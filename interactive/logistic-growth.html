@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Logistic Growth Function</title>
+  <!-- KaTeX renders the definition formulas from LaTeX. If offline/CDN is unavailable, the raw TeX remains visible as fallback. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf7;
+      --ink: #202020;
+      --muted: #626262;
+      --line: #d9d1c3;
+      --accent: #007c89;
+      --accent-2: #e36f3f;
+      --green: #5f7f42;
+      --blue-soft: #e9fbfd;
+      --orange-soft: #fff0e8;
+      --shadow: 0 18px 50px rgba(40, 31, 19, 0.13);
+      --radius: 24px;
+      font-family: "IBM Plex Sans Thai Looped", "Noto Sans Thai", "Tahoma", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 8%, rgba(0,124,137,0.10), transparent 32%),
+        radial-gradient(circle at 90% 10%, rgba(227,111,63,0.12), transparent 28%),
+        linear-gradient(135deg, #f4f1ea 0%, #fbf8f1 55%, #eee8db 100%);
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero, .definition, .panel, .plot-card {
+      background: rgba(255,253,247,0.88);
+      border: 1px solid rgba(160, 148, 128, 0.32);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      top: -110px;
+      border-radius: 50%;
+      background: repeating-linear-gradient(45deg, rgba(0,124,137,0.16) 0 8px, transparent 8px 18px);
+      opacity: 0.9;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1.12;
+      margin: 12px 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      color: #38332b;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .definition {
+      padding: 24px;
+      border-left: 8px solid var(--accent);
+    }
+
+    .definition h2 {
+      margin: 0 0 10px;
+      font-size: 1.28rem;
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: #f7fbfb;
+      border: 1px solid #cfe7e8;
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      overflow-x: auto;
+      font-size: 1.06rem;
+    }
+
+    .math-display {
+      display: block;
+      text-align: center;
+      font-family: "Cambria Math", "STIX Two Math", Georgia, serif;
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel { padding: 22px; }
+
+    .panel h2, .plot-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+    }
+
+    .control {
+      padding: 16px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .control:last-of-type { border-bottom: none; }
+
+    .control-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    label {
+      font-weight: 700;
+      color: #2c2923;
+    }
+
+    .value-chip {
+      display: inline-flex;
+      min-width: 76px;
+      justify-content: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: #00636d;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 1px solid rgba(0,124,137,0.28);
+      background: #f5fbfb;
+      color: #064d55;
+      font: inherit;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 124, 137, 0.12);
+      background: #e9fbfd;
+    }
+
+    .plot-card {
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .plot-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #f0f0ea;
+      color: #444;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .badge.accent { background: var(--blue-soft); color: #00636d; }
+    .badge.orange { background: var(--orange-soft); color: #9b3f19; }
+
+    .canvas-wrap {
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: min(58vh, 570px);
+      min-height: 440px;
+      border-radius: 16px;
+    }
+
+    .readout-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .readout {
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .readout .name {
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-bottom: 2px;
+    }
+
+    .readout .num {
+      font-size: 1.16rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .explain {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .note-card {
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+    }
+
+    .note-card strong { color: var(--accent); }
+
+    code, .mono {
+      font-family: "JetBrains Mono", "Cascadia Mono", monospace;
+    }
+
+    @media (max-width: 980px) {
+      header, main, .explain { grid-template-columns: 1fr; }
+      .readout-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 14px; }
+      .hero, .definition, .panel, .plot-card { border-radius: 18px; padding: 18px; }
+      .preset-grid, .readout-grid { grid-template-columns: 1fr; }
+      canvas { min-height: 360px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <section class="hero">
+        <div class="eyebrow">Interactive Definition 1.3</div>
+        <h1>Logistic Growth Function</h1>
+        <p class="subtitle">ปรับค่า <strong>a</strong>, <strong>b</strong>, และ <strong>c</strong> เพื่อสังเกตว่าฟังก์ชันโลจิสติกเริ่มจากน้อย เพิ่มเร็วขึ้น แล้วค่อย ๆ เข้าใกล้ขอบเขตบนอย่างไร</p>
+      </section>
+
+      <section class="definition" aria-label="definition">
+        <h2>บทนิยาม 1.3</h2>
+        <p>กำหนดให้ <span class="mono">a, b, c</span> เป็นค่าคงตัวบวก โดยที่ <span class="mono">b &lt; 1</span> ฟังก์ชันโลจิสติกของการเพิ่มปริมาณ คือ</p>
+        <div class="formula-box">
+          <div class="math-display">
+            $$
+            f(x) = \frac{c}{1 + a b^x}
+            \quad \text{หรือ} \quad
+            f(x) = \frac{c}{1 + a e^{-kx}}
+            $$
+          </div>
+        </div>
+        <p>เมื่อ <strong>c</strong> คือขอบเขตของการเพิ่มปริมาณ (the limit to growth) และในกราฟนี้ใช้ความสัมพันธ์ $k = -\ln(b)$</p>
+      </section>
+    </header>
+
+    <main>
+      <aside class="panel">
+        <h2>ตัวควบคุมพารามิเตอร์</h2>
+
+        <div class="control">
+          <div class="control-head">
+            <label for="a">ค่า a — ตำแหน่ง/ความล่าช้าเริ่มต้น</label>
+            <span id="aVal" class="value-chip">5.00</span>
+          </div>
+          <input id="a" type="range" min="0.1" max="20" step="0.1" value="5" />
+          <div class="hint">ค่า a มากขึ้นทำให้กราฟเริ่มต่ำกว่าเดิม และจุดเร่งการเติบโตเลื่อนไปทางขวา</div>
+        </div>
+
+        <div class="control">
+          <div class="control-head">
+            <label for="b">ค่า b — อัตราการเข้าใกล้ขอบเขต</label>
+            <span id="bVal" class="value-chip">0.75</span>
+          </div>
+          <input id="b" type="range" min="0.1" max="0.95" step="0.01" value="0.75" />
+          <div class="hint">เพราะ b &lt; 1, เมื่อ x เพิ่มขึ้น ค่า b<sup>x</sup> จะลดลง จึงทำให้ f(x) เพิ่มเข้าใกล้ c</div>
+        </div>
+
+        <div class="control">
+          <div class="control-head">
+            <label for="c">ค่า c — ขอบเขตของการเพิ่มปริมาณ</label>
+            <span id="cVal" class="value-chip">100</span>
+          </div>
+          <input id="c" type="range" min="10" max="300" step="1" value="100" />
+          <div class="hint">เส้นประแนวนอนคือ y = c ซึ่งกราฟจะเข้าใกล้ แต่ไม่เกินในแบบจำลองนี้</div>
+        </div>
+
+        <div class="control">
+          <div class="control-head">
+            <label for="xProbe">สำรวจค่าที่ x</label>
+            <span id="xVal" class="value-chip">5.0</span>
+          </div>
+          <input id="xProbe" type="range" min="-10" max="20" step="0.1" value="5" />
+          <div class="hint">เลื่อนเพื่ออ่านค่าจุดบนกราฟ และเปรียบเทียบกับขอบเขต c</div>
+        </div>
+
+        <div class="preset-grid" aria-label="presets">
+          <button data-preset="slow">เติบโตช้า</button>
+          <button data-preset="fast">เติบโตเร็ว</button>
+          <button data-preset="delayed">เริ่มช้า/หน่วงนาน</button>
+          <button data-preset="highcap">ขอบเขตสูง</button>
+        </div>
+      </aside>
+
+      <section class="plot-card">
+        <div class="plot-top">
+          <div>
+            <h2>กราฟของ f(x)</h2>
+            <div class="badges">
+              <span class="badge accent" id="formulaBadge">f(x)=100/(1+5.00·0.75^x)</span>
+              <span class="badge orange" id="kBadge">k = 0.2877</span>
+            </div>
+          </div>
+          <div class="badges">
+            <span class="badge">เส้นทึบ: f(x)</span>
+            <span class="badge">เส้นประ: y = c</span>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="plot" width="1100" height="650" aria-label="interactive logistic growth graph"></canvas>
+        </div>
+
+        <div class="readout-grid">
+          <div class="readout">
+            <div class="name">ค่าเริ่มต้น f(0)</div>
+            <div class="num" id="f0Out">16.67</div>
+          </div>
+          <div class="readout">
+            <div class="name">ค่าที่สำรวจ f(x)</div>
+            <div class="num" id="fxOut">45.77</div>
+          </div>
+          <div class="readout">
+            <div class="name">จุดชันที่สุด x*</div>
+            <div class="num" id="inflOut">5.59</div>
+          </div>
+          <div class="readout">
+            <div class="name">ครึ่งหนึ่งของขอบเขต c/2</div>
+            <div class="num" id="halfOut">50.00</div>
+          </div>
+        </div>
+
+        <div class="explain">
+          <div class="note-card"><strong>อ่านกราฟ:</strong> เมื่อ <span class="mono">x</span> เพิ่มขึ้น ตัวส่วน <span class="mono">1 + a·b^x</span> ลดลงเข้าใกล้ <span class="mono">1</span> ดังนั้น <span class="mono">f(x)</span> เพิ่มเข้าใกล้ <span class="mono">c</span></div>
+          <div class="note-card"><strong>คำถามชวนคิด:</strong> ถ้าอยากให้ประชากรแตะครึ่งหนึ่งของขอบเขตเร็วขึ้น ควรปรับ <span class="mono">a</span> หรือ <span class="mono">b</span> อย่างไร?</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function renderDefinitionMath() {
+      if (!window.renderMathInElement) return;
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    }
+    window.addEventListener("DOMContentLoaded", renderDefinitionMath);
+
+    const $ = (id) => document.getElementById(id);
+    const canvas = $("plot");
+    const ctx = canvas.getContext("2d");
+
+    const controls = {
+      a: $("a"),
+      b: $("b"),
+      c: $("c"),
+      xProbe: $("xProbe")
+    };
+
+    function logistic(x, a, b, c) {
+      return c / (1 + a * Math.pow(b, x));
+    }
+
+    function fmt(n, digits = 2) {
+      if (!Number.isFinite(n)) return "นอกช่วง";
+      return Number(n).toFixed(digits);
+    }
+
+    function roundedMax(c) {
+      if (c <= 50) return Math.ceil((c * 1.15) / 10) * 10;
+      if (c <= 150) return Math.ceil((c * 1.15) / 25) * 25;
+      return Math.ceil((c * 1.15) / 50) * 50;
+    }
+
+    function draw() {
+      const a = parseFloat(controls.a.value);
+      const b = parseFloat(controls.b.value);
+      const c = parseFloat(controls.c.value);
+      const xp = parseFloat(controls.xProbe.value);
+      const k = -Math.log(b);
+      const f0 = logistic(0, a, b, c);
+      const fx = logistic(xp, a, b, c);
+      const xInflect = -Math.log(a) / Math.log(b);
+
+      $("aVal").textContent = fmt(a, 2);
+      $("bVal").textContent = fmt(b, 2);
+      $("cVal").textContent = fmt(c, 0);
+      $("xVal").textContent = fmt(xp, 1);
+      $("formulaBadge").textContent = `f(x)=${fmt(c,0)}/(1+${fmt(a,2)}·${fmt(b,2)}^x)`;
+      $("kBadge").textContent = `k = ${fmt(k, 4)}`;
+      $("f0Out").textContent = fmt(f0, 2);
+      $("fxOut").textContent = fmt(fx, 2);
+      $("inflOut").textContent = fmt(xInflect, 2);
+      $("halfOut").textContent = fmt(c / 2, 2);
+
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const W = rect.width;
+      const H = rect.height;
+      const margin = { left: 68, right: 28, top: 32, bottom: 58 };
+      const xMin = -10, xMax = 20;
+      const yMin = 0, yMax = roundedMax(c);
+      const pw = W - margin.left - margin.right;
+      const ph = H - margin.top - margin.bottom;
+
+      const sx = (x) => margin.left + ((x - xMin) / (xMax - xMin)) * pw;
+      const sy = (y) => margin.top + (1 - (y - yMin) / (yMax - yMin)) * ph;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#fffdfa";
+      ctx.fillRect(0, 0, W, H);
+
+      // grid
+      ctx.strokeStyle = "rgba(120,108,90,0.18)";
+      ctx.lineWidth = 1;
+      ctx.font = "12px IBM Plex Sans Thai Looped, Tahoma, sans-serif";
+      ctx.fillStyle = "#6d665b";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+
+      for (let x = -10; x <= 20; x += 5) {
+        const px = sx(x);
+        ctx.beginPath();
+        ctx.moveTo(px, margin.top);
+        ctx.lineTo(px, margin.top + ph);
+        ctx.stroke();
+        ctx.fillText(String(x), px, margin.top + ph + 12);
+      }
+
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      const yStep = yMax <= 60 ? 10 : yMax <= 160 ? 25 : 50;
+      for (let y = 0; y <= yMax; y += yStep) {
+        const py = sy(y);
+        ctx.beginPath();
+        ctx.moveTo(margin.left, py);
+        ctx.lineTo(margin.left + pw, py);
+        ctx.stroke();
+        ctx.fillText(String(y), margin.left - 10, py);
+      }
+
+      // axes
+      ctx.strokeStyle = "#2d2a24";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(margin.left, margin.top);
+      ctx.lineTo(margin.left, margin.top + ph);
+      ctx.lineTo(margin.left + pw, margin.top + ph);
+      ctx.stroke();
+
+      ctx.fillStyle = "#2d2a24";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.font = "700 14px IBM Plex Sans Thai Looped, Tahoma, sans-serif";
+      ctx.fillText("x", margin.left + pw / 2, H - 28);
+      ctx.save();
+      ctx.translate(20, margin.top + ph / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("f(x)", 0, 0);
+      ctx.restore();
+
+      // carrying capacity line y=c
+      const cy = sy(c);
+      ctx.strokeStyle = "rgba(227,111,63,0.82)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 8]);
+      ctx.beginPath();
+      ctx.moveTo(margin.left, cy);
+      ctx.lineTo(margin.left + pw, cy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#9b3f19";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "bottom";
+      ctx.font = "800 13px IBM Plex Sans Thai Looped, Tahoma, sans-serif";
+      ctx.fillText(`y = c = ${fmt(c,0)}`, margin.left + pw - 8, cy - 6);
+
+      // half capacity line
+      const hy = sy(c / 2);
+      ctx.strokeStyle = "rgba(0,124,137,0.25)";
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.moveTo(margin.left, hy);
+      ctx.lineTo(margin.left + pw, hy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // curve fill
+      const n = 360;
+      ctx.beginPath();
+      ctx.moveTo(sx(xMin), sy(0));
+      for (let i = 0; i <= n; i++) {
+        const x = xMin + (i / n) * (xMax - xMin);
+        ctx.lineTo(sx(x), sy(logistic(x, a, b, c)));
+      }
+      ctx.lineTo(sx(xMax), sy(0));
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, margin.top, 0, margin.top + ph);
+      grad.addColorStop(0, "rgba(0,124,137,0.23)");
+      grad.addColorStop(1, "rgba(0,124,137,0.02)");
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // curve stroke
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const x = xMin + (i / n) * (xMax - xMin);
+        const px = sx(x);
+        const py = sy(logistic(x, a, b, c));
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = "#007c89";
+      ctx.lineWidth = 4;
+      ctx.lineCap = "round";
+      ctx.stroke();
+
+      // probe point
+      const pX = sx(xp), pY = sy(fx);
+      ctx.strokeStyle = "rgba(0,0,0,0.35)";
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pX, pY);
+      ctx.lineTo(pX, margin.top + ph);
+      ctx.moveTo(margin.left, pY);
+      ctx.lineTo(pX, pY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = "#e36f3f";
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(pX, pY, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#38251a";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "bottom";
+      ctx.font = "800 13px IBM Plex Sans Thai Looped, Tahoma, sans-serif";
+      const labelText = `(${fmt(xp,1)}, ${fmt(fx,2)})`;
+      const labelWidth = Math.max(128, ctx.measureText(labelText).width + 24);
+      const labelX = Math.min(pX + 12, margin.left + pw - labelWidth - 8);
+      const labelY = Math.max(pY - 10, margin.top + 18);
+      roundRect(ctx, labelX - 6, labelY - 21, labelWidth, 26, 10, "rgba(255,240,232,0.96)", "rgba(227,111,63,0.35)");
+      // roundRect changes fillStyle to the box color; reset before writing the coordinate text.
+      ctx.fillStyle = "#38251a";
+      ctx.fillText(labelText, labelX, labelY);
+
+      // inflection point x* where f=c/2
+      if (xInflect >= xMin && xInflect <= xMax) {
+        const ix = sx(xInflect);
+        const iy = sy(c / 2);
+        ctx.strokeStyle = "rgba(95,127,66,0.75)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([3, 5]);
+        ctx.beginPath();
+        ctx.moveTo(ix, margin.top);
+        ctx.lineTo(ix, margin.top + ph);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#5f7f42";
+        ctx.beginPath();
+        ctx.arc(ix, iy, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#3d5b26";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+        ctx.font = "800 12px IBM Plex Sans Thai Looped, Tahoma, sans-serif";
+        ctx.fillText("จุดชันที่สุด", ix, iy - 10);
+      }
+    }
+
+    function roundRect(ctx, x, y, w, h, r, fill, stroke) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+      if (stroke) { ctx.strokeStyle = stroke; ctx.stroke(); }
+    }
+
+    function setPreset(name) {
+      const presets = {
+        slow: { a: 5, b: 0.90, c: 100, xProbe: 8 },
+        fast: { a: 5, b: 0.55, c: 100, xProbe: 4 },
+        delayed: { a: 16, b: 0.78, c: 100, xProbe: 10 },
+        highcap: { a: 4, b: 0.72, c: 240, xProbe: 6 }
+      };
+      const p = presets[name];
+      for (const key of Object.keys(p)) controls[key].value = p[key];
+      draw();
+    }
+
+    Object.values(controls).forEach(el => el.addEventListener("input", draw));
+    document.querySelectorAll("[data-preset]").forEach(btn => {
+      btn.addEventListener("click", () => setPreset(btn.dataset.preset));
+    });
+    window.addEventListener("resize", draw);
+    draw();
+  </script>
+</body>
+</html>
