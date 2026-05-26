@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ความสัมพันธ์กับฟังก์ชัน • ม.5</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf7;
+      --ink: #202020;
+      --muted: #626262;
+      --line: #d9d1c3;
+      --accent: #007c89;
+      --accent-2: #e36f3f;
+      --green: #5f7f42;
+      --red: #c0392b;
+      --purple: #7c5e9e;
+      --blue-soft: #e9fbfd;
+      --orange-soft: #fff0e8;
+      --shadow: 0 18px 50px rgba(40, 31, 19, 0.13);
+      --radius: 24px;
+      font-family: "IBM Plex Sans Thai Looped", "Noto Sans Thai", "Tahoma", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 8%, rgba(0,124,137,0.10), transparent 32%),
+        radial-gradient(circle at 90% 10%, rgba(227,111,63,0.12), transparent 28%),
+        linear-gradient(135deg, #f4f1ea 0%, #fbf8f1 55%, #eee8db 100%);
+      min-height: 100vh;
+      line-height: 1.65;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.45fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    header > div:first-child,
+    header > div:last-child,
+    .card {
+      background: rgba(255,253,247,0.88);
+      border: 1px solid rgba(160, 148, 128, 0.32);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    header > div:first-child {
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header > div:first-child::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      top: -110px;
+      border-radius: 50%;
+      background: repeating-linear-gradient(45deg, rgba(0,124,137,0.16) 0 8px, transparent 8px 18px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    header > div:last-child {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      min-height: 100%;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--blue-soft);
+      color: #00636d;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .title, h1 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1.12;
+      margin: 12px 0 12px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      color: #38332b;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .card {
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .definition {
+      background: rgba(255,253,247,0.88);
+      border: 1px solid rgba(160, 148, 128, 0.32);
+      border-left: 8px solid var(--accent);
+      border-radius: var(--radius);
+      box-shadow: none;
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    .definition strong:first-child {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .definition .katex-display,
+    .formula-box,
+    .example-mapping {
+      background: #f7fbfb;
+      border: 1px solid #cfe7e8;
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .example-card {
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      box-shadow: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .example-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 124, 137, 0.12);
+      background: #ffffff;
+    }
+
+    .example-header {
+      font-weight: 900;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+    }
+
+    .example-header.ok { color: var(--green); }
+    .example-header.bad { color: var(--red); }
+
+    .example-mapping {
+      font-family: "JetBrains Mono", "Cascadia Mono", monospace;
+      line-height: 1.85;
+      color: #2c2923;
+    }
+
+    .mapping-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 90px;
+      padding: 44px 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      position: relative;
+      min-height: 400px;
+      overflow: hidden;
+    }
+
+    .set {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .set-label {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .element {
+      width: 72px;
+      height: 72px;
+      background: #fffdf8;
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+      box-shadow: 0 6px 14px rgba(40, 31, 19, 0.08);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .element:hover {
+      border-color: rgba(0,124,137,0.38);
+      background: #f5fbfb;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 124, 137, 0.12);
+    }
+
+    .element.selected {
+      border-color: var(--accent);
+      background: var(--blue-soft);
+      box-shadow: 0 0 0 4px rgba(0,124,137,0.14), 0 10px 22px rgba(0, 124, 137, 0.12);
+    }
+
+    .element.mapped,
+    .element.domain {
+      border-color: var(--accent);
+      background: var(--blue-soft);
+      color: #00636d;
+    }
+
+    .element.range,
+    .element.injective {
+      border-color: var(--green);
+      background: #f2f7ec;
+      color: #3f6128;
+    }
+
+    .element.codomain,
+    .element.surjective {
+      border-color: var(--purple);
+      background: #f6f0fb;
+      color: #5a4074;
+    }
+
+    .element.has-multiple {
+      border-color: var(--red);
+      background: #fff0e8;
+      color: #9b3f19;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .arrow {
+      stroke: var(--accent-2);
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      fill: none;
+    }
+
+    .status-bar,
+    .readout,
+    .legend {
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+      margin-top: 14px;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .status-text {
+      font-weight: 900;
+      font-size: 0.98rem;
+      color: #2c2923;
+    }
+
+    .status-text.ok { color: var(--green); }
+    .status-text.bad { color: var(--red); }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 2px solid;
+      display: inline-block;
+    }
+
+    .controls,
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 1px solid rgba(0,124,137,0.28);
+      background: #f5fbfb;
+      color: #064d55;
+      font: inherit;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      justify-content: center;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 124, 137, 0.12);
+      background: #e9fbfd;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-success {
+      border: 1px solid rgba(0,124,137,0.28);
+      background: #f5fbfb;
+      color: #064d55;
+      box-shadow: none;
+    }
+
+    .explanation {
+      margin-top: 16px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    code, .mono {
+      font-family: "JetBrains Mono", "Cascadia Mono", monospace;
+    }
+
+    @media (max-width: 980px) {
+      header { grid-template-columns: 1fr; }
+      .example-grid { grid-template-columns: 1fr; }
+      .mapping-area { gap: 44px; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 14px; }
+      header > div:first-child,
+      header > div:last-child,
+      .card { border-radius: 18px; padding: 18px; }
+      .mapping-area { gap: 22px; padding: 28px 10px; }
+      .element { width: 62px; height: 62px; }
+      .controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 class="title">ความสัมพันธ์กับฟังก์ชัน</h1>
+        <p class="subtitle">ม.5 • ทบทวนความสัมพันธ์และฟังก์ชัน</p>
+      </div>
+      <div>
+        <span class="badge">Interactive</span>
+      </div>
+    </header>
+
+    <!-- คำนิยาม (เวอร์ชันวิชาการ) -->
+    <div class="card">
+      <div class="definition">
+        <strong>ความสัมพันธ์ (Relation)</strong><br><br>
+        ให้ $A$ และ $B$ เป็นเซตใด ๆ <strong>ความสัมพันธ์</strong> $R$ จาก $A$ ไปยัง $B$ คือสับเซตของผลคูณคาร์ทีเซียน $A \times B$<br><br>
+        $$ R \subseteq A \times B $$
+        <br>
+        นั่นคือ $R$ คือเซตของคู่อันดับ $(a,b)$ ที่ $a \in A$ และ $b \in B$ โดยสมาชิกหนึ่งใน $A$ สามารถจับคู่กับสมาชิกหลายตัวใน $B$ ได้
+      </div>
+
+      <div class="definition" style="border-left-color: var(--green);">
+        <strong>ฟังก์ชัน (Function)</strong><br><br>
+        ฟังก์ชัน $f$ จาก $A$ ไปยัง $B$ คือความสัมพันธ์ที่มีสมบัติว่า<br><br>
+        <strong>สำหรับทุก $a \in A$ มี $b \in B$ เพียงหนึ่งเดียวที่ $(a,b) \in f$</strong><br><br>
+        $$ f: A \to B \quad \text{โดยที่} \quad \forall a \in A,\ \exists! b \in B \ \text{ดังที่} \ (a,b) \in f $$
+        <br>
+        <span style="font-size:13px; color:#666;">(ทุกตัวในโดเมนต้องถูกจับคู่ และไม่มีตัวไหนมี output มากกว่า 1 ตัว)</span>
+      </div>
+    </div>
+
+    <!-- ตัวอย่าง (2 ตัวอย่าง) -->
+    <div class="card">
+      <div class="section-title">
+        <span>📘</span>
+        <span>ตัวอย่าง</span>
+      </div>
+
+      <div class="example-grid">
+        <!-- ตัวอย่าง 1 -->
+        <div class="example-card">
+          <div class="example-header ok">
+            <span>✓</span>
+            <span>ตัวอย่างที่ 1: เป็นฟังก์ชัน</span>
+          </div>
+          <div style="font-size:14.5px; line-height:1.75;">
+            ให้ $A = \{1, 2, 3\}$ และ $B = \{a, b, c\}$<br>
+            ความสัมพันธ์ $R = \{(1,a), (2,b), (3,c)\}$
+          </div>
+          <div class="example-mapping">
+            1 → a<br>
+            2 → b<br>
+            3 → c
+          </div>
+          <div style="font-size:13.5px; color:#5f7f42; margin-bottom:16px;">
+            <strong>สรุป:</strong> ทุกตัวใน $A$ มี output เพียงตัวเดียว → <strong>เป็นฟังก์ชัน</strong>
+          </div>
+          <button class="btn-secondary" style="width:100%;" onclick="loadExample(1)">โหลดตัวอย่างนี้</button>
+        </div>
+
+        <!-- ตัวอย่าง 2 -->
+        <div class="example-card">
+          <div class="example-header bad">
+            <span>✗</span>
+            <span>ตัวอย่างที่ 2: ไม่เป็นฟังก์ชัน</span>
+          </div>
+          <div style="font-size:14.5px; line-height:1.75;">
+            ให้ $A = \{x, y, z\}$ และ $B = \{p, q, r\}$<br>
+            ความสัมพันธ์ $R = \{(x,p), (x,q), (y,p), (z,r)\}$
+          </div>
+          <div class="example-mapping">
+            x → p, q<br>
+            y → p<br>
+            z → r
+          </div>
+          <div style="font-size:13.5px; color:#c0392b; margin-bottom:16px;">
+            <strong>สรุป:</strong> ตัว $x$ มี output 2 ตัว (p และ q) → <strong>ไม่เป็นฟังก์ชัน</strong>
+          </div>
+          <button class="btn-secondary" style="width:100%;" onclick="loadExample(2)">โหลดตัวอย่างนี้</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- โซน Interactive -->
+    <div class="card">
+      <div class="section-title">
+        <span>🔄</span>
+        <span>ลองสร้างความสัมพันธ์ด้วยตัวเอง</span>
+      </div>
+
+      <div class="mapping-area" id="mapping-area">
+        <svg id="svg-arrows" width="100%" height="100%"></svg>
+
+        <div class="set">
+          <div class="set-label">เซต A (โดเมน)</div>
+          <div id="set-a"></div>
+        </div>
+
+        <div class="set">
+          <div class="set-label">เซต B (โคโดเมน)</div>
+          <div id="set-b"></div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div>
+          <span class="status-text" id="status-text">คลิกที่สมาชิกในเซต A แล้วคลิกสมาชิกในเซต B เพื่อสร้างลูกศร</span>
+        </div>
+        <div style="font-size:13px; color:#888;">
+          <span id="arrow-count">0</span> ลูกศร
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn-primary" onclick="randomizeExample()">
+          🎲 สุ่มตัวอย่างใหม่
+        </button>
+        <button class="btn-secondary" onclick="resetMapping()">
+          ⟳ Reset
+        </button>
+        <button class="btn-secondary" onclick="showSolution()">
+          👁 แสดงเฉลย
+        </button>
+        <button class="btn-secondary" onclick="exportAsImage()">
+          📸 บันทึกเป็นภาพ
+        </button>
+      </div>
+
+      <div id="explanation" class="explanation">
+        <strong style="color:#c0392b;">เฉลย:</strong>
+        <div id="solution-text" style="margin-top:12px; line-height:1.75;"></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      คลิกที่สมาชิกในเซต A แล้วคลิกสมาชิกในเซต B เพื่อสร้างลูกศร • ลูกศรสีส้ม = ยังไม่เป็นฟังก์ชัน
+    </div>
+  </div>
+
+  <script>
+    let currentA = [];
+    let currentB = [];
+    let mappings = {};
+    let selectedA = null;
+
+    const exampleTemplates = [
+      {
+        name: "ตัวอย่างที่ 1: เป็นฟังก์ชัน",
+        generate: () => ({ a: ["1","2","3"], b: ["a","b","c"], mappings: { "1": ["a"], "2": ["b"], "3": ["c"] } })
+      },
+      {
+        name: "ตัวอย่างที่ 2: ไม่เป็นฟังก์ชัน",
+        generate: () => ({ a: ["x","y","z"], b: ["p","q","r"], mappings: { "x": ["p","q"], "y": ["p"], "z": ["r"] } })
+      },
+      {
+        name: "ตัวอย่างที่ 3: สุ่มขนาด",
+        generate: () => {
+          const sizeA = Math.floor(Math.random()*2)+3;
+          const sizeB = Math.floor(Math.random()*3)+3;
+          const lettersA = ["α","β","γ","δ","ε"];
+          const lettersB = ["①","②","③","④","⑤"];
+          const a = lettersA.slice(0,sizeA);
+          const b = lettersB.slice(0,sizeB);
+          const mappings = {};
+          a.forEach(val => {
+            if (Math.random()>0.25) {
+              const num = Math.random()>0.7 ? 2 : 1;
+              const targets = [];
+              for (let i=0; i<num; i++) {
+                const t = b[Math.floor(Math.random()*b.length)];
+                if (!targets.includes(t)) targets.push(t);
+              }
+              mappings[val] = targets;
+            }
+          });
+          return { a, b, mappings };
+        }
+      }
+    ];
+
+    function loadExample(num) {
+      let data;
+      if (num === 1) data = { a: ["1","2","3"], b: ["a","b","c"], mappings: { "1": ["a"], "2": ["b"], "3": ["c"] } };
+      else if (num === 2) data = { a: ["x","y","z"], b: ["p","q","r"], mappings: { "x": ["p","q"], "y": ["p"], "z": ["r"] } };
+      
+      currentA = data.a; currentB = data.b; mappings = data.mappings || {}; selectedA = null;
+      document.getElementById("explanation").classList.remove("show");
+      renderSets();
+      document.querySelector(".mapping-area").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function renderSets() {
+      const setAEl = document.getElementById("set-a");
+      const setBEl = document.getElementById("set-b");
+      setAEl.innerHTML = ""; setBEl.innerHTML = "";
+      
+      currentA.forEach(val => {
+        const el = document.createElement("div");
+        el.className = "element"; el.textContent = val; el.dataset.value = val;
+        const targets = mappings[val] || [];
+        if (targets.length > 0) el.classList.add(targets.length > 1 ? "has-multiple" : "mapped");
+        if (selectedA === val) el.classList.add("selected");
+        el.onclick = () => selectA(val);
+        setAEl.appendChild(el);
+      });
+      
+      currentB.forEach(val => {
+        const el = document.createElement("div");
+        el.className = "element"; el.textContent = val; el.dataset.value = val;
+        el.onclick = () => selectB(val);
+        setBEl.appendChild(el);
+      });
+      
+      drawArrows(); updateStatus();
+    }
+
+    function selectA(val) { selectedA = (selectedA === val) ? null : val; renderSets(); }
+    
+    function selectB(val) {
+      if (!selectedA) { alert("กรุณาคลิกที่สมาชิกในเซต A ก่อน"); return; }
+      if (!mappings[selectedA]) mappings[selectedA] = [];
+      if (!mappings[selectedA].includes(val)) mappings[selectedA].push(val);
+      selectedA = null; renderSets();
+    }
+
+    function drawArrows() {
+      const svg = document.getElementById("svg-arrows");
+      svg.innerHTML = "";
+      const area = document.getElementById("mapping-area");
+      const rect = area.getBoundingClientRect();
+      svg.setAttribute("width", rect.width); svg.setAttribute("height", rect.height);
+      
+      Object.entries(mappings).forEach(([aVal, targets]) => {
+        if (!Array.isArray(targets)) return;
+        targets.forEach(bVal => {
+          const aEl = document.querySelector(`#set-a .element[data-value="${aVal}"]`);
+          const bEl = document.querySelector(`#set-b .element[data-value="${bVal}"]`);
+          if (!aEl || !bEl) return;
+          const aRect = aEl.getBoundingClientRect(); const bRect = bEl.getBoundingClientRect();
+          const x1 = aRect.right - rect.left + 8; const y1 = aRect.top - rect.top + aRect.height/2;
+          const x2 = bRect.left - rect.left - 8; const y2 = bRect.top - rect.top + bRect.height/2;
+          const midX = (x1 + x2) / 2;
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", `M ${x1} ${y1} Q ${midX} ${y1} ${x2} ${y2}`);
+          path.setAttribute("class", "arrow");
+          svg.appendChild(path);
+        });
+      });
+    }
+
+    function updateStatus() {
+      const statusEl = document.getElementById("status-text");
+      const countEl = document.getElementById("arrow-count");
+      let total = 0; Object.values(mappings).forEach(t => { if (Array.isArray(t)) total += t.length; });
+      countEl.textContent = total;
+      
+      if (total === 0) { statusEl.textContent = "คลิกที่สมาชิกในเซต A แล้วคลิกสมาชิกในเซต B เพื่อสร้างลูกศร"; statusEl.className = "status-text"; }
+      else {
+        const res = checkIsFunction();
+        if (res.isFunction) { statusEl.textContent = "✓ นี่คือฟังก์ชัน — ทุกตัวใน A มี output เพียงตัวเดียว"; statusEl.className = "status-text ok"; }
+        else { statusEl.textContent = "✗ นี่ไม่ใช่ฟังก์ชัน: " + res.reason; statusEl.className = "status-text bad"; }
+      }
+    }
+
+    function checkIsFunction() {
+      for (const a of currentA) {
+        const t = mappings[a];
+        if (!t || t.length === 0) return { isFunction: false, reason: "มีสมาชิกในเซต A ที่ยังไม่ถูกจับคู่" };
+        if (t.length > 1) return { isFunction: false, reason: "มีสมาชิกในเซต A ที่ชี้ไปมากกว่า 1 ตัว" };
+      }
+      return { isFunction: true, reason: "" };
+    }
+
+    function randomizeExample() {
+      const tpl = exampleTemplates[Math.floor(Math.random()*exampleTemplates.length)];
+      const d = tpl.generate();
+      currentA = d.a; currentB = d.b; mappings = d.mappings || {}; selectedA = null;
+      document.getElementById("explanation").classList.remove("show"); renderSets();
+    }
+
+    function resetMapping() { mappings = {}; selectedA = null; document.getElementById("explanation").classList.remove("show"); renderSets(); }
+    
+    function showSolution() {
+      const exp = document.getElementById("explanation");
+      const txt = document.getElementById("solution-text");
+      const res = checkIsFunction();
+      const total = Object.values(mappings).reduce((s,arr)=>s+(Array.isArray(arr)?arr.length:0),0);
+      let html = "";
+      if (total===0) html = "ยังไม่มีลูกศรใด ๆ กรุณาสร้างความสัมพันธ์ก่อน";
+      else if (res.isFunction) html = `<strong style="color:#5f7f42;">นี่คือฟังก์ชัน</strong><br><br>ทุกตัวในเซต A มี output เพียงตัวเดียวในเซต B`;
+      else html = `<strong style="color:#c0392b;">นี่ไม่ใช่ฟังก์ชัน</strong><br><br><strong>เหตุผล:</strong> ${res.reason}`;
+      txt.innerHTML = html; exp.classList.add("show");
+    }
+
+    async function exportAsImage() {
+      const card = document.querySelector(".card");
+      try {
+        const canvas = await html2canvas(card, { backgroundColor: "#fffdf7", scale: 2 });
+        const link = document.createElement("a");
+        link.download = "relation-vs-function.png"; link.href = canvas.toDataURL("image/png"); link.click();
+      } catch(e) { alert("ไม่สามารถบันทึกภาพได้"); }
+    }
+
+    function init() {
+      if (window.renderMathInElement) renderMathInElement(document.body, { delimiters: [{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}] });
+      const d = exampleTemplates[0].generate();
+      currentA = d.a; currentB = d.b; mappings = d.mappings || {};
+      renderSets();
+      window.addEventListener("resize", () => setTimeout(drawArrows,100));
+      document.addEventListener("keydown", e => {
+        if (e.key==="Escape") { selectedA=null; renderSets(); }
+        if (e.key.toLowerCase()==="r") resetMapping();
+      });
+    }
+    window.onload = init;
+  </script>
+</body>
+</html>

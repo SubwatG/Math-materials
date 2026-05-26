@@ -6,6 +6,13 @@
 
 - [Logistic Growth Functions](interactive/logistic-growth.html) — ปรับค่า `a`, `b`, `c` เพื่อสำรวจกราฟของฟังก์ชันโลจิสติกและขอบเขตการเพิ่มปริมาณ
 
+### ม.5 บทที่ 0 — ทบทวนความสัมพันธ์และฟังก์ชัน
+
+- [ความสัมพันธ์กับฟังก์ชัน](interactive/m5-relation-vs-function.html) — สร้างลูกศรจากเซต A ไปเซต B เพื่อตรวจว่าเป็นฟังก์ชันหรือไม่ พร้อมนิยามวิชาการด้วย KaTeX
+- [โดเมน โคโดเมน และเรนจ์](interactive/m5-domain-codomain-range.html) — สำรวจความแตกต่างระหว่าง domain, codomain และ range ผ่าน mapping diagram แบบ interactive
+- [One-to-one และ Onto](interactive/m5-one-to-one-onto.html) — สร้าง mapping เพื่อตรวจสอบ injective, surjective และ bijective ด้วยภาพลูกศร
+- [Inverse Function](interactive/m5-inverse-function.html) — ตรวจสอบว่า mapping มี inverse function หรือไม่ ผ่านเงื่อนไข bijective และตัวอย่างหลายกรณี
+
 ## GitHub Pages
 
 Repository นี้เตรียมไว้สำหรับเปิด GitHub Pages จาก branch `main` และ folder `/` (root)
