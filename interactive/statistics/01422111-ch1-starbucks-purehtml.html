@@ -1,0 +1,3726 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01422111 หลักสถิติ - บทที่ 1 (Starbucks Theme)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});"></script>
+
+    <style>
+        :root {
+            --color-sb-green: #006241;
+            --color-sb-accent: #00754A;
+            --color-sb-house: #1E3932;
+            --color-sb-light: #d4e9e2;
+            --color-canvas: #f2f0eb;
+            --color-ceramic: #edebe9;
+            --color-card: #ffffff;
+            --color-text: rgba(0, 0, 0, 0.87);
+            --color-text-soft: rgba(0, 0, 0, 0.58);
+            --color-text-inverse: #ffffff;
+            --color-gold: #cba258;
+            --color-gold-light: #faf6ee;
+            --color-error: #c82014;
+            --bg-page: var(--color-canvas);
+            --bg-card: var(--color-card);
+            --text-main: var(--color-text);
+            --text-muted: var(--color-text-soft);
+            --accent-color: var(--color-sb-green);
+            --accent-bg: var(--color-sb-light);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-pill: 50px;
+            --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 28px -4px rgba(0, 0, 0, 0.10), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+            --shadow-gold: 0 8px 24px -4px rgba(203, 162, 88, 0.35);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-fast: 200ms;
+            --duration-normal: 380ms;
+            --duration-slow: 700ms;
+
+            /* Sizing — base 980px continuous, 1920px present/PDF */
+            --root-size: 16px;
+            --scale-factor: 1;
+            --slide-w: 980px;
+            --slide-h: 540px;
+        }
+
+        [data-theme="dark"] {
+            --color-sb-green: #008f5c;
+            --color-sb-accent: #00a86b;
+            --color-sb-house: #1E3932;
+            --color-sb-light: #1a3328;
+            --color-canvas: #151c18;
+            --color-ceramic: #2a322e;
+            --color-card: #1e2622;
+            --color-text: rgba(255, 255, 255, 0.90);
+            --color-text-soft: rgba(255, 255, 255, 0.55);
+            --color-text-inverse: #ffffff;
+            --color-gold: #cba258;
+            --color-gold-light: #2a2418;
+            --color-error: #e53935;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+            font-size: var(--root-size);
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Thai Looped', 'IBM Plex Serif', sans-serif;
+            background: var(--color-canvas);
+            color: var(--color-text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background var(--duration-slow) var(--ease-out-expo),
+                color var(--duration-slow) var(--ease-out-expo);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background-image: radial-gradient(circle at 20% 30%, rgba(0, 98, 65, 0.025) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(203, 162, 88, 0.025) 0%, transparent 50%);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            z-index: 100;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-sb-green), var(--color-sb-accent), var(--color-gold));
+            transition: width var(--duration-fast) var(--ease-out-expo);
+            box-shadow: 0 0 12px rgba(0, 117, 74, 0.4);
+        }
+
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 90;
+            background: transparent;
+            border-bottom: 1px solid rgba(30, 57, 50, 0.06);
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.85rem;
+            color: var(--color-sb-house);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: none;
+        }
+
+        [data-theme="dark"] .topnav {
+            background: transparent;
+            border-bottom-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .topnav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .topnav-brand-mark {
+            width: 24px;
+            height: 24px;
+            background: var(--color-sb-green);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 0 0 2px var(--color-gold);
+        }
+
+        .topnav-brand-mark::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            background: var(--color-gold);
+            border-radius: 50%;
+        }
+
+        .topnav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: inherit;
+            font-family: inherit;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all var(--duration-fast) var(--ease-out-expo);
+        }
+
+        .nav-btn:hover {
+            background: rgba(30, 57, 50, 0.08);
+            transform: translateY(-1px);
+        }
+
+        [data-theme="dark"] .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 80;
+            background: var(--color-card);
+            border: 1px solid var(--color-sb-light);
+            border-radius: var(--radius-pill);
+            padding: 0.5rem 1rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--color-sb-house);
+            font-weight: 500;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        [data-theme="dark"] .slide-counter {
+            background: var(--color-card);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: var(--color-sb-accent);
+        }
+
+        .slide-counter-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .slide-counter-sep {
+            opacity: 0.4;
+        }
+
+        .nav-arrows {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            z-index: 80;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--color-card);
+            border: 1px solid var(--color-sb-light);
+            color: var(--color-sb-house);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--duration-fast) var(--ease-out-expo);
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.05);
+            background: var(--color-sb-green);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .nav-arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide {
+            background: var(--color-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 3rem 2.75rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--color-sb-light);
+            position: relative;
+            width: var(--slide-w);
+            max-width: 100%;
+            height: auto;
+            min-height: min(var(--slide-h), calc(var(--slide-w) * 9 / 16));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-snap-align: start;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            filter: blur(8px);
+            transition: opacity var(--duration-slow) var(--ease-out-expo),
+                transform var(--duration-slow) var(--ease-out-expo),
+                filter var(--duration-slow) var(--ease-out-expo),
+                box-shadow var(--duration-slow) var(--ease-out-expo);
+        }
+
+        .slide.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        .slide:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--color-sb-green), var(--color-sb-accent));
+            opacity: 0.85;
+        }
+
+        .slide.cover {
+            background: linear-gradient(170deg, var(--color-sb-house) 0%, var(--color-sb-green) 60%, var(--color-canvas) 60.5%, var(--color-canvas) 100%);
+            color: var(--color-text-inverse);
+            text-align: center;
+            align-items: center;
+            border-color: transparent;
+        }
+
+        .slide.cover::before {
+            display: none;
+        }
+
+        .slide.cover::after {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            right: -120px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, var(--color-gold) 0%, transparent 65%);
+            opacity: 0.18;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .slide.trans {
+            background: var(--color-sb-house);
+            color: var(--color-text-inverse);
+            text-align: center;
+            align-items: center;
+            border-color: transparent;
+        }
+
+        .slide.cover .slide-content,
+        .slide.trans .slide-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.trans::before {
+            display: none;
+        }
+
+        .slide.trans::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, var(--color-sb-accent) 0%, transparent 60%);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .slide.cover .slide-title,
+        .slide.trans .slide-title {
+            color: var(--color-text-inverse);
+            border-left-color: var(--color-gold);
+        }
+
+        .slide.cover .slide-footer,
+        .slide.trans .slide-footer {
+            color: rgba(255, 255, 255, 0.7);
+            border-top-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .slide.cover h1,
+        .slide.trans h1 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--color-text-inverse);
+            margin-bottom: 0.5rem;
+        }
+
+        .slide.cover h2,
+        .slide.trans h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--color-gold);
+            margin-top: 0.5rem;
+        }
+
+        .slide.closing {
+            background: var(--color-sb-house);
+            color: var(--color-text-inverse);
+            text-align: center;
+            align-items: center;
+            border-color: transparent;
+        }
+
+        .slide.closing::before {
+            background: linear-gradient(180deg, var(--color-gold), var(--color-sb-accent));
+        }
+
+        .slide.closing h1 {
+            color: var(--color-text-inverse);
+        }
+
+        .slide.closing .slide-footer {
+            color: rgba(255, 255, 255, 0.5);
+            border-top-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .slide-header {
+            margin-bottom: 1.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--color-text);
+            border-left: 4px solid var(--color-sb-green);
+            padding-left: 16px;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+
+        .slide-subtitle {
+            font-size: 1.02rem;
+            color: var(--color-text-soft);
+            font-weight: 400;
+            padding-left: 20px;
+        }
+
+        .slide-content {
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-footer {
+            margin-top: 1.75rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--color-text-soft);
+            border-top: 1px solid var(--color-sb-light);
+            padding-top: 0.85rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            letter-spacing: 0.04em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .sub-card {
+            background: var(--color-canvas);
+            border: 1px solid var(--color-sb-light);
+            border-radius: var(--radius-md);
+            padding: 1.4rem 1.5rem;
+            position: relative;
+            transition: transform var(--duration-normal) var(--ease-out-expo),
+                box-shadow var(--duration-normal) var(--ease-out-expo),
+                border-color var(--duration-normal) var(--ease-out-expo);
+        }
+
+        [data-theme="dark"] .sub-card {
+            background: var(--color-ceramic);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .sub-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-sb-accent);
+        }
+
+        .sub-card h4 {
+            color: var(--color-sb-green);
+            font-weight: 600;
+            margin-bottom: 0.65rem;
+            font-size: 1.1rem;
+            font-family: 'IBM Plex Sans Thai Looped', 'IBM Plex Sans', sans-serif;
+        }
+
+        [data-theme="dark"] .sub-card h4 {
+            color: var(--color-sb-accent);
+        }
+
+        .sub-card p,
+        .sub-card li {
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        .sub-card .muted {
+            color: var(--color-text-soft);
+            font-size: 0.88rem;
+        }
+
+        ul,
+        ol {
+            padding-left: 1.3rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        li::marker {
+            color: var(--color-sb-accent);
+        }
+
+        strong {
+            color: var(--color-sb-green);
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] strong {
+            color: var(--color-sb-accent);
+        }
+
+        .callout {
+            border-left: 4px solid var(--color-sb-accent);
+            background: var(--color-sb-light);
+            border-radius: var(--radius-md);
+            padding: 1.1rem 1.4rem;
+            margin-top: 1rem;
+            color: var(--color-text);
+            transition: transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .callout:hover {
+            transform: translateX(2px);
+        }
+
+        .callout strong {
+            color: var(--color-sb-green);
+        }
+
+        .callout.bq-blue {
+            border-left-color: #1E40AF;
+            background: #EFF6FF;
+        }
+
+        .callout.bq-purple {
+            border-left-color: #7E22CE;
+            background: #FAF5FF;
+        }
+
+        .callout.bq-green {
+            border-left-color: #166534;
+            background: #F0FDF4;
+        }
+
+        .callout.bq-red {
+            border-left-color: #B91C1C;
+            background: #FEF2F2;
+        }
+
+        .callout.bq-black {
+            border-left-color: #1E293B;
+            background: #F8FAFC;
+        }
+
+        .callout.bq-gold {
+            border-left-color: var(--color-gold);
+            background: var(--color-gold-light);
+            box-shadow: var(--shadow-gold);
+        }
+
+        [data-theme="dark"] .callout.bq-blue {
+            background: #1a2436;
+        }
+
+        [data-theme="dark"] .callout.bq-purple {
+            background: #201a2e;
+        }
+
+        [data-theme="dark"] .callout.bq-green {
+            background: #1a2a20;
+        }
+
+        [data-theme="dark"] .callout.bq-red {
+            background: #2e1a1a;
+        }
+
+        [data-theme="dark"] .callout.bq-black {
+            background: #1a1e24;
+        }
+
+        [data-theme="dark"] .callout.bq-gold {
+            background: #2a2418;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.92rem;
+        }
+
+        thead th {
+            background: var(--color-sb-house);
+            color: var(--color-text-inverse);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: none;
+        }
+
+        thead th:first-child {
+            border-top-left-radius: var(--radius-md);
+        }
+
+        thead th:last-child {
+            border-top-right-radius: var(--radius-md);
+        }
+
+        tbody td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--color-sb-light);
+            color: var(--color-text);
+        }
+
+        [data-theme="dark"] tbody td {
+            border-bottom-color: rgba(255, 255, 255, 0.06);
+        }
+
+        tbody tr {
+            transition: background var(--duration-fast) var(--ease-out-expo);
+        }
+
+        tbody tr:hover {
+            background: var(--color-ceramic);
+        }
+
+        [data-theme="dark"] tbody tr:hover {
+            background: rgba(0, 143, 92, 0.08);
+        }
+
+        .slide.visible .sub-card,
+        .slide.visible .callout,
+        .slide.visible tbody tr {
+            animation: riseIn var(--duration-slow) var(--ease-out-expo) backwards;
+        }
+
+        .slide.visible .sub-card:nth-child(1) {
+            animation-delay: 80ms;
+        }
+
+        .slide.visible .sub-card:nth-child(2) {
+            animation-delay: 180ms;
+        }
+
+        .slide.visible .sub-card:nth-child(3) {
+            animation-delay: 280ms;
+        }
+
+        .slide.visible .sub-card:nth-child(4) {
+            animation-delay: 380ms;
+        }
+
+        .slide.visible .sub-card:nth-child(5) {
+            animation-delay: 480ms;
+        }
+
+        .slide.visible .sub-card:nth-child(6) {
+            animation-delay: 580ms;
+        }
+
+        .slide.visible tbody tr:nth-child(1) {
+            animation-delay: 100ms;
+        }
+
+        .slide.visible tbody tr:nth-child(2) {
+            animation-delay: 180ms;
+        }
+
+        .slide.visible tbody tr:nth-child(3) {
+            animation-delay: 260ms;
+        }
+
+        .slide.visible tbody tr:nth-child(4) {
+            animation-delay: 340ms;
+        }
+
+        .slide.visible tbody tr:nth-child(5) {
+            animation-delay: 420ms;
+        }
+
+        .slide.visible tbody tr:nth-child(6) {
+            animation-delay: 500ms;
+        }
+
+        .slide.visible tbody tr:nth-child(7) {
+            animation-delay: 580ms;
+        }
+
+        .slide.visible img {
+            animation: riseIn var(--duration-slow) var(--ease-out-expo) 300ms backwards;
+        }
+
+        .slide.visible svg[role="img"] {
+            animation: riseIn var(--duration-slow) var(--ease-out-expo) 350ms backwards;
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.visible .slide-title,
+        .slide.visible .slide-subtitle,
+        .slide.visible h1 {
+            animation: titleIn var(--duration-slow) var(--ease-out-expo) backwards;
+        }
+
+        .slide.visible .slide-subtitle {
+            animation-delay: 100ms;
+        }
+
+        @keyframes titleIn {
+            from {
+                opacity: 0;
+                transform: translateX(-12px);
+                filter: blur(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        .katex {
+            font-size: 1.02em;
+        }
+
+        @supports (view-transition-name: root) {
+            ::view-transition-old(root) {
+                animation: blurFadeOut 420ms var(--ease-out-expo) forwards;
+            }
+
+            ::view-transition-new(root) {
+                animation: blurFadeIn 520ms var(--ease-out-expo) forwards;
+            }
+
+            @keyframes blurFadeOut {
+                from {
+                    opacity: 1;
+                    filter: blur(0);
+                    transform: scale(1);
+                }
+
+                to {
+                    opacity: 0;
+                    filter: blur(14px);
+                    transform: scale(0.97);
+                }
+            }
+
+            @keyframes blurFadeIn {
+                from {
+                    opacity: 0;
+                    filter: blur(14px);
+                    transform: scale(1.03);
+                }
+
+                to {
+                    opacity: 1;
+                    filter: blur(0);
+                    transform: scale(1);
+                }
+            }
+        }
+
+        /* ====== Presenting mode (page per slide, fullscreen) ======
+           Slide keeps its natural 980px width (same as continuous mode).
+           Centered + letterboxed; only scale DOWN if viewport is smaller. */
+        body.presenting {
+            overflow: hidden;
+            --slide-w: min(100vw, 1920px);
+            --slide-h: min(100vh, 1080px);
+            --root-size: calc(16px * var(--slide-w) / 980);
+        }
+
+        body.presenting .container {
+            position: fixed;
+            inset: 0;
+            max-width: none;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #151c18;
+        }
+
+        body.presenting .slide {
+            position: relative;
+            flex: 0 0 var(--slide-w);
+            width: var(--slide-w);
+            max-width: var(--slide-w);
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--duration-slow) var(--ease-out-expo);
+            display: none;
+        }
+
+        body.presenting .slide.current {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        body.presenting .slide::before {
+            width: 6px;
+        }
+
+        body.presenting .topnav,
+        body.presenting .progress-bar,
+        body.presenting .nav-arrows,
+        body.presenting .slide-counter,
+        body.presenting .exit-present,
+        body.presenting .present-hint {
+            display: none !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
+
+            .slide {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        @media print {
+
+            .topnav,
+            .progress-bar,
+            .slide-counter,
+            .nav-arrows,
+            .exit-present,
+            .present-hint {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                overflow: visible;
+            }
+
+            .container {
+                padding: 0;
+                max-width: none;
+            }
+
+            .slide {
+                page-break-after: always;
+                break-after: page;
+                width: 100%;
+                aspect-ratio: 16/9;
+                margin: 0 auto;
+                border-radius: 0;
+                border: none;
+                padding: 2.5rem 3rem;
+                box-shadow: none;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                display: flex !important;
+                position: relative !important;
+                overflow: hidden;
+            }
+
+            .slide:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .slide::before {
+                width: 5px;
+            }
+
+            .slide-footer {
+                font-size: 0.7rem;
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+            }
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .container {
+                padding: 4rem 1rem 5rem;
+            }
+
+            .slide {
+                padding: 2rem 1.5rem;
+                min-height: auto;
+            }
+
+            .slide-title {
+                font-size: 1.4rem;
+            }
+
+            .slide.cover h1 {
+                font-size: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-arrows,
+            .slide-counter {
+                bottom: 1rem;
+            }
+
+            .nav-arrows {
+                left: 1rem;
+            }
+
+            .slide-counter {
+                right: 1rem;
+                font-size: 0.7rem;
+                padding: 0.4rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="topnav">
+        <div class="topnav-brand">
+            <span class="topnav-brand-mark"></span>
+            <span>01422111 · หลักสถิติ</span>
+        </div>
+        <div class="topnav-actions">
+            <button class="nav-btn" id="pdfBtn" aria-label="Download as PDF" title="Download PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="12" y1="18" x2="12" y2="12" />
+                    <polyline points="9 15 12 18 15 15" />
+                </svg>
+                <span>PDF</span>
+            </button>
+            <button class="nav-btn" id="presentBtn" aria-label="Enter present mode" title="Present (F)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                    <polyline points="15 18 21 12 15 6" transform="translate(-6 0)" />
+                </svg>
+                <span>Present</span>
+            </button>
+            <button class="nav-btn" id="themeToggle" aria-label="Toggle dark mode">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <path
+                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                </svg>
+                <span id="themeLabel">Light</span>
+            </button>
+        </div>
+    </nav>
+    <div class="nav-arrows">
+        <button class="nav-arrow" id="prevBtn" aria-label="Previous slide" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+            </svg>
+        </button>
+        <button class="nav-arrow" id="nextBtn" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+            </svg>
+        </button>
+    </div>
+    <div class="slide-counter">
+        <span class="slide-counter-num" id="curSlide">1</span>
+        <span class="slide-counter-sep">/</span>
+        <span class="slide-counter-num" id="totalSlides">43</span>
+    </div>
+    <div class="present-hint" id="presentHint" style="display:none">hidden</div>
+    <button class="exit-present" id="exitPresent" aria-label="Exit present mode (Esc)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" style="width:14px;height:14px;">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+        <span>ออก (Esc)</span>
+    </button>
+    <div class="container" id="deck">
+        <div class="slide cover">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.75rem; font-family: 'IBM Plex Sans'; letter-spacing: 0.05em;">
+                    01422111 หลักสถิติ</p>
+                <h1>บทที่ 1<br>ความหมายของสถิติ</h1>
+                <div class="meta-info" style="margin-top: auto; padding-bottom: 1.5rem; text-align: center;">
+                    <p style="font-weight: 500; color: var(--color-text);">อ.ดร. กิตติพงศ์ ทรัพย์วัฒนาชัย</p>
+                    <p style="font-size: 0.9rem; color: var(--color-text-soft); margin-top: 0.4rem;">Department of
+                        Digital Science and Technology &middot; 2026</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>1 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <h1 style="font-size: 2.5rem; color: var(--color-text-inverse); font-weight: 500;">ภาพรวมรายวิชา</h1>
+                <h2
+                    style="font-family: 'IBM Plex Sans'; color: rgba(255,255,255,0.7); font-weight: 400; margin-top: 0.25rem; font-size: 1.25rem;">
+                    Course Overview</h2>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>2 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">โครงสร้างรายวิชา</div>
+                <div class="slide-subtitle">วิชาหลักสถิติ (01422111)</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-green);">
+                        <h4>ภาคต้น (บทที่ 1-5)</h4>
+                        <p class="muted" style="margin-bottom: 1rem;">มุ่งเน้นความรู้พื้นฐานและทฤษฎีความน่าจะเป็น</p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>บทที่ 1</strong> ความหมายของสถิติ</li>
+                            <li><strong>บทที่ 2</strong> การวิเคราะห์ข้อมูลเบื้องต้น</li>
+                            <li><strong>บทที่ 3</strong> ตัวแปรสุ่มและการแจกแจง</li>
+                            <li><strong>บทที่ 4</strong> การแจกแจงของค่าสถิติ</li>
+                            <li><strong>บทที่ 5</strong> การอนุมานเชิงสถิติ</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-house);">
+                        <h4 style="color: var(--color-sb-house);">ภาคปลาย (บทที่ 6-10)</h4>
+                        <p class="muted" style="margin-bottom: 1rem;">มุ่งเน้นการวิเคราะห์เชิงอนุมานและการประยุกต์ใช้
+                        </p>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>บทที่ 6</strong> สถิติอนุมานสำหรับประชากรเดียว</li>
+                            <li><strong>บทที่ 7</strong> สถิติอนุมานสำหรับสองประชากร</li>
+                            <li><strong>บทที่ 8</strong> การวิเคราะห์ความแปรปรวน</li>
+                            <li><strong>บทที่ 9</strong> การทดสอบไคสแควร์</li>
+                            <li><strong>บทที่ 10</strong> สหสัมพันธ์และการถดถอย</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology</span>
+                <span>3 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สารบัญบทที่ 1</div>
+                <div class="slide-subtitle">หัวข้อการเรียนรู้ในสัปดาห์นี้</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2"
+                    style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.5rem 1.5rem;">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.1</strong>
+                            กำเนิดและพัฒนาการของสถิติ</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.2</strong>
+                            ทำไมต้องเรียนสถิติ?</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.3</strong>
+                            นิยามของสถิติ</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.4</strong>
+                            ประเภทของสถิติ</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.5</strong>
+                            ข้อมูลและประเภทของข้อมูล</li>
+                    </ul>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.6</strong>
+                            ประชากรและตัวอย่าง</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.7</strong>
+                            พารามิเตอร์และค่าสถิติ</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.8</strong>
+                            เครื่องหมายผลรวม</li>
+                        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">1.9</strong>
+                            ปัจจุบันสถิติไปทางไหน?</li>
+                    </ul>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li
+                            style="padding: 0.4rem 0; color: var(--color-gold); font-weight: 600; font-size: 0.92rem; border-bottom: 1px solid var(--color-sb-light);">
+                            ★ เนื้อหาเสริม (Supplementary)</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S1</strong>
+                            ระดับการวัดตัวแปร</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S2</strong>
+                            แหล่งที่มาของข้อมูล</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S3</strong>
+                            วิธีเลือกตัวอย่าง</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S4</strong> พรรณนา
+                            vs อนุมาน</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S5</strong>
+                            ตัวอย่างการคำนวณ</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S6</strong> จริยธรรม
+                            + ความเข้าใจผิด + ศัพท์</li>
+                        <li
+                            style="padding: 0.3rem 0; border-bottom: 1px solid var(--color-sb-light); font-size: 0.92rem;">
+                            <strong style="color: var(--color-gold); font-family: 'IBM Plex Sans';">S7</strong> แผนภาพ +
+                            Nightingale + Interactive</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>4 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.1</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.1
+                    กำเนิดและพัฒนาการของสถิติ</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>5 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ที่มาของคำว่า "Statistics"</div>
+                <div class="slide-subtitle">รากศัพท์และความหมายในอดีต</div>
+            </div>
+            <div class="slide-content">
+                <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    คำว่า <strong style="color: var(--color-sb-green);">"statistics"</strong>
+                    มีต้นกำเนิดมาจากภาษาเยอรมันคำว่า <strong style="font-family: 'IBM Plex Sans';">"Statistik"</strong>
+                    ซึ่งมีรากศัพท์แผลงมาจากภาษาละตินคือ <strong style="font-family: 'IBM Plex Sans';">"status"</strong>
+                    ซึ่งแปลว่า <strong style="color: var(--color-sb-green);">"รัฐ"</strong> หรือ <strong
+                        style="color: var(--color-sb-green);">"สภาพ"</strong>
+                </p>
+                <div class="callout bq-gold" style="margin-top: 1.5rem;">
+                    <h5 style="font-weight: 500; margin-bottom: 0.5rem; color: var(--color-text);">ความหมายดั้งเดิม:
+                        "ข้อมูลเกี่ยวกับรัฐ"</h5>
+                    <p class="muted">
+                        ในยุคเริ่มต้น
+                        สถิติหมายถึงการจัดเก็บรวบรวมข้อมูลดิบที่มีความจำเป็นต่อการบริหารจัดการราชการแผ่นดินอันได้แก่
+                    </p>
+                    <ul
+                        style="margin-top: 0.75rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; list-style-type: none; padding-left: 0;">
+                        <li style="padding-left: 1.25rem; position: relative;"><span
+                                style="position: absolute; left: 0; color: var(--color-sb-accent);">•</span>
+                            จำนวนประชากร</li>
+                        <li style="padding-left: 1.25rem; position: relative;"><span
+                                style="position: absolute; left: 0; color: var(--color-sb-accent);">•</span>
+                            ทรัพยากรต่าง ๆ</li>
+                        <li style="padding-left: 1.25rem; position: relative;"><span
+                                style="position: absolute; left: 0; color: var(--color-sb-accent);">•</span>
+                            การจัดเก็บภาษี</li>
+                        <li style="padding-left: 1.25rem; position: relative;"><span
+                                style="position: absolute; left: 0; color: var(--color-sb-accent);">•</span>
+                            กำลังพลทางทหาร</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>6 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ยุคโบราณ: การเก็บข้อมูลของรัฐ</div>
+                <div class="slide-subtitle">การเริ่มต้นเก็บบันทึกข้อมูลเชิงบริหาร</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+                    <div class="sub-card" style="background-color: var(--color-card);">
+                        <h4 style="font-family: 'IBM Plex Sans';">อียิปต์โบราณ</h4>
+                        <p class="muted" style="margin-bottom: 0.5rem;">(≈ 3,000 ปีก่อนคริสตกาล)</p>
+                        <p style="font-size: 0.95rem;">
+                            มีการจัดทำ<strong>สำมะโนประชากร</strong>เพื่อใช้วางแผนการจัดเก็บภาษี
+                            และการเกณฑ์แรงงานเพื่อก่อสร้างศาสนสถาน</p>
+                    </div>
+                    <div class="sub-card" style="background-color: var(--color-card);">
+                        <h4>จีนโบราณ</h4>
+                        <p class="muted" style="margin-bottom: 0.5rem;">(ยุคราชวงศ์ฮั่น)</p>
+                        <p style="font-size: 0.95rem;">
+                            เริ่มต้นระเบียบการ<strong>สำรวจสำมะโนประชากร</strong>อย่างเป็นระบบ
+                            เพื่อประโยชน์ในการปกครองและการเกณฑ์ทหารเข้ากองทัพ</p>
+                    </div>
+                    <div class="sub-card" style="background-color: var(--color-card);">
+                        <h4>โรมันโบราณ</h4>
+                        <p class="muted" style="margin-bottom: 0.5rem;">(จักรวรรดิโรมัน)</p>
+                        <p style="font-size: 0.95rem;">ริเริ่มระบบ <strong>การสำมะโนประชากร</strong> ที่มีมาตรฐาน
+                            เพื่อใช้ประเมินการจัดเก็บภาษีและกำหนดสิทธิพลเมืองอย่างเป็นรูปธรรม</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>7 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ยุคกลางถึงยุคฟื้นฟู</div>
+                <div class="slide-subtitle">จุดเปลี่ยนสำคัญ – จาก "การนับ" สู่ "การวิเคราะห์"</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600;"><span
+                                style="font-family: 'IBM Plex Sans';">John Graunt</span> (ค.ศ. 1662)</h4>
+                        <div style="display: flex; gap: 0.75rem; align-items: flex-start; margin: 0.4rem 0 0.6rem 0;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Graunt_Observations.jpg"
+                                alt="Title page of Observations on the Bills of Mortality (1662)"
+                                style="width: 110px; height: auto; border-radius: 4px; border: 1px solid var(--color-border, #ccc); flex-shrink: 0;">
+                            <p style="font-size: 0.9rem; margin: 0; line-height: 1.45;">วิเคราะห์ข้อมูล <span
+                                    style="font-family: 'IBM Plex Sans'; font-style: italic;">Bills of
+                                    Mortality</span><br>(บันทึกการเสียชีวิตลอนดอน)</p>
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--color-sb-green); font-weight: 500;">ค้นพบ
+                            "รูปแบบหรือแพทเทิร์น" ซ่อนอยู่ในข้อมูล</p>
+                        <p class="muted" style="margin-top: 0.5rem;">นับเป็นจุดกำเนิดพื้นฐานของสถิติสมัยใหม่</p>
+                    </div>
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-text-main, var(--color-text));">
+                        <h4 style="color: var(--color-text); font-weight: 600;"><span
+                                style="font-family: 'IBM Plex Sans';">Edmond Halley</span> (ค.ศ. 1693)</h4>
+                        <div style="display: flex; gap: 0.6rem; align-items: center; margin: 0.3rem 0 0.5rem 0;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Edmund_Halley.gif"
+                                alt="Portrait of Edmond Halley (c. 1690, by Thomas Murray)"
+                                style="width: 64px; height: auto; border-radius: 4px; flex-shrink: 0; border: 1px solid var(--color-border, #ccc);">
+                            <p style="font-size: 0.9rem; margin: 0; line-height: 1.4;">นำไอเดีย Graunt สร้าง
+                                <strong>ตารางชีวิต (<span style="font-family: 'IBM Plex Sans';">life
+                                        table</span>)</strong> แรกของโลก<br>จากข้อมูลเมือง <span
+                                    style="font-family: 'IBM Plex Sans'; font-style: italic;">Breslau</span></p>
+                        </div>
+                        <p style="font-size: 0.95rem; color: var(--color-sb-green); font-weight: 500;">
+                            นำข้อมูลมาคำนวณเบี้ยประกันชีวิต</p>
+                        <p class="muted" style="margin-top: 0.3rem;">ตัวอย่างแรกของการประยุกต์ใช้สถิติในเชิงธุรกิจ</p>
+                        <svg viewBox="0 0 320 150"
+                            style="width: 100%; max-width: 320px; height: auto; display: block; margin-top: 0.5rem; background: var(--color-card-inner, #fafafa); border-radius: 4px;"
+                            role="img" aria-label="Bar chart of Halley's Breslau life table (1693)">
+                            <style>
+                                .bt-title {
+                                    font: 600 10px 'IBM Plex Sans', sans-serif;
+                                    fill: var(--color-text);
+                                }
+
+                                .bt-axis {
+                                    font: 9px 'IBM Plex Sans', sans-serif;
+                                    fill: var(--color-muted, #666);
+                                }
+
+                                .bt-bar {
+                                    fill: var(--color-sb-green);
+                                }
+
+                                .bt-bar:hover {
+                                    fill: #cba75f;
+                                }
+                            </style>
+                            <text x="160" y="13" text-anchor="middle" class="bt-title">Breslau Life Table (Halley,
+                                1693)</text>
+                            <line x1="24" y1="120" x2="306" y2="120" stroke="#999" stroke-width="0.6" />
+                            <line x1="24" y1="22" x2="24" y2="120" stroke="#999" stroke-width="0.6" />
+                            <text x="6" y="24" class="bt-axis">1000</text>
+                            <text x="6" y="73" class="bt-axis">500</text>
+                            <text x="6" y="122" class="bt-axis">0</text>
+                            <g>
+                                <rect x="36" y="20" width="32" height="100" class="bt-bar">
+                                    <title>อายุ 1: 1000 คน</title>
+                                </rect>
+                                <rect x="74" y="60" width="32" height="60" class="bt-bar">
+                                    <title>อายุ 14: 634 คน</title>
+                                </rect>
+                                <rect x="112" y="67" width="32" height="53" class="bt-bar">
+                                    <title>อายุ 28: 546 คน</title>
+                                </rect>
+                                <rect x="150" y="76" width="32" height="44" class="bt-bar">
+                                    <title>อายุ 42: 427 คน</title>
+                                </rect>
+                                <rect x="188" y="92" width="32" height="28" class="bt-bar">
+                                    <title>อายุ 56: 282 คน</title>
+                                </rect>
+                                <rect x="226" y="106" width="32" height="14" class="bt-bar">
+                                    <title>อายุ 70: 142 คน</title>
+                                </rect>
+                                <rect x="264" y="118" width="32" height="2" class="bt-bar">
+                                    <title>อายุ 84: 20 คน</title>
+                                </rect>
+                            </g>
+                            <g class="bt-axis" text-anchor="middle">
+                                <text x="52" y="133">1</text>
+                                <text x="90" y="133">14</text>
+                                <text x="128" y="133">28</text>
+                                <text x="166" y="133">42</text>
+                                <text x="204" y="133">56</text>
+                                <text x="242" y="133">70</text>
+                                <text x="280" y="133">84</text>
+                                <text x="160" y="146">อายุ (ปี) — out of 1000 newborns</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>8 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ยุคสถิติสมัยใหม่ (คริสต์ศตวรรษที่ 19–20)</div>
+                <div class="slide-subtitle">การผสานสถิติศาสตร์เข้ากับทฤษฎีความน่าจะเป็นและคณิตศาสตร์</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); margin-bottom: 1rem; border: 1px solid var(--color-sb-light);">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">นักสถิติ</th>
+                                <th>ผลงานและรากฐานสำคัญ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong style="font-family: 'IBM Plex Sans';">Carl Friedrich Gauss</strong></td>
+                                <td>วิธีกำลังสองน้อยที่สุด (<span style="font-family: 'IBM Plex Sans';">Least Squares
+                                        Method</span>) และทฤษฎีการแจกแจงปกติ (<span
+                                        style="font-family: 'IBM Plex Sans';">Normal Distribution</span>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-family: 'IBM Plex Sans';">Francis Galton</strong></td>
+                                <td>การคิดค้นและพัฒนาทฤษฎีสหสัมพันธ์ (<span
+                                        style="font-family: 'IBM Plex Sans';">Correlation</span>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-family: 'IBM Plex Sans';">Karl Pearson</strong></td>
+                                <td>การคิดค้นสถิติทดสอบไคสแควร์ (<span style="font-family: 'IBM Plex Sans';">Chi-Square
+                                        Test</span>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-family: 'IBM Plex Sans';">Ronald A. Fisher</strong></td>
+                                <td>การวิเคราะห์ความแปรปรวน (<span style="font-family: 'IBM Plex Sans';">ANOVA</span>),
+                                    ทฤษฎีการสุ่มตัวอย่าง และระเบียบการออกแบบการทดลอง</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="callout bq-gold" style="margin-top: 0.5rem;">
+                    <span style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-sb-green);">Sir
+                        Ronald A. Fisher</span> ได้รับการยกย่องให้เป็น <strong>"บิดาแห่งสถิติสมัยใหม่"</strong>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>9 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สถิติในปัจจุบัน</div>
+                <div class="slide-subtitle">หัวใจหลักในการขับเคลื่อนเทคโนโลยีและงานวิจัยข้ามสายงาน</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;"><span
+                                style="font-family: 'IBM Plex Sans';">Data Science / ML</span></h5>
+                        <p class="muted">การวิเคราะห์ข้อมูลขนาดใหญ่ผ่านโมเดล <span
+                                style="font-family: 'IBM Plex Sans';">Regression, Classification, Clustering</span></p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;">
+                            วิทยาศาสตร์การแพทย์</h5>
+                        <p class="muted">ระเบียบการวิเคราะห์ผลการทดลองทางคลินิก (การทดสอบยา) และระบาดวิทยา</p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;">การบริหารธุรกิจ
+                        </h5>
+                        <p class="muted">การทำ <span style="font-family: 'IBM Plex Sans';">A/B Testing</span>
+                            เพื่อพัฒนาผลิตภัณฑ์ และการพยากรณ์ยอดขายเชิงปริมาณ</p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;">วิศวกรรมศาสตร์
+                        </h5>
+                        <p class="muted">กระบวนการควบคุมคุณภาพการผลิต (<span
+                                style="font-family: 'IBM Plex Sans';">Quality Control</span>) และการประเมิน <span
+                                style="font-family: 'IBM Plex Sans';">Reliability</span></p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;">สังคมศาสตร์</h5>
+                        <p class="muted">การออกแบบตัวอย่างระเบียบวิธีวิจัย และการวิเคราะห์ผลสำรวจความคิดเห็น (โพลล์)</p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-canvas);">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem;">
+                            วิทยาศาสตร์สิ่งแวดล้อม</h5>
+                        <p class="muted">การวิเคราะห์แนวโน้มและจัดทำแบบจำลองสภาพภูมิอากาศเชิงสถิติ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+            </div>
+            <div class="callout bq-blue" style="margin-top: 1rem;">
+                <strong>ดูเพิ่มเติม:</strong> Nightingale Rose Diagram (สไลด์ 55) — การสื่อสารสถิติด้วยภาพ
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>10 / 57</span>
+            </div>
+        </div>
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.2</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.2
+                    ทำไมต้องเรียนสถิติ?</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>11 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">คำถามที่สถิติช่วยตอบ</div>
+                <div class="slide-subtitle">ตัวอย่างสถานการณ์และปัญหาในชีวิตจริงและงานวิจัย</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                        <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green); font-size: 1.15rem;">1</span>
+                        <p style="font-size: 1rem;">นักศึกษาเกษตรฯ จ่ายค่าเช่าหอเฉลี่ยเท่าไร?</p>
+                    </div>
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                        <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green); font-size: 1.15rem;">2</span>
+                        <p style="font-size: 1rem;">ยาใหม่มีประสิทธิภาพมากกว่ายาเดิมหรือไม่?</p>
+                    </div>
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                        <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green); font-size: 1.15rem;">3</span>
+                        <p style="font-size: 1rem;">อ่านหนังสือมาก &rarr; คะแนนสอบสูงกว่าจริงหรือ?</p>
+                    </div>
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                        <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green); font-size: 1.15rem;">4</span>
+                        <p style="font-size: 1rem;">โพลล์ 1,000 คนบอกผลเลือกตั้งระดับประเทศได้ไหม?</p>
+                    </div>
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 1rem;">
+                        <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green); font-size: 1.15rem;">5</span>
+                        <p style="font-size: 1rem;">เครื่องจักรใหม่บรรจุขวดแม่นยำกว่าเครื่องเก่าหรือไม่?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>12 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ลักษณะร่วมของคำถามเหล่านี้</div>
+                <div class="slide-subtitle">ข้อจำกัดและความท้าทายในการหาคำตอบ</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2"
+                    style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.25rem;">
+                        <h4 style="font-size: 1.1rem; color: #B91C1C;">1. ไม่สามารถเก็บข้อมูลทั้งหมดได้</h4>
+                        <p class="muted" style="margin-top: 0.25rem;">เช่น
+                            การจะไปตามสัมภาษณ์และสอบถามข้อมูลจากนักศึกษาเกษตรฯ ทุกคน คงทำไม่ไหวในทางปฏิบัติ</p>
+                    </div>
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.25rem;">
+                        <h4 style="font-size: 1.1rem; color: #D97706;">2. มีความไม่แน่นอนเกิดขึ้น</h4>
+                        <p class="muted" style="margin-top: 0.25rem;">นักศึกษาแต่ละคนจ่ายค่าเช่าหอต่างกัน
+                            รวมถึงผลลัพธ์จากการทดลองย่อมมีความผันผวนเป็นปกติ</p>
+                    </div>
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.25rem;">
+                        <h4 style="font-size: 1.1rem; color: var(--color-sb-green);">3. ต้องการสรุปจากภาพย่อย</h4>
+                        <p class="muted" style="margin-top: 0.25rem;">
+                            มุ่งเน้นกระบวนการสรุปอ้างอิงและขยายผลจากข้อมูลส่วนแคบหรือ "ตัวอย่าง" ไปยังภาพรวมหรือ
+                            "ประชากร"</p>
+                    </div>
+                </div>
+                <div class="callout bq-gold" style="text-align: center;">
+                    <p style="font-size: 1.05rem; font-weight: 500;">
+                        สถิติ = เครื่องมือตัดสินใจ ภายใต้ <span
+                            style="color: #B91C1C; font-weight: 600;">ความไม่แน่นอน</span> อย่างเป็นระบบ
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>13 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.3</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.3 นิยามของสถิติ
+                </h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>14 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ความหมาย 2 อย่าง</div>
+                <div class="slide-subtitle">การแยกแยะระหว่างตัวข้อมูลดิบและองค์ความรู้ทางศาสตร์</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card" style="background-color: var(--color-card); border-top: 4px solid #475569;">
+                        <h4 style="color: var(--color-text); font-weight: 600;">1. สถิติ = ตัวเลขหรือข้อมูล</h4>
+                        <p class="muted" style="margin-bottom: 0.75rem;">หมายถึง ตัวเลข ข้อเท็จจริง
+                            หรือดัชนีที่สรุปได้จากการประมวลผลข้อมูล</p>
+                        <ul style="font-size: 0.95rem; padding-left: 1.25rem;">
+                            <li>จำนวนผู้ประสบอุบัติเหตุทางถนน</li>
+                            <li>ปริมาณน้ำฝนสะสมรายปี</li>
+                            <li>ดัชนีราคาสินค้าผู้บริโภค</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600;">2. สถิติศาสตร์ = วิชาหรือศาสตร์</h4>
+                        <p class="muted" style="margin-bottom: 0.5rem;">หมายถึง
+                            ระเบียบวิธีและกระบวนการจัดการข้อมูลอย่างเป็นวิทยาศาสตร์ ซึ่งประกอบด้วย 5 ขั้นตอนหลัก:</p>
+                        <ol
+                            style="font-size: 0.95rem; padding-left: 1.25rem; font-weight: 500; color: var(--color-sb-green);">
+                            <li><span style="color: var(--color-text); font-weight: 400;">วางแผน (Planning)</span></li>
+                            <li><span style="color: var(--color-text); font-weight: 400;">เก็บรวบรวม (Collection)</span>
+                            </li>
+                            <li><span style="color: var(--color-text); font-weight: 400;">นำเสนอ (Presentation)</span>
+                            </li>
+                            <li><span style="color: var(--color-text); font-weight: 400;">วิเคราะห์ (Analysis)</span>
+                            </li>
+                            <li><span style="color: var(--color-text); font-weight: 400;">แปลความหมายของข้อมูล
+                                    (Interpretation)</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>15 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.4</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.4 ประเภทของสถิติ
+                </h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>16 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สถิติพรรณนา (Descriptive Statistics)</div>
+                <div class="slide-subtitle">การสรุปและอธิบายลักษณะทางกายภาพของข้อมูลที่มีอยู่</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card" style="background-color: var(--color-card);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">
+                            ขอบเขตและคำจำกัดความ</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+                            มุ่งเน้นการ<strong>อธิบายข้อมูลเฉพาะกลุ่มที่ศึกษาเท่านั้น</strong></p>
+                        <p style="font-size: 0.95rem; color: #B91C1C; font-weight: 500;">
+                            ไม่สามารถนำผลสรุปไปอ้างอิงหรือขยายผลสู่กลุ่มอื่นได้</p>
+                    </div>
+                    <div class="sub-card" style="background-color: var(--color-card);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">
+                            เครื่องมือและระเบียบวิธี</h4>
+                        <ul style="font-size: 0.95rem; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.25rem;"><strong>การนำเสนอข้อมูล:</strong> จัดทำในรูปแบบตาราง
+                                กราฟ หรือรูปภาพ</li>
+                            <li style="margin-bottom: 0.25rem;"><strong>ค่าวัดแนวโน้มเข้าสู่ส่วนกลาง:</strong>
+                                ค่าเฉลี่ย, มัธยฐาน, ฐานนิยม</li>
+                            <li style="margin-bottom: 0.25rem;"><strong>ค่าวัดการกระจาย:</strong> พิสัย,
+                                ส่วนเบี่ยงเบนมาตรฐาน, ความแปรปรวน</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="callout" style="background-color: var(--color-ceramic); border-left-color: #cbd5e1;">
+                    <p style="font-size: 0.95rem;">
+                        <strong>ตัวอย่างการประยุกต์:</strong>
+                        การคำนวณและรายงานค่าเช่าหอพักเฉลี่ยของนิสิตเฉพาะกลุ่มจากชุดข้อมูลที่เก็บรวบรวมมาได้จริง
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>17 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สถิติอนุมาน (Inferential Statistics)</div>
+                <div class="slide-subtitle">การขยายผลและสรุปอ้างอิงจากกลุ่มตัวอย่างไปสู่ประชากรเป้าหมาย</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">
+                            กระบวนการและขอบเขต</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+                            มุ่งเน้นการ<strong>อ้างอิงข้อมูลจากกลุ่มตัวอย่างขยายผลไปยังประชากร</strong>ได้</p>
+                        <ul class="muted" style="font-size: 0.95rem; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.25rem;">เก็บรวบรวมข้อมูลเพียงบางส่วนจากประชากรทั้งหมดเรียกว่า
+                                "ตัวอย่าง"</li>
+                            <li style="margin-bottom: 0.25rem;">ใช้กลุ่มตัวอย่างนี้ทำหน้าที่เป็นตัวแทนหลักในการให้ข้อมูล
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">กลไกการทดสอบ</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+                            นำข้อมูลดิบที่ได้มาดำเนินการวิเคราะห์ทางคณิตศาสตร์อย่างเป็นระบบ<strong>โดยอาศัยทฤษฎีความน่าจะเป็น</strong>
+                        </p>
+                        <p style="font-size: 0.95rem; color: var(--color-sb-green); font-weight: 500;">
+                            เพื่อใช้ประมาณค่าพารามิเตอร์หรือทดสอบสมมติฐาน</p>
+                    </div>
+                </div>
+                <div class="callout">
+                    <p style="font-size: 0.95rem;">
+                        <strong>ตัวอย่างการประยุกต์:</strong> การสุ่มสำรวจและสอบถามนิสิตจำนวน 200 คน
+                        นำมาวิเคราะห์เพื่อสรุปภาพรวมของค่าเช่าหอพักของนิสิตทั้งมหาวิทยาลัย
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>18 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">เปรียบเทียบ: Descriptive vs. Inferential</div>
+                <div class="slide-subtitle">การสรุปข้อแตกต่างเชิงโครงสร้างและเครื่องมือที่ใช้วิเคราะห์</div>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); margin-bottom: 1rem; border: 1px solid #cbd5e1;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">ลักษณะ</th>
+                                <th style="width: 42.5%;">สถิติพรรณนา (Descriptive)</th>
+                                <th style="width: 42.5%;">สถิติอนุมาน (Inferential)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>วัตถุประสงค์</strong></td>
+                                <td>เพื่ออธิบายลักษณะข้อมูลทั้งหมดที่มีอยู่ในมือ</td>
+                                <td>เพื่อสรุปและอ้างอิงขยายผลไปสู่ระดับประชากร</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ขอบเขตผลสรุป</strong></td>
+                                <td>จำกัดอยู่เฉพาะภายในกลุ่มข้อมูลที่นำมาศึกษาเท่านั้น</td>
+                                <td>สามารถขยายขอบเขตผลวิเคราะห์ไปสู่ภาพรวมประชากร</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ตัวอย่างบริบท</strong></td>
+                                <td>คำนวณค่าเช่าหอเฉลี่ยของนิสิตเจาะจงเฉพาะกลุ่ม 200 คน</td>
+                                <td>สุ่มนิสิต 200 คน เพื่ออนุมานค่าเช่าหอรวมทั้งมหาวิทยาลัย</td>
+                            </tr>
+                            <tr>
+                                <td><strong>เครื่องมือวิเคราะห์</strong></td>
+                                <td>การจัดทำกราฟ, แผนภูมิรูปภาพ, ตารางแจกแจง, ค่าสถิติพื้นฐาน</td>
+                                <td>กระบวนการประมาณค่าพารามิเตอร์, การทดสอบสมมติฐาน</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="callout"
+                    style="text-align: center; font-weight: 500; font-size: 1rem; margin-top: 0.5rem; background-color: var(--color-ceramic); border-left-color: #475569;">
+                    พรรณนา = <span style="color: var(--color-sb-green); font-weight: 600;">บรรยายสิ่งที่เห็น</span>
+                    &nbsp;|&nbsp; อนุมาน = <span
+                        style="color: #0284C7; font-weight: 600;">สรุปอ้างอิงจากตัวอย่างไปประชากร</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>19 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.5</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.5
+                    ข้อมูลและประเภทของข้อมูล</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>20 / 57</span>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ประเภทของข้อมูล</div>
+                <div class="slide-subtitle">เกณฑ์การจำแนกตามแหล่งที่มาและตามลักษณะการแสดงผล</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-text);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.75rem;">1.
+                            แบ่งตามแหล่งที่มา</h4>
+                        <div style="margin-bottom: 0.75rem;">
+                            <span
+                                style="font-size: 0.9rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block;">ปฐมภูมิ
+                                (Primary Data)</span>
+                            <p class="muted" style="line-height: 1.5;">
+                                เป็นข้อมูลที่ผู้ใช้ทำการ<strong>ลงมือรวบรวมเองโดยตรง</strong> ผ่านกระบวนการสำรวจ
+                                การทดลอง หรือการสังเกตการณ์</p>
+                        </div>
+                        <div>
+                            <span
+                                style="font-size: 0.9rem; font-weight: 600; color: #475569; font-family: 'IBM Plex Sans'; display: block;">ทุติยภูมิ
+                                (Secondary Data)</span>
+                            <p class="muted" style="line-height: 1.5;">เป็นข้อมูลที่<strong>จัดเก็บมาจากผู้อื่น</strong>
+                                หรือหน่วยงานอื่นได้ประมวลผลไว้แล้ว เช่น รายงานประจำปี งานวิจัย หรือฐานข้อมูลภาครัฐ</p>
+                        </div>
+                    </div>
+
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.75rem;">2.
+                            แบ่งตามลักษณะข้อมูล</h4>
+                        <div style="margin-bottom: 0.75rem;">
+                            <span
+                                style="font-size: 0.9rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block;">เชิงปริมาณ
+                                (Quantitative Data)</span>
+                            <p class="muted" style="line-height: 1.5;">
+                                เป็นข้อมูลที่แสดงผลเป็นตัวเลขเชิงคำนวณทางคณิตศาสตร์ได้โดยตรง เช่น <strong>อายุ, น้ำหนัก,
+                                    รายได้ประชากร</strong></p>
+                        </div>
+                        <div>
+                            <span
+                                style="font-size: 0.9rem; font-weight: 600; color: #B91C1C; font-family: 'IBM Plex Sans'; display: block;">เชิงคุณภาพ
+                                (Qualitative Data)</span>
+                            <p class="muted" style="line-height: 1.5;">เป็นข้อมูลที่ใช้บ่งบอกคุณลักษณะ คุณสมบัติ
+                                หรือหมวดหมู่ ซึ่งไม่สามารถคำนวณทางคณิตศาสตร์ได้โดยตรง เช่น <strong>เพศ, อาชีพ,
+                                    ความคิดเห็น</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="callout bq-blue" style="margin-top: 1rem;">
+                <strong>ดูเพิ่มเติม:</strong> ระดับการวัด (สไลด์ 45) · แหล่งที่มาของข้อมูล (46) · แผนภูมิต้นไม้ตัวแปร
+                (54)
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>21 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ข้อมูลเชิงปริมาณ และ สเกลการวัด</div>
+                <div class="slide-subtitle">การแบ่งชนิดย่อยของข้อมูลตัวเลขและคุณสมบัติของมาตรวัดสถิติ</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="gap: 1rem; margin-bottom: 1.25rem;">
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.95rem;">
+                        <strong>ข้อมูลไม่ต่อเนื่อง (Discrete Data):</strong> ข้อมูลที่ได้จากการ<strong>นับ</strong>
+                        มีค่าเป็นจำนวนเต็มที่ไม่สามารถแบ่งแยกย่อยเป็นทศนิยมได้ เช่น จำนวนบุตร, จำนวนนิสิตในห้องเรียน
+                    </div>
+                    <div
+                        style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.95rem;">
+                        <strong>ข้อมูลต่อเนื่อง (Continuous Data):</strong> ข้อมูลที่ได้จากการ<strong>วัด</strong>
+                        สามารถมีค่าเป็นทศนิยมหรือค่าใด ๆ ในช่วงที่กำหนดได้ละเอียด เช่น น้ำหนัก, ส่วนสูง, อุณหภูมิ
+                    </div>
+                </div>
+
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); margin-bottom: 0; border: 1px solid #cbd5e1;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>สเกลการวัด (Measurement Scales)</th>
+                                <th style="text-align: center; width: 15%;">มีลำดับ?</th>
+                                <th style="text-align: center; width: 15%;">ระยะห่างเท่ากัน?</th>
+                                <th style="text-align: center; width: 15%;">ศูนย์แท้จริง?</th>
+                                <th style="width: 25%;">ตัวอย่างข้อมูล</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>นามกำหนด (Nominal Scale)</strong></td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td>เพศ, สัญชาติ, หมู่เลือด</td>
+                            </tr>
+                            <tr>
+                                <td><strong>อันดับ (Ordinal Scale)</strong></td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td>ระดับความพึงพอใจ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>อันตรภาค (Interval Scale)</strong></td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td style="text-align: center; color: var(--color-text-soft); font-weight: 500;">—</td>
+                                <td>อุณหภูมิ (&deg;C)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>อัตราส่วน (Ratio Scale)</strong></td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td style="text-align: center; color: var(--color-sb-green); font-weight: 600;">✓</td>
+                                <td>น้ำหนัก, รายได้, อายุ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>22 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.6</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.6
+                    ประชากรและตัวอย่าง</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>23 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ประชากร vs ตัวอย่าง</div>
+                <div class="slide-subtitle">การจำแนกหน่วยในการศึกษาและวิธีการจัดเก็บข้อมูลเชิงสถิติ</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-text);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">ประชากร
+                            (Population)</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0.5rem;">หมายถึง
+                            หน่วย<strong>ทุกหน่วย</strong>ที่สนใจศึกษา</p>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.75rem;"><span
+                                style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green);">$N$</span>
+                            = ขนาดประชากร</p>
+                        <div
+                            style="background-color: var(--color-canvas); border: 1px solid var(--color-sb-light); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.9rem; color: var(--color-text-soft);">
+                            <strong>สำมะโน (Census):</strong> คือการเก็บข้อมูลจากทุกหน่วยในประชากร
+                            ซึ่งมีข้อจำกัดคือทำให้<span style="color: #B91C1C; font-weight: 500;">เสียเวลา
+                                และค่าใช้จ่ายสูง</span>
+                        </div>
+                    </div>
+
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 0.5rem;">ตัวอย่าง (Sample)
+                        </h4>
+                        <p style="font-size: 1rem; margin-bottom: 0.5rem;">หมายถึง
+                            <strong>บางส่วนของประชากร</strong>ที่ถูกนำมาเลือกใช้เป็นตัวแทน</p>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.75rem;"><span
+                                style="font-family: 'IBM Plex Sans'; font-weight: 600; color: var(--color-sb-green);">$n$</span>
+                            = ขนาดตัวอย่าง</p>
+                        <div
+                            style="background-color: var(--color-sb-light); border: 1px solid #bbf7d0; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.9rem; color: var(--color-text);">
+                            <strong>สุ่มตัวอย่าง (Sampling):</strong> มีข้อดีคือช่วยให้<span
+                                style="color: var(--color-sb-green); font-weight: 600;">ประหยัด และรวดเร็ว</span>
+                            จากนั้นจึงเลือกใช้ระเบียบวิธีทางสถิติอนุมานเพื่อสรุปผลวิเคราะห์
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="callout bq-blue" style="margin-top: 1rem;">
+                <strong>ดูเพิ่มเติม:</strong> วิธีเลือกตัวอย่าง (สไลด์ 47) — Random / Stratified / Cluster / Convenience
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>24 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ประชากรเป้าหมาย vs ประชากรที่เข้าถึงได้</div>
+                <div class="slide-subtitle">การจำแนกประเภทประชากรในงานวิจัยเชิงปฏิบัติ</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); margin-bottom: 1.5rem; border: 1px solid #cbd5e1;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">ประเภทประชากร</th>
+                                <th>คำอธิบายเชิงความหมาย</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ประชากรเป้าหมาย (Target Population)</strong></td>
+                                <td>กลุ่มหน่วยข้อมูลหรือประชากรทั้งหมดที่ผู้วิจัย<strong>ต้องการ</strong>สรุปผลการศึกษาอ้างอิงไปถึง
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>ประชากรที่เข้าถึงได้ (Accessible Population)</strong></td>
+                                <td>กลุ่มประชากรย่อยภายในขอบเขตที่ผู้วิจัยสามารถดำเนินการ<strong>เก็บข้อมูลได้จริง</strong>ในทางปฏิบัติ
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout bq-red">
+                    <strong>ข้อควรระวังในเชิงสถิติ:</strong> กลุ่มตัวอย่างที่สุ่มเลือกออกมาศึกษา
+                    จำเป็นต้อง<strong>เป็นตัวแทนที่ดี (Representative)</strong> ของประชากร
+                    และจะต้องมี<strong>ขนาดใหญ่เพียงพอ</strong>เพื่อความแม่นยำในการทดสอบ
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>25 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.7</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.7
+                    พารามิเตอร์และค่าสถิติ</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>26 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">นิยามทางสถิติศาสตร์</div>
+                <div class="slide-subtitle">การแยกแยะระหว่างค่าดัชนีของประชากรและค่าดัชนีของกลุ่มตัวอย่าง</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card" style="background-color: var(--color-card); border-top: 4px solid #0369A1;">
+                        <h4 style="color: #0369A1; font-weight: 600; margin-bottom: 0.75rem;">พารามิเตอร์ (Parameter)
+                        </h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">คือ
+                            ค่าดัชนีชี้วัดที่คำนวณประมวลผลมาจาก<strong>ประชากร</strong>ทั้งหมด</p>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.2rem; margin-bottom: 0.5rem;">
+                            <li style="margin-bottom: 0.25rem;">มีสถานะเป็น <strong>ค่าคงที่</strong>
+                                (ไม่เปลี่ยนแปลงค่า)</li>
+                            <li style="margin-bottom: 0.25rem;">ในทางปฏิบัติมักจะ<strong>ไม่ทราบค่าจริง</strong>
+                                (เนื่องจากไม่สามารถเก็บข้อมูลประชากรทั้งหมดได้)</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-weight: 500;">ใช้สัญลักษณ์ภาษากรีก: <span
+                                style="font-family: 'IBM Plex Sans'; color: #0369A1; font-size: 1.05rem;">$\mu, \sigma,
+                                \rho, P$</span></p>
+                    </div>
+
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h4 style="color: var(--color-sb-green); font-weight: 600; margin-bottom: 0.75rem;">ค่าสถิติ
+                            (Statistic)</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">คือ
+                            ค่าดัชนีชี้วัดที่คำนวณประมวลผลมาจากเฉพาะกลุ่ม<strong>ตัวอย่าง</strong></p>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.2rem; margin-bottom: 0.5rem;">
+                            <li style="margin-bottom: 0.25rem;">มีสถานะเป็น <strong>ตัวแปรสุ่ม</strong>
+                                (ค่าสามารถแปรเปลี่ยนไปตามสุ่มกลุ่มตัวอย่างแต่ละชุด)</li>
+                            <li style="margin-bottom: 0.25rem;">ในทางปฏิบัติเราสามารถ<strong>ทราบค่าได้เสมอ</strong>
+                                (เนื่องจากคำนวณขึ้นมาจากข้อมูลกลุ่มตัวอย่างที่เก็บมา)</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-weight: 500;">ใช้สัญลักษณ์อักษรโรมัน: <span
+                                style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green); font-size: 1.05rem;">$\overline{X},
+                                S, r, p$</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="callout bq-blue" style="margin-top: 1rem;">
+                <strong>ดูเพิ่มเติม:</strong> สถิติเชิงพรรณนา vs เชิงอนุมาน (สไลด์ 48) — เส้นแบ่งสำคัญของการวิเคราะห์
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>27 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สรุปเปรียบเทียบ: Parameter vs. Statistic</div>
+                <div class="slide-subtitle">การจับคู่สัญลักษณ์ทางสถิติศาสตร์ตามคุณลักษณะของข้อมูล</div>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); margin-bottom: 1rem; border: 1px solid #cbd5e1;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">คุณลักษณะข้อมูล</th>
+                                <th style="width: 37.5%;">พารามิเตอร์ (Parameter)</th>
+                                <th style="width: 37.5%;">ค่าสถิติ (Statistic)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>คำนวณประมวลผลมาจาก</strong></td>
+                                <td>ประชากร (<span style="font-family: 'IBM Plex Sans';">Population</span>)</td>
+                                <td>ตัวอย่าง (<span style="font-family: 'IBM Plex Sans';">Sample</span>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ลักษณะทางคณิตศาสตร์</strong></td>
+                                <td>ค่าคงที่ (<span style="font-family: 'IBM Plex Sans';">Constant</span>)</td>
+                                <td>ตัวแปรสุ่ม (<span style="font-family: 'IBM Plex Sans';">Random Variable</span>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ขนาดสัญลักษณ์นับ</strong></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$N$</span></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$n$</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ค่าเฉลี่ย (Mean)</strong></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$\mu$</span></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$\overline{X}$</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>ส่วนเบี่ยงเบนมาตรฐาน (SD)</strong></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$\sigma$</span></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$S$</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ความแปรปรวน (Variance)</strong></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$\sigma^2$</span></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$S^2$</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>สัดส่วน (Proportion)</strong></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$P$</span></td>
+                                <td><span style="font-family: 'IBM Plex Sans'; font-weight: 500;">$p$</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout bq-green" style="text-align: center;">
+                    <strong>เป้าหมายปลายทางของสถิติ:</strong> คือการใช้ประโยชน์จาก <strong>ค่าสถิติ</strong> (<span
+                        style="font-family: 'IBM Plex Sans'; font-weight: 600;">$\overline{X}, S, p$</span>)
+                    เพื่อนำไปเป็นตัว <span style="color: var(--color-sb-green); font-weight: 600;">ประมาณค่า</span>
+                    ของตัว <strong>พารามิเตอร์</strong> (<span
+                        style="font-family: 'IBM Plex Sans'; font-weight: 600;">$\mu, \sigma, P$</span>)
+                    ที่เราไม่ทราบค่าในประชากร
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>28 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.8</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.8 เครื่องหมายผลรวม
+                </h1>
+                <h2
+                    style="font-family: 'IBM Plex Sans'; color: rgba(255,255,255,0.7); font-weight: 400; margin-top: 0.25rem; font-size: 1.25rem;">
+                    Summation Notation</h2>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>29 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">เครื่องหมายผลรวม &Sigma; (Sigma)</div>
+                <div class="slide-subtitle">สัญลักษณ์ทางคณิตศาสตร์สากลที่ใช้แทนการบวกสะสมชุดข้อมูล</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="align-items: center; gap: 2rem;">
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.5rem;">
+                        <h4 style="color: var(--color-text); font-weight: 600; margin-bottom: 1rem;">ส่วนประกอบดรรชนี
+                        </h4>
+                        <ul style="list-style-type: none; padding-left: 0; font-size: 1rem;">
+                            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                    style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">$x_{i}$</strong>
+                                = ค่าข้อมูลหน่วยที่ $i$</li>
+                            <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--color-sb-light);"><strong
+                                    style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">$i$</strong> =
+                                ดัชนี (index) เริ่มต้นคำนวศ</li>
+                            <li style="padding: 0.4rem 0;"><strong
+                                    style="color: var(--color-sb-green); font-family: 'IBM Plex Sans';">$n$</strong> =
+                                จำนวนข้อมูลทั้งหมดที่นำมาบวก</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-card bq-green" style="text-align: center; padding: 2rem 1.5rem;">
+                        <h4 style="color: var(--color-sb-green); font-weight: 600; margin-bottom: 0.75rem;">
+                            สูตรการกระจายพจน์ผลรวม</h4>
+                        <p
+                            style="font-size: 1.35rem; font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text); letter-spacing: 0.02em; margin-top: 0.5rem;">
+                            $$\sum_{i=1}^{n}x_{i}=x_{1}+x_{2}+x_{3}+\cdot\cdot\cdot+x_{n}$$
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="callout bq-blue" style="margin-top: 1rem;">
+                <strong>ดูเพิ่มเติม:</strong> ตัวอย่างการคำนวณ (สไลด์ 49) · Live Counter (สไลด์ 56) — คำนวณ
+                Mean/Median/SD แบบ real-time
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>30 / 57</span>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">รูปแบบต่าง ๆ ของผลรวม</div>
+                <div class="slide-subtitle">การแยกแยะความแตกต่างระหว่างการยกกำลังและการคูณดรรชนี</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); border: 1px solid #cbd5e1; margin-bottom: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">สัญลักษณ์</th>
+                                <th style="width: 50%;">การกระจายพจน์คณิตศาสตร์</th>
+                                <th style="width: 25%;">ความหมายเชิงสถิติ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong
+                                        style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green);">$\sum_{i=1}^{n}x_{i}$</strong>
+                                </td>
+                                <td style="font-family: 'IBM Plex Sans';">$x_{1}+x_{2}+\cdot\cdot\cdot+x_{n}$</td>
+                                <td>ผลรวมของ X</td>
+                            </tr>
+                            <tr>
+                                <td><strong
+                                        style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green);">$\sum_{i=1}^{n}x_{i}^{2}$</strong>
+                                </td>
+                                <td style="font-family: 'IBM Plex Sans';">
+                                    $x_{1}^{2}+x_{2}^{2}+\cdot\cdot\cdot+x_{n}^{2}$</td>
+                                <td>ผลรวมของ $x^2$</td>
+                            </tr>
+                            <tr>
+                                <td><strong
+                                        style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green);">$\sum_{i=1}^{n}x_{i}y_{i}$</strong>
+                                </td>
+                                <td style="font-family: 'IBM Plex Sans';">
+                                    $x_{1}y_{1}+x_{2}y_{2}+\cdot\cdot\cdot+x_{n}y_{n}$</td>
+                                <td>ผลรวมของ $xy$</td>
+                            </tr>
+                            <tr>
+                                <td><strong
+                                        style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green);">$(\sum_{i=1}^{n}x_{i})^{2}$</strong>
+                                </td>
+                                <td style="font-family: 'IBM Plex Sans';">$(x_{1}+\cdot\cdot\cdot+x_{n})^{2}$</td>
+                                <td>กำลังสองของผลรวม</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>31 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">กฎการใช้เครื่องหมายผลรวม</div>
+                <div class="slide-subtitle">กฎพีชคณิตพื้นฐานสำหรับการกระจายพจน์ของสัญลักษณ์ซิกมา</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); border: 1px solid #cbd5e1; margin-bottom: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">ชื่อกฎทางคณิตศาสตร์</th>
+                                <th style="width: 60%;">โครงสร้างสูตรคำนวณ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. ผลรวมของผลบวก</strong></td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green); font-size: 1.05rem;">
+                                    $\sum(x_{i}+y_{i})=\sum x_{i}+\sum y_{i}$</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. ผลรวมของค่าคงที่</strong></td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green); font-size: 1.05rem;">
+                                    $\sum C=nC$</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. ค่าคงที่คูณตัวแปร</strong></td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green); font-size: 1.05rem;">
+                                    $\sum Cx_{i}=C\sum x_{i}$</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. ตัวแปรบวกค่าคงที่</strong></td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; color: var(--color-sb-green); font-size: 1.05rem;">
+                                    $\sum(x_{i}+C)=\sum x_{i}+nC$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>32 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ตัวอย่างที่ 1.1</div>
+                <div class="slide-subtitle">การฝึกคำนวณแทนค่าจากชุดข้อมูลดิบที่กำหนดให้</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="background-color: var(--color-ceramic); border-radius: 6px; padding: 0.6rem 1.25rem; font-size: 0.95rem; margin-bottom: 1rem; border-left: 4px solid #475569;">
+                    <strong>กำหนดให้:</strong> &nbsp;<span style="font-family: 'IBM Plex Sans';">$X_{1}=3, \; X_{2}=4,
+                        \; X_{3}=5, \; Y_{1}=-1, \; Y_{2}=2, \; Y_{3}=3$</span>
+                </div>
+
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); border: 1px solid #cbd5e1; margin-bottom: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">โจทย์ข้อคำนวณ</th>
+                                <th style="width: 50%;">การแทนค่าเพื่อคำนวณ</th>
+                                <th style="width: 20%; text-align: center;">ผลลัพธ์</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-family: 'IBM Plex Sans';">$\sum X_{i}$</td>
+                                <td style="font-family: 'IBM Plex Sans'; color: var(--color-text-soft);">$3+4+5$</td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; text-align: center; font-weight: 600; color: var(--color-sb-green);">
+                                    12</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: 'IBM Plex Sans';">$\sum X_{i}^{2}$</td>
+                                <td style="font-family: 'IBM Plex Sans'; color: var(--color-text-soft);">$9+16+25$</td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; text-align: center; font-weight: 600; color: var(--color-sb-green);">
+                                    50</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: 'IBM Plex Sans';">$\sum X_{i}Y_{i}$</td>
+                                <td style="font-family: 'IBM Plex Sans'; color: var(--color-text-soft);">
+                                    $(3)(-1)+(4)(2)+(5)(3)$</td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; text-align: center; font-weight: 600; color: var(--color-sb-green);">
+                                    20</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family: 'IBM Plex Sans';">$(\sum X_{i})(\sum Y_{i})$</td>
+                                <td style="font-family: 'IBM Plex Sans'; color: var(--color-text-soft);">$(12)(4)$</td>
+                                <td
+                                    style="font-family: 'IBM Plex Sans'; text-align: center; font-weight: 600; color: var(--color-sb-green);">
+                                    48</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>33 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ตัวอย่างที่ 1.2</div>
+                <div class="slide-subtitle">การฝึกใช้กฎพีชคณิตของผลรวมในการกระจายพจน์เพื่อหาคำตอบ</div>
+            </div>
+            <div class="slide-content">
+                <div
+                    style="background-color: var(--color-ceramic); border-radius: 6px; padding: 0.6rem 1.25rem; font-size: 0.95rem; margin-bottom: 1rem; border-left: 4px solid var(--color-sb-green);">
+                    <strong>โจทย์ข้อนี้:</strong> &nbsp;<span style="font-family: 'IBM Plex Sans';">กำหนดให้ $X_{1}=-3,
+                        \; X_{2}=5, \; Y_{1}=2, \; Y_{2}=4$ &nbsp;และขนาดตัวอย่าง ($n=2$)</span> <br>
+                    <span class="muted" style="font-size: 0.9rem; margin-top: 0.25rem; display: block;">
+                        จากการคำนวณเบื้องต้นจะได้ผลรวมคงที่คือ: &nbsp;<span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">$\sum
+                            X_{i}=2$</span> &nbsp;และ&nbsp; <span
+                            style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">$\sum
+                            Y_{i}=6$</span>
+                    </span>
+                </div>
+
+                <div class="grid-2">
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.25rem;">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">โจทย์ ก.</h5>
+                        <p
+                            style="font-family: 'IBM Plex Sans'; font-size: 0.9rem; color: var(--color-sb-green); margin-bottom: 0.4rem;">
+                            $$\sum_{i=1}^{2}(X_{i}+3)+\sum_{i=1}^{2}(Y_{i}-2)$$
+                        </p>
+                        <div
+                            style="font-family: 'IBM Plex Sans'; font-size: 0.85rem; color: var(--color-text-soft); line-height: 1.6; border-top: 1px solid var(--color-sb-light); padding-top: 0.4rem;">
+                            $= (\sum X_{i} + 2\cdot3) + (\sum Y_{i} - 2\cdot2)$ <br>
+                            $= (2 + 6) + (6 - 4)$ <br>
+                            $= 8 + 2$<br>
+                            <strong style="color: var(--color-text); font-size: 0.95rem;">ผลลัพธ์ = <span
+                                    style="color: var(--color-sb-green); font-weight: 600;">10</span></strong>
+                        </div>
+                    </div>
+
+                    <div class="sub-card" style="background-color: var(--color-card); padding: 1.25rem;">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">โจทย์ ข.</h5>
+                        <p
+                            style="font-family: 'IBM Plex Sans'; font-size: 0.9rem; color: #0284C7; margin-bottom: 0.4rem;">
+                            $$\sum_{i=1}^{2}(3X_{i}-2Y_{i}+6)$$
+                        </p>
+                        <div
+                            style="font-family: 'IBM Plex Sans'; font-size: 0.85rem; color: var(--color-text-soft); line-height: 1.6; border-top: 1px solid var(--color-sb-light); padding-top: 0.4rem;">
+                            $= 3\sum X_{i} - 2\sum Y_{i} + 2\cdot6$ <br>
+                            $= 3(2) - 2(6) + 12$ <br>
+                            $= 6 - 12 + 12$<br>
+                            <strong style="color: var(--color-text); font-size: 0.95rem;">ผลลัพธ์ = <span
+                                    style="color: #0284C7; font-weight: 600;">6</span></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>34 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SECTION 1.9</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">1.9
+                    ปัจจุบันสถิติไปทางไหน?</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>35 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สถิติกับยุคข้อมูล</div>
+                <div class="slide-subtitle">บทบาทของสถิติศาสตร์ในทางเทคโนโลยีและการประยุกต์ใช้หลากสาขา</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2"
+                    style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.25rem;"><span
+                                style="font-family: 'IBM Plex Sans';">Data Science</span></h5>
+                        <p class="muted">วิเคราะห์ข้อมูลขนาดใหญ่ เพื่อค้นพบรูปแบบและแนวโน้ม</p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.25rem;"><span
+                                style="font-family: 'IBM Plex Sans';">Machine Learning</span></h5>
+                        <p class="muted">ใช้โมเดล <span style="font-family: 'IBM Plex Sans';">Regression,
+                                Classification, Clustering, Neural Networks</span></p>
+                    </div>
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.25rem;"><span
+                                style="font-family: 'IBM Plex Sans';">AI</span> (ปัญญาประดิษฐ์)</h5>
+                        <p class="muted">ขับเคลื่อนระบบ <span style="font-family: 'IBM Plex Sans';">NLP, Computer
+                                Vision</span> และ <span style="font-family: 'IBM Plex Sans';">Generative AI</span></p>
+                    </div>
+                </div>
+
+                <div
+                    style="overflow-x: auto; border-radius: var(--radius-md); border: 1px solid #cbd5e1; margin-bottom: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">สาขาวิชาประยุกต์</th>
+                                <th style="width: 75%;">รูปแบบการนำไปใช้งานจริงในวิชาชีพ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>การแพทย์</strong></td>
+                                <td>กระบวนการทดสอบยา และการวิเคราะห์ระบาดวิทยา</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ธุรกิจ</strong></td>
+                                <td>การทำกิจกรรม <span style="font-family: 'IBM Plex Sans';">A/B testing</span>
+                                    และระเบียบวิธีพยากรณ์ยอดขาย</td>
+                            </tr>
+                            <tr>
+                                <td><strong>วิศวกรรมศาสตร์</strong></td>
+                                <td>กระบวนการควบคุมคุณภาพการผลิตภายในโรงงาน</td>
+                            </tr>
+                            <tr>
+                                <td><strong>สังคมศาสตร์</strong></td>
+                                <td>การออกแบบสำรวจและงานวิจัยเชิงนโยบายภาคสาธารณะ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>สิ่งแวดล้อม</strong></td>
+                                <td>การสร้างและประเมินผลแบบจำลองภูมิอากาศโลก</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>36 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">ตัวอย่างการใช้งานจริง
+                </h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>37 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ตัวอย่างการใช้งาน: โพลล์สำรวจเลือกตั้ง</div>
+                <div class="slide-subtitle">กลไกการอนุมานความคิดเห็นมหาชนระดับประเทศด้วยกลุ่มตัวอย่างย่อย</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-left: 4px solid var(--color-text);">
+                        <h5 style="font-weight: 600; margin-bottom: 0.5rem;">กระบวนการจัดเก็บข้อมูล</h5>
+                        <ul class="muted" style="font-size: 0.95rem; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.4rem;">ดำเนินการสำรวจผู้มีสิทธิเลือกตั้งจำนวน 1,000 คน</li>
+                            <li style="margin-bottom: 0.4rem;">ตั้งคำถามเจาะจงว่าผู้ให้ข้อมูลตั้งใจจะเลือกพรรคการเมืองใด
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-left: 4px solid var(--color-sb-green);">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.5rem;">
+                            กลไกการคำนวณทางสถิติ</h5>
+                        <ul class="muted" style="font-size: 0.95rem; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.4rem;">
+                                ใช้เครื่องมือทางสถิติเพื่อทำการ<strong>ประมาณสัดส่วน</strong>ของประชากรทั้งประเทศ</li>
+                            <li style="margin-bottom: 0.4rem;">คำนวณหาค่า<strong>ช่วงความเชื่อมั่น (<span
+                                        style="font-family: 'IBM Plex Sans';">confidence interval</span>)</strong>
+                                เพื่อกำกับความคลาดเคลื่อน</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="callout bq-gold" style="margin-top: 1.5rem; text-align: center;">
+                    <p style="font-size: 1rem; font-weight: 500;">
+                        ผลลัพธ์: จากกลุ่มบุคคลเพียง 1,000 คน &rarr; สามารถนำมาใช้<span
+                            style="color: var(--color-sb-green); font-weight: 600;">สรุปผลทั้งประเทศได้</span>
+                        อย่างเป็นระบบด้วยหลักการของ<strong>ความน่าจะเป็น</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>38 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ตัวอย่างการใช้งาน: การทดสอบยา (<span
+                        style="font-family: 'IBM Plex Sans';">Clinical Trial</span>)</div>
+                <div class="slide-subtitle">ระเบียบวิธีทางวิทยาศาสตร์การแพทย์เพื่อพิสูจน์ผลลัพธ์ของยารักษาโรค</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-text);">
+                        <h5 style="font-weight: 600; margin-bottom: 0.5rem;">1. การวางแผนออกแบบกลุ่มทดลอง</h5>
+                        <p class="muted">
+                            ทำการแบ่งผู้ป่วยออกเป็น 2 กลุ่มอย่างเป็นระบบ: กลุ่มที่ได้รับ<strong>ยาใหม่</strong>
+                            เพื่อทดสอบประสิทธิภาพ เปรียบเทียบกับกลุ่มที่ได้รับ<strong>ยาหลอก (<span
+                                    style="font-family: 'IBM Plex Sans';">Placebo</span>)</strong>
+                            จากนั้นทำการวัดผลลัพธ์หลังสิ้นสุดการรักษา
+                        </p>
+                    </div>
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green);">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.5rem;">2.
+                            การวิเคราะห์สรุปผลทางสถิติ</h5>
+                        <p class="muted">
+                            ประยุกต์ใช้กระบวนการ <strong>การทดสอบสมมติฐาน (<span
+                                    style="font-family: 'IBM Plex Sans';">hypothesis testing</span>)</strong>
+                            เพื่อเป็นเกณฑ์ในการตัดสินใจว่าผลการรักษาของทั้งสองกลุ่มมีความ<strong>แตกต่างอย่างมีนัยสำคัญทางสถิติ</strong>หรือไม่
+                        </p>
+                    </div>
+                </div>
+
+                <div class="callout"
+                    style="margin-top: 1.25rem; background-color: #f0fdfa; border-left-color: #0d9488; padding: 1.25rem;">
+                    <p style="font-size: 1rem; font-weight: 500; text-align: center; color: #115e59;">
+                        สถิติช่วยตอบคำถามสำคัญ: <span
+                            style="font-weight: 600; text-decoration: underline;">"ยานี้ใช้ได้ผลจริงหรือเป็นแค่เพียงเรื่องบังเอิญ?"</span>
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology &middot; 2026</span>
+                <span>39 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title"><span style="font-family: 'IBM Plex Sans';">A/B Testing</span>
+                    ในธุรกิจเทคโนโลยี</div>
+                <div class="slide-subtitle">
+                    การตัดสินใจเชิงธุรกิจบนพื้นฐานของข้อมูลผ่านการทดสอบเปรียบเทียบองค์ประกอบผลิตภัณฑ์</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="margin-bottom: 1rem;">
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid #64748B; padding: 1.25rem;">
+                        <h5 style="font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">รูปแบบ A (Control
+                            Group)</h5>
+                        <div style="font-size: 0.95rem; line-height: 1.6; color: var(--color-text-soft);">
+                            <p>ลักษณะ: ปุ่ม "ซื้อเลย" วางพื้นฐานด้วย <strong>สีเขียว</strong></p>
+                            <p>จำนวนผู้เข้าชมแอปพลิเคชัน: <span
+                                    style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">5,000
+                                    คน</span></p>
+                            <p>จำนวนผู้กดคลิกซื้อสำเร็จ: <span
+                                    style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">120
+                                    คน</span></p>
+                            <div style="margin-top: 0.5rem; font-weight: 600; color: var(--color-text);">Conversion Rate
+                                = <span
+                                    style="font-family: 'IBM Plex Sans'; font-size: 1.2rem; color: #475569;">2.4%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-card"
+                        style="background-color: var(--color-card); border-top: 4px solid var(--color-sb-green); padding: 1.25rem;">
+                        <h5 style="font-weight: 600; color: var(--color-sb-green); margin-bottom: 0.5rem;">รูปแบบ B
+                            (Variant Group)</h5>
+                        <div style="font-size: 0.95rem; line-height: 1.6; color: var(--color-text-soft);">
+                            <p>ลักษณะ: เปลี่ยนปุ่ม "ซื้อเลย" ทดลองด้วย <strong>สีแดง</strong></p>
+                            <p>จำนวนผู้เข้าชมแอปพลิเคชัน: <span
+                                    style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">5,000
+                                    คน</span></p>
+                            <p>จำนวนผู้กดคลิกซื้อสำเร็จ: <span
+                                    style="font-family: 'IBM Plex Sans'; font-weight: 500; color: var(--color-text);">185
+                                    คน</span></p>
+                            <div style="margin-top: 0.5rem; font-weight: 600; color: var(--color-sb-green);">Conversion
+                                Rate = <span
+                                    style="font-family: 'IBM Plex Sans'; font-size: 1.2rem; color: var(--color-sb-green);">3.7%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="muted" style="line-height: 1.5; margin-bottom: 0.5rem;">
+                    ใช้ระเบียบวิธีทดสอบสมมติฐานทางสถิติเพื่อพิจารณาพิสูจน์ว่าอัตราการตัดสินใจซื้อ (Conversion Rate)
+                    ของรูปแบบ B ดีกว่ารูปแบบ A อย่างมีนัยสำคัญทางสถิติ หรือเป็นเพียงแค่ผลลัพธ์จากความบังเอิญ
+                </p>
+                <div class="callout" style="padding: 0.6rem 1rem; margin-top: 0; font-size: 0.9rem;">
+                    <strong>ข้อมูลอุตสาหกรรมเทค:</strong> บริษัทเทคโนโลยีชั้นนำดำเนินกิจกรรม <span
+                        style="font-family: 'IBM Plex Sans';">A/B testing</span>
+                    ในลักษณะนี้ร่วมกันนับพันครั้งต่อปีเพื่อปรับปรุงและพัฒนาผลิตภัณฑ์
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>40 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SUMMARY</p>
+                <h1 style="font-size: 2.5rem; color: var(--color-text-inverse); font-weight: 500;">สรุปบทที่ 1</h1>
+                <h2
+                    style="font-family: 'IBM Plex Sans'; color: rgba(255,255,255,0.7); font-weight: 400; margin-top: 0.25rem; font-size: 1.25rem;">
+                    Key Takeaways</h2>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>41 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ประเด็นสำคัญประจำบทเรียน</div>
+                <div class="slide-subtitle">การประมวลองค์ความรู้ทั้งหมดในบทความหมายของสถิติ</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block; margin-bottom: 0.25rem;">DEVELOPMENT</span>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.1rem;">
+                            <li>ที่มารากศัพท์: <span style="font-family: 'IBM Plex Sans';">"status"</span> =
+                                ข้อมูลหรือกิจการของรัฐ</li>
+                            <li>พัฒนาการทางสายธาร: การนับ &rarr; การวิเคราะห์ &rarr; ทฤษฎีความน่าจะเป็น &rarr; ยุคข้อมูล
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block; margin-bottom: 0.25rem;">DEFINITION
+                            & TYPES</span>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.1rem;">
+                            <li><strong>2 ความหมาย:</strong> ตัวเลข/ข้อมูลดิบ กับ ศาสตร์เชิงกระบวนการ</li>
+                            <li><strong>2 ประเภทหลัก:</strong> สถิติพรรณนา (<span
+                                    style="font-family: 'IBM Plex Sans';">Descriptive</span>) กับ สถิติอนุมาน (<span
+                                    style="font-family: 'IBM Plex Sans';">Inferential</span>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block; margin-bottom: 0.25rem;">DATA
+                            & MEASUREMENT</span>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.1rem;">
+                            <li>ลักษณะข้อมูล: แบ่งเป็นข้อมูลเชิงปริมาณ และข้อมูลเชิงคุณภาพ</li>
+                            <li><strong>4 มาตรวัดสเกล:</strong> <span style="font-family: 'IBM Plex Sans';">Nominal,
+                                    Ordinal, Interval, Ratio</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-card" style="padding: 1rem; background-color: var(--color-card);">
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block; margin-bottom: 0.25rem;">POPULATION
+                            & SAMPLE</span>
+                        <ul class="muted" style="font-size: 0.9rem; padding-left: 1.1rem;">
+                            <li>หน่วยศึกษาข้อมูล: ประชากร ($N$) เปรียบเทียบกับ กลุ่มตัวอย่าง ($n$)</li>
+                            <li>ตัวดัชนีชี้วัด: พารามิเตอร์ ($\mu, \sigma, P$) คู่กับ ค่าสถิติ ($\overline{X}, S, p$)
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-card"
+                        style="padding: 1rem; background-color: var(--color-card); grid-column: span 2;">
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; color: var(--color-sb-green); font-family: 'IBM Plex Sans'; display: block; margin-bottom: 0.25rem;">MATHEMATICS
+                            & APPLICATION</span>
+                        <ul class="muted"
+                            style="font-size: 0.9rem; padding-left: 1.1rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.25rem 1rem;">
+                            <li>เครื่องหมายผลรวมพีชคณิต: สัญลักษณ์ซิกมา ($\sum_{i=1}^{n}x_{i}$)</li>
+                            <li>กรณีศึกษาใช้งานจริง: โพลล์สำรวจ, <span style="font-family: 'IBM Plex Sans';">Clinical
+                                    Trial</span>, <span style="font-family: 'IBM Plex Sans';">A/B Testing</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="callout bq-gold" style="margin-top: 1.25rem; padding: 1rem;">
+                    <p style="font-size: 0.95rem; text-align: center; font-weight: 500;">
+                        <strong>เป้าหมายแก่นแกนของสถิติศาสตร์:</strong> มุ่งหวังเพื่อสร้างกระบวนการ
+                        <strong>"ตัดสินใจภายใต้ความไม่แน่นอน"</strong> อย่างถูกต้อง แม่นยำ
+                        และมีหลักการรองรับทางวิทยาศาสตร์ข้อมูล
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University &middot; 2026</span>
+                <span>42 / 57</span>
+            </div>
+        </div>
+
+        <div class="slide closing">
+            <div class="slide-content">
+                <h1>คำถาม?</h1>
+                <p
+                    style="font-family: 'IBM Plex Sans'; color: var(--color-gold); font-size: 1.25rem; font-weight: 400; letter-spacing: 0.05em;">
+                    Q & A</p>
+
+                <div style="margin-top: 4rem; font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.6;">
+                    <p style="font-weight: 500; color: var(--color-text-inverse);">ขอบคุณนิสิตทุกคนครับ</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.4rem;">วิชาหลักสถิติ (01422111) &middot;
+                        ภาควิชาวิทยาการดิจิทัลและเทคโนโลยี</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>DEPARTMENT OF DIGITAL SCIENCE AND TECHNOLOGY</span>
+                <span>43 / 57</span>
+            </div>
+        </div>
+        <!--SLIDES_BLOCK-->
+        <div class="slide trans">
+            <div class="slide-content">
+                <p
+                    style="font-size: 1.05rem; color: var(--color-gold); font-weight: 500; margin-bottom: 0.5rem; font-family: 'IBM Plex Sans';">
+                    SUPPLEMENTARY</p>
+                <h1 style="font-size: 2.3rem; color: var(--color-text-inverse); font-weight: 500;">เนื้อหาเสริม:
+                    เจาะลึกแนวคิดสำคัญ</h1>
+            </div>
+            <div class="slide-footer">
+                <span>Kasetsart University</span>
+                <span>44 / 57</span>
+            </div>
+        </div>
+
+        <!-- 1: Measurement scales -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ระดับการวัดตัวแปร (Measurement Scales)</div>
+                <div class="slide-subtitle">Stevens (1946): บันได 4 ขั้นของข้อมูลเชิงปริมาณ</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-green);">
+                        <h4>Nominal (นามบัญญัติ)</h4>
+                        <p class="muted">จัดหมวดหมู่เท่านั้น ไม่มีลำดับ</p>
+                        <p style="margin-top: 0.5rem;"><strong>ตัวอย่าง:</strong> เพศ, สีตา, เขตเลือกตั้ง, ยี่ห้อรถ</p>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid #475569;">
+                        <h4>Ordinal (อันดับ)</h4>
+                        <p class="muted">จัดลำดับได้ แต่ระยะห่างไม่เท่ากัน</p>
+                        <p style="margin-top: 0.5rem;"><strong>ตัวอย่าง:</strong> ระดับความพึงพอใจ, อันดับมหาวิทยาลัย
+                        </p>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-house);">
+                        <h4>Interval (อันตรภาค)</h4>
+                        <p class="muted">ระยะห่างเท่ากัน แต่ศูนย์ไม่แท้จริง</p>
+                        <p style="margin-top: 0.5rem;"><strong>ตัวอย่าง:</strong> อุณหภูมิ °C, ปี ค.ศ., IQ</p>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid var(--color-gold);">
+                        <h4>Ratio (อัตราส่วน)</h4>
+                        <p class="muted">ระยะห่างเท่ากัน + ศูนย์แท้จริง</p>
+                        <p style="margin-top: 0.5rem;"><strong>ตัวอย่าง:</strong> ส่วนสูง, น้ำหนัก, รายได้, อายุ</p>
+                    </div>
+                </div>
+                <div class="callout bq-gold" style="margin-top: 1.25rem;">
+                    <strong>กฎสำคัญ:</strong> ยิ่งระดับสูง ยิ่งใช้สถิติได้หลากหลาย (mean, SD, t-test)
+                    แต่ข้อมูลระดับต่ำใช้ได้เฉพาะ mode/median/non-parametric
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>45 / 57</span>
+            </div>
+        </div>
+
+        <!-- 2: Data sources -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">แหล่งที่มาของข้อมูล</div>
+                <div class="slide-subtitle">ข้อมูลปฐมภูมิ vs ทุติยภูมิ และแหล่งสำคัญในงานวิจัย</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="gap: 1rem;">
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-green);">
+                        <h4>ข้อมูลปฐมภูมิ (Primary)</h4>
+                        <p class="muted">ผู้วิจัยเก็บเอง เพื่อตอบคำถามเฉพาะ</p>
+                        <ul style="margin-top: 0.5rem; font-size: 0.92rem;">
+                            <li>แบบสอบถาม / สัมภาษณ์</li>
+                            <li>การทดลอง (Experiment)</li>
+                            <li>การสังเกต (Observation)</li>
+                            <li>Sensor / IoT data</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="border-top: 4px solid var(--color-sb-house);">
+                        <h4>ข้อมูลทุติยภูมิ (Secondary)</h4>
+                        <p class="muted">ผู้อื่นเก็บไว้แล้ว นำมาใช้ใหม่</p>
+                        <ul style="margin-top: 0.5rem; font-size: 0.92rem;">
+                            <li>สำนักงานสถิติแห่งชาติ (NSO)</li>
+                            <li>ธนาคารแห่งประเทศไทย</li>
+                            <li>WHO, World Bank, OECD</li>
+                            <li>Open data: data.go.th, Kaggle</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="callout bq-blue" style="margin-top: 1.25rem;">
+                    <strong>ข้อควรระวัง:</strong> ข้อมูลทุติยภูมิอาจเก็บด้วยนิยาม/วิธีที่ต่างจากที่เราต้องการ
+                    ต้องตรวจสอบ metadata ก่อนใช้
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>46 / 57</span>
+            </div>
+        </div>
+
+        <!-- 3: Sampling methods brief -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">วิธีเลือกตัวอย่าง (Sampling Methods)</div>
+                <div class="slide-subtitle">ภาพรวมวิธีสุ่มตัวอย่างที่ใช้บ่อย (รายละเอียดเชิงลึกในบทถัดไป)</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div class="sub-card">
+                        <h4>Simple Random Sampling</h4>
+                        <p class="muted">ทุกหน่วยมีโอกาสถูกเลือกเท่ากัน (จับสลาก / RNG)</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>ดี:</strong> ง่าย,
+                            unbiased<br><strong>จำกัด:</strong> ต้องมีรายชื่อประชากรทั้งหมด</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Stratified Sampling</h4>
+                        <p class="muted">แบ่งชั้นภูมิ (เช่น เพศ, ภาค) แล้วสุ่มจากแต่ละชั้น</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>ดี:</strong> ลด variance,
+                            มีตัวแทนครบทุกกลุ่ม</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Cluster Sampling</h4>
+                        <p class="muted">สุ่มกลุ่ม (เช่น โรงเรียน) แล้วเก็บข้อมูลทุกหน่วยในกลุ่ม</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>ดี:</strong> ประหยัดเมื่อประชากรกระจาย
+                        </p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Convenience Sampling</h4>
+                        <p class="muted">เลือกหน่วยที่หาได้ง่าย ไม่ใช่ probability sampling</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>ข้อเสีย:</strong> bias สูง,
+                            อนุมานประชากรไม่ได้</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>47 / 57</span>
+            </div>
+        </div>
+
+        <!-- 4: Descriptive vs Inferential -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สถิติเชิงพรรณนา vs เชิงอนุมาน</div>
+                <div class="slide-subtitle">Descriptive vs Inferential Statistics — เส้นแบ่งสำคัญของการวิเคราะห์</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+                    <div class="sub-card" style="border-top: 6px solid var(--color-sb-green);">
+                        <h4>Descriptive (เชิงพรรณนา)</h4>
+                        <p><strong>เป้าหมาย:</strong> สรุปข้อมูลที่มีอยู่</p>
+                        <p><strong>เครื่องมือ:</strong> mean, median, mode, SD, %, กราฟ</p>
+                        <p><strong>ตัวอย่าง:</strong> "นักศึกษา 200 คน มี GPA เฉลี่ย 3.12"</p>
+                    </div>
+                    <div class="sub-card" style="border-top: 6px solid var(--color-sb-house);">
+                        <h4>Inferential (เชิงอนุมาน)</h4>
+                        <p><strong>เป้าหมาย:</strong> สรุปจากตัวอย่างไปยังประชากร</p>
+                        <p><strong>เครื่องมือ:</strong> t-test, CI, regression, χ²</p>
+                        <p><strong>ตัวอย่าง:</strong> "GPA เฉลี่ยนักศึกษา มก. = 3.0–3.2 (95% CI)"</p>
+                    </div>
+                </div>
+                <div class="callout bq-purple" style="margin-top: 1.25rem;">
+                    <strong>สะพานเชื่อม:</strong> Descriptive บอก "เป็นอย่างไร" · Inferential ตอบ "มีนัยสำคัญหรือไม่ /
+                    เกิดจากบังเอิญหรือเปล่า"
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>48 / 57</span>
+            </div>
+        </div>
+
+        <!-- 5: Worked example -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ตัวอย่างการคำนวณ: คะแนนสอบ 5 คน</div>
+                <div class="slide-subtitle">Worked Example — Mean, Median, Variance, SD</div>
+            </div>
+            <div class="slide-content">
+                <p>ข้อมูล: <strong>72, 85, 90, 68, 95</strong> (คะแนนสอบวิชาสถิติของนักศึกษา 5 คน)</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.75rem;">
+                    <div class="sub-card">
+                        <h4>Mean (ค่าเฉลี่ย)</h4>
+                        <p style="font-size: 1.05rem; margin-top: 0.4rem;">$\bar{x} = \dfrac{72+85+90+68+95}{5} =
+                            \dfrac{410}{5} = \mathbf{82}$</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Median (มัธยฐาน)</h4>
+                        <p class="muted">เรียง: 68, 72, <strong>85</strong>, 90, 95</p>
+                        <p style="font-size: 1.05rem; margin-top: 0.4rem;">Median = $\mathbf{85}$</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Variance (ความแปรปรวน)</h4>
+                        <p style="font-size: 0.85rem; margin-top: 0.4rem;">$(72-82)^2 + (85-82)^2 + (90-82)^2 +
+                            (68-82)^2 + (95-82)^2$</p>
+                        <p style="font-size: 0.92rem; margin-top: 0.3rem;">$= 100 + 9 + 64 + 196 + 169 = 538$</p>
+                        <p style="font-size: 1.05rem; margin-top: 0.3rem;">$s^2 = \dfrac{538}{5-1} = \mathbf{134.5}$</p>
+                    </div>
+                    <div class="sub-card">
+                        <h4>SD (ส่วนเบี่ยงเบนมาตรฐาน)</h4>
+                        <p style="font-size: 1.05rem; margin-top: 0.4rem;">$s = \sqrt{134.5} \approx \mathbf{11.60}$</p>
+                    </div>
+                </div>
+                <div class="callout bq-gold" style="margin-top: 1rem;">
+                    <strong>ตีความ:</strong> คะแนนเฉลี่ย 82 คะแนน กระจายตัวรอบค่าเฉลี่ยประมาณ ±11.6 คะแนน
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>49 / 57</span>
+            </div>
+        </div>
+
+        <!-- 6: Ethics -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">จริยธรรมทางสถิติ</div>
+                <div class="slide-subtitle">ตัวอย่างการใช้สถิติผิดจรรยาบรรณ — เรียนรู้เพื่อหลีกเลี่ยง</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="gap: 1rem;">
+                    <div class="callout bq-red">
+                        <h5 style="font-weight: 600;">Misleading Graphs</h5>
+                        <p class="muted" style="font-size: 0.9rem;">ตัดแกน Y, ยืดสเกล, cherry-pick ช่วงเวลา —
+                            ทำให้ผลต่างดูใหญ่หรือเล็กเกินจริง</p>
+                    </div>
+                    <div class="callout bq-red">
+                        <h5 style="font-weight: 600;">P-hacking</h5>
+                        <p class="muted" style="font-size: 0.9rem;">ทดสอบซ้ำ ๆ หลายตัวแปรจนเจอ p &lt; 0.05 โดยบังเอิญ —
+                            "significant" แต่หลอก</p>
+                    </div>
+                    <div class="callout bq-red">
+                        <h5 style="font-weight: 600;">Cherry-picking</h5>
+                        <p class="muted" style="font-size: 0.9rem;">เลือกแสดงเฉพาะข้อมูลที่สนับสนุนสมมติฐาน
+                            ซ่อนส่วนที่ขัดแย้ง</p>
+                    </div>
+                    <div class="callout bq-red">
+                        <h5 style="font-weight: 600;">Survivorship Bias</h5>
+                        <p class="muted" style="font-size: 0.9rem;">วิเคราะห์เฉพาะ "ผู้รอด" ไม่นับผู้ที่หลุดไป — เช่น
+                            สถิติเครื่องบินสงคราม</p>
+                    </div>
+                </div>
+                <div class="callout bq-gold" style="margin-top: 1rem;">
+                    <strong>หลัก ASA / ICMJE:</strong> Transparency · Reproducibility · Honest reporting of all results
+                    (ไม่ใช่เฉพาะที่ "ตรง")
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>50 / 57</span>
+            </div>
+        </div>
+
+        <!-- 7: Misconceptions -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">ความเข้าใจผิดที่พบบ่อย</div>
+                <div class="slide-subtitle">5 ความเชื่อที่ผิดเกี่ยวกับสถิติ — และความจริง</div>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2" style="gap: 0.85rem; grid-template-columns: 1fr;">
+                    <div class="sub-card" style="border-left: 4px solid var(--color-sb-green);">
+                        <h4>"Correlation = Causation"</h4>
+                        <p class="muted">ตัวแปรสองตัวเคลื่อนไหวพร้อมกัน
+                            <strong>ไม่ได้</strong>หมายความว่าตัวหนึ่งทำให้อีกตัวหนึ่งเปลี่ยน</p>
+                    </div>
+                    <div class="sub-card" style="border-left: 4px solid var(--color-sb-house);">
+                        <h4>"Larger sample is always better"</h4>
+                        <p class="muted">ใช่ในแง่ precision แต่ถ้า <strong>bias ในการเก็บข้อมูล</strong> ยิ่ง n
+                            มากยิ่งหลอกมาก</p>
+                    </div>
+                    <div class="sub-card" style="border-left: 4px solid var(--color-sb-accent);">
+                        <h4>"p &lt; 0.05 means the effect is real"</h4>
+                        <p class="muted">p-value คือ <strong>ความน่าจะเป็นของข้อมูล ถ้า H₀ เป็นจริง</strong> —
+                            ไม่ใช่ความน่าจะเป็นที่ H₁ เป็นจริง</p>
+                    </div>
+                    <div class="sub-card" style="border-left: 4px solid var(--color-gold);">
+                        <h4>"Average tells the whole story"</h4>
+                        <p class="muted">ค่าเฉลี่ยเพียงค่าเดียวซ่อนการกระจาย — เช่น เงินเดือน "เฉลี่ย 30,000"
+                            อาจมาจากคนส่วนน้อยที่รวยมาก</p>
+                    </div>
+                    <div class="sub-card" style="border-left: 4px solid #B91C1C;">
+                        <h4>"Statistics can prove anything"</h4>
+                        <p class="muted">สถิติไม่ได้ "พิสูจน์" แต่ <strong>ให้หลักฐาน</strong>
+                            เพื่อสนับสนุนหรือหักล้างสมมติฐานอย่างมีระเบียบ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>51 / 57</span>
+            </div>
+        </div>
+
+        <!-- 8: Glossary -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">สรุปศัพท์ (Glossary)</div>
+                <div class="slide-subtitle">คำศัพท์หลักที่ต้องจำให้ได้ก่อนไปบทถัดไป</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1.25rem; font-size: 0.95rem;">
+                    <div><strong>Population</strong> — ประชากรทั้งหมดที่สนใจศึกษา</div>
+                    <div><strong>Sample</strong> — ส่วนหนึ่งของประชากรที่เก็บข้อมูลจริง</div>
+                    <div><strong>Parameter</strong> — ค่าลักษณะของประชากร (μ, σ, p)</div>
+                    <div><strong>Statistic</strong> — ค่าลักษณะของตัวอย่าง (x̄, s, p̂)</div>
+                    <div><strong>Variable</strong> — คุณลักษณะที่แตกต่างกันในแต่ละหน่วย</div>
+                    <div><strong>Observation</strong> — ค่าของตัวแปรในหนึ่งหน่วยตัวอย่าง</div>
+                    <div><strong>Descriptive</strong> — สรุป/บรรยายข้อมูลที่มี</div>
+                    <div><strong>Inferential</strong> — อนุมานจากตัวอย่างสู่ประชากร</div>
+                    <div><strong>Quantitative</strong> — เชิงปริมาณ (ตัวเลข)</div>
+                    <div><strong>Qualitative</strong> — เชิงคุณภาพ (หมวดหมู่)</div>
+                    <div><strong>Bias</strong> — ความเอนเอียงเชิงระบบในข้อมูล</div>
+                    <div><strong>Variability</strong> — การกระจาย/ความแตกต่างของข้อมูล</div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>52 / 57</span>
+            </div>
+        </div>
+
+        <!-- 9: Concept map SVG -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">แผนที่แนวคิด: Data → Decision</div>
+                <div class="slide-subtitle">ภาพรวมกระบวนการทางสถิติตั้งแต่ข้อมูลดิบถึงการตัดสินใจ</div>
+            </div>
+            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 880 360" style="width: 100%; max-width: 880px; height: auto;" role="img"
+                    aria-label="Concept map: Data flows through Descriptive and Inferential statistics to support Decision-making">
+                    <defs>
+                        <linearGradient id="cmGreen" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#008F5C" />
+                            <stop offset="100%" stop-color="#006B45" />
+                        </linearGradient>
+                        <linearGradient id="cmHouse" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#1E293B" />
+                            <stop offset="100%" stop-color="#0F172A" />
+                        </linearGradient>
+                        <linearGradient id="cmAccent" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#D4A24C" />
+                            <stop offset="100%" stop-color="#B8862E" />
+                        </linearGradient>
+                        <marker id="cmArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                            orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E293B" />
+                        </marker>
+                    </defs>
+                    <rect x="20" y="140" width="160" height="80" rx="10" fill="url(#cmGreen)" />
+                    <text x="100" y="175" text-anchor="middle" fill="white" font-size="20" font-weight="600"
+                        font-family="IBM Plex Sans Thai Looped">DATA</text>
+                    <text x="100" y="200" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="13"
+                        font-family="IBM Plex Sans">ข้อมูลดิบ</text>
+                    <path d="M 185 180 L 240 180" stroke="#1E293B" stroke-width="2.5" fill="none"
+                        marker-end="url(#cmArr)" />
+                    <rect x="245" y="60" width="180" height="80" rx="10" fill="url(#cmHouse)" />
+                    <text x="335" y="95" text-anchor="middle" fill="white" font-size="18"
+                        font-weight="600">Descriptive</text>
+                    <text x="335" y="118" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12">mean · median
+                        · SD · graph</text>
+                    <rect x="245" y="220" width="180" height="80" rx="10" fill="url(#cmHouse)" />
+                    <text x="335" y="255" text-anchor="middle" fill="white" font-size="18"
+                        font-weight="600">Inferential</text>
+                    <text x="335" y="278" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="12">CI · t-test ·
+                        regression</text>
+                    <path d="M 430 100 Q 540 100 605 180" stroke="#1E293B" stroke-width="2.5" fill="none"
+                        marker-end="url(#cmArr)" />
+                    <path d="M 430 260 Q 540 260 605 180" stroke="#1E293B" stroke-width="2.5" fill="none"
+                        marker-end="url(#cmArr)" />
+                    <rect x="610" y="140" width="160" height="80" rx="10" fill="url(#cmAccent)" />
+                    <text x="690" y="175" text-anchor="middle" fill="white" font-size="20"
+                        font-weight="600">DECISION</text>
+                    <text x="690" y="200" text-anchor="middle" fill="rgba(255,255,255,0.9)"
+                        font-size="13">การตัดสินใจ</text>
+                    <path d="M 690 220 Q 690 320 335 320 Q 100 320 100 220" stroke="#475569" stroke-width="1.5"
+                        fill="none" stroke-dasharray="6 4" marker-end="url(#cmArr)" />
+                    <text x="395" y="345" text-anchor="middle" fill="#475569" font-size="12"
+                        font-style="italic">ป้อนกลับ: เก็บข้อมูลเพิ่ม / ทดลองใหม่</text>
+                </svg>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>53 / 57</span>
+            </div>
+        </div>
+
+        <!-- 10: Variable decision tree SVG -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">แผนภูมิต้นไม้: ประเภทตัวแปร</div>
+                <div class="slide-subtitle">Decision tree — จำแนกตัวแปรเบื้องต้น</div>
+            </div>
+            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 880 400" style="width: 100%; max-width: 880px; height: auto;" role="img"
+                    aria-label="Decision tree classifying variables into categorical/quantitative and their sub-types">
+                    <defs>
+                        <marker id="dtArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                            orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E293B" />
+                        </marker>
+                    </defs>
+                    <rect x="370" y="20" width="140" height="50" rx="8" fill="#008F5C" />
+                    <text x="440" y="52" text-anchor="middle" fill="white" font-size="18"
+                        font-weight="600">Variable</text>
+                    <path d="M 410 70 Q 280 100 200 140" stroke="#1E293B" stroke-width="2" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <path d="M 470 70 Q 600 100 680 140" stroke="#1E293B" stroke-width="2" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <text x="245" y="100" fill="#1E293B" font-size="13" font-style="italic">ไม่ใช่ตัวเลข?</text>
+                    <text x="635" y="100" fill="#1E293B" font-size="13" font-style="italic">เป็นตัวเลข?</text>
+                    <rect x="80" y="140" width="180" height="50" rx="8" fill="#1E293B" />
+                    <text x="170" y="172" text-anchor="middle" fill="white" font-size="16"
+                        font-weight="600">Categorical</text>
+                    <rect x="620" y="140" width="180" height="50" rx="8" fill="#1E293B" />
+                    <text x="710" y="172" text-anchor="middle" fill="white" font-size="16"
+                        font-weight="600">Quantitative</text>
+                    <path d="M 130 190 L 90 240" stroke="#1E293B" stroke-width="1.5" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <path d="M 210 190 L 250 240" stroke="#1E293B" stroke-width="1.5" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <rect x="20" y="245" width="140" height="40" rx="6" fill="#475569" />
+                    <text x="90" y="270" text-anchor="middle" fill="white" font-size="14"
+                        font-weight="500">Nominal</text>
+                    <rect x="180" y="245" width="140" height="40" rx="6" fill="#475569" />
+                    <text x="250" y="270" text-anchor="middle" fill="white" font-size="14"
+                        font-weight="500">Ordinal</text>
+                    <text x="55" y="225" fill="#1E293B" font-size="11" font-style="italic">ไม่มีลำดับ</text>
+                    <text x="290" y="225" fill="#1E293B" font-size="11" font-style="italic">มีลำดับ</text>
+                    <path d="M 670 190 L 630 240" stroke="#1E293B" stroke-width="1.5" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <path d="M 750 190 L 790 240" stroke="#1E293B" stroke-width="1.5" fill="none"
+                        marker-end="url(#dtArr)" />
+                    <rect x="560" y="245" width="140" height="40" rx="6" fill="#475569" />
+                    <text x="630" y="270" text-anchor="middle" fill="white" font-size="14"
+                        font-weight="500">Discrete</text>
+                    <rect x="720" y="245" width="140" height="40" rx="6" fill="#475569" />
+                    <text x="790" y="270" text-anchor="middle" fill="white" font-size="14"
+                        font-weight="500">Continuous</text>
+                    <text x="595" y="225" fill="#1E293B" font-size="11" font-style="italic">นับได้</text>
+                    <text x="800" y="225" fill="#1E293B" font-size="11" font-style="italic">วัดได้</text>
+                    <text x="90" y="310" text-anchor="middle" fill="#1E293B" font-size="12">เพศ, สี, เขต</text>
+                    <text x="250" y="310" text-anchor="middle" fill="#1E293B" font-size="12">ระดับ, อันดับ</text>
+                    <text x="630" y="310" text-anchor="middle" fill="#1E293B" font-size="12">จำนวนบุตร</text>
+                    <text x="790" y="310" text-anchor="middle" fill="#1E293B" font-size="12">ส่วนสูง, นน.</text>
+                    <text x="90" y="335" text-anchor="middle" fill="#475569" font-size="11"
+                        font-style="italic">mode</text>
+                    <text x="250" y="335" text-anchor="middle" fill="#475569" font-size="11"
+                        font-style="italic">median</text>
+                    <text x="630" y="335" text-anchor="middle" fill="#475569" font-size="11" font-style="italic">mean,
+                        SD</text>
+                    <text x="790" y="335" text-anchor="middle" fill="#475569" font-size="11" font-style="italic">mean,
+                        SD</text>
+                    <text x="440" y="380" text-anchor="middle" fill="#1E293B" font-size="12"
+                        font-weight="600">เครื่องมือสถิติที่ใช้ได้</text>
+                </svg>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>54 / 57</span>
+            </div>
+        </div>
+
+        <!-- 11: Nightingale rose diagram -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Nightingale Rose Diagram (1858)</div>
+                <div class="slide-subtitle">Florence Nightingale สื่อสารข้อมูลการเสียชีวิตในสงครามไครเมียด้วย "coxcomb"
+                </div>
+            </div>
+            <div class="slide-content"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: center;">
+                <svg viewBox="0 0 320 320" style="width: 100%; max-width: 320px; height: auto; justify-self: center;"
+                    role="img"
+                    aria-label="Nightingale rose diagram showing Crimean War deaths: Disease 51% (largest sector, bottom), Wounds 28% (left), Other 21% (right). Sector radius proportional to percentage.">
+                    <g transform="translate(160,160)">
+                        <!-- Disease 51% (bottom, largest, r=102) — sector 30° to 150° -->
+                        <path d="M 0 0 L 88.3 51 A 102 102 0 0 1 -88.3 51 Z" fill="#BE185D" opacity="0.85" />
+                        <text x="0" y="48" text-anchor="middle" fill="white" font-size="15"
+                            font-weight="600">Disease</text>
+                        <text x="0" y="65" text-anchor="middle" fill="white" font-size="13">51%</text>
+                        <!-- Wounds 28% (left, r=56) — sector 150° to 270° -->
+                        <path d="M 0 0 L -48.5 28 A 56 56 0 0 1 0 -56 Z" fill="#3B82F6" opacity="0.85" />
+                        <text x="-24" y="-18" text-anchor="middle" fill="white" font-size="12"
+                            font-weight="600">Wounds</text>
+                        <text x="-24" y="-4" text-anchor="middle" fill="white" font-size="11">28%</text>
+                        <!-- Other 21% (right, smallest, r=42) — sector 270° to 30° -->
+                        <path d="M 0 0 L 0 -42 A 42 42 0 0 1 36.4 21 Z" fill="#475569" opacity="0.85" />
+                        <text x="22" y="-15" text-anchor="middle" fill="white" font-size="11"
+                            font-weight="600">Other</text>
+                        <text x="22" y="-3" text-anchor="middle" fill="white" font-size="10">21%</text>
+                        <!-- Month labels at outer edge -->
+                        <text x="0" y="-115" text-anchor="middle" fill="#1E293B" font-size="10">Jan</text>
+                        <text x="115" y="5" text-anchor="middle" fill="#1E293B" font-size="10">Apr</text>
+                        <text x="-115" y="5" text-anchor="middle" fill="#1E293B" font-size="10">Oct</text>
+                    </g>
+                </svg>
+                <div>
+                    <p style="font-size: 1.05rem;">Nightingale ใช้ rose diagram แสดงให้ Queen Victoria เห็นว่า</p>
+                    <div class="callout bq-gold" style="margin: 0.75rem 0;">
+                        <strong>การเสียชีวิตจากโรค (51%) มากกว่าจากบาดแผลสงคราม (28%) หลายเท่า</strong>
+                    </div>
+                    <p class="muted">นำไปสู่การปฏิรูปสุขอนามัยในโรงพยาบาลทหาร และเป็นต้นแบบ <em>evidence-based
+                            policy</em></p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>55 / 57</span>
+            </div>
+        </div>
+
+        <!-- 12: Interactive live counter -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">คำนวณสถิติเบื้องต้น (Live)</div>
+                <div class="slide-subtitle">พิมพ์ตัวเลขคั่นด้วยคอมมา หรือกด "สุ่ม" เพื่อดู Mean / Median / SD เปลี่ยนแบบ
+                    real-time</div>
+            </div>
+            <div class="slide-content">
+                <div class="sub-card" style="background: var(--color-canvas);">
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">ข้อมูล (คั่นด้วยคอมมา หรือ
+                        space):</label>
+                    <input id="liveDataInput" type="text" value="72, 85, 90, 68, 95"
+                        style="width: 100%; padding: 0.6rem 0.8rem; font-size: 1rem; border: 1.5px solid var(--color-sb-light); border-radius: var(--radius-md); font-family: 'IBM Plex Sans';"
+                        oninput="window.__liveStatsUpdate()">
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.6rem;">
+                        <button onclick="window.__liveStatsRandom()"
+                            style="padding: 0.5rem 1rem; background: var(--color-sb-green); color: white; border: none; border-radius: var(--radius-md); font-weight: 500; cursor: pointer; font-family: 'IBM Plex Sans Thai Looped', 'IBM Plex Sans';">
+                            🎲 สุ่มข้อมูล
+                        </button>
+                        <button onclick="window.__liveStatsClear()"
+                            style="padding: 0.5rem 1rem; background: var(--color-card); color: var(--color-text); border: 1px solid var(--color-sb-light); border-radius: var(--radius-md); font-weight: 500; cursor: pointer;">
+                            ล้าง
+                        </button>
+                    </div>
+                </div>
+                <div id="liveStatsOutput"
+                    style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-top: 1rem;">
+                </div>
+                <div id="liveStatsChart"
+                    style="margin-top: 1rem; height: 80px; display: flex; align-items: flex-end; gap: 4px; padding: 0.5rem; background: var(--color-canvas); border-radius: var(--radius-md); border: 1px solid var(--color-sb-light);">
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>56 / 57</span>
+            </div>
+        </div>
+
+        <!-- 13: Interactive scale classifier -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">จำแนกระดับการวัด (Interactive)</div>
+                <div class="slide-subtitle">คลิกที่ตัวแปรเพื่อจัดเข้าระดับที่ถูกต้อง — Nominal / Ordinal / Interval /
+                    Ratio</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+                    <div class="sub-card" style="background: var(--color-canvas);">
+                        <h4>ตัวแปร</h4>
+                        <p class="muted" style="font-size: 0.85rem;">คลิกเพื่อเลือก</p>
+                        <div id="scVarList"
+                            style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem;"></div>
+                    </div>
+                    <div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem;">
+                            <button data-scale="nominal" class="sc-drop"
+                                style="padding: 0.75rem; min-height: 80px; background: white; border: 2px dashed var(--color-sb-green); border-radius: var(--radius-md); cursor: pointer; text-align: left;">
+                                <strong style="color: var(--color-sb-green);">Nominal</strong>
+                                <p class="muted" style="font-size: 0.82rem; margin-top: 0.3rem;">จัดหมวดหมู่</p>
+                            </button>
+                            <button data-scale="ordinal" class="sc-drop"
+                                style="padding: 0.75rem; min-height: 80px; background: white; border: 2px dashed #475569; border-radius: var(--radius-md); cursor: pointer; text-align: left;">
+                                <strong style="color: #475569;">Ordinal</strong>
+                                <p class="muted" style="font-size: 0.82rem; margin-top: 0.3rem;">มีลำดับ</p>
+                            </button>
+                            <button data-scale="interval" class="sc-drop"
+                                style="padding: 0.75rem; min-height: 80px; background: white; border: 2px dashed var(--color-sb-house); border-radius: var(--radius-md); cursor: pointer; text-align: left;">
+                                <strong style="color: var(--color-sb-house);">Interval</strong>
+                                <p class="muted" style="font-size: 0.82rem; margin-top: 0.3rem;">ระยะเท่ากัน ไม่มี 0 แท้
+                                </p>
+                            </button>
+                            <button data-scale="ratio" class="sc-drop"
+                                style="padding: 0.75rem; min-height: 80px; background: white; border: 2px dashed var(--color-gold); border-radius: var(--radius-md); cursor: pointer; text-align: left;">
+                                <strong style="color: var(--color-gold);">Ratio</strong>
+                                <p class="muted" style="font-size: 0.82rem; margin-top: 0.3rem;">ระยะเท่ากัน + 0 แท้</p>
+                            </button>
+                        </div>
+                        <div id="scFeedback" style="margin-top: 0.75rem; font-size: 0.95rem; min-height: 1.5rem;"></div>
+                        <button onclick="window.__scReset()"
+                            style="margin-top: 0.6rem; padding: 0.4rem 0.9rem; background: var(--color-card); color: var(--color-text); border: 1px solid var(--color-sb-light); border-radius: var(--radius-md); cursor: pointer; font-size: 0.88rem;">
+                            ↻ เริ่มใหม่
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Department of Digital Science and Technology · 2026</span>
+                <span>57 / 57</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            const slides = document.querySelectorAll('.slide');
+            const total = slides.length;
+            document.getElementById('totalSlides').textContent = total;
+            const cur = document.getElementById('curSlide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progressBar');
+            let currentIdx = 0;
+            const themeToggle = document.getElementById('themeToggle');
+            const themeLabel = document.getElementById('themeLabel');
+
+            function updateUI(idx) {
+                currentIdx = Math.max(0, Math.min(total - 1, idx));
+                cur.textContent = currentIdx + 1;
+                prevBtn.disabled = currentIdx === 0;
+                nextBtn.disabled = currentIdx === total - 1;
+                progressBar.style.width = ((currentIdx + 1) / total * 100) + '%';
+            }
+
+            function goTo(idx) {
+                if (idx < 0 || idx >= total) return;
+                const target = slides[idx];
+                const inPresenting = document.body.classList.contains('presenting');
+                if (inPresenting) {
+                    slides.forEach(s => s.classList.remove('current'));
+                    target.classList.add('current');
+                    updateUI(idx);
+                } else {
+                    const scrollBehavior = (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+                        ? () => document.startViewTransition(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+                        : () => target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    scrollBehavior();
+                    updateUI(idx);
+                }
+            }
+
+            const presentBtn = document.getElementById('presentBtn');
+            const exitPresentBtn = document.getElementById('exitPresent');
+
+            function enterPresenting() {
+                document.body.classList.add('presenting');
+                if (slides[currentIdx]) slides[currentIdx].classList.add('current');
+                updateUI(currentIdx);
+                const req = document.documentElement.requestFullscreen
+                    || document.documentElement.webkitRequestFullscreen
+                    || document.documentElement.msRequestFullscreen;
+                if (req) { try { req.call(document.documentElement).catch(() => { }); } catch (e) { } }
+            }
+            function exitPresenting() {
+                document.body.classList.remove('presenting');
+                slides.forEach(s => s.classList.remove('current'));
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                    if (exit) { try { exit.call(document).catch(() => { }); } catch (e) { } }
+                }
+            }
+            presentBtn.addEventListener('click', enterPresenting);
+            exitPresentBtn.addEventListener('click', exitPresenting);
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && document.body.classList.contains('presenting')) {
+                    // user pressed Esc to leave fullscreen — also exit presenting
+                }
+            });
+
+            prevBtn.addEventListener('click', () => goTo(currentIdx - 1));
+            nextBtn.addEventListener('click', () => goTo(currentIdx + 1));
+
+            document.addEventListener('keydown', (e) => {
+                if (e.target.matches('input, textarea')) return;
+                if (e.key === 'Escape' && document.body.classList.contains('presenting')) {
+                    e.preventDefault(); exitPresenting(); return;
+                }
+                if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey) {
+                    if (!document.body.classList.contains('presenting')) {
+                        e.preventDefault(); enterPresenting();
+                    }
+                    return;
+                }
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(currentIdx + 1); }
+                else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(currentIdx - 1); }
+                else if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+                else if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+            });
+
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const idx = Array.prototype.indexOf.call(slides, entry.target);
+                        if (idx >= 0) updateUI(idx);
+                    }
+                });
+            }, { threshold: 0.25, rootMargin: '-10% 0px -10% 0px' });
+            slides.forEach(s => io.observe(s));
+
+            themeToggle.addEventListener('click', () => {
+                const html = document.documentElement;
+                const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                themeLabel.textContent = next === 'dark' ? 'Dark' : 'Light';
+                try { localStorage.setItem('sb-theme', next); } catch (e) { }
+            });
+            try {
+                const stored = localStorage.getItem('sb-theme');
+                if (stored) {
+                    document.documentElement.setAttribute('data-theme', stored);
+                    themeLabel.textContent = stored === 'dark' ? 'Dark' : 'Light';
+                } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeLabel.textContent = 'Dark';
+                }
+            } catch (e) { }
+
+            updateUI(0);
+
+            // ====== PDF download = window.print() (browser native, no library) ======
+            document.getElementById('pdfBtn').addEventListener('click', () => window.print());
+        })();
+    </script>
+    <script>
+        /* ===== Interactive widgets: live stats + scale classifier ===== */
+        (function () {
+            // --- Live stats calculator ---
+            function parseData(str) {
+                return str.split(/[\s,;]+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length; }).map(Number).filter(function (n) { return !isNaN(n); });
+            }
+            function medianOf(arr) {
+                var s = arr.slice().sort(function (a, b) { return a - b; });
+                var n = s.length;
+                if (n === 0) return 0;
+                if (n % 2 === 1) return s[(n - 1) / 2];
+                return (s[n / 2 - 1] + s[n / 2]) / 2;
+            }
+            function statsOf(arr) {
+                var n = arr.length;
+                if (n === 0) return null;
+                var sum = 0; for (var i = 0; i < n; i++) sum += arr[i];
+                var mean = sum / n;
+                var med = medianOf(arr);
+                var variance = n > 1 ? arr.reduce(function (s, x) { return s + (x - mean) * (x - mean); }, 0) / (n - 1) : 0;
+                return { n: n, mean: mean, median: med, sd: Math.sqrt(variance), min: Math.min.apply(null, arr), max: Math.max.apply(null, arr) };
+            }
+            function renderStats() {
+                var input = document.getElementById('liveDataInput');
+                var output = document.getElementById('liveStatsOutput');
+                var chart = document.getElementById('liveStatsChart');
+                if (!input || !output) return;
+                var data = parseData(input.value);
+                var s = statsOf(data);
+                if (!s) {
+                    output.innerHTML = '<div class="muted" style="grid-column: 1/-1; text-align: center; padding: 1rem;">พิมพ์ตัวเลขเพื่อดูสถิติ</div>';
+                    if (chart) chart.innerHTML = '';
+                    return;
+                }
+                var fmt = function (v) { return v.toFixed(2); };
+                var card = function (label, value) {
+                    return '<div class="sub-card" style="text-align: center; padding: 0.75rem;">' +
+                        '<div class="muted" style="font-size: 0.85rem;">' + label + '</div>' +
+                        '<div style="font-size: 1.4rem; font-weight: 600; color: var(--color-sb-green); font-family: IBM Plex Sans, monospace; margin-top: 0.25rem;">' + value + '</div>' +
+                        '</div>';
+                };
+                output.innerHTML = card('n', s.n) + card('Mean', fmt(s.mean)) + card('Median', fmt(s.median)) + card('SD', fmt(s.sd));
+                if (chart) {
+                    var range = (s.max - s.min) || 1;
+                    chart.innerHTML = data.map(function (v) {
+                        var h = Math.max(8, ((v - s.min) / range) * 60);
+                        return '<div style="flex: 1; height: ' + h + 'px; background: linear-gradient(180deg, var(--color-sb-green), var(--color-sb-accent)); border-radius: 2px 2px 0 0; min-width: 8px;" title="' + v + '"></div>';
+                    }).join('');
+                }
+            }
+            window.__liveStatsUpdate = renderStats;
+            window.__liveStatsRandom = function () {
+                var n = 5 + Math.floor(Math.random() * 4);
+                var arr = [];
+                for (var i = 0; i < n; i++) arr.push(50 + Math.floor(Math.random() * 50));
+                document.getElementById('liveDataInput').value = arr.join(', ');
+                renderStats();
+            };
+            window.__liveStatsClear = function () {
+                document.getElementById('liveDataInput').value = '';
+                renderStats();
+            };
+            if (document.getElementById('liveDataInput')) renderStats();
+
+            // --- Scale classifier ---
+            var SC_VARIABLES = [
+                { name: 'เพศ (ชาย/หญิง)', answer: 'nominal' },
+                { name: 'อุณหภูมิ (°C)', answer: 'interval' },
+                { name: 'ส่วนสูง (cm)', answer: 'ratio' },
+                { name: 'ระดับความพอใจ (1-5)', answer: 'ordinal' },
+                { name: 'น้ำหนัก (kg)', answer: 'ratio' },
+                { name: 'ปี ค.ศ.', answer: 'interval' },
+                { name: 'หมายเลขโทรศัพท์', answer: 'nominal' },
+                { name: 'อันดับมหาวิทยาลัย', answer: 'ordinal' }
+            ];
+            var scRemaining = [];
+            var scCurrent = 0;
+
+            function renderScList() {
+                var list = document.getElementById('scVarList');
+                if (!list) return;
+                if (scRemaining.length === 0) {
+                    list.innerHTML = '<p class="muted" style="font-size: 0.9rem; text-align: center; padding: 1rem;">— ครบแล้ว —</p>';
+                    return;
+                }
+                list.innerHTML = scRemaining.map(function (v, i) {
+                    var active = (i === scCurrent);
+                    return '<button data-sc-idx="' + i + '" class="sc-var" style="padding: 0.5rem 0.7rem; background: ' + (active ? 'var(--color-canvas)' : 'white') + '; border: 1.5px solid ' + (active ? 'var(--color-sb-green)' : 'var(--color-sb-light)') + '; border-radius: var(--radius-md); cursor: pointer; text-align: left; font-size: 0.92rem;">' + v.name + '</button>';
+                }).join('');
+                list.querySelectorAll('.sc-var').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        scCurrent = parseInt(btn.dataset.scIdx);
+                        renderScList();
+                    });
+                });
+            }
+            function scInit() {
+                if (!document.getElementById('scVarList')) return;
+                scRemaining = SC_VARIABLES.slice();
+                scCurrent = 0;
+                renderScList();
+                var fb = document.getElementById('scFeedback');
+                if (fb) fb.innerHTML = '<span class="muted">เลือกตัวแปร → คลิกปุ่มระดับที่คิดว่าถูกต้อง</span>';
+            }
+            window.__scReset = scInit;
+            function setupScDrops() {
+                document.querySelectorAll('.sc-drop').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        if (scCurrent === null || scCurrent < 0 || scCurrent >= scRemaining.length) {
+                            var fb0 = document.getElementById('scFeedback');
+                            if (fb0) fb0.innerHTML = '<span style="color: #B91C1C;">เลือกตัวแปรก่อน</span>';
+                            return;
+                        }
+                        var choice = btn.dataset.scale;
+                        var v = scRemaining[scCurrent];
+                        var correct = (choice === v.answer);
+                        var fb = document.getElementById('scFeedback');
+                        if (correct) {
+                            fb.innerHTML = '<span style="color: var(--color-sb-green);">✓ ถูก!</span> <strong>' + v.name + '</strong> เป็น <strong>' + v.answer + '</strong>';
+                            scRemaining.splice(scCurrent, 1);
+                            scCurrent = scRemaining.length > 0 ? 0 : null;
+                            renderScList();
+                            if (scRemaining.length === 0) {
+                                fb.innerHTML += '<br><span class="muted">🎉 ครบทุกตัวแปร! กด "เริ่มใหม่" เพื่อเล่นอีกครั้ง</span>';
+                            }
+                        } else {
+                            fb.innerHTML = '<span style="color: #B91C1C;">✗ ยังไม่ถูก</span> ลองคิดดูว่า <strong>' + v.name + '</strong> มีลำดับ/ระยะเท่ากัน/ศูนย์แท้จริงหรือไม่';
+                        }
+                    });
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () { scInit(); setupScDrops(); });
+            } else {
+                scInit();
+                setupScDrops();
+            }
+        })();
+    </script>
+</body>
+
+</html>
