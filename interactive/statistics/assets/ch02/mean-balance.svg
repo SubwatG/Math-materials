@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif} .line{stroke:#161616;stroke-width:4;stroke-linecap:round} .pt{fill:#0F62FE;stroke:#161616;stroke-width:2} .mean{fill:#0F62FE;stroke:#161616;stroke-width:2}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [fill="#0F62FE"] { fill: #78A9FF !important; }
+  [stroke="#0F62FE"] { stroke: #78A9FF !important; }
+  [fill="#78A9FF"] { fill: #0F62FE !important; }
+  [stroke="#78A9FF"] { stroke: #0F62FE !important; }
+  [fill="#161616"] { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+  [fill="#FFFFFF"] { fill: #262626 !important; }
+  [stroke="#FFFFFF"] { stroke: #262626 !important; }
+  [fill="#DA1E28"] { fill: #FF8389 !important; }
+  [stroke="#DA1E28"] { stroke: #FF8389 !important; }
+  [fill="#F1C21B"] { fill: #F1C21B !important; }
+  [stroke="#F1C21B"] { stroke: #F1C21B !important; }
+}</style>
+<line class="line" x1="90" y1="165" x2="670" y2="165"/>
+<polygon points="380,175 340,285 420,285" fill="none" stroke="#0F62FE" stroke-width="4"/>
+<text x="380" y="315" text-anchor="middle" font-size="24">mean = balance point</text>
+<circle class="pt" cx="186" cy="145" r="14"/><text x="186" y="115" text-anchor="middle" font-size="20">4</text><circle class="pt" cx="186" cy="145" r="14"/><text x="186" y="115" text-anchor="middle" font-size="20">4</text><circle class="pt" cx="378" cy="145" r="14"/><text x="378" y="115" text-anchor="middle" font-size="20">6</text><circle class="pt" cx="570" cy="145" r="14"/><text x="570" y="115" text-anchor="middle" font-size="20">8</text><circle class="pt" cx="570" cy="145" r="14"/><text x="570" y="115" text-anchor="middle" font-size="20">8</text>
+<circle class="mean" cx="380" cy="165" r="18"/><text x="380" y="70" text-anchor="middle" font-size="28" font-weight="700">Mean as center of gravity</text>
+</svg>

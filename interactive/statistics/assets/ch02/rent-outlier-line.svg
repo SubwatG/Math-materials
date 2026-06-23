@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif}
+.axis{stroke:#161616;stroke-width:1.5}
+.tick{stroke:#161616;stroke-width:1}
+.qline{stroke:#0F62FE;stroke-width:2;fill:none}
+.limit{stroke:#DA1E28;stroke-width:2;stroke-dasharray:6,3;fill:none}
+.outlier{fill:#DA1E28;stroke:#161616;stroke-width:1.2}
+.label{font-size:10px}
+.limit-label{fill:#DA1E28;font-size:11px;font-weight:600}
+.q-label{fill:#0F62FE;font-size:11px;font-weight:600}
+.outlier-label{fill:#DA1E28;font-size:12px;font-weight:700}
+.muted{opacity:.7}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [fill="#0F62FE"] { fill: #78A9FF !important; }
+  [stroke="#0F62FE"] { stroke: #78A9FF !important; }
+  [fill="#78A9FF"] { fill: #0F62FE !important; }
+  [stroke="#78A9FF"] { stroke: #0F62FE !important; }
+  [fill="#161616"] { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+  [fill="#FFFFFF"] { fill: #262626 !important; }
+  [stroke="#FFFFFF"] { stroke: #262626 !important; }
+  [fill="#DA1E28"] { fill: #FF8389 !important; }
+  [stroke="#DA1E28"] { stroke: #FF8389 !important; }
+  [fill="#F1C21B"] { fill: #F1C21B !important; }
+  [stroke="#F1C21B"] { stroke: #F1C21B !important; }
+}</style>
+
+<g transform="translate(80,120)">
+<line x1="0" y1="0" x2="780" y2="0" class="axis"/>
+<line x1="0" y1="-8" x2="0" y2="8" class="axis"/>
+<line x1="780" y1="-8" x2="780" y2="8" class="axis"/>
+<g>
+<line x1="0" y1="-6" x2="0" y2="6" class="tick"/><text x="0" y="24" text-anchor="middle" class="label">350</text>
+<line x1="39" y1="-6" x2="39" y2="6" class="tick"/><text x="39" y="24" text-anchor="middle" class="label">400</text>
+<line x1="117" y1="-6" x2="117" y2="6" class="tick"/><text x="117" y="24" text-anchor="middle" class="label">500</text>
+<line x1="195" y1="-6" x2="195" y2="6" class="tick"/><text x="195" y="24" text-anchor="middle" class="label">600</text>
+<line x1="273" y1="-6" x2="273" y2="6" class="tick"/><text x="273" y="24" text-anchor="middle" class="label">700</text>
+<line x1="351" y1="-6" x2="351" y2="6" class="tick"/><text x="351" y="24" text-anchor="middle" class="label">800</text>
+<line x1="429" y1="-6" x2="429" y2="6" class="tick"/><text x="429" y="24" text-anchor="middle" class="label">900</text>
+<line x1="507" y1="-6" x2="507" y2="6" class="tick"/><text x="507" y="24" text-anchor="middle" class="label">1000</text>
+<line x1="585" y1="-6" x2="585" y2="6" class="tick"/><text x="585" y="24" text-anchor="middle" class="label">1100</text>
+<line x1="663" y1="-6" x2="663" y2="6" class="tick"/><text x="663" y="24" text-anchor="middle" class="label">1200</text>
+<line x1="741" y1="-6" x2="741" y2="6" class="tick"/><text x="741" y="24" text-anchor="middle" class="label">1300</text>
+</g>
+
+<g transform="translate(8,0)">
+<line x1="0" y1="-26" x2="0" y2="6" class="limit"/>
+<text x="-2" y="-32" text-anchor="end" class="limit-label">LL = 360</text>
+</g>
+<g transform="translate(725,0)">
+<line x1="0" y1="-26" x2="0" y2="6" class="limit"/>
+<text x="0" y="-32" text-anchor="end" class="limit-label">UL = 1280</text>
+</g>
+
+<g transform="translate(277,0)">
+<line x1="0" y1="-12" x2="0" y2="4" class="qline"/>
+<text x="0" y="-16" text-anchor="middle" class="q-label">Q₁ 705</text>
+</g>
+<g transform="translate(382,0)">
+<line x1="0" y1="-12" x2="0" y2="4" class="qline"/>
+<text x="0" y="-16" text-anchor="middle" class="q-label">Q₂ 840</text>
+</g>
+<g transform="translate(456,0)">
+<line x1="0" y1="-12" x2="0" y2="4" class="qline"/>
+<text x="0" y="-16" text-anchor="middle" class="q-label">Q₃ 935</text>
+</g>
+
+<circle cx="0" cy="0" r="6" class="outlier"/>
+<text x="-4" y="-44" text-anchor="end" class="outlier-label">outlier (350)</text>
+</g>
+
+<text x="450" y="186" text-anchor="middle" font-size="13" font-weight="600">350 &lt; LL = 360 → ค่าผิดปกติ (outlier ด้านล่าง)</text>
+</svg>

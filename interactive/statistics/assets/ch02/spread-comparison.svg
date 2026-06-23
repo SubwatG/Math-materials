@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 280">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif} line{stroke:#161616;stroke-width:3;stroke-linecap:round} circle{stroke:#161616;stroke-width:2} .a{fill:#0F62FE}.b{fill:#0F62FE}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [fill="#0F62FE"] { fill: #78A9FF !important; }
+  [stroke="#0F62FE"] { stroke: #78A9FF !important; }
+  [fill="#78A9FF"] { fill: #0F62FE !important; }
+  [stroke="#78A9FF"] { stroke: #0F62FE !important; }
+  [fill="#161616"] { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+  [fill="#FFFFFF"] { fill: #262626 !important; }
+  [stroke="#FFFFFF"] { stroke: #262626 !important; }
+  [fill="#DA1E28"] { fill: #FF8389 !important; }
+  [stroke="#DA1E28"] { stroke: #FF8389 !important; }
+  [fill="#F1C21B"] { fill: #F1C21B !important; }
+  [stroke="#F1C21B"] { stroke: #F1C21B !important; }
+}</style>
+<text x="410" y="34" text-anchor="middle" font-size="26" font-weight="700">Same center, different spread</text>
+<line x1="80" y1="105" x2="740" y2="105"/><text x="70" y="110" text-anchor="end" font-size="18">low SD</text>
+<circle class="a" cx="355" cy="105" r="12"/><circle class="a" cx="380" cy="105" r="12"/><circle class="a" cx="405" cy="105" r="12"/><circle class="a" cx="430" cy="105" r="12"/><circle class="a" cx="455" cy="105" r="12"/>
+<line x1="80" y1="205" x2="740" y2="205"/><text x="70" y="210" text-anchor="end" font-size="18">high SD</text>
+<circle class="b" cx="160" cy="205" r="12"/><circle class="b" cx="285" cy="205" r="12"/><circle class="b" cx="410" cy="205" r="12"/><circle class="b" cx="535" cy="205" r="12"/><circle class="b" cx="660" cy="205" r="12"/>
+<line x1="410" y1="70" x2="410" y2="235" stroke="#DA1E28" stroke-width="2" stroke-dasharray="6 6"/><text x="410" y="262" text-anchor="middle" font-size="18">same mean</text>
+</svg>

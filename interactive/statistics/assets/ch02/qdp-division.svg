@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 290">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif}
+.line{stroke:#161616;stroke-width:1.5;fill:none}
+.t-major{stroke:#161616;stroke-width:1.6}
+.t-med{stroke:#161616;stroke-width:1.1}
+.t-min{stroke:#161616;stroke-width:0.7}
+.axis{font-size:11px;fill:#525252}
+.label{font-size:12px;font-weight:600}
+.section{font-size:14px;font-weight:700}
+.note{font-size:11px;fill:#525252;font-style:italic}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+}
+</style>
+
+<text x="450" y="22" text-anchor="middle" font-size="14" font-weight="700">Quartile (4 ส่วน) · Decile (10 ส่วน) · Percentile (100 ส่วน)</text>
+
+<!-- Quartile row -->
+<text x="20" y="88" class="section">Q</text>
+<g transform="translate(60,88)">
+  <line class="line" x1="0" y1="0" x2="780" y2="0"/>
+  <line class="t-major" x1="0" y1="-7" x2="0" y2="7"/>
+  <line class="t-major" x1="195" y1="-7" x2="195" y2="7"/>
+  <line class="t-major" x1="390" y1="-7" x2="390" y2="7"/>
+  <line class="t-major" x1="585" y1="-7" x2="585" y2="7"/>
+  <line class="t-major" x1="780" y1="-7" x2="780" y2="7"/>
+  <text class="axis" x="0" y="-13" text-anchor="middle">0%</text>
+  <text class="label" x="195" y="-13" text-anchor="middle">Q₁</text>
+  <text class="label" x="390" y="-13" text-anchor="middle">Q₂</text>
+  <text class="label" x="585" y="-13" text-anchor="middle">Q₃</text>
+  <text class="axis" x="780" y="-13" text-anchor="middle">100%</text>
+  <text class="axis" x="0" y="22" text-anchor="middle">0%</text>
+  <text class="axis" x="195" y="22" text-anchor="middle">25%</text>
+  <text class="axis" x="390" y="22" text-anchor="middle">50%</text>
+  <text class="axis" x="585" y="22" text-anchor="middle">75%</text>
+  <text class="axis" x="780" y="22" text-anchor="middle">100%</text>
+</g>
+
+<!-- Decile row -->
+<text x="20" y="160" class="section">D</text>
+<g transform="translate(60,160)">
+  <line class="line" x1="0" y1="0" x2="780" y2="0"/>
+  <line class="t-major" x1="0" y1="-7" x2="0" y2="7"/>
+  <line class="t-med" x1="78" y1="-5" x2="78" y2="5"/>
+  <line class="t-med" x1="156" y1="-5" x2="156" y2="5"/>
+  <line class="t-med" x1="234" y1="-5" x2="234" y2="5"/>
+  <line class="t-med" x1="312" y1="-5" x2="312" y2="5"/>
+  <line class="t-med" x1="390" y1="-5" x2="390" y2="5"/>
+  <line class="t-med" x1="468" y1="-5" x2="468" y2="5"/>
+  <line class="t-med" x1="546" y1="-5" x2="546" y2="5"/>
+  <line class="t-med" x1="624" y1="-5" x2="624" y2="5"/>
+  <line class="t-med" x1="702" y1="-5" x2="702" y2="5"/>
+  <line class="t-major" x1="780" y1="-7" x2="780" y2="7"/>
+  <text class="label" x="78" y="-13" text-anchor="middle">D₁</text>
+  <text class="label" x="156" y="-13" text-anchor="middle">D₂</text>
+  <text class="label" x="234" y="-13" text-anchor="middle">D₃</text>
+  <text class="label" x="312" y="-13" text-anchor="middle">D₄</text>
+  <text class="label" x="390" y="-13" text-anchor="middle">D₅</text>
+  <text class="label" x="468" y="-13" text-anchor="middle">D₆</text>
+  <text class="label" x="546" y="-13" text-anchor="middle">D₇</text>
+  <text class="label" x="624" y="-13" text-anchor="middle">D₈</text>
+  <text class="label" x="702" y="-13" text-anchor="middle">D₉</text>
+  <text class="axis" x="0" y="22" text-anchor="middle">0%</text>
+  <text class="axis" x="78" y="22" text-anchor="middle">10%</text>
+  <text class="axis" x="156" y="22" text-anchor="middle">20%</text>
+  <text class="axis" x="234" y="22" text-anchor="middle">30%</text>
+  <text class="axis" x="312" y="22" text-anchor="middle">40%</text>
+  <text class="axis" x="390" y="22" text-anchor="middle">50%</text>
+  <text class="axis" x="468" y="22" text-anchor="middle">60%</text>
+  <text class="axis" x="546" y="22" text-anchor="middle">70%</text>
+  <text class="axis" x="624" y="22" text-anchor="middle">80%</text>
+  <text class="axis" x="702" y="22" text-anchor="middle">90%</text>
+  <text class="axis" x="780" y="22" text-anchor="middle">100%</text>
+</g>
+
+<!-- Percentile row -->
+<text x="20" y="235" class="section">P</text>
+<g transform="translate(60,235)">
+  <line class="line" x1="0" y1="0" x2="780" y2="0"/>
+  <!-- Major at 0, 25, 50, 75, 100 -->
+  <line class="t-major" x1="0" y1="-7" x2="0" y2="7"/>
+  <line class="t-major" x1="195" y1="-7" x2="195" y2="7"/>
+  <line class="t-major" x1="390" y1="-7" x2="390" y2="7"/>
+  <line class="t-major" x1="585" y1="-7" x2="585" y2="7"/>
+  <line class="t-major" x1="780" y1="-7" x2="780" y2="7"/>
+  <!-- Med at 10, 20, ..., 90 -->
+  <line class="t-med" x1="78" y1="-5" x2="78" y2="5"/>
+  <line class="t-med" x1="156" y1="-5" x2="156" y2="5"/>
+  <line class="t-med" x1="234" y1="-5" x2="234" y2="5"/>
+  <line class="t-med" x1="312" y1="-5" x2="312" y2="5"/>
+  <line class="t-med" x1="468" y1="-5" x2="468" y2="5"/>
+  <line class="t-med" x1="546" y1="-5" x2="546" y2="5"/>
+  <line class="t-med" x1="624" y1="-5" x2="624" y2="5"/>
+  <line class="t-med" x1="702" y1="-5" x2="702" y2="5"/>
+  <!-- Minor at 5, 15, 35, 45, 55, 65, 85, 95 -->
+  <line class="t-min" x1="39" y1="-3" x2="39" y2="3"/>
+  <line class="t-min" x1="117" y1="-3" x2="117" y2="3"/>
+  <line class="t-min" x1="273" y1="-3" x2="273" y2="3"/>
+  <line class="t-min" x1="351" y1="-3" x2="351" y2="3"/>
+  <line class="t-min" x1="429" y1="-3" x2="429" y2="3"/>
+  <line class="t-min" x1="507" y1="-3" x2="507" y2="3"/>
+  <line class="t-min" x1="663" y1="-3" x2="663" y2="3"/>
+  <line class="t-min" x1="741" y1="-3" x2="741" y2="3"/>
+  <!-- Labels above major ticks -->
+  <text class="label" x="195" y="-13" text-anchor="middle">P₂₅</text>
+  <text class="label" x="390" y="-13" text-anchor="middle">P₅₀</text>
+  <text class="label" x="585" y="-13" text-anchor="middle">P₇₅</text>
+  <text class="note" x="780" y="-13" text-anchor="end">P₁, P₂, …, P₉₉</text>
+  <text class="axis" x="0" y="22" text-anchor="middle">0%</text>
+  <text class="axis" x="195" y="22" text-anchor="middle">25%</text>
+  <text class="axis" x="390" y="22" text-anchor="middle">50%</text>
+  <text class="axis" x="585" y="22" text-anchor="middle">75%</text>
+  <text class="axis" x="780" y="22" text-anchor="middle">100%</text>
+</g>
+</svg>

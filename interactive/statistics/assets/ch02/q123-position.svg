@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 145">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif} .box{fill:none;stroke:#161616;stroke-width:1.2;rx:7} .hi{fill:#0F62FE;stroke:#161616;stroke-width:2;rx:7} .bracket{stroke:#DA1E28;stroke-width:2;fill:none} .brk-label{fill:#DA1E28;font-size:14px;font-weight:700} .muted{opacity:.7}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [fill="#0F62FE"] { fill: #78A9FF !important; }
+  [stroke="#0F62FE"] { stroke: #78A9FF !important; }
+  [fill="#78A9FF"] { fill: #0F62FE !important; }
+  [stroke="#78A9FF"] { stroke: #0F62FE !important; }
+  [fill="#161616"] { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+  [fill="#FFFFFF"] { fill: #262626 !important; }
+  [stroke="#FFFFFF"] { stroke: #262626 !important; }
+  [fill="#DA1E28"] { fill: #FF8389 !important; }
+  [stroke="#DA1E28"] { stroke: #FF8389 !important; }
+  [fill="#F1C21B"] { fill: #F1C21B !important; }
+  [stroke="#F1C21B"] { stroke: #F1C21B !important; }
+}</style>
+
+<g>
+<line x1="205" y1="40" x2="273" y2="40" class="bracket"/>
+<line x1="205" y1="40" x2="205" y2="46" class="bracket"/>
+<line x1="273" y1="40" x2="273" y2="46" class="bracket"/>
+<text x="239" y="32" text-anchor="middle" class="brk-label">Q₁</text>
+</g>
+<g>
+<line x1="409" y1="40" x2="477" y2="40" class="bracket"/>
+<line x1="409" y1="40" x2="409" y2="46" class="bracket"/>
+<line x1="477" y1="40" x2="477" y2="46" class="bracket"/>
+<text x="443" y="32" text-anchor="middle" class="brk-label">Q₂</text>
+</g>
+<g>
+<line x1="613" y1="40" x2="681" y2="40" class="bracket"/>
+<line x1="613" y1="40" x2="613" y2="46" class="bracket"/>
+<line x1="681" y1="40" x2="681" y2="46" class="bracket"/>
+<text x="647" y="32" text-anchor="middle" class="brk-label">Q₃</text>
+</g>
+
+<rect class="box" x="35" y="60" width="30" height="42"/><text x="50" y="88" text-anchor="middle" font-size="12">350</text><text class="muted" x="50" y="122" text-anchor="middle" font-size="10">1</text>
+<rect class="box" x="69" y="60" width="30" height="42"/><text x="84" y="88" text-anchor="middle" font-size="12">540</text><text class="muted" x="84" y="122" text-anchor="middle" font-size="10">2</text>
+<rect class="box" x="103" y="60" width="30" height="42"/><text x="118" y="88" text-anchor="middle" font-size="12">550</text><text class="muted" x="118" y="122" text-anchor="middle" font-size="10">3</text>
+<rect class="box" x="137" y="60" width="30" height="42"/><text x="152" y="88" text-anchor="middle" font-size="12">590</text><text class="muted" x="152" y="122" text-anchor="middle" font-size="10">4</text>
+<rect class="box" x="171" y="60" width="30" height="42"/><text x="186" y="88" text-anchor="middle" font-size="12">680</text><text class="muted" x="186" y="122" text-anchor="middle" font-size="10">5</text>
+<rect class="hi" x="205" y="60" width="30" height="42"/><text x="220" y="88" text-anchor="middle" font-size="12">700</text><text class="muted" x="220" y="122" text-anchor="middle" font-size="10">6</text>
+<rect class="hi" x="239" y="60" width="30" height="42"/><text x="254" y="88" text-anchor="middle" font-size="12">710</text><text class="muted" x="254" y="122" text-anchor="middle" font-size="10">7</text>
+<rect class="box" x="273" y="60" width="30" height="42"/><text x="288" y="88" text-anchor="middle" font-size="12">720</text><text class="muted" x="288" y="122" text-anchor="middle" font-size="10">8</text>
+<rect class="box" x="307" y="60" width="30" height="42"/><text x="322" y="88" text-anchor="middle" font-size="12">730</text><text class="muted" x="322" y="122" text-anchor="middle" font-size="10">9</text>
+<rect class="box" x="341" y="60" width="30" height="42"/><text x="356" y="88" text-anchor="middle" font-size="12">730</text><text class="muted" x="356" y="122" text-anchor="middle" font-size="10">10</text>
+<rect class="box" x="375" y="60" width="30" height="42"/><text x="390" y="88" text-anchor="middle" font-size="12">760</text><text class="muted" x="390" y="122" text-anchor="middle" font-size="10">11</text>
+<rect class="hi" x="409" y="60" width="30" height="42"/><text x="424" y="88" text-anchor="middle" font-size="12">830</text><text class="muted" x="424" y="122" text-anchor="middle" font-size="10">12</text>
+<rect class="hi" x="443" y="60" width="30" height="42"/><text x="458" y="88" text-anchor="middle" font-size="12">850</text><text class="muted" x="458" y="122" text-anchor="middle" font-size="10">13</text>
+<rect class="box" x="477" y="60" width="30" height="42"/><text x="492" y="88" text-anchor="middle" font-size="12">860</text><text class="muted" x="492" y="122" text-anchor="middle" font-size="10">14</text>
+<rect class="box" x="511" y="60" width="30" height="42"/><text x="526" y="88" text-anchor="middle" font-size="12">890</text><text class="muted" x="526" y="122" text-anchor="middle" font-size="10">15</text>
+<rect class="box" x="545" y="60" width="30" height="42"/><text x="560" y="88" text-anchor="middle" font-size="12">910</text><text class="muted" x="560" y="122" text-anchor="middle" font-size="10">16</text>
+<rect class="box" x="579" y="60" width="30" height="42"/><text x="594" y="88" text-anchor="middle" font-size="12">910</text><text class="muted" x="594" y="122" text-anchor="middle" font-size="10">17</text>
+<rect class="hi" x="613" y="60" width="30" height="42"/><text x="628" y="88" text-anchor="middle" font-size="12">930</text><text class="muted" x="628" y="122" text-anchor="middle" font-size="10">18</text>
+<rect class="hi" x="647" y="60" width="30" height="42"/><text x="662" y="88" text-anchor="middle" font-size="12">940</text><text class="muted" x="662" y="122" text-anchor="middle" font-size="10">19</text>
+<rect class="box" x="681" y="60" width="30" height="42"/><text x="696" y="88" text-anchor="middle" font-size="12">940</text><text class="muted" x="696" y="122" text-anchor="middle" font-size="10">20</text>
+<rect class="box" x="715" y="60" width="30" height="42"/><text x="730" y="88" text-anchor="middle" font-size="12">960</text><text class="muted" x="730" y="122" text-anchor="middle" font-size="10">21</text>
+<rect class="box" x="749" y="60" width="30" height="42"/><text x="764" y="88" text-anchor="middle" font-size="12">1020</text><text class="muted" x="764" y="122" text-anchor="middle" font-size="10">22</text>
+<rect class="box" x="783" y="60" width="30" height="42"/><text x="798" y="88" text-anchor="middle" font-size="12">1040</text><text class="muted" x="798" y="122" text-anchor="middle" font-size="10">23</text>
+<rect class="box" x="817" y="60" width="30" height="42"/><text x="832" y="88" text-anchor="middle" font-size="12">1120</text><text class="muted" x="832" y="122" text-anchor="middle" font-size="10">24</text>
+</svg>

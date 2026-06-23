@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 130">
+<style>text{fill:#161616;font-family:IBM Plex Sans Thai Looped,Arial,sans-serif} .box{fill:none;stroke:#161616;stroke-width:1.2;rx:7}
+@media (prefers-color-scheme: dark) {
+  text { fill: #F4F4F4 !important; }
+  [fill="#0F62FE"] { fill: #78A9FF !important; }
+  [stroke="#0F62FE"] { stroke: #78A9FF !important; }
+  [fill="#78A9FF"] { fill: #0F62FE !important; }
+  [stroke="#78A9FF"] { stroke: #0F62FE !important; }
+  [fill="#161616"] { fill: #F4F4F4 !important; }
+  [stroke="#161616"] { stroke: #F4F4F4 !important; }
+  [fill="#525252"] { fill: #C6C6C6 !important; }
+  [stroke="#525252"] { stroke: #C6C6C6 !important; }
+  [fill="#FFFFFF"] { fill: #262626 !important; }
+  [stroke="#FFFFFF"] { stroke: #262626 !important; }
+  [fill="#DA1E28"] { fill: #FF8389 !important; }
+  [stroke="#DA1E28"] { stroke: #FF8389 !important; }
+  [fill="#F1C21B"] { fill: #F1C21B !important; }
+  [stroke="#F1C21B"] { stroke: #F1C21B !important; }
+}</style>
+<rect class="box" x="35" y="60" width="30" height="42"/><text x="50" y="88" text-anchor="middle" font-size="12">350</text>
+<rect class="box" x="69" y="60" width="30" height="42"/><text x="84" y="88" text-anchor="middle" font-size="12">540</text>
+<rect class="box" x="103" y="60" width="30" height="42"/><text x="118" y="88" text-anchor="middle" font-size="12">550</text>
+<rect class="box" x="137" y="60" width="30" height="42"/><text x="152" y="88" text-anchor="middle" font-size="12">590</text>
+<rect class="box" x="171" y="60" width="30" height="42"/><text x="186" y="88" text-anchor="middle" font-size="12">680</text>
+<rect class="box" x="205" y="60" width="30" height="42"/><text x="220" y="88" text-anchor="middle" font-size="12">700</text>
+<rect class="box" x="239" y="60" width="30" height="42"/><text x="254" y="88" text-anchor="middle" font-size="12">710</text>
+<rect class="box" x="273" y="60" width="30" height="42"/><text x="288" y="88" text-anchor="middle" font-size="12">720</text>
+<rect class="box" x="307" y="60" width="30" height="42"/><text x="322" y="88" text-anchor="middle" font-size="12">730</text>
+<rect class="box" x="341" y="60" width="30" height="42"/><text x="356" y="88" text-anchor="middle" font-size="12">730</text>
+<rect class="box" x="375" y="60" width="30" height="42"/><text x="390" y="88" text-anchor="middle" font-size="12">760</text>
+<rect class="box" x="409" y="60" width="30" height="42"/><text x="424" y="88" text-anchor="middle" font-size="12">830</text>
+<rect class="box" x="443" y="60" width="30" height="42"/><text x="458" y="88" text-anchor="middle" font-size="12">850</text>
+<rect class="box" x="477" y="60" width="30" height="42"/><text x="492" y="88" text-anchor="middle" font-size="12">860</text>
+<rect class="box" x="511" y="60" width="30" height="42"/><text x="526" y="88" text-anchor="middle" font-size="12">890</text>
+<rect class="box" x="545" y="60" width="30" height="42"/><text x="560" y="88" text-anchor="middle" font-size="12">910</text>
+<rect class="box" x="579" y="60" width="30" height="42"/><text x="594" y="88" text-anchor="middle" font-size="12">910</text>
+<rect class="box" x="613" y="60" width="30" height="42"/><text x="628" y="88" text-anchor="middle" font-size="12">930</text>
+<rect class="box" x="647" y="60" width="30" height="42"/><text x="662" y="88" text-anchor="middle" font-size="12">940</text>
+<rect class="box" x="681" y="60" width="30" height="42"/><text x="696" y="88" text-anchor="middle" font-size="12">940</text>
+<rect class="box" x="715" y="60" width="30" height="42"/><text x="730" y="88" text-anchor="middle" font-size="12">960</text>
+<rect class="box" x="749" y="60" width="30" height="42"/><text x="764" y="88" text-anchor="middle" font-size="12">1020</text>
+<rect class="box" x="783" y="60" width="30" height="42"/><text x="798" y="88" text-anchor="middle" font-size="12">1040</text>
+<rect class="box" x="817" y="60" width="30" height="42"/><text x="832" y="88" text-anchor="middle" font-size="12">1120</text>
+</svg>
