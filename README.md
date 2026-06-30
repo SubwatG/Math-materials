@@ -13,6 +13,10 @@
 - [One-to-one และ Onto](interactive/m5-one-to-one-onto.html) — สร้าง mapping เพื่อตรวจสอบ injective, surjective และ bijective ด้วยภาพลูกศร
 - [Inverse Function](interactive/m5-inverse-function.html) — ตรวจสอบว่า mapping มี inverse function หรือไม่ ผ่านเงื่อนไข bijective และตัวอย่างหลายกรณี
 
+### 01422111 หลักสถิติ
+
+- [บทที่ 3 ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น](interactive/statistics/01422111-ch03-purehtml.html) — สไลด์ interactive สำหรับสำรวจ random variable และ probability distribution พร้อมตัวอย่างคำนวณ
+
 ## GitHub Pages
 
 Repository นี้เตรียมไว้สำหรับเปิด GitHub Pages จาก branch `main` และ folder `/` (root)
