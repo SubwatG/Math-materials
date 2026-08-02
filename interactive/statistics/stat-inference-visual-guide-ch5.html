@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>การอนุมานเชิงสถิติ — Visual Field Guide (บทที่ 5)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Chakra+Petch:wght@400;500;600;700&family=Chakra+Petch+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ffffff;
+    --paper-warm: #f7f7f7;
+    --paper-light: #fafafa;
+    --paper-white: #ffffff;
+    --ink: #0B2545;
+    --ink-2: #1A3A5C;
+    --ink-soft: rgba(11, 37, 69, 0.65);
+    --ink-faint: rgba(11, 37, 69, 0.35);
+    --ink-trace: rgba(11, 37, 69, 0.12);
+    --orange: #D75C2A;
+    --orange-deep: #A8421A;
+    --orange-soft: rgba(215, 92, 42, 0.16);
+    --orange-bright: #E8743A;
+    --green: #2A7553;
+    --green-deep: #1F5840;
+    --green-soft: rgba(42, 117, 83, 0.16);
+    --green-bright: #3A9572;
+    --grid-major: rgba(11, 37, 69, 0.22);
+    --grid-minor: rgba(11, 37, 69, 0.05);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: 'Chakra Petch', 'Newsreader', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.025em; }
+  .mono { font-family: 'Chakra Petch Mono', 'JetBrains Mono', monospace; }
+  .serif-italic { font-family: 'Newsreader', serif; font-style: italic; }
+
+  /* Paper grain overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+  main, header, footer { position: relative; z-index: 1; }
+
+  /* Top nav */
+  .top-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .top-nav-inner {
+    max-width: 1400px; margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .brand-mark { color: var(--orange); font-size: 24px; line-height: 1; }
+  .nav-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-links a::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: var(--ink);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-meta {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  /* Layout */
+  .container { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 120px 0 80px; position: relative; }
+  .section + .section { border-top: 1px solid var(--ink-faint); }
+
+  /* Hero */
+  .hero { padding-top: 100px; padding-bottom: 60px; }
+  .hero-meta {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-meta::before { content: ''; width: 32px; height: 1px; background: var(--ink); }
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(56px, 11vw, 150px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    margin: 0 0 8px 0;
+  }
+  .hero-title .amp {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--orange);
+  }
+  .hero-subtitle {
+    font-family: 'Chakra Petch', 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 30px);
+    color: var(--ink-2);
+    max-width: 640px;
+    margin: 16px 0 32px 0;
+    line-height: 1.3;
+  }
+  .hero-foot {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Section head */
+  .section-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .section-num {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(34px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .section-epigraph {
+    font-family: 'Chakra Petch', 'Newsreader', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
+  /* Figure card (SVG showcase) */
+  .figure-card {
+    background: var(--paper-white);
+    border: 1px solid var(--ink-faint);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 32px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .figure-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 6px 24px rgba(11, 37, 69, 0.08);
+  }
+  .figure-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .figure-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 19px; letter-spacing: -0.01em;
+  }
+  .figure-tag {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .figure-desc {
+    font-size: 14.5px; color: var(--ink-soft);
+    margin: 0 0 14px 0; max-width: 900px;
+  }
+  .figure-frame {
+    background: #ffffff;
+    border: 1px solid var(--ink-trace);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .figure-frame svg { display: block; width: 100%; height: auto; }
+
+  /* grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Pill */
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 99px;
+    border: 1px solid var(--ink-faint);
+    color: var(--ink);
+  }
+  .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .pill.orange { color: var(--orange); border-color: var(--orange-soft); background: var(--orange-soft); }
+  .pill.green { color: var(--green); border-color: var(--green-soft); background: var(--green-soft); }
+
+  /* Formula block (plain) */
+  .formula-block {
+    font-family: 'Chakra Petch Mono', monospace;
+    font-size: 16px;
+    background: var(--paper-white);
+    border-left: 3px solid var(--orange);
+    padding: 12px 18px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--ink-faint);
+    padding: 48px 0 60px;
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+  .footer-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 32px;
+    display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .mono-small { font-family: 'Chakra Petch Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <div class="brand"><span class="brand-mark">∎</span> สถิติ — บทที่ 5</div>
+    <div class="nav-links">
+      <a href="#hero">บทนำ</a>
+      <a href="#ci">ช่วงความเชื่อมั่น</a>
+      <a href="#workflow">กระบวนการ</a>
+      <a href="#formulas">สูตร</a>
+    </div>
+    <div class="nav-meta">01422111 · STAT INFERENCE</div>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <div class="hero-meta">01422111 · หลักสถิติ · บทที่ 5</div>
+      <h1 class="hero-title">การอนุมานเชิงสถิติ<span class="amp">.</span></h1>
+      <p class="hero-subtitle">จากตัวอย่างสุ่มหนึ่งชุด เราสรุปเกี่ยวกับประชากรทั้งหมด — ด้วยช่วงความเชื่อมั่นและการทดสอบสมมติฐาน</p>
+      <div class="hero-foot">CI · H₀ · H₁ · α · p-value · Z · t</div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section id="ci" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-num">§ 01 / CONFIDENCE INTERVAL</div></div>
+        <div><h2 class="section-title">ช่วงความเชื่อมั่นของค่าเฉลี่ย.</h2></div>
+      </div>
+      <p class="section-epigraph" style="margin-top:-32px; margin-bottom:48px;">เลือกสูตรให้ถูกตามสถานการณ์ — รู้ σ หรือไม่? ตัวอย่างใหญ่หรือเล็ก? Flowchart นี้พาคุณไปยังสูตรที่ถูกต้อง</p>
+
+      <div class="figure-card">
+        <div class="figure-head">
+          <span class="figure-title">CI for μ — แผนผังการตัดสินใจ (3 กรณี)</span>
+          <span class="figure-tag">animated · TH/EN</span>
+        </div>
+        <p class="figure-desc">Start → รู้ σ? (ใช่: Z·σ/√n) / (ไม่ใช่) → n ≥ 30? (ใช่: Z·s/√n, CLT) / (ไม่ใช่: t_{α/2,n−1}·s/√n)</p>
+        <div class="figure-frame">
+          <!-- INLINE: ci-for-mu-flowchart.svg -->
+          <svg viewBox="0 0 1200 850" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="แผนผังการตัดสินใจเลือกสถิติและสูตรช่วงความเชื่อมั่นของค่าเฉลี่ยประชากร (μ) - CI Selection Flowchart for Population Mean μ">
+  <desc>Redesigned flowchart for white background featuring decision tree for CI of population mean mu with 3 case outcomes (Z with sigma, Z with s, t-distribution). Features Chakra Petch typography, semantic IDs, escaped XML entities, rerouted clean connectors, and SMIL flow animations without center pulse dots.</desc>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap');
+
+      .chakra-font {
+        font-family: 'Chakra Petch', 'Chakra Petch Mono', sans-serif, monospace;
+      }
+    </style>
+
+    <!-- Background Soft Gradient for White Theme -->
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#f1f5f9" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Arrowhead Markers -->
+    <marker id="arrow-slate" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#e11d48" />
+    </marker>
+
+    <!-- Paths for SMIL Motion Passengers -->
+    <path id="edge-path-case1" d="M 400 190 L 220 190 L 220 330" fill="none"/>
+    <path id="edge-path-case2" d="M 790 230 L 790 265 L 600 265 L 600 330" fill="none"/>
+    <path id="edge-path-case3" d="M 890 190 L 980 190 L 980 330" fill="none"/>
+  </defs>
+
+  <!-- Background Layer (Pure White + Subtle Soft Radial Glow) -->
+  <rect id="node-bg" width="1200" height="850" fill="#ffffff" />
+  <rect width="1200" height="850" fill="url(#bgGlow)" />
+
+  <!-- Main Content Container with Chakra Petch Typography -->
+  <g class="chakra-font">
+
+    <!-- ==================== LAYER 1: HEADER SECTION ==================== -->
+    <g id="node-header">
+      <line x1="50" y1="22" x2="1150" y2="22" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"/>
+      <text x="600" y="48" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">แผนผังการตัดสินใจเลือกสถิติและสูตรช่วงความเชื่อมั่นของค่าเฉลี่ยประชากร (&#956;)</text>
+      <text x="600" y="68" text-anchor="middle" font-size="13" font-weight="500" fill="#475569">Confidence Interval (CI) Selection Flowchart for Population Mean &#956;</text>
+      <line x1="50" y1="80" x2="1150" y2="80" stroke="#e2e8f0" stroke-width="1.5"/>
+    </g>
+
+    <!-- ==================== LAYER 2: FLOWCHART CONNECTORS & PATHS ==================== -->
+    <g id="edge-connectors-group">
+      <!-- Start -> Decision 1 -->
+      <line id="edge-start-d1" x1="500" y1="132" x2="500" y2="146" stroke="#475569" stroke-width="2" marker-end="url(#arrow-slate)" />
+
+      <!-- Decision 1 -> YES (Case 1: Left Branch) -->
+      <path id="edge-d1-yes" d="M 400 190 L 220 190 L 220 330" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-green)" />
+      
+      <!-- Decision 1 -> NO (Branch to Decision 2) -->
+      <path id="edge-d1-no" d="M 600 190 L 684 190" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow-rose)" />
+
+      <!-- Decision 2 -> YES (Case 2: Middle Branch) -->
+      <path id="edge-d2-yes" d="M 790 230 L 790 265 L 600 265 L 600 330" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-blue)" />
+
+      <!-- Decision 2 -> NO (Case 3: Right Branch) -->
+      <path id="edge-d2-no" d="M 890 190 L 980 190 L 980 330" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-orange)" />
+    </g>
+
+
+    <!-- ==================== LAYER 3: FLOWCHART DECISION NODES & BADGES ==================== -->
+
+    <!-- START NODE -->
+    <g id="node-start">
+      <rect x="420" y="92" width="160" height="40" rx="20" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+      <text x="500" y="110" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">เริ่มต้น</text>
+      <text x="500" y="124" text-anchor="middle" font-size="10.5" font-weight="500" fill="#64748b">Start</text>
+    </g>
+
+    <!-- DECISION NODE 1: Is sigma known? -->
+    <g id="node-d1">
+      <polygon points="500,150 600,190 500,230 400,190" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+      <text x="500" y="185" text-anchor="middle" font-size="14" font-weight="700" fill="#312e81">ทราบค่า &#963; หรือไม่?</text>
+      <text x="500" y="202" text-anchor="middle" font-size="10.5" font-weight="500" fill="#4338ca">Is population SD (&#963;) known?</text>
+    </g>
+
+    <!-- BADGES FOR DECISION 1 -->
+    <!-- D1 - YES Badge (Left) -->
+    <g id="node-badge-d1-yes">
+      <rect x="270" y="156" width="80" height="28" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="310" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#15803d">ใช่ (YES)</text>
+      <text x="310" y="180" text-anchor="middle" font-size="8.5" font-weight="500" fill="#166534">ทราบค่า &#963;</text>
+    </g>
+
+    <!-- D1 - NO Badge (Right to D2) -->
+    <g id="node-badge-d1-no">
+      <rect x="605" y="156" width="80" height="28" rx="14" fill="#ffe4e6" stroke="#e11d48" stroke-width="1.5"/>
+      <text x="645" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#be123c">ไม่ใช่ (NO)</text>
+      <text x="645" y="180" text-anchor="middle" font-size="8.5" font-weight="500" fill="#9f1239">ไม่ทราบค่า &#963;</text>
+    </g>
+
+    <!-- DECISION NODE 2: Sample size n >= 30? -->
+    <g id="node-d2">
+      <polygon points="790,150 890,190 790,230 690,190" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+      <text x="790" y="185" text-anchor="middle" font-size="14" font-weight="700" fill="#312e81">ขนาดตัวอย่าง n &#8805; 30?</text>
+      <text x="790" y="202" text-anchor="middle" font-size="10.5" font-weight="500" fill="#4338ca">Sample size n &#8805; 30?</text>
+    </g>
+
+    <!-- BADGES FOR DECISION 2 -->
+    <!-- D2 - YES Badge (Left to Middle Card) -->
+    <g id="node-badge-d2-yes">
+      <rect x="660" y="232" width="80" height="28" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="700" y="246" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d4ed8">ใช่ (YES)</text>
+      <text x="700" y="256" text-anchor="middle" font-size="8.5" font-weight="500" fill="#1e40af">กลุ่มตัวอย่างใหญ่</text>
+    </g>
+
+    <!-- D2 - NO Badge (Right to Right Card) -->
+    <g id="node-badge-d2-no">
+      <rect x="895" y="156" width="80" height="28" rx="14" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/>
+      <text x="935" y="170" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c2410c">ไม่ใช่ (NO)</text>
+      <text x="935" y="180" text-anchor="middle" font-size="8.5" font-weight="500" fill="#9a3412">กลุ่มตัวอย่างเล็ก</text>
+    </g>
+
+
+    <!-- ==================== LAYER 4: 3 CASE RESULT CARDS ==================== -->
+
+    <!-- CASE 1 CARD: Known Sigma (Green/Emerald Theme) -->
+    <g id="node-card-case1">
+      <rect x="50" y="340" width="340" height="430" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      
+      <!-- Card Header Banner -->
+      <rect x="65" y="352" width="310" height="52" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+      <text x="220" y="374" text-anchor="middle" font-size="16" font-weight="700" fill="#14532d">กรณีที่ 1: ทราบค่า &#963;</text>
+      <text x="220" y="392" text-anchor="middle" font-size="11" font-weight="500" fill="#166534">Case 1: Known Population SD (&#963;)</text>
+
+      <!-- Section 1: Sampling Distribution -->
+      <g>
+        <rect x="65" y="416" width="310" height="70" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+        <text x="77" y="434" font-size="11.5" font-weight="700" fill="#047857">1. ทฤษฎีการแจกแจง (Sampling Distribution)</text>
+        <text x="220" y="456" text-anchor="middle" font-size="15" font-weight="700" fill="#065f46">x&#772; ~ N(&#956;, &#963;&#178;/n)</text>
+        <text x="220" y="474" text-anchor="middle" font-size="10.5" font-weight="500" fill="#047857">ระดับความเชื่อมั่น CL = 1 &#8722; &#945;</text>
+      </g>
+
+      <!-- Section 2: CI Formula -->
+      <g>
+        <rect x="65" y="498" width="310" height="120" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+        <text x="77" y="516" font-size="11.5" font-weight="700" fill="#047857">2. สูตรช่วงความเชื่อมั่น (CI Formula)</text>
+        <!-- Pill badge inside formula section -->
+        <rect x="135" y="524" width="170" height="20" rx="4" fill="#dcfce7"/>
+        <text x="220" y="538" text-anchor="middle" font-size="10.5" font-weight="700" fill="#15803d">ใช้การแจกแจง Z (Normal)</text>
+
+        <!-- Math Formula -->
+        <text x="220" y="575" text-anchor="middle" font-size="17" font-weight="700" fill="#065f46">&#956; = x&#772; &#177; Z<tspan font-size="11.5" dy="3">&#945;/2</tspan><tspan dy="-3"> &#183; (&#963;/&#8730;n)</tspan></text>
+        <text x="220" y="598" text-anchor="middle" font-size="10.5" font-weight="500" fill="#047857">Standard Normal Distribution</text>
+      </g>
+
+      <!-- Section 3: Interval Notation -->
+      <g>
+        <rect x="65" y="630" width="310" height="125" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="1"/>
+        <text x="77" y="648" font-size="11.5" font-weight="700" fill="#047857">3. รูปแบบช่วง (Interval Notation)</text>
+        <text x="220" y="680" text-anchor="middle" font-size="12.5" font-weight="700" fill="#065f46">( x&#772; &#8722; Z<tspan font-size="10" dy="2">&#945;/2</tspan><tspan dy="-2">&#183;&#963;/&#8730;n , x&#772; + Z</tspan><tspan font-size="10" dy="2">&#945;/2</tspan><tspan dy="-2">&#183;&#963;/&#8730;n )</tspan></text>
+        <text x="220" y="710" text-anchor="middle" font-size="11" font-weight="600" fill="#14532d">[ ขอบเขตล่าง (LCL) , ขอบเขตบน (UCL) ]</text>
+        <text x="220" y="730" text-anchor="middle" font-size="9.5" font-weight="500" fill="#047857">LCL = Lower Limit | UCL = Upper Limit</text>
+      </g>
+    </g>
+
+    <!-- CASE 2 CARD: Unknown Sigma, Large Sample n >= 30 (Blue Theme) -->
+    <g id="node-card-case2">
+      <rect x="430" y="340" width="340" height="430" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+      
+      <!-- Card Header Banner -->
+      <rect x="445" y="352" width="310" height="52" rx="10" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+      <text x="600" y="374" text-anchor="middle" font-size="16" font-weight="700" fill="#1e3a8a">กรณีที่ 2: ไม่ทราบ &#963; (n &#8805; 30)</text>
+      <text x="600" y="392" text-anchor="middle" font-size="11" font-weight="500" fill="#1d4ed8">Case 2: Unknown &#963;, Large Sample (n &#8805; 30)</text>
+
+      <!-- Section 1: Sampling Distribution -->
+      <g>
+        <rect x="445" y="416" width="310" height="70" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+        <text x="457" y="434" font-size="11.5" font-weight="700" fill="#1d4ed8">1. ทฤษฎีการแจกแจง (Sampling Distribution)</text>
+        <text x="600" y="456" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1e40af">x&#772; ~ N(&#956;, s&#178;/n) <tspan font-size="10.5" font-weight="500" fill="#2563eb">[โดย CLT]</tspan></text>
+        <text x="600" y="474" text-anchor="middle" font-size="10.5" font-weight="500" fill="#1d4ed8">ระดับความเชื่อมั่น CL = 1 &#8722; &#945;</text>
+      </g>
+
+      <!-- Section 2: CI Formula -->
+      <g>
+        <rect x="445" y="498" width="310" height="120" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+        <text x="457" y="516" font-size="11.5" font-weight="700" fill="#1d4ed8">2. สูตรช่วงความเชื่อมั่น (CI Formula)</text>
+        <!-- Pill badge inside formula section -->
+        <rect x="505" y="524" width="190" height="20" rx="4" fill="#dbeafe"/>
+        <text x="600" y="538" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1d4ed8">ใช้การแจกแจง Z (โดยใช้ s)</text>
+
+        <!-- Math Formula -->
+        <text x="600" y="575" text-anchor="middle" font-size="17" font-weight="700" fill="#1e40af">&#956; = x&#772; &#177; Z<tspan font-size="11.5" dy="3">&#945;/2</tspan><tspan dy="-3"> &#183; (s/&#8730;n)</tspan></text>
+        <text x="600" y="598" text-anchor="middle" font-size="10.5" font-weight="500" fill="#1d4ed8">Large Sample Approximation via CLT</text>
+      </g>
+
+      <!-- Section 3: Interval Notation -->
+      <g>
+        <rect x="445" y="630" width="310" height="125" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+        <text x="457" y="648" font-size="11.5" font-weight="700" fill="#1d4ed8">3. รูปแบบช่วง (Interval Notation)</text>
+        <text x="600" y="680" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e40af">( x&#772; &#8722; Z<tspan font-size="10" dy="2">&#945;/2</tspan><tspan dy="-2">&#183;s/&#8730;n , x&#772; + Z</tspan><tspan font-size="10" dy="2">&#945;/2</tspan><tspan dy="-2">&#183;s/&#8730;n )</tspan></text>
+        <text x="600" y="710" text-anchor="middle" font-size="11" font-weight="600" fill="#1e3a8a">[ ขอบเขตล่าง (LCL) , ขอบเขตบน (UCL) ]</text>
+        <text x="600" y="730" text-anchor="middle" font-size="9.5" font-weight="500" fill="#1d4ed8">LCL = Lower Limit | UCL = Upper Limit</text>
+      </g>
+    </g>
+
+    <!-- CASE 3 CARD: Unknown Sigma, Small Sample n < 30 (Amber/Orange Theme) -->
+    <g id="node-card-case3">
+      <rect x="810" y="340" width="340" height="430" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+      
+      <!-- Card Header Banner -->
+      <rect x="825" y="352" width="310" height="52" rx="10" fill="#ffedd5" stroke="#fdba74" stroke-width="1.5"/>
+      <text x="980" y="374" text-anchor="middle" font-size="16" font-weight="700" fill="#7c2d12">กรณีที่ 3: ไม่ทราบ &#963; (n &lt; 30)</text>
+      <text x="980" y="392" text-anchor="middle" font-size="11" font-weight="500" fill="#c2410c">Case 3: Unknown &#963;, Small Sample (n &lt; 30)</text>
+
+      <!-- Section 1: Sampling Distribution -->
+      <g>
+        <rect x="825" y="416" width="310" height="70" rx="8" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+        <text x="837" y="434" font-size="11.5" font-weight="700" fill="#c2410c">1. ทฤษฎีการแจกแจง (Sampling Distribution)</text>
+        <text x="980" y="456" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3412">x&#772; ~ t<tspan font-size="10.5" dy="3">df=n&#8722;1</tspan><tspan dy="-3"> (องศาเสรี df = n &#8722; 1)</tspan></text>
+        <text x="980" y="474" text-anchor="middle" font-size="10.5" font-weight="500" fill="#c2410c">ระดับความเชื่อมั่น CL = 1 &#8722; &#945;</text>
+      </g>
+
+      <!-- Section 2: CI Formula -->
+      <g>
+        <rect x="825" y="498" width="310" height="120" rx="8" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+        <text x="837" y="516" font-size="11.5" font-weight="700" fill="#c2410c">2. สูตรช่วงความเชื่อมั่น (CI Formula)</text>
+        <!-- Pill badge inside formula section -->
+        <rect x="880" y="524" width="200" height="20" rx="4" fill="#ffedd5"/>
+        <text x="980" y="538" text-anchor="middle" font-size="10.5" font-weight="700" fill="#9a3412">ใช้การแจกแจง t (t-Distribution)</text>
+
+        <!-- Math Formula -->
+        <text x="980" y="575" text-anchor="middle" font-size="16.5" font-weight="700" fill="#9a3412">&#956; = x&#772; &#177; t<tspan font-size="11" dy="3">&#945;/2, n&#8722;1</tspan><tspan dy="-3"> &#183; (s/&#8730;n)</tspan></text>
+        <text x="980" y="598" text-anchor="middle" font-size="10.5" font-weight="500" fill="#c2410c">Student's t-Distribution (df = n &#8722; 1)</text>
+      </g>
+
+      <!-- Section 3: Interval Notation -->
+      <g>
+        <rect x="825" y="630" width="310" height="125" rx="8" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+        <text x="837" y="648" font-size="11.5" font-weight="700" fill="#c2410c">3. รูปแบบช่วง (Interval Notation)</text>
+        <text x="980" y="680" text-anchor="middle" font-size="11.5" font-weight="700" fill="#9a3412">( x&#772; &#8722; t<tspan font-size="9" dy="2">&#945;/2,df</tspan><tspan dy="-2">&#183;s/&#8730;n , x&#772; + t</tspan><tspan font-size="9" dy="2">&#945;/2,df</tspan><tspan dy="-2">&#183;s/&#8730;n )</tspan></text>
+        <text x="980" y="710" text-anchor="middle" font-size="11" font-weight="600" fill="#7c2d12">[ ขอบเขตล่าง (LCL) , ขอบเขตบน (UCL) ]</text>
+        <text x="980" y="730" text-anchor="middle" font-size="9.5" font-weight="500" fill="#c2410c">LCL = Lower Limit | UCL = Upper Limit</text>
+      </g>
+    </g>
+
+
+    <!-- ==================== LAYER 5: SMIL ANIMATION DYNAMICS ==================== -->
+
+    <!-- Animated Dashed Flow Line Offsets -->
+    <g id="edge-dashed-flow-group" opacity="0.85">
+      <!-- Case 1 Flow Line Overlay -->
+      <path d="M 400 190 L 220 190 L 220 330" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite" />
+      </path>
+      <!-- Case 2 Flow Line Overlay -->
+      <path d="M 790 230 L 790 265 L 600 265 L 600 330" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite" begin="0.5s" />
+      </path>
+      <!-- Case 3 Flow Line Overlay -->
+      <path d="M 890 190 L 980 190 L 980 330" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="6,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite" begin="1s" />
+      </path>
+    </g>
+
+    <!-- Traveling Particle Motion along Connector Paths -->
+    <g id="node-traveler-case1">
+      <circle r="4.5" fill="#16a34a">
+        <animateMotion dur="4s" repeatCount="indefinite">
+          <mpath href="#edge-path-case1"/>
+        </animateMotion>
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="4s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    <g id="node-traveler-case2">
+      <circle r="4.5" fill="#2563eb">
+        <animateMotion dur="4s" repeatCount="indefinite" begin="1.3s">
+          <mpath href="#edge-path-case2"/>
+        </animateMotion>
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="4s" repeatCount="indefinite" begin="1.3s" />
+      </circle>
+    </g>
+
+    <g id="node-traveler-case3">
+      <circle r="4.5" fill="#ea580c">
+        <animateMotion dur="4s" repeatCount="indefinite" begin="2.6s">
+          <mpath href="#edge-path-case3"/>
+        </animateMotion>
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="4s" repeatCount="indefinite" begin="2.6s" />
+      </circle>
+    </g>
+
+
+    <!-- ==================== LAYER 6: FOOTER LEGEND & NOTATION BANNER ==================== -->
+    <g id="node-footer">
+      <rect x="40" y="792" width="1120" height="40" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="600" y="816" text-anchor="middle" font-size="11" fill="#334155">
+        <tspan font-weight="700" fill="#4f46e5">คำอธิบายสัญลักษณ์ (Notation Legend):</tspan>
+        <tspan font-weight="600" fill="#0f172a"> x&#772;</tspan> = ค่าเฉลี่ยตัวอย่าง (Sample Mean) |
+        <tspan font-weight="600" fill="#0f172a">&#956;</tspan> = ค่าเฉลี่ยประชากร (Population Mean) |
+        <tspan font-weight="600" fill="#0f172a">&#963;</tspan> = SD ประชากร (Population SD) |
+        <tspan font-weight="600" fill="#0f172a">s</tspan> = SD ตัวอย่าง (Sample SD) |
+        <tspan font-weight="600" fill="#0f172a">n</tspan> = ขนาดตัวอย่าง (Sample Size) |
+        <tspan font-weight="600" fill="#0f172a">df</tspan> = องศาเสรี (df = n &#8722; 1)
+      </text>
+    </g>
+
+  </g>
+</svg>
+
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="figure-card" style="margin-bottom:0;">
+          <div class="figure-head">
+            <span class="figure-title">p-value อธิบาย</span>
+            <span class="figure-tag">animated · white</span>
+          </div>
+          <p class="figure-desc">Null distribution, z_obs = +2.15, shaded tail = p-value 0.0158 ≤ α → reject H₀</p>
+          <div class="figure-frame">
+            <!-- INLINE: p-value-explained.svg -->
+            <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="P-Value Explained: Null distribution bell curve with observed statistic and shaded tail area representing the p-value.">
+  <desc>All headline content is static and readable on the first frame. Redesigned for white background. SMIL animation: pulsing observed statistic node, dashed flow paths into tail region, and orbiting sample point.</desc>
+  <defs>
+    <!-- Background Soft Radial Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#f1f5f9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Tail Gradient Fill (Vibrant Red for White Background) -->
+    <linearGradient id="tailGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#dc2626" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <!-- Bell Curve Body Fill Gradient -->
+    <linearGradient id="curveFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.01"/>
+    </linearGradient>
+
+    <!-- Orbit Path around Observed Statistic (Centered at x=858, y=406.21) -->
+    <path id="orbit-obs" d="M 858,406.21 m-30,0 a30,18 0 1,1 60,0 a30,18 0 1,1 -60,0" fill="none"/>
+
+    <!-- Flow path along bell curve from x=180 to z_obs (x=858, y=406.21) -->
+    <path id="edge-flow-path" d="M 180,429.48 C 234,427.96 288,428.60 342,406.21 C 388,388.35 434,342.18 480,284.43 C 520,235.18 560,188.91 600,190.00 C 640,188.91 680,235.18 720,284.43 C 766,342.18 812,388.35 858,406.21" fill="none"/>
+  </defs>
+
+  <!-- Background Layer (Pure White + Subtle Soft Tint) -->
+  <rect width="1200" height="600" fill="#ffffff"/>
+  <rect width="1200" height="600" fill="url(#bgGlow)"/>
+
+  <!-- Global Font Styling: Clean modern UI font with crisp mono fallback -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <!-- Layer 1: Title Header & Static Labels -->
+    <text x="50" y="48" font-size="13" letter-spacing="2.5" font-weight="bold" fill="#6d28d9">STATISTICAL INFERENCE</text>
+    <line x1="270" y1="43" x2="1150" y2="43" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="50" y="82" font-size="20" font-weight="800" fill="#0f172a">P-VALUE EXPLAINED &#8594; Tail Probability under H&#8320;</text>
+    <text x="50" y="106" font-size="13" fill="#475569">Assuming the null hypothesis is true, p-value is the probability of obtaining a test statistic at least as extreme as observed</text>
+
+    <!-- Layer 2: Side Cards -->
+    <!-- Left Card: Null Hypothesis Info -->
+    <g id="node-card-null" opacity="0.98">
+      <rect x="50" y="135" width="295" height="130" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="68" y="162" font-size="13" font-weight="bold" fill="#0369a1">Null Hypothesis (H&#8320;)</text>
+      <text x="68" y="184" font-size="12" fill="#334155">&#8226; Assumes no real effect or difference</text>
+      <text x="68" y="204" font-size="12" fill="#334155">&#8226; Symmetric bell curve centered at &#956;&#8320; = 0</text>
+      <text x="68" y="224" font-size="12" fill="#64748b">&#8226; Most samples land near center</text>
+      <text x="68" y="246" font-size="11" font-weight="bold" fill="#0284c7">Mean &#956;&#8320; = 0</text>
+    </g>
+
+    <!-- Right Card: Observed Statistic & p-value Info -->
+    <g id="node-card-pval" opacity="0.98">
+      <rect x="855" y="135" width="295" height="135" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="873" y="162" font-size="13" font-weight="bold" fill="#b91c1c">Observed Statistic &amp; p-value</text>
+      <text x="873" y="184" font-size="12" fill="#334155">&#8226; Observed test stat: z_obs = +2.15</text>
+      <text x="873" y="204" font-size="12" font-weight="bold" fill="#dc2626">&#8226; p-value = P(Z &#8805; 2.15 | H&#8320;)</text>
+      <text x="873" y="224" font-size="12" fill="#334155">&#8226; Tail area = 0.0158 (1.58%)</text>
+      <rect x="873" y="234" width="259" height="25" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+      <text x="1002.5" y="251" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">p = 0.0158 &#8804; &#945; (0.05) &#8594; Reject H&#8320;</text>
+    </g>
+
+    <!-- Layer 3: Distribution & Bell Curve Structural Elements -->
+    <g id="node-distribution-group">
+      <!-- Baseline Grid / Axis -->
+      <line id="edge-axis" x1="140" y1="430" x2="1060" y2="430" stroke="#64748b" stroke-width="2"/>
+
+      <!-- Full Bell Curve Area Fill -->
+      <path d="M 180,430 L 180,429.48 C 234,427.96 288,428.60 342,406.21 C 388,388.35 434,342.18 480,284.43 C 520,235.18 560,188.91 600,190.00 C 640,188.91 680,235.18 720,284.43 C 766,342.18 812,388.35 858,406.21 C 912,428.60 966,427.96 1020,429.48 L 1020,430 Z" fill="url(#curveFill)"/>
+
+      <!-- Shaded Tail Area (p-value) -->
+      <path id="node-tail-shade" d="M 858,406.21 C 912,428.60 966,427.96 1020,429.48 L 1020,430 L 858,430 Z" fill="url(#tailGradient)" stroke="#dc2626" stroke-width="1.5"/>
+
+      <!-- Main Bell Curve Stroke -->
+      <path id="node-bell-curve" d="M 180,429.48 C 234,427.96 288,428.60 342,406.21 C 388,388.35 434,342.18 480,284.43 C 520,235.18 560,188.91 600,190.00 C 640,188.91 680,235.18 720,284.43 C 766,342.18 812,388.35 858,406.21 C 912,428.60 966,427.96 1020,429.48" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Mean H0 Center Line -->
+      <line id="edge-mean-line" x1="600" y1="190" x2="600" y2="430" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="5,4"/>
+      <text x="600" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#0369a1">H&#8320; Center (&#956;&#8320; = 0)</text>
+
+      <!-- Observed Statistic Line (at x=858, y=406.21) -->
+      <line id="edge-obs-line" x1="858" y1="406.21" x2="858" y2="430" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+
+      <!-- Critical Value Line (alpha = 0.05 threshold at z=1.645, x=797, y=368) -->
+      <line id="edge-crit-line" x1="797" y1="368" x2="797" y2="430" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="797" y="355" text-anchor="middle" font-size="11" font-weight="bold" fill="#d97706">&#945; = 0.05 threshold</text>
+
+      <!-- Axis Ticks and Labels -->
+      <g font-size="11" fill="#475569" text-anchor="middle">
+        <!-- Ticks -->
+        <line x1="240" y1="430" x2="240" y2="436" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="360" y1="430" x2="360" y2="436" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="480" y1="430" x2="480" y2="436" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="600" y1="430" x2="600" y2="440" stroke="#0284c7" stroke-width="2"/>
+        <line x1="720" y1="430" x2="720" y2="436" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="840" y1="430" x2="840" y2="436" stroke="#64748b" stroke-width="1.5"/>
+        <line x1="858" y1="430" x2="858" y2="442" stroke="#dc2626" stroke-width="2"/>
+        <line x1="960" y1="430" x2="960" y2="436" stroke="#64748b" stroke-width="1.5"/>
+
+        <!-- Label text -->
+        <text x="240" y="454">-3&#963;</text>
+        <text x="360" y="454">-2&#963;</text>
+        <text x="480" y="454">-1&#963;</text>
+        <text x="600" y="456" font-weight="bold" fill="#0369a1">0</text>
+        <text x="720" y="454">+1&#963;</text>
+        <text x="840" y="454">+2&#963;</text>
+        <text x="858" y="472" font-weight="bold" fill="#dc2626">z_obs = +2.15</text>
+        <text x="960" y="454">+3&#963;</text>
+      </g>
+
+      <!-- Tail Annotation Pointer / Label -->
+      <g id="node-tail-label">
+        <path id="edge-pointer-tail" d="M 940,270 C 935,310 925,340 895,385" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="890,389 892,380 899,386" fill="#dc2626"/>
+        <text x="925" y="360" text-anchor="start" font-size="12" font-weight="bold" fill="#b91c1c">Shaded Tail Area</text>
+        <text x="925" y="377" text-anchor="start" font-size="11" fill="#dc2626">= p-value (0.0158)</text>
+      </g>
+    </g>
+
+    <!-- Layer 4: SMIL Dynamic Flow & Animated Patterns -->
+    <g opacity="0.8">
+      <path id="edge-dashed-flow" d="M 858,430 L 1020,430" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite"/>
+      </path>
+    </g>
+
+    <g opacity="0.85">
+      <circle r="3.5" fill="#0284c7">
+        <animateMotion dur="4s" repeatCount="indefinite"><mpath href="#edge-flow-path"/></animateMotion>
+        <animate attributeName="opacity" values="0.2;1;0.4" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="3" fill="#7c3aed">
+        <animateMotion dur="4s" repeatCount="indefinite" begin="2s"><mpath href="#edge-flow-path"/></animateMotion>
+        <animate attributeName="opacity" values="0.2;1;0.4" dur="4s" repeatCount="indefinite" begin="2s"/>
+      </circle>
+    </g>
+
+    <g id="node-orbit-group" opacity="0.85">
+      <path d="M 858,406.21 m-30,0 a30,18 0 1,1 60,0 a30,18 0 1,1 -60,0" fill="none" stroke="#dc2626" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle r="3.5" fill="#dc2626">
+        <animateMotion dur="4s" repeatCount="indefinite"><mpath href="#orbit-obs"/></animateMotion>
+      </circle>
+    </g>
+
+    <g id="node-obs-pulse" opacity="0.95">
+      <circle cx="858" cy="406.21" r="7" fill="rgba(220,38,38,0.2)" stroke="#dc2626" stroke-width="1.8">
+        <animate attributeName="r" values="7;15;7" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="858" cy="406.21" r="4.5" fill="#dc2626"/>
+    </g>
+
+    <g id="node-null-pulse" opacity="0.85">
+      <circle cx="600" cy="190" r="5" fill="rgba(2,132,199,0.2)" stroke="#0284c7" stroke-width="1.5">
+        <animate attributeName="r" values="5;9;5" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="600" cy="190" r="3" fill="#0284c7"/>
+    </g>
+
+    <!-- Layer 5: Bottom Key Takeaway Banner -->
+    <g id="node-summary-banner" opacity="0.98">
+      <rect x="50" y="505" width="1100" height="55" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="70" y="538" font-size="12" fill="#0f172a">
+        <tspan font-weight="bold" fill="#0284c7">KEY TAKEAWAY:</tspan>
+        <tspan fill="#334155"> p-value measures compatibility with H&#8320;. Smaller p &#8594; stronger evidence against H&#8320;.</tspan>
+      </text>
+      <rect x="890" y="519" width="240" height="27" rx="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+      <text x="1010" y="536" text-anchor="middle" font-size="11" font-weight="bold" fill="#0369a1">Right-Tailed Test (One-Sided)</text>
+    </g>
+  </g>
+</svg>
+
+          </div>
+        </div>
+        <div class="figure-card" style="margin-bottom:0;">
+          <div class="figure-head">
+            <span class="figure-title">Hypothesis Testing Flow</span>
+            <span class="figure-tag">animated · dark</span>
+          </div>
+          <p class="figure-desc">แผนผังการตัดสินใจทดสอบสมมติฐาน — แสงเส้นนำสายตาจากซ้ายไปขวา</p>
+          <div class="figure-frame">
+            <!-- INLINE: hypothesis-testing-flow.svg -->
+            <svg viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hypothesis Testing Decision Flow Diagram">
+  <desc>Statistical hypothesis testing decision flow: State hypotheses, choose alpha, compute test statistic, calculate p-value, and compare p-value with alpha to reject or fail to reject H0. Static-first slide with a sweeping SMIL light beam.</desc>
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#171e33"/>
+    </linearGradient>
+
+    <!-- Card Background Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Glowing Accent Gradients -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+
+    <!-- Light Beam Sweep Gradient -->
+    <linearGradient id="lightBeamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#38bdf8" stop-opacity="0.04"/>
+      <stop offset="48%" stop-color="#818cf8" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="52%" stop-color="#38bdf8" stop-opacity="0.2"/>
+      <stop offset="75%" stop-color="#6366f1" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Connector Arrow Markers -->
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+
+    <!-- Glow Filters -->
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="glowBeam" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <path id="pipelinePath" d="M 175,225 L 1025,225"/>
+  </defs>
+
+  <!-- Base Dark Canvas -->
+  <rect width="1200" height="675" fill="url(#bgGradient)"/>
+
+  <!-- Subtle Decorative Grid Lines -->
+  <g stroke="#334155" stroke-width="1" opacity="0.15">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="330" x2="1200" y2="330"/>
+    <line x1="0" y1="610" x2="1200" y2="610"/>
+    <line x1="600" y1="0" x2="600" y2="675"/>
+  </g>
+
+  <!-- ===== SWEEPING LIGHT BEAM EFFECT (SMIL, Infinite Loop, Left-to-Right) ===== -->
+  <g pointer-events="none" filter="url(#glowBeam)">
+    <g transform="skewX(-14)">
+      <rect x="-250" y="-50" width="180" height="775" fill="url(#lightBeamGrad)">
+        <animate attributeName="x" values="-350;1350" dur="4.8s" repeatCount="indefinite" calcMode="linear"/>
+      </rect>
+    </g>
+  </g>
+
+  <!-- ===== ANIMATED FLOW PULSE (SMIL) ===== -->
+  <circle r="4" fill="#60a5fa" filter="url(#glowCyan)">
+    <animateMotion dur="5s" repeatCount="indefinite" calcMode="linear">
+      <mpath href="#pipelinePath"/>
+    </animateMotion>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.92;1" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ===== HEADER SECTION ===== -->
+  <g transform="translate(60, 42)">
+    <!-- Pill Badge -->
+    <rect x="0" y="0" width="185" height="26" rx="13" fill="#1e293b" stroke="#0284c7" stroke-width="1.2"/>
+    <circle cx="14" cy="13" r="4" fill="#38bdf8"/>
+    <text x="26" y="17" font-family="Inter, -apple-system, Arial, sans-serif" font-size="11" font-weight="700" fill="#38bdf8" letter-spacing="1">STATISTICAL INFERENCE</text>
+
+    <!-- Main Title -->
+    <text x="0" y="58" font-family="Inter, -apple-system, Arial, sans-serif" font-size="28" font-weight="800" fill="#f8fafc" letter-spacing="-0.5">Hypothesis Testing Decision Flow</text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="80" font-family="Inter, -apple-system, Arial, sans-serif" font-size="14" font-weight="400" fill="#94a3b8">Standard 5-Step Analytical Pipeline • Significance Level (α = 0.05) &amp; p-Value Method</text>
+  </g>
+
+  <!-- Key Legend (Top Right) -->
+  <g transform="translate(930, 50)">
+    <rect x="0" y="0" width="210" height="48" rx="8" fill="#1e293b" fill-opacity="0.6" stroke="#334155" stroke-width="1"/>
+    <text x="15" y="22" font-family="Inter, -apple-system, Arial, sans-serif" font-size="11" font-weight="600" fill="#cbd5e1">CORE DECISION RULE</text>
+    <text x="15" y="38" font-family="monospace" font-size="12" font-weight="700" fill="#38bdf8">p &lt; α  ==&gt;  Reject H₀</text>
+  </g>
+
+  <!-- ===== PIPELINE CONNECTORS ===== -->
+  <g stroke="#334155" stroke-width="2.5" stroke-dasharray="6 4" fill="none">
+    <line x1="260" y1="225" x2="310" y2="225"/>
+    <line x1="530" y1="225" x2="580" y2="225"/>
+    <line x1="800" y1="225" x2="850" y2="225"/>
+  </g>
+  <!-- Connector Arrows -->
+  <line x1="260" y1="225" x2="312" y2="225" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <line x1="530" y1="225" x2="582" y2="225" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <line x1="800" y1="225" x2="852" y2="225" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+
+  <!-- ===== STEP CARDS (HORIZONTAL ROW) ===== -->
+
+  <!-- STEP 1 CARD -->
+  <g transform="translate(60, 150)">
+    <rect width="200" height="150" rx="14" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect width="200" height="4" rx="2" fill="url(#cyanGrad)"/>
+    <!-- Step Badge -->
+    <rect x="16" y="16" width="32" height="24" rx="6" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="32" y="32" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="800" fill="#38bdf8" text-anchor="middle">01</text>
+    <!-- Title & Body -->
+    <text x="16" y="62" font-family="Inter, -apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">State Hypotheses</text>
+    <text x="16" y="82" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Define H₀ and H₁</text>
+    <!-- Math Code snippet -->
+    <rect x="14" y="98" width="172" height="36" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="120" font-family="monospace" font-size="11" fill="#38bdf8">H₀: μ = μ₀  vs  H₁: μ != μ₀</text>
+  </g>
+
+  <!-- STEP 2 CARD -->
+  <g transform="translate(330, 150)">
+    <rect width="200" height="150" rx="14" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect width="200" height="4" rx="2" fill="url(#indigoGrad)"/>
+    <!-- Step Badge -->
+    <rect x="16" y="16" width="32" height="24" rx="6" fill="#4f46e5" fill-opacity="0.2" stroke="#818cf8" stroke-width="1"/>
+    <text x="32" y="32" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="800" fill="#818cf8" text-anchor="middle">02</text>
+    <!-- Title & Body -->
+    <text x="16" y="62" font-family="Inter, -apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">Choose Alpha (α)</text>
+    <text x="16" y="82" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Significance Level</text>
+    <!-- Math Code snippet -->
+    <rect x="14" y="98" width="172" height="36" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="120" font-family="monospace" font-size="11" fill="#818cf8">α = 0.05 (95% Conf)</text>
+  </g>
+
+  <!-- STEP 3 CARD -->
+  <g transform="translate(600, 150)">
+    <rect width="200" height="150" rx="14" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect width="200" height="4" rx="2" fill="url(#purpleGrad)"/>
+    <!-- Step Badge -->
+    <rect x="16" y="16" width="32" height="24" rx="6" fill="#7c3aed" fill-opacity="0.2" stroke="#c084fc" stroke-width="1"/>
+    <text x="32" y="32" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="800" fill="#c084fc" text-anchor="middle">03</text>
+    <!-- Title & Body -->
+    <text x="16" y="62" font-family="Inter, -apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">Compute Statistic</text>
+    <text x="16" y="82" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Test Score (Z, t, χ²)</text>
+    <!-- Math Code snippet -->
+    <rect x="14" y="98" width="172" height="36" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="120" font-family="monospace" font-size="11" fill="#c084fc">Z = (x - μ₀) / (s/sqrt(n))</text>
+  </g>
+
+  <!-- STEP 4 CARD -->
+  <g transform="translate(870, 150)">
+    <rect width="200" height="150" rx="14" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect width="200" height="4" rx="2" fill="url(#cyanGrad)"/>
+    <!-- Step Badge -->
+    <rect x="16" y="16" width="32" height="24" rx="6" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+    <text x="32" y="32" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="800" fill="#38bdf8" text-anchor="middle">04</text>
+    <!-- Title & Body -->
+    <text x="16" y="62" font-family="Inter, -apple-system, Arial, sans-serif" font-size="15" font-weight="700" fill="#f8fafc">Calculate p-Value</text>
+    <text x="16" y="82" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Probability in Distribution</text>
+    <!-- Math Code snippet -->
+    <rect x="14" y="98" width="172" height="36" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="120" font-family="monospace" font-size="11" fill="#38bdf8">p = P(|Z| &gt;= |Z_calc|)</text>
+  </g>
+
+  <!-- ===== STEP 5 / DECISION FLOW DOWNWARD BRANCH ===== -->
+  <!-- Downward Line from Step 4 to Bottom Decision Area -->
+  <path d="M 970,300 L 970,335 L 600,335 L 600,360" stroke="#38bdf8" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+  <circle cx="600" cy="360" r="4" fill="#38bdf8"/>
+
+  <!-- ===== BOTTOM SECTION: DECISION EVALUATION & OUTCOMES ===== -->
+  
+  <!-- LEFT: VISUAL COMPARISON METER CARD -->
+  <g transform="translate(60, 375)">
+    <rect width="510" height="235" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    
+    <!-- Card Title -->
+    <rect x="20" y="20" width="32" height="24" rx="6" fill="#d97706" fill-opacity="0.2" stroke="#fbbf24" stroke-width="1"/>
+    <text x="36" y="36" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="800" fill="#fbbf24" text-anchor="middle">05</text>
+    <text x="62" y="37" font-family="Inter, -apple-system, Arial, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Compare p-Value vs. Alpha (α)</text>
+    <text x="20" y="64" font-family="Inter, -apple-system, Arial, sans-serif" font-size="13" fill="#94a3b8">The p-value measures the strength of evidence against H₀.</text>
+
+    <!-- Visual Bar Chart Container -->
+    <g transform="translate(20, 85)">
+      <!-- Background Bar Track -->
+      <rect x="0" y="20" width="470" height="24" rx="12" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
+      
+      <!-- p-value dynamic bar (SMIL animated) -->
+      <rect x="0" y="20" width="130" height="24" rx="12" fill="url(#cyanGrad)">
+        <animate attributeName="width" values="130;70;70;310;310;130" keyTimes="0;0.2;0.45;0.65;0.85;1" dur="7s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Alpha Threshold Marker Line (at x=180, alpha=0.05) -->
+      <line x1="180" y1="10" x2="180" y2="52" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="4 3"/>
+      <polygon points="175,8 185,8 180,14" fill="#fbbf24"/>
+      
+      <!-- Alpha Threshold Label -->
+      <text x="180" y="-2" font-family="monospace" font-size="11" font-weight="700" fill="#fbbf24" text-anchor="middle">α Threshold = 0.05</text>
+
+      <!-- Bar Legend / Labels -->
+      <text x="10" y="36" font-family="Inter, -apple-system, Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">p-value</text>
+      <text x="10" y="72" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#34d399">&lt;-- Reject Zone (p &lt; α)</text>
+      <text x="460" y="72" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8" text-anchor="end">Fail to Reject Zone (p &gt;= α) --&gt;</text>
+    </g>
+
+    <!-- Rule Summary Footer -->
+    <rect x="20" y="180" width="470" height="38" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="32" y="204" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#cbd5e1">
+      <tspan fill="#fbbf24" font-weight="700">Decision Rule: </tspan>Smaller p-values indicate stronger evidence against the null.
+    </text>
+  </g>
+
+  <!-- RIGHT: THE TWO DECISION OUTCOME CARDS -->
+  
+  <!-- OUTCOME A: REJECT H0 (GREEN) -->
+  <g transform="translate(600, 375)">
+    <rect width="265" height="235" rx="16" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" stroke-opacity="0.6"/>
+    <rect width="265" height="4" rx="2" fill="url(#emeraldGrad)"/>
+
+    <!-- Status Header -->
+    <rect x="18" y="18" width="100" height="22" rx="11" fill="#059669" fill-opacity="0.2" stroke="#34d399" stroke-width="1"/>
+    <text x="68" y="33" font-family="monospace" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">IF p &lt; α</text>
+
+    <!-- Headline Decision -->
+    <text x="18" y="72" font-family="Inter, -apple-system, Arial, sans-serif" font-size="22" font-weight="800" fill="#34d399">Reject H₀</text>
+    <text x="18" y="94" font-family="Inter, -apple-system, Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0">Statistically Significant</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="110" x2="247" y2="110" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Explanatory Bullet Points -->
+    <circle cx="26" cy="132" r="3" fill="#34d399"/>
+    <text x="36" y="136" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Sufficient sample evidence</text>
+
+    <circle cx="26" cy="158" r="3" fill="#34d399"/>
+    <text x="36" y="162" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Low chance of observed result</text>
+
+    <!-- Concluding Pill -->
+    <rect x="18" y="182" width="229" height="34" rx="8" fill="#064e3b" fill-opacity="0.4" stroke="#059669" stroke-width="1"/>
+    <text x="132" y="203" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">Support Alternative (H₁)</text>
+  </g>
+
+  <!-- OUTCOME B: FAIL TO REJECT H0 (ROSE / SLATE) -->
+  <g transform="translate(885, 375)">
+    <rect width="255" height="235" rx="16" fill="url(#cardGrad)" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.5"/>
+    <rect width="255" height="4" rx="2" fill="url(#roseGrad)"/>
+
+    <!-- Status Header -->
+    <rect x="18" y="18" width="100" height="22" rx="11" fill="#e11d48" fill-opacity="0.2" stroke="#fb7185" stroke-width="1"/>
+    <text x="68" y="33" font-family="monospace" font-size="11" font-weight="700" fill="#fb7185" text-anchor="middle">IF p &gt;= α</text>
+
+    <!-- Headline Decision -->
+    <text x="18" y="72" font-family="Inter, -apple-system, Arial, sans-serif" font-size="22" font-weight="800" fill="#fb7185">Fail to Reject H₀</text>
+    <text x="18" y="94" font-family="Inter, -apple-system, Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0">Not Significant</text>
+
+    <!-- Divider Line -->
+    <line x1="18" y1="110" x2="237" y2="110" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Explanatory Bullet Points -->
+    <circle cx="26" cy="132" r="3" fill="#fb7185"/>
+    <text x="36" y="136" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Insufficient sample evidence</text>
+
+    <circle cx="26" cy="158" r="3" fill="#fb7185"/>
+    <text x="36" y="162" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" fill="#94a3b8">Result consistent with H₀</text>
+
+    <!-- Concluding Pill -->
+    <rect x="18" y="182" width="219" height="34" rx="8" fill="#881337" fill-opacity="0.4" stroke="#be123c" stroke-width="1"/>
+    <text x="127" y="203" font-family="Inter, -apple-system, Arial, sans-serif" font-size="12" font-weight="700" fill="#fca5a5" text-anchor="middle">Retain Null Hypothesis (H₀)</text>
+  </g>
+
+  <!-- ===== FOOTER ===== -->
+  <g transform="translate(60, 642)">
+    <text x="0" y="0" font-family="monospace" font-size="11" fill="#475569">hypothesis-testing-flow.svg • SMIL Light Beam Animation • Static-First Readable Frame 1</text>
+  </g>
+</svg>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><section id="workflow" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-num">§ 02 / WORKFLOW</div></div>
+        <div><h2 class="section-title">กระบวนการตัดสินใจทางสถิติ.</h2></div>
+      </div>
+      <p class="section-epigraph" style="margin-top:-32px; margin-bottom:48px;">การทดสอบสมมติฐานมี 5 ขั้นตอนที่ต้องปฏิบัติอย่างเป็นระบบ — เริ่มจากตั้งสมมติฐานจนถึงสรุปผล พร้อมตัวอย่างการคำนวณ Z-test</p>
+
+      <div class="figure-card">
+        <div class="figure-head">
+          <span class="figure-title">กระบวนการตัดสินใจทางสถิติพร้อมตัวอย่างคำนวณ Z-test (Z = 2.00)</span>
+          <span class="figure-tag">animated · TH/EN</span>
+        </div>
+        <p class="figure-desc">5 ขั้นตอน: กำหนด H₀/H₁ → เลือก α → คำนวณสถิติ → หาบริเวณวิกฤต → สรุปผล (ตัวอย่าง: โรงงานน้ำตาล 500g, Z = 2.00, reject H₀)</p>
+        <div class="figure-frame">
+          <!-- INLINE: hypothesis-testing-workflow.svg -->
+          <svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hypothesis Testing 5-Step Workflow (กระบวนการตัดสินใจทางสถิติพร้อมตัวอย่างคำนวณ Z-test)">
+  <desc>Static-first vertical flow diagram of 5 steps of Hypothesis Testing with worked Z-test example. Header title updated, flow connectors redesigned with curved side arches, bilingual titles aligned on single baseline.</desc>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap');
+      
+      .chakra-font {
+        font-family: 'Chakra Petch Mono', 'Chakra Petch', monospace, sans-serif;
+      }
+    </style>
+
+    <!-- Background Soft Radial Glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#f1f5f9" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Arrowhead Markers for Flow Connectors -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ea580c"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#9333ea"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+
+    <!-- Curved Path along Left Channel for Traveling Particle SMIL Animation -->
+    <path id="edge-flow-path-curved" d="M 70,123 C 18,155 18,217 70,249 C 18,281 18,343 70,375 C 18,407 18,469 70,501 C 18,533 18,595 70,627" fill="none"/>
+  </defs>
+
+  <!-- Background Base Layer -->
+  <rect width="1200" height="750" fill="#ffffff"/>
+  <rect width="1200" height="750" fill="url(#bgGlow)"/>
+
+  <!-- Main Container with Font Styling -->
+  <g class="chakra-font">
+
+    <!-- LAYER 1: Header Section -->
+    <g id="node-header">
+      <line x1="50" y1="18" x2="1150" y2="18" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+      <text x="50" y="42" font-size="12" letter-spacing="1.5" font-weight="700" fill="#6d28d9">ข้อตกลงและกระบวนการทางสถิติ &#8226; STATISTICAL INFERENCE WORKFLOW</text>
+      <text x="50" y="68" font-size="20" font-weight="700" fill="#0f172a">กระบวนการตัดสินใจทางสถิติพร้อมตัวอย่างคำนวณ Z-test (Z = 2.00)</text>
+      <text x="840" y="68" font-size="12" font-weight="600" fill="#475569">(5 Steps of Hypothesis Testing)</text>
+      <line x1="50" y1="84" x2="1150" y2="84" stroke="#e2e8f0" stroke-width="1.5"/>
+    </g>
+
+    <!-- LAYER 2: Worked Example Track Connectors (Right Side Flow) -->
+    <g id="edge-example-track">
+      <line id="edge-example-1-2" x1="945" y1="194" x2="945" y2="234" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gray)"/>
+      <line id="edge-example-2-3" x1="945" y1="320" x2="945" y2="360" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gray)"/>
+      <line id="edge-example-3-4" x1="945" y1="446" x2="945" y2="486" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gray)"/>
+      <line id="edge-example-4-5" x1="945" y1="572" x2="945" y2="612" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-gray)"/>
+    </g>
+
+    <!-- LAYER 3: 5 Step Cards (Main Flowchart) -->
+
+    <!-- STEP 1: BLUE CARD (H0 & H1 Setup) -->
+    <g id="node-step1">
+      <rect x="50" y="98" width="1100" height="106" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="740" y1="108" x2="740" y2="194" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+      
+      <!-- Connection from Circle Node to Pill -->
+      <line x1="76" y1="123" x2="95" y2="123" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2"/>
+
+      <!-- Step Header Pill & Inline Bilingual Title (Same Baseline) -->
+      <rect x="95" y="113" width="72" height="20" rx="4" fill="#0284c7"/>
+      <text x="131" y="127" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">STEP 01</text>
+      <text x="177" y="127" font-size="14" font-weight="700" fill="#0369a1">Step 1: กำหนด H&#8320; และ H&#8321;<tspan font-size="11.5" font-weight="500" fill="#0284c7" dx="10">(Set Up Hypotheses)</tspan></text>
+
+      <!-- Step Content Details -->
+      <text x="95" y="149" font-size="12" fill="#1e293b">&#8226; อ่านโจทย์ให้เข้าใจว่าต้องการทดสอบอะไร <tspan fill="#64748b" font-size="11">(Understand problem statement &amp; parameter)</tspan></text>
+      <text x="95" y="167" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#0369a1">H&#8320; (Null Hypothesis):</tspan> มักใช้เครื่องหมาย = <tspan fill="#64748b" font-size="11">(Status quo / No effect: μ = μ₀, p = p₀)</tspan></text>
+      <text x="95" y="185" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#0369a1">H&#8321; (Alternative Hypothesis):</tspan> ตรงข้ามกับ H&#8320; <tspan fill="#64748b" font-size="11">(Claim to prove: &#8800;, &gt;, &lt;)</tspan></text>
+    </g>
+
+    <!-- STEP 1 WORKED EXAMPLE BADGE -->
+    <g id="node-example-1">
+      <rect x="755" y="108" width="380" height="86" rx="6" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1"/>
+      <rect x="765" y="115" width="135" height="18" rx="3" fill="#0284c7"/>
+      <text x="832.5" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">ตัวอย่าง (Worked Ex.)</text>
+      <text x="910" y="128" font-size="10.5" font-weight="600" fill="#0369a1">โรงงานน้ำตาลอ้างว่าน้ำหนักเฉลี่ย = 500g</text>
+      <text x="765" y="152" font-size="11" fill="#334155">ข้อมูล: n = 36, x&#772; = 508, σ = 24 (ทดสอบสองข้าง)</text>
+      <rect x="765" y="160" width="360" height="26" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1"/>
+      <text x="945" y="177" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">H&#8320;: μ = 500   vs   H&#8321;: μ &#8800; 500</text>
+    </g>
+
+    <!-- Curved Flow Connector 1 -> 2 (Loops safely in left margin outside straight vertical path) -->
+    <path id="edge-step1-2" d="M 70,132 C 18,158 18,214 64,241" fill="none" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+
+
+    <!-- STEP 2: ORANGE CARD (Significance Level alpha) -->
+    <g id="node-step2">
+      <rect x="50" y="224" width="1100" height="106" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+      <line x1="740" y1="234" x2="740" y2="320" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+      
+      <!-- Connection from Circle Node to Pill -->
+      <line x1="76" y1="249" x2="95" y2="249" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="2,2"/>
+
+      <!-- Step Header Pill & Inline Bilingual Title (Same Baseline) -->
+      <rect x="95" y="239" width="72" height="20" rx="4" fill="#ea580c"/>
+      <text x="131" y="253" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">STEP 02</text>
+      <text x="177" y="253" font-size="14" font-weight="700" fill="#c2410c">Step 2: กำหนดระดับนัยสำคัญ α<tspan font-size="11.5" font-weight="500" fill="#ea580c" dx="10">(Choose Significance Level α)</tspan></text>
+
+      <!-- Step Content Details -->
+      <text x="95" y="275" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#c2410c">α = 0.01 (1%):</tspan> เข้มงวดมาก <tspan fill="#64748b" font-size="11">(Strict — การแพทย์, ผลกระทบร้ายแรง / High-risk medical)</tspan></text>
+      <text x="95" y="293" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#c2410c">α = 0.05 (5%):</tspan> มาตรฐาน นิยมที่สุด <tspan fill="#64748b" font-size="11">(Default standard — งานวิจัยทั่วไป / General research)</tspan></text>
+      <text x="95" y="311" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#c2410c">α = 0.10 (10%):</tspan> ผ่อนปรน <tspan fill="#64748b" font-size="11">(Relaxed — การศึกษาเบื้องต้น / Exploratory study)</tspan></text>
+    </g>
+
+    <!-- STEP 2 WORKED EXAMPLE BADGE -->
+    <g id="node-example-2">
+      <rect x="755" y="234" width="380" height="86" rx="6" fill="#fff7ed" stroke="#fb923c" stroke-width="1"/>
+      <rect x="765" y="241" width="135" height="18" rx="3" fill="#ea580c"/>
+      <text x="832.5" y="254" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">ตัวอย่าง (Worked Ex.)</text>
+      <text x="910" y="254" font-size="11" font-weight="600" fill="#c2410c">เลือกระดับนัยสำคัญมาตรฐาน</text>
+      <text x="765" y="278" font-size="11" fill="#334155">กำหนด α = 0.05 (โอกาสเกิด Type I Error ไม่เกิน 5%)</text>
+      <rect x="765" y="286" width="360" height="26" rx="4" fill="#ffffff" stroke="#ea580c" stroke-width="1"/>
+      <text x="945" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="#c2410c">α = 0.05   &#8594;   α/2 = 0.025 (สองข้าง)</text>
+    </g>
+
+    <!-- Curved Flow Connector 2 -> 3 -->
+    <path id="edge-step2-3" d="M 70,258 C 18,284 18,340 64,367" fill="none" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arrow-orange)"/>
+
+
+    <!-- STEP 3: GREEN CARD (Test Statistic & Compute) -->
+    <g id="node-step3">
+      <rect x="50" y="350" width="1100" height="106" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <line x1="740" y1="360" x2="740" y2="446" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+      
+      <!-- Connection from Circle Node to Pill -->
+      <line x1="76" y1="375" x2="95" y2="375" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2,2"/>
+
+      <!-- Step Header Pill & Inline Bilingual Title (Same Baseline) -->
+      <rect x="95" y="365" width="72" height="20" rx="4" fill="#16a34a"/>
+      <text x="131" y="379" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">STEP 03</text>
+      <text x="177" y="379" font-size="14" font-weight="700" fill="#15803d">Step 3: เลือกตัวสถิติและคำนวณ<tspan font-size="11.5" font-weight="500" fill="#16a34a" dx="10">(Choose Test Statistic &amp; Compute)</tspan></text>
+
+      <!-- Step Content Details -->
+      <text x="95" y="401" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#15803d">ทราบ σ (n &#8805; 30):</tspan> Z = (x&#772; − μ₀) / (σ / &#8730;n) <tspan fill="#64748b" font-size="11">(Known population SD)</tspan></text>
+      <text x="95" y="419" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#15803d">ไม่ทราบ σ (n &lt; 30):</tspan> t = (x&#772; − μ₀) / (s / &#8730;n) <tspan fill="#64748b" font-size="11">(Unknown SD, use sample s)</tspan></text>
+      <text x="95" y="437" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#15803d">ทดสอบสัดส่วน (Proportion):</tspan> Z = (p&#772; − p₀) / &#8730;[p₀(1−p₀)/n]</text>
+    </g>
+
+    <!-- STEP 3 WORKED EXAMPLE BADGE -->
+    <g id="node-example-3">
+      <rect x="755" y="360" width="380" height="86" rx="6" fill="#f0fdf4" stroke="#4ade80" stroke-width="1"/>
+      <rect x="765" y="367" width="135" height="18" rx="3" fill="#16a34a"/>
+      <text x="832.5" y="380" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">ตัวอย่าง (Worked Ex.)</text>
+      <text x="910" y="380" font-size="11" font-weight="600" fill="#15803d">ทราบ σ = 24, n = 36 &#8805; 30 (Z-test)</text>
+      <text x="765" y="404" font-size="11" fill="#334155">Z = (508 − 500) / (24 / &#8730;36) = 8 / (24 / 6) = 8 / 4</text>
+      <rect x="765" y="412" width="360" height="26" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+      <text x="945" y="429" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">คำนวณสถิติทดสอบ: Z_obs = +2.00</text>
+    </g>
+
+    <!-- Curved Flow Connector 3 -> 4 -->
+    <path id="edge-step3-4" d="M 70,384 C 18,410 18,466 64,493" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+
+
+    <!-- STEP 4: PURPLE CARD (Critical Region) -->
+    <g id="node-step4">
+      <rect x="50" y="476" width="1100" height="106" rx="10" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+      <line x1="740" y1="486" x2="740" y2="572" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+      
+      <!-- Connection from Circle Node to Pill -->
+      <line x1="76" y1="501" x2="95" y2="501" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="2,2"/>
+
+      <!-- Step Header Pill & Inline Bilingual Title (Same Baseline) -->
+      <rect x="95" y="491" width="72" height="20" rx="4" fill="#9333ea"/>
+      <text x="131" y="505" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">STEP 04</text>
+      <text x="177" y="505" font-size="14" font-weight="700" fill="#7e22ce">Step 4: กำหนดบริเวณวิกฤต<tspan font-size="11.5" font-weight="500" fill="#9333ea" dx="10">(Determine Critical Region)</tspan></text>
+
+      <!-- Step Content Details -->
+      <text x="95" y="527" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#7e22ce">สองข้าง (θ &#8800; θ₀):</tspan> ปฏิเสธ H&#8320; เมื่อ |สถิติ| &gt; z_{α/2} <tspan fill="#64748b" font-size="11">(Two-tailed critical values)</tspan></text>
+      <text x="95" y="545" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#7e22ce">ข้างเดียวขวา (θ &gt; θ₀):</tspan> ปฏิเสธ H&#8320; เมื่อ สถิติ &gt; z_α <tspan fill="#64748b" font-size="11">(Right-tailed critical region)</tspan></text>
+      <text x="95" y="563" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#7e22ce">ข้างเดียวซ้าย (θ &lt; θ₀):</tspan> ปฏิเสธ H&#8320; เมื่อ สถิติ &lt; −z_α <tspan fill="#64748b" font-size="11">(Left-tailed critical region)</tspan></text>
+    </g>
+
+    <!-- STEP 4 WORKED EXAMPLE BADGE -->
+    <g id="node-example-4">
+      <rect x="755" y="486" width="380" height="86" rx="6" fill="#faf5ff" stroke="#c084fc" stroke-width="1"/>
+      <rect x="765" y="493" width="135" height="18" rx="3" fill="#9333ea"/>
+      <text x="832.5" y="506" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">ตัวอย่าง (Worked Ex.)</text>
+      <text x="910" y="506" font-size="11" font-weight="600" fill="#7e22ce">หาค่าวิกฤตที่ α/2 = 0.025</text>
+      <text x="765" y="530" font-size="11" fill="#334155">จากตาราง Z: z_{0.025} = &#177;1.96 (ขอบเขตปฏิเสธ H&#8320;)</text>
+      <rect x="765" y="538" width="360" height="26" rx="4" fill="#ffffff" stroke="#9333ea" stroke-width="1"/>
+      <text x="945" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#7e22ce">เกณฑ์ตัดสิน: ปฏิเสธ H&#8320; ถ้า |Z_obs| &gt; 1.96</text>
+    </g>
+
+    <!-- Curved Flow Connector 4 -> 5 -->
+    <path id="edge-step4-5" d="M 70,510 C 18,536 18,592 64,619" fill="none" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+
+
+    <!-- STEP 5: RED/TEAL CARD (Conclusion & p-value) -->
+    <g id="node-step5">
+      <rect x="50" y="602" width="1100" height="106" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="740" y1="612" x2="740" y2="698" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+      
+      <!-- Connection from Circle Node to Pill -->
+      <line x1="76" y1="627" x2="95" y2="627" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="2,2"/>
+
+      <!-- Step Header Pill & Inline Bilingual Title (Same Baseline) -->
+      <rect x="95" y="617" width="72" height="20" rx="4" fill="#dc2626"/>
+      <text x="131" y="631" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">STEP 05</text>
+      <text x="177" y="631" font-size="14" font-weight="700" fill="#b91c1c">Step 5: สรุปผลการทดสอบ<tspan font-size="11.5" font-weight="500" fill="#dc2626" dx="10">(Make Decision &amp; Draw Conclusion)</tspan></text>
+
+      <!-- Step Content Details -->
+      <text x="95" y="653" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#b91c1c">ตกในบริเวณวิกฤต (|สถิติ| &gt; ค่าวิกฤต):</tspan> ปฏิเสธ H&#8320; (Reject H&#8320; / Accept H&#8321;)</text>
+      <text x="95" y="671" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#0d9488">ไม่ตกในบริเวณวิกฤต (|สถิติ| &#8804; ค่าวิกฤต):</tspan> ยอมรับ H&#8320; (Fail to reject H&#8320;)</text>
+      <text x="95" y="689" font-size="12" fill="#1e293b">&#8226; <tspan font-weight="700" fill="#0284c7">วิธีทางเลือก p-value:</tspan> p &#8804; α &#8594; ปฏิเสธ H&#8320;  |  p &gt; α &#8594; ยอมรับ H&#8320;</text>
+    </g>
+
+    <!-- STEP 5 WORKED EXAMPLE BADGE -->
+    <g id="node-example-5">
+      <rect x="755" y="612" width="380" height="86" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+      <rect x="765" y="619" width="135" height="18" rx="3" fill="#dc2626"/>
+      <text x="832.5" y="632" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">ตัวอย่าง (Worked Ex.)</text>
+      <text x="910" y="632" font-size="11" font-weight="600" fill="#b91c1c">|2.00| &gt; 1.96 &#8594; ปฏิเสธ H&#8320; &#10004;</text>
+      <text x="765" y="656" font-size="11" fill="#334155">p-value = 2 &#215; P(Z &gt; 2.00) = 0.0456 &lt; 0.05 (Reject H&#8320;)</text>
+      <rect x="765" y="664" width="360" height="26" rx="4" fill="#dc2626" stroke="#b91c1c" stroke-width="1"/>
+      <text x="945" y="681" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">สรุป: น้ำหนักเฉลี่ยต่างจาก 500g อย่างมีนัยสำคัญ</text>
+    </g>
+
+
+    <!-- LAYER 4: Dynamic Pulsing Dots & Traveling Particle -->
+
+    <!-- Pulsing Status Dots for Each Step Circle Node (Located at cx=70, cy=123, 249, 375, 501, 627) -->
+    <g id="node-pulse-step1">
+      <circle cx="70" cy="123" r="5" fill="rgba(2,132,199,0.2)" stroke="#0284c7" stroke-width="1.5">
+        <animate attributeName="r" values="5;11;5" dur="3s" repeatCount="indefinite" begin="0s"/>
+        <animate attributeName="opacity" values="0.3;0.95;0.3" dur="3s" repeatCount="indefinite" begin="0s"/>
+      </circle>
+      <circle cx="70" cy="123" r="3.5" fill="#0284c7"/>
+    </g>
+
+    <g id="node-pulse-step2">
+      <circle cx="70" cy="249" r="5" fill="rgba(234,88,12,0.2)" stroke="#ea580c" stroke-width="1.5">
+        <animate attributeName="r" values="5;11;5" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+        <animate attributeName="opacity" values="0.3;0.95;0.3" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+      </circle>
+      <circle cx="70" cy="249" r="3.5" fill="#ea580c"/>
+    </g>
+
+    <g id="node-pulse-step3">
+      <circle cx="70" cy="375" r="5" fill="rgba(22,163,74,0.2)" stroke="#16a34a" stroke-width="1.5">
+        <animate attributeName="r" values="5;11;5" dur="3s" repeatCount="indefinite" begin="1.2s"/>
+        <animate attributeName="opacity" values="0.3;0.95;0.3" dur="3s" repeatCount="indefinite" begin="1.2s"/>
+      </circle>
+      <circle cx="70" cy="375" r="3.5" fill="#16a34a"/>
+    </g>
+
+    <g id="node-pulse-step4">
+      <circle cx="70" cy="501" r="5" fill="rgba(147,51,234,0.2)" stroke="#9333ea" stroke-width="1.5">
+        <animate attributeName="r" values="5;11;5" dur="3s" repeatCount="indefinite" begin="1.8s"/>
+        <animate attributeName="opacity" values="0.3;0.95;0.3" dur="3s" repeatCount="indefinite" begin="1.8s"/>
+      </circle>
+      <circle cx="70" cy="501" r="3.5" fill="#9333ea"/>
+    </g>
+
+    <g id="node-pulse-step5">
+      <circle cx="70" cy="627" r="5" fill="rgba(220,38,38,0.2)" stroke="#dc2626" stroke-width="1.5">
+        <animate attributeName="r" values="5;11;5" dur="3s" repeatCount="indefinite" begin="2.4s"/>
+        <animate attributeName="opacity" values="0.3;0.95;0.3" dur="3s" repeatCount="indefinite" begin="2.4s"/>
+      </circle>
+      <circle cx="70" cy="627" r="3.5" fill="#dc2626"/>
+    </g>
+
+    <!-- Traveling Particle moving along the side-curved path -->
+    <g id="node-flow-particle" opacity="0.9">
+      <circle r="4.5" fill="#0284c7">
+        <animateMotion dur="6s" repeatCount="indefinite">
+          <mpath href="#edge-flow-path-curved"/>
+        </animateMotion>
+        <animate attributeName="fill" values="#0284c7;#ea580c;#16a34a;#9333ea;#dc2626;#0284c7" dur="6s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+
+    <!-- LAYER 5: Bottom Key Takeaway Footer Banner -->
+    <g id="node-footer">
+      <rect x="50" y="714" width="1100" height="28" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="70" y="732" font-size="11" fill="#334155">
+        <tspan font-weight="700" fill="#0284c7">ข้อสังเกตหลัก (Key Note):</tspan> การทดสอบสมมติฐานเป็นการหาหลักฐานเพื่อ <tspan font-weight="700" fill="#dc2626">"ปฏิเสธ H&#8320;"</tspan> เมื่อข้อมูลขัดแย้งอย่างมีนัยสำคัญ การไม่ปฏิเสธ H&#8320; หมายถึงข้อมูลยังไม่เพียงพอ <tspan fill="#64748b">(Fail to reject H&#8320; ≠ Proving H&#8320; is true)</tspan>
+      </text>
+    </g>
+
+  </g>
+</svg>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CI -->
+  
+
+  <!-- PVALUE detail -->
+  
+
+  <section id="formulas" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><div class="section-num">§ 03 / FORMULAS</div></div>
+        <div><h2 class="section-title">สูตรที่ควรจำ.</h2></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="pill green"><span class="dot"></span>ช่วงความเชื่อมั่น μ</div>
+          <div class="formula-block">รู้ $\sigma$: $\mu = \bar{x} \pm Z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$</div>
+          <div class="formula-block">ไม่รู้ $\sigma$, $n \ge 30$: $\mu = \bar{x} \pm Z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}$</div>
+          <div class="formula-block">ไม่รู้ $\sigma$, $n < 30$: $\mu = \bar{x} \pm t_{\alpha/2,\,n-1} \cdot \frac{s}{\sqrt{n}}$</div>
+        </div>
+        <div>
+          <div class="pill orange"><span class="dot"></span>การทดสอบสมมติฐาน</div>
+          <div class="formula-block">$Z = \dfrac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}$</div>
+          <div class="formula-block">$t = \dfrac{\bar{x} - \mu_0}{s/\sqrt{n}}, \quad \text{df} = n-1$</div>
+          <div class="formula-block">$p\text{-value} \le \alpha \Rightarrow$ ปฏิเสธ $H_0$</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>01422111 หลักสถิติ · บทที่ 5 การอนุมานเชิงสถิติ</div>
+    <div class="mono-small">SVG by agy + Hermes QA · SMIL · Chakra Petch</div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    }
+  });
+</script>
+</body>
+</html>
