@@ -1,93 +1,36 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "version": "1.0.0",
-  "lastUpdated": "2026-07-05",
+  "version": "2.0.0",
+  "lastUpdated": "2026-08-04",
+  "site": {
+    "title": "สื่อการสอนคณิตศาสตร์",
+    "description": "คลังสื่อคณิตศาสตร์แบบอ่าน อธิบาย และทดลองได้ด้วยตนเอง"
+  },
   "contentGroups": [
     {
-      "id": "statistics-01422111",
-      "title": "สถิติ 01422111",
-      "description": "สถิติสำหรับวิทยาศาสตร์",
-      "theme": "starbucks",
-      "designSystem": {
-        "primaryColor": "#006241",
-        "secondaryColor": "#cba258",
-        "bgColor": "#f2f0eb",
-        "fontFamily": "IBM Plex Sans Thai Looped",
-        "darkMode": true
-      },
+      "id": "m3-analytic-geometry",
+      "level": "m3",
+      "levelLabel": "มัธยมศึกษาตอนต้น",
+      "title": "ม.3: พาราโบลา",
+      "description": "สรุปแนวคิด สมการ รูปร่างกราฟ และการวิเคราะห์พาราโบลาอย่างเป็นระบบ",
+      "theme": "orange",
+      "order": 1,
       "topics": [
         {
-          "id": "stats-ch1",
-          "title": "บทที่ 1: ความหมายของสถิติ",
+          "id": "m3-parabola",
+          "title": "สรุปเข้มเรื่อง พาราโบลา",
           "order": 1,
           "prerequisites": [],
           "items": [
             {
-              "id": "stats-ch1-1",
-              "filename": "01422111-ch1-starbucks-purehtml.html",
-              "title": "01422111 หลักสถิติ - บทที่ 1 (Starbucks Theme)",
-              "type": "slides",
-              "tech": "katex-0.16.9"
-            }
-          ]
-        },
-        {
-          "id": "stats-ch2",
-          "title": "บทที่ 2: การวิเคราะห์ข้อมูลเบื้องต้น",
-          "order": 2,
-          "prerequisites": [
-            "stats-ch1"
-          ],
-          "items": [
-            {
-              "id": "stats-ch2-1",
-              "filename": "01422111-ch02-purehtml.html",
-              "title": "01422111 หลักสถิติ - บทที่ 2 (Carbon Hybrid)",
-              "type": "slides",
-              "tech": "katex-0.16.9"
-            }
-          ]
-        },
-        {
-          "id": "stats-ch3",
-          "title": "บทที่ 3: ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น",
-          "order": 3,
-          "prerequisites": [
-            "stats-ch2"
-          ],
-          "items": [
-            {
-              "id": "stats-ch3-1",
-              "filename": "01422111-ch03-purehtml.html",
-              "title": "01422111 หลักสถิติ - บทที่ 3 (KU Stats Claude)",
-              "type": "slides",
-              "tech": "katex-0.16.9"
-            }
-          ]
-        },
-        {
-          "order": 4,
-          "title": "แบบฝึกหัด: เลือกตัวสถิติทดสอบ (Z หรือ t)",
-          "prerequisites": [
-            "บทที่ 5",
-            "บทที่ 6"
-          ],
-          "items": [
-            {
-              "filename": "01422111-ch5-statistic-choice-quiz.html"
-            }
-          ]
-        },
-        {
-          "order": 5,
-          "title": "แบบฝึกหัด: เลือกสูตรช่วงความเชื่อมั่น (CI)",
-          "prerequisites": [
-            "บทที่ 5",
-            "บทที่ 6"
-          ],
-          "items": [
-            {
-              "filename": "01422111-ch5-ci-formula-quiz.html"
+              "id": "m3-parabola-guide",
+              "filename": "interactive/m3-parabola/index.html",
+              "alternateFiles": ["interactive/m3-parabola-summary.html"],
+              "title": "Parabola guide",
+              "description": "บทนำ รูปแบบสมการ การแปลงสมการ จุดยอด แกนสมมาตร และตัวอย่างโจทย์",
+              "type": "guide",
+              "typeLabel": "บทสรุป",
+              "tech": "quarto-html"
             }
           ]
         }
@@ -95,112 +38,195 @@
     },
     {
       "id": "m5-functions",
-      "title": "คณิตศาสตร์ ม.5: ฟังก์ชัน",
-      "description": "ความสัมพันธ์และฟังก์ชัน โดเมน โคโดเมน range ฟังก์ชันสับกลับ",
-      "theme": "warm-cream",
-      "designSystem": {
-        "primaryColor": "#007c89",
-        "secondaryColor": "#e36f3f",
-        "bgColor": "#f4f1ea",
-        "fontFamily": "IBM Plex Sans Thai Looped",
-        "darkMode": false
-      },
+      "level": "m5",
+      "levelLabel": "มัธยมศึกษาตอนปลาย",
+      "title": "ม.5: ฟังก์ชัน",
+      "description": "เรียนรู้ฟังก์ชันผ่านแผนภาพการจับคู่ ตั้งแต่ domain และ range ไปจนถึง inverse function",
+      "theme": "teal",
+      "order": 2,
       "topics": [
         {
           "id": "m5-relation-vs-function",
           "title": "ความสัมพันธ์กับฟังก์ชัน",
           "order": 1,
           "prerequisites": [],
-          "items": [
-            {
-              "id": "m5-relation-vs-function-1",
-              "filename": "m5-relation-vs-function.html",
-              "title": "ความสัมพันธ์กับฟังก์ชัน",
-              "type": "interactive",
-              "tech": "svg-mapping"
-            }
-          ]
+          "items": [{
+            "id": "m5-relation-vs-function-1",
+            "filename": "interactive/m5-relation-vs-function.html",
+            "title": "ความสัมพันธ์กับฟังก์ชัน",
+            "description": "ทดลองสร้างลูกศรจากเซตหนึ่งไปอีกเซตหนึ่ง และตรวจว่าเป็นฟังก์ชันหรือไม่",
+            "type": "interactive",
+            "typeLabel": "ทดลองได้",
+            "tech": "svg-mapping"
+          }]
         },
         {
           "id": "m5-domain-codomain-range",
           "title": "โดเมน โคโดเมน และเรนจ์",
           "order": 2,
-          "prerequisites": [
-            "m5-relation-vs-function"
-          ],
-          "items": [
-            {
-              "id": "m5-domain-codomain-range-1",
-              "filename": "m5-domain-codomain-range.html",
-              "title": "โดเมน โคโดเมน และเรนจ์",
-              "type": "interactive",
-              "tech": "svg-mapping"
-            }
-          ]
+          "prerequisites": ["m5-relation-vs-function"],
+          "items": [{
+            "id": "m5-domain-codomain-range-1",
+            "filename": "interactive/m5-domain-codomain-range.html",
+            "title": "โดเมน โคโดเมน และเรนจ์",
+            "description": "แยกความหมายของ domain, codomain และ range ผ่าน mapping diagram",
+            "type": "interactive",
+            "typeLabel": "ทดลองได้",
+            "tech": "svg-mapping"
+          }]
         },
         {
           "id": "m5-one-to-one-onto",
           "title": "One-to-one และ Onto",
           "order": 3,
-          "prerequisites": [
-            "m5-domain-codomain-range"
-          ],
-          "items": [
-            {
-              "id": "m5-one-to-one-onto-1",
-              "filename": "m5-one-to-one-onto.html",
-              "title": "One-to-one และ Onto",
-              "type": "interactive",
-              "tech": "svg-mapping"
-            }
-          ]
+          "prerequisites": ["m5-domain-codomain-range"],
+          "items": [{
+            "id": "m5-one-to-one-onto-1",
+            "filename": "interactive/m5-one-to-one-onto.html",
+            "title": "One-to-one และ Onto",
+            "description": "ตรวจสอบ injective, surjective และ bijective จากภาพการจับคู่",
+            "type": "interactive",
+            "typeLabel": "ทดลองได้",
+            "tech": "svg-mapping"
+          }]
         },
         {
           "id": "m5-inverse-function",
           "title": "Inverse Function",
           "order": 4,
-          "prerequisites": [
-            "m5-one-to-one-onto"
-          ],
+          "prerequisites": ["m5-one-to-one-onto"],
+          "items": [{
+            "id": "m5-inverse-function-1",
+            "filename": "interactive/m5-inverse-function.html",
+            "title": "Inverse Function",
+            "description": "เชื่อมโยง inverse function กับเงื่อนไข bijective และการสลับบทบาทของเซต",
+            "type": "interactive",
+            "typeLabel": "ทดลองได้",
+            "tech": "svg-mapping"
+          }]
+        }
+      ]
+    },
+    {
+      "id": "university-statistics-01422111",
+      "level": "university",
+      "levelLabel": "ระดับมหาวิทยาลัย",
+      "title": "01422111: หลักสถิติ",
+      "description": "สื่อประกอบรายวิชาสำหรับเรียนแนวคิด วิเคราะห์ข้อมูล สุ่มตัวแปร และเริ่มต้นการอนุมานเชิงสถิติ",
+      "theme": "green",
+      "order": 3,
+      "topics": [
+        {
+          "id": "stats-ch1",
+          "title": "บทที่ 1: ความหมายของสถิติ",
+          "order": 1,
+          "prerequisites": [],
+          "items": [{
+            "id": "stats-ch1-1",
+            "filename": "interactive/statistics/01422111-ch1-starbucks-purehtml.html",
+            "title": "ความหมายของสถิติ",
+            "description": "ประชากร ตัวอย่าง ข้อมูล พารามิเตอร์ ค่าสถิติ และเครื่องหมายผลรวม",
+            "type": "slides",
+            "typeLabel": "บทเรียน",
+            "tech": "katex"
+          }]
+        },
+        {
+          "id": "stats-ch2",
+          "title": "บทที่ 2: การวิเคราะห์ข้อมูลเบื้องต้น",
+          "order": 2,
+          "prerequisites": ["stats-ch1"],
+          "items": [{
+            "id": "stats-ch2-1",
+            "filename": "interactive/statistics/01422111-ch02-purehtml.html",
+            "title": "การวิเคราะห์ข้อมูลเบื้องต้น",
+            "description": "การนำเสนอข้อมูล ค่ากลาง ตำแหน่ง การกระจาย และรูปร่างของการแจกแจง",
+            "type": "slides",
+            "typeLabel": "บทเรียน",
+            "tech": "katex"
+          }]
+        },
+        {
+          "id": "stats-ch3",
+          "title": "บทที่ 3: ตัวแปรสุ่มและการแจกแจง",
+          "order": 3,
+          "prerequisites": ["stats-ch2"],
+          "items": [{
+            "id": "stats-ch3-1",
+            "filename": "interactive/statistics/01422111-ch03-purehtml.html",
+            "title": "ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น",
+            "description": "สำรวจตัวแปรสุ่มแบบไม่ต่อเนื่อง แบบต่อเนื่อง และการแจกแจงความน่าจะเป็น",
+            "type": "slides",
+            "typeLabel": "บทเรียน",
+            "tech": "katex"
+          }]
+        },
+        {
+          "id": "stats-ch5-visual-guide",
+          "title": "บทที่ 5: การอนุมานเชิงสถิติ",
+          "order": 4,
+          "prerequisites": ["stats-ch2"],
+          "items": [{
+            "id": "stats-ch5-visual-guide-1",
+            "filename": "interactive/statistics/stat-inference-visual-guide-ch5.html",
+            "title": "Visual Field Guide: การอนุมานเชิงสถิติ",
+            "description": "ภาพรวมช่วงความเชื่อมั่น กระบวนการตัดสินใจ และสูตรที่ควรจำ",
+            "type": "guide",
+            "typeLabel": "คู่มือภาพ",
+            "tech": "katex"
+          }]
+        },
+        {
+          "id": "stats-practice",
+          "title": "แบบฝึกหัดเลือกวิธีทำ",
+          "order": 5,
+          "prerequisites": ["stats-ch5-visual-guide"],
           "items": [
             {
-              "id": "m5-inverse-function-1",
-              "filename": "m5-inverse-function.html",
-              "title": "Inverse Function",
-              "type": "interactive",
-              "tech": "svg-mapping"
+              "id": "stats-statistic-choice-quiz",
+              "filename": "interactive/statistics/01422111-ch5-statistic-choice-quiz.html",
+              "title": "เลือกตัวสถิติทดสอบ: Z หรือ t",
+              "description": "ฝึกเลือกตัวสถิติทดสอบให้เหมาะกับโจทย์",
+              "type": "quiz",
+              "typeLabel": "แบบฝึกหัด",
+              "tech": "katex"
+            },
+            {
+              "id": "stats-ci-formula-quiz",
+              "filename": "interactive/statistics/01422111-ch5-ci-formula-quiz.html",
+              "title": "เลือกสูตรช่วงความเชื่อมั่น: Z หรือ t",
+              "description": "ฝึกเลือกสูตรช่วงความเชื่อมั่นจากเงื่อนไขของข้อมูล",
+              "type": "quiz",
+              "typeLabel": "แบบฝึกหัด",
+              "tech": "katex"
             }
           ]
         }
       ]
     },
     {
-      "id": "calculus",
-      "title": "แคลคูลัส",
-      "description": "ลู่เข้าของฟังก์ชัน logistic growth",
-      "theme": "warm-cream",
-      "designSystem": {
-        "primaryColor": "#007c89",
-        "secondaryColor": "#e36f3f",
-        "bgColor": "#f4f1ea",
-        "fontFamily": "IBM Plex Sans Thai Looped",
-        "darkMode": false
-      },
+      "id": "university-calculus",
+      "level": "university",
+      "levelLabel": "ระดับมหาวิทยาลัย",
+      "title": "แคลคูลัส: Logistic Growth",
+      "description": "ทดลองดูพฤติกรรมของฟังก์ชัน logistic และผลของพารามิเตอร์ต่อกราฟ",
+      "theme": "blue",
+      "order": 4,
       "topics": [
         {
           "id": "logistic-growth",
           "title": "Logistic Growth",
           "order": 1,
           "prerequisites": [],
-          "items": [
-            {
-              "id": "logistic-growth-1",
-              "filename": "logistic-growth.html",
-              "title": "Logistic Growth Function",
-              "type": "interactive",
-              "tech": "canvas"
-            }
-          ]
+          "items": [{
+            "id": "logistic-growth-1",
+            "filename": "interactive/logistic-growth.html",
+            "title": "Logistic Growth Function",
+            "description": "ปรับค่าพารามิเตอร์และสำรวจกราฟของฟังก์ชัน logistic แบบ interactive",
+            "type": "interactive",
+            "typeLabel": "ทดลองได้",
+            "tech": "katex-canvas"
+          }]
         }
       ]
     }
