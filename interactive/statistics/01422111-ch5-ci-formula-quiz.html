@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เลือกสูตรช่วงความเชื่อมั่นให้ถูก: Z หรือ t? (บทที่ 5 + 6.1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Chakra+Petch:wght@400;500;600;700&family=Chakra+Petch+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --paper: #F5EEDC;
+    --paper-warm: #F0E7D0;
+    --paper-light: #FAF6EA;
+    --paper-white: #FFFFFF;
+    --ink: #0B2545;
+    --ink-2: #1A3A5C;
+    --ink-soft: rgba(11, 37, 69, 0.65);
+    --ink-faint: rgba(11, 37, 69, 0.16);
+    --ink-trace: rgba(11, 37, 69, 0.10);
+    --orange: #D75C2A;
+    --orange-deep: #A8421A;
+    --orange-soft: rgba(215, 92, 42, 0.14);
+    --orange-bright: #E8743A;
+    --green: #2A7553;
+    --green-deep: #1F5840;
+    --green-soft: rgba(42, 117, 83, 0.14);
+    --green-bright: #3A9572;
+    --red: #B3261E;
+    --red-soft: rgba(179, 38, 30, 0.10);
+    --grid-minor: rgba(11, 37, 69, 0.05);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: 'Chakra Petch', 'Newsreader', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.025em; }
+  .mono { font-family: 'Chakra Petch Mono', monospace; }
+  .serif-italic { font-family: 'Newsreader', serif; font-style: italic; }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 26px 26px;
+    pointer-events: none; z-index: 0; opacity: 0.7;
+  }
+  main, header, footer { position: relative; z-index: 1; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(245, 238, 220, 0.88);
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .top-nav-inner {
+    max-width: 980px; margin: 0 auto;
+    padding: 13px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.01em; }
+  .brand-mark { color: var(--orange); font-size: 22px; line-height: 1; }
+  .nav-meta { font-family: 'Chakra Petch Mono', monospace; font-size: 11px; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 72px 0 36px; }
+  .hero-meta {
+    font-family: 'Chakra Petch Mono', monospace; font-size: 12px;
+    color: var(--ink-soft); letter-spacing: 0.16em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  }
+  .hero-meta::before { content: ''; width: 32px; height: 1px; background: var(--ink); }
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(34px, 6.4vw, 68px); font-weight: 700; line-height: 1.02;
+    letter-spacing: -0.035em; margin: 0 0 14px 0;
+  }
+  .hero-title .amp { font-family: 'Newsreader', serif; font-style: italic; font-weight: 400; color: var(--orange); }
+  .hero-subtitle {
+    font-family: 'Chakra Petch', 'Newsreader', serif; font-style: italic;
+    font-size: clamp(16px, 2vw, 21px); color: var(--ink-2);
+    max-width: 720px; margin: 0 0 28px 0; line-height: 1.4;
+  }
+
+  .rule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 8px 0 40px; }
+  @media (max-width: 820px) { .rule-grid { grid-template-columns: 1fr; } }
+  .rule-card {
+    background: var(--paper-white); border: 1px solid var(--ink-faint);
+    border-radius: var(--radius); padding: 18px 18px 16px;
+  }
+  .rule-card .rule-tag {
+    font-family: 'Chakra Petch Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-deep);
+    margin-bottom: 8px; display: block;
+  }
+  .rule-card .rule-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; margin: 0 0 6px; }
+  .rule-card .rule-formula {
+    font-size: 15px; background: var(--paper-light); border-left: 2px solid var(--orange);
+    padding: 10px 10px; margin: 8px 0; overflow-x: auto; text-align: center;
+  }
+  .rule-card .rule-formula .katex-display { margin: 0; }
+  .rule-card .rule-note { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 0; }
+
+  .quiz-progress { margin: 8px 0 20px; }
+  .progress-track { height: 6px; background: var(--ink-trace); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: var(--orange); border-radius: 99px; transition: width 0.4s ease; }
+  .progress-label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Chakra Petch Mono', monospace; font-size: 11.5px;
+    color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .quiz-card {
+    background: var(--paper-white);
+    border: 1px solid var(--ink-faint);
+    border-radius: var(--radius);
+    padding: 28px 30px 26px;
+    box-shadow: 0 2px 18px rgba(11, 37, 69, 0.06);
+  }
+  .quiz-qnum { font-family: 'Chakra Petch Mono', monospace; font-size: 11.5px; color: var(--orange-deep); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .quiz-scenario { font-size: 16.5px; line-height: 1.6; margin: 0 0 18px; }
+  .quiz-scenario .katex { font-size: 1.02em; }
+  .quiz-question { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; margin: 0 0 16px; }
+  .quiz-question::before { content: '▸ '; color: var(--orange); }
+
+  .opt-list { display: grid; gap: 12px; margin: 0 0 6px; }
+  .opt {
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid var(--ink-faint); border-radius: 10px;
+    padding: 16px 18px; cursor: pointer;
+    background: var(--paper-light);
+    transition: border-color 0.18s, background 0.18s, transform 0.12s;
+    user-select: none;
+  }
+  .opt:hover { border-color: var(--orange); background: var(--orange-soft); }
+  .opt .opt-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--ink-faint); background: var(--paper-white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Chakra Petch Mono', monospace; font-size: 13px; font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .opt .opt-math { flex: 1 1 auto; text-align: center; font-size: 16px; overflow-x: auto; }
+  .opt .opt-math .katex-display { margin: 0; }
+  .opt.selected { border-color: var(--orange); background: var(--orange-soft); }
+  .opt.selected .opt-num { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .opt.correct { border-color: var(--green); background: var(--green-soft); }
+  .opt.correct .opt-num { background: var(--green); border-color: var(--green); color: #fff; }
+  .opt.wrong { border-color: var(--red); background: var(--red-soft); }
+  .opt.wrong .opt-num { background: var(--red); border-color: var(--red); color: #fff; }
+  .opt.disabled { cursor: default; pointer-events: none; }
+  .opt .opt-check { margin-left: auto; font-family: 'Chakra Petch Mono', monospace; font-weight: 700; font-size: 15px; flex: 0 0 auto; }
+
+  /* df sub-selector */
+  .df-section { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 10px; background: var(--paper-light); border: 1px dashed var(--ink-faint); }
+  .df-section.show { display: block; }
+  .df-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14.5px; margin: 0 0 10px; }
+  .df-title::before { content: '∘ '; color: var(--orange); }
+  .df-list { display: flex; gap: 10px; flex-wrap: wrap; }
+  .df-chip {
+    border: 1px solid var(--ink-faint); border-radius: 8px;
+    padding: 8px 14px; cursor: pointer; background: var(--paper-white);
+    font-size: 14px; transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .df-chip:hover { border-color: var(--orange); background: var(--orange-soft); }
+  .df-chip.selected { border-color: var(--orange); background: var(--orange-soft); }
+  .df-chip.correct { border-color: var(--green); background: var(--green-soft); }
+  .df-chip.wrong { border-color: var(--red); background: var(--red-soft); }
+  .df-chip.disabled { cursor: default; pointer-events: none; }
+  .df-chip .katex-display { margin: 0; }
+
+  .feedback { display: none; margin-top: 18px; padding: 16px 18px; border-radius: 10px; border-left: 4px solid; }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: var(--green-soft); border-color: var(--green); }
+  .feedback.wrong-fb { background: var(--red-soft); border-color: var(--red); }
+  .feedback-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; margin: 0 0 8px; }
+  .feedback.correct-fb .feedback-title { color: var(--green-deep); }
+  .feedback.wrong-fb .feedback-title { color: var(--red); }
+  .feedback-explanation { font-size: 14.5px; line-height: 1.7; color: var(--ink-2); margin-bottom: 8px; }
+  .feedback-explanation .katex { font-size: 1.02em; }
+  .feedback-formula { font-size: 16px; text-align: center; padding: 8px 0 2px; }
+  .feedback-formula .katex-display { margin: 0; }
+
+  .next-wrap { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px;
+    border: none; border-radius: 10px; padding: 12px 22px; cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary { background: var(--orange); color: #fff; box-shadow: 0 2px 10px rgba(215, 92, 42, 0.3); }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(215, 92, 42, 0.35); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink-faint); }
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+  .btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .result-card { text-align: center; padding: 48px 32px; }
+  .result-score { font-family: 'Space Grotesk', sans-serif; font-size: clamp(56px, 10vw, 110px); font-weight: 700; letter-spacing: -0.04em; margin: 8px 0 4px; line-height: 1; }
+  .result-score .of { font-size: 0.4em; color: var(--ink-soft); font-weight: 400; }
+  .result-label { font-family: 'Chakra Petch Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+  .result-msg { font-family: 'Newsreader', serif; font-style: italic; font-size: 19px; color: var(--ink-2); margin: 18px 0 8px; }
+  .result-verdict { font-family: 'Chakra Petch Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 99px; display: inline-block; margin-top: 10px; }
+  .verdict-pass { background: var(--green-soft); color: var(--green-deep); border: 1px solid var(--green); }
+  .verdict-fail { background: var(--red-soft); color: var(--red); border: 1px solid var(--red); }
+
+  .review-list { margin: 28px 0 8px; display: grid; gap: 12px; text-align: left; }
+  .review-item { background: var(--paper-white); border: 1px solid var(--ink-faint); border-radius: 10px; padding: 14px 18px; }
+  .review-item .review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .review-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+  .review-dot.ok { background: var(--green); }
+  .review-dot.no { background: var(--red); }
+  .review-item .review-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14.5px; }
+  .review-item .review-detail { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .review-item .review-explanation { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; margin-top: 4px; }
+  .review-item .review-math { font-size: 15px; text-align: center; margin-top: 6px; }
+  .review-item .review-math .katex-display { margin: 0; }
+
+  .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+
+  footer { border-top: 1px solid var(--ink-faint); padding: 36px 0 48px; color: var(--ink-soft); font-size: 13px; margin-top: 60px; }
+  .footer-inner { max-width: 980px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .mono-small { font-family: 'Chakra Petch Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .hidden { display: none !important; }
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ===== Responsive: tablet & mobile ===== */
+  @media (max-width: 820px) {
+    .container { padding: 0 18px; }
+    .hero { padding: 48px 0 28px; }
+    .hero-title { font-size: clamp(30px, 8vw, 52px); }
+    .quiz-card { padding: 22px 20px 20px; }
+    .opt { padding: 13px 14px; gap: 12px; }
+    .opt .opt-math { font-size: 14px; }
+    .rule-formula { font-size: 13.5px; }
+    .feedback-formula { font-size: 14px; }
+    .result-card { padding: 36px 20px; }
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .container { padding: 0 14px; }
+    .top-nav-inner { padding: 11px 14px; gap: 10px; }
+    .brand { font-size: 14px; }
+    .brand-mark { font-size: 19px; }
+    .nav-meta { font-size: 9.5px; letter-spacing: 0.06em; }
+
+    .hero { padding: 40px 0 24px; }
+    .hero-meta { font-size: 10.5px; letter-spacing: 0.12em; margin-bottom: 14px; }
+    .hero-meta::before { width: 22px; }
+    .hero-title { font-size: clamp(26px, 9vw, 40px); letter-spacing: -0.03em; margin-bottom: 10px; }
+    .hero-subtitle { font-size: 15.5px; margin-bottom: 20px; }
+    .rule-grid { gap: 12px; margin: 6px 0 28px; }
+    .rule-card { padding: 14px 14px 12px; }
+    .rule-formula { font-size: 13px; padding: 8px 8px; }
+    .rule-note { font-size: 12px; }
+
+    .quiz-progress { margin: 6px 0 14px; }
+    .progress-label { font-size: 10.5px; }
+    .quiz-card { padding: 18px 14px 16px; border-radius: 12px; }
+    .quiz-qnum { font-size: 10.5px; margin-bottom: 6px; }
+    .quiz-scenario { font-size: 15.5px; line-height: 1.55; margin-bottom: 14px; }
+    .quiz-scenario .katex { font-size: 1em; }
+    .quiz-question { font-size: 16px; margin-bottom: 12px; }
+
+    .opt-list { gap: 10px; }
+    .opt { padding: 12px 12px; gap: 10px; border-radius: 9px; min-height: 52px; }
+    .opt .opt-num { width: 26px; height: 26px; font-size: 12px; }
+    .opt .opt-math { font-size: 13.5px; }
+    .opt .opt-check { font-size: 13px; }
+
+    .df-section { padding: 12px 12px; margin-top: 12px; }
+    .df-title { font-size: 13.5px; margin-bottom: 8px; }
+    .df-list { gap: 8px; }
+    .df-chip { padding: 8px 12px; font-size: 13px; }
+
+    .feedback { padding: 13px 14px; margin-top: 14px; }
+    .feedback-title { font-size: 14px; }
+    .feedback-explanation { font-size: 13.5px; line-height: 1.6; }
+    .feedback-formula { font-size: 13.5px; overflow-x: auto; }
+
+    .next-wrap { gap: 10px; margin-top: 16px; }
+    .btn { font-size: 14px; padding: 11px 16px; border-radius: 9px; }
+    .next-wrap .btn { flex: 1 1 auto; justify-content: center; }
+
+    .result-card { padding: 28px 14px; }
+    .result-msg { font-size: 17px; }
+    .result-verdict { font-size: 11px; padding: 5px 12px; }
+    .review-item { padding: 12px 14px; }
+    .review-item .review-title { font-size: 13.5px; }
+    .review-item .review-detail, .review-item .review-explanation { font-size: 13px; }
+    .review-item .review-math { font-size: 13.5px; overflow-x: auto; }
+    .btn-row { gap: 10px; }
+    .btn-row .btn { flex: 1 1 auto; justify-content: center; }
+
+    .footer-inner { padding: 0 14px; }
+    .mono-small { font-size: 10px; }
+  }
+
+  /* KaTeX display math should never break layout on small screens */
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; max-width: 100%; }
+
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <div class="brand"><span class="brand-mark">∎</span> เลือกสูตรช่วงความเชื่อมั่นให้ถูก</div>
+    <div class="nav-meta">01422111 · บทที่ 5 + 6.1 · CI</div>
+  </div>
+</nav>
+
+<main class="container">
+  <section id="intro">
+    <div class="hero">
+      <div class="hero-meta">01422111 · หลักสถิติ · แบบฝึกหัดออนไลน์</div>
+      <h1 class="hero-title">สูตรช่วงความเชื่อมั่น<span class="amp">:</span> Z หรือ t?</h1>
+      <p class="hero-subtitle">ฝึกเลือกสูตรช่วงความเชื่อมั่น (CI) ของ μ ให้ถูกต้อง: ดูเงื่อนไข σ ทราบหรือไม่ ขนาดตัวอย่าง และการแจกแจงประชากร</p>
+
+      <div class="rule-grid">
+        <div class="rule-card">
+          <span class="rule-tag">Case 1: ทราบ σ²</span>
+          <p class="rule-title">CI โดยใช้ Z กับ σ</p>
+          <div class="rule-formula">$$\bar{x} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$$</div>
+          <p class="rule-note">ทราบ σ²: ใช้ z เสมอ ไม่สนใจขนาด n</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-tag">Case 2: ไม่ทราบ σ², n &lt; 30</span>
+          <p class="rule-title">CI โดยใช้ t กับ s</p>
+          <div class="rule-formula">$$\bar{x} \pm t_{\alpha/2,\,n-1} \cdot \frac{s}{\sqrt{n}}$$</div>
+          <p class="rule-note">ต้องประชากรแจกแจงปกติ ($df = n-1$)</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-tag">Case 3: ไม่ทราบ σ², n ≥ 30</span>
+          <p class="rule-title">CI โดยใช้ Z กับ s (CLT)</p>
+          <div class="rule-formula">$$\bar{x} \pm z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}$$</div>
+          <p class="rule-note">CLT: ประชากรไม่ปกติก็ใช้ได้</p>
+        </div>
+      </div>
+
+      <div class="next-wrap">
+        <div class="mono-small">10 ข้อ · ถ้าเลือก t ต้องเลือก df ด้วย</div>
+        <button class="btn btn-primary" onclick="startQuiz()">เริ่มทำแบบฝึกหัด →</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="quiz-progress">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label">
+        <span id="progressText">ข้อ 1 / 10</span>
+        <span id="scoreText">คะแนน: 0</span>
+      </div>
+    </div>
+
+    <div class="quiz-card fade-in" id="quizCard">
+      <div class="quiz-qnum" id="qNum">ข้อ 1 / 10</div>
+      <p class="quiz-scenario" id="qScenario"></p>
+      <p class="quiz-question">จงเลือกสูตรช่วงความเชื่อมั่นที่ถูกต้อง</p>
+      <div class="opt-list" id="optList"></div>
+      <div class="df-section" id="dfSection">
+        <p class="df-title">เลือก df ที่ถูกต้อง</p>
+        <div class="df-list" id="dfList"></div>
+      </div>
+      <div class="feedback" id="feedback">
+        <p class="feedback-title" id="fbTitle"></p>
+        <div class="feedback-explanation" id="fbExplanation"></div>
+        <div class="feedback-formula" id="fbFormula"></div>
+      </div>
+      <div class="next-wrap">
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn btn-ghost" id="btnBack" onclick="prevQuestion()">← ย้อนกลับ</button>
+          <button class="btn btn-ghost" id="btnRestart" onclick="startQuiz()">เริ่มใหม่</button>
+          <button class="btn btn-ghost" id="btnSkip" onclick="skipQuestion()">ข้ามข้อนี้ →</button>
+        </div>
+        <button class="btn btn-primary" id="btnNext" onclick="nextQuestion()" disabled>ข้อถัดไป →</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="quiz-card result-card fade-in">
+      <div class="result-label">ผลการทำแบบฝึกหัด</div>
+      <div class="result-score" id="resultScore">0<span class="of"> / 10</span></div>
+      <p class="result-msg" id="resultMsg"></p>
+      <div><span class="result-verdict" id="resultVerdict"></span></div>
+
+      <div class="review-list" id="reviewList"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="startQuiz()">ทำใหม่ทั้งหมด</button>
+        <button class="btn btn-ghost" onclick="reviewWrong()">ดูเฉพาะข้อที่ผิด</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">↑ กลับหัวข้อ</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>01422111 หลักสถิติ · มหาวิทยาลัยเกษตรศาสตร์</span>
+    <span class="mono-small">Confidence Interval · Z · t · CLT</span>
+  </div>
+</footer>
+
+<script>
+/* QUESTIONS INJECTED BY BUILD SCRIPT */
+const QUESTIONS = [
+  {
+    "id": 1,
+    "title": "ข้อ 1: CI ทราบ $\\sigma^2$ ประชากรปกติ",
+    "scenario": "โรงงานผลิตน้ำผลไม้บรรจุกล่องต้องการประมาณปริมาตรสุทธิเฉลี่ยของประชากร ต้องการช่วงความเชื่อมั่น 95% โดยทราบส่วนเบี่ยงเบนมาตรฐานประชากร $\\sigma = 4.0$ มล. และปริมาตรบรรจุมีการกระจายแบบปกติ สุ่มตรวจน้ำผลไม้จำนวน $n = 25$ กล่อง พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 252.4$ มล. และส่วนเบี่ยงเบนมาตรฐานตัวอย่าง $s = 4.5$ มล.",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 0,
+    "t_index": 1,
+    "df_options": [],
+    "df_correct": -1,
+    "feedback_formula": "$$252.4 \\pm 1.96 \\cdot \\frac{4.0}{\\sqrt{25}} = 252.4 \\pm 1.568 = (250.832,\\, 253.968)$$",
+    "case": "known-sigma",
+    "difficulty": "ง่าย",
+    "explanation": "ทราบ $\\sigma = 4.0$ และประชากรปกติ จึงใช้สูตร CI ด้วย $z_{\\alpha/2}$ กับ $\\sigma$: $\\bar{x} \\pm z_{0.025} \\cdot \\sigma/\\sqrt{n}$ ส่วน $s = 4.5$ เป็นข้อมูลส่วนเกินไม่ต้องใช้"
+  },
+  {
+    "id": 2,
+    "title": "ข้อ 2: CI ไม่ทราบ $\\sigma^2$ ประชากรปกติ ตัวอย่างเล็ก",
+    "scenario": "บริษัทยาต้องการประมาณค่าการลดความดันเฉลี่ยของยาสูตรใหม่ด้วยช่วงความเชื่อมั่น 95% ข้อมูลประชากรมีการกระจายแบบปกติแต่ไม่ทราบ $\\sigma$ ทำการทดลองในผู้ป่วย $n = 9$ คน พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 17.4$ มม.ปรอท และส่วนเบี่ยงเบนมาตรฐานตัวอย่าง $s = 3.6$ มม.ปรอท",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 1,
+    "t_index": 1,
+    "df_options": [
+      "$$df = 8$$",
+      "$$df = 9$$",
+      "$$df = 15$$",
+      "$$df = 7$$"
+    ],
+    "df_correct": 0,
+    "feedback_formula": "$$17.4 \\pm t_{0.025,\\,8} \\cdot \\frac{3.6}{\\sqrt{9}} = 17.4 \\pm 2.306 \\cdot 1.2 = (14.633,\\, 20.167)$$",
+    "case": "unknown-sigma-small",
+    "difficulty": "กลาง",
+    "explanation": "ไม่ทราบ $\\sigma$ และ $n = 9 < 30$ ประชากรปกติ จึงใช้ CI ด้วย $t_{\\alpha/2,\\,n-1}$: $\\bar{x} \\pm t_{0.025,\\,8} \\cdot s/\\sqrt{n}$ โดย $df = n-1 = 8$"
+  },
+  {
+    "id": 3,
+    "title": "ข้อ 3: CI ไม่ทราบ $\\sigma^2$ ประชากรเบ้ ตัวอย่างใหญ่",
+    "scenario": "นักวิจัยการเกษตรต้องการประมาณผลผลิตข้าวโพดเฉลี่ยด้วยช่วงความเชื่อมั่น 95% ข้อมูลผลผลิตประชากรมีการกระจายแบบเบ้ขวา และไม่ทราบ $\\sigma$ สุ่มเก็บข้อมูลจากแปลงทดลอง $n = 40$ แปลง พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 830.0$ กก./ไร่ และส่วนเบี่ยงเบนมาตรฐานตัวอย่าง $s = 95.0$ กก./ไร่",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 2,
+    "t_index": 1,
+    "df_options": [],
+    "df_correct": -1,
+    "feedback_formula": "$$830.0 \\pm 1.96 \\cdot \\frac{95.0}{\\sqrt{40}} = 830.0 \\pm 29.43 = (800.57,\\, 859.43)$$",
+    "case": "unknown-sigma-large",
+    "difficulty": "กลาง",
+    "explanation": "ไม่ทราบ $\\sigma$ แต่ $n = 40 \\ge 30$ โดย CLT จึงใช้ CI ด้วย $z_{\\alpha/2}$ กับ $s$: $\\bar{x} \\pm 1.96 \\cdot s/\\sqrt{n}$ แม้ประชากรเบ้ขวา"
+  },
+  {
+    "id": 4,
+    "title": "ข้อ 4: CI ไม่ทราบ $\\sigma^2$ ปัจจุบัน (มี $\\sigma$ เดิมลวง)",
+    "scenario": "โรงงานผลิตชิ้นส่วนอิเล็กทรอนิกส์ปรับกระบวนการผลิตใหม่ ต้องการประมาณความต้านทานเฉลี่ยด้วยช่วงความเชื่อมั่น 95% ข้อมูลประชากรมีการกระจายแบบปกติ เมื่อสุ่มชิ้นส่วนมา $n = 16$ ชิ้น พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 103.2$ โอห์ม และ $s = 6.4$ โอห์ม (ในอดีตสายการผลิตเดิมเคยมี $\\sigma_{\\text{old}} = 5.5$ โอห์ม)",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 1,
+    "t_index": 1,
+    "df_options": [
+      "$$df = 15$$",
+      "$$df = 16$$",
+      "$$df = 14$$",
+      "$$df = 24$$"
+    ],
+    "df_correct": 0,
+    "feedback_formula": "$$103.2 \\pm t_{0.025,\\,15} \\cdot \\frac{6.4}{\\sqrt{16}} = 103.2 \\pm 2.131 \\cdot 1.6 = (99.790,\\, 106.610)$$",
+    "case": "unknown-sigma-small",
+    "difficulty": "ยาก",
+    "explanation": "$\\sigma_{\\text{old}} = 5.5$ เป็นของสายการผลิตเดิมใช้ไม่ได้กับกระบวนการใหม่ ไม่ทราบ $\\sigma$ ปัจจุบัน และ $n = 16 < 30$ จึงใช้ CI ด้วย $t_{\\alpha/2,\\,n-1}$: $df = 16-1 = 15$"
+  },
+  {
+    "id": 5,
+    "title": "ข้อ 5: CI ทราบ $\\sigma^2$ ประชากรปกติ",
+    "scenario": "สถาบันภาษาต้องการประมาณคะแนนเฉลี่ยประชากรด้วยช่วงความเชื่อมั่น 95% ประชากรคะแนนสอบมีการกระจายแบบปกติและทราบส่วนเบี่ยงเบนมาตรฐานประชากร $\\sigma = 12.0$ คะแนน สุ่มนิสิตมา $n = 25$ คน พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 509.6$ คะแนน และ $s = 13.5$ คะแนน",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 0,
+    "t_index": 1,
+    "df_options": [],
+    "df_correct": -1,
+    "feedback_formula": "$$509.6 \\pm 1.96 \\cdot \\frac{12.0}{\\sqrt{25}} = 509.6 \\pm 4.704 = (504.896,\\, 514.304)$$",
+    "case": "known-sigma",
+    "difficulty": "ง่าย",
+    "explanation": "ทราบ $\\sigma = 12.0$ และประชากรปกติ จึงใช้ CI ด้วย $z_{\\alpha/2}$ กับ $\\sigma$: $\\bar{x} \\pm 1.96 \\cdot \\sigma/\\sqrt{n}$ ส่วน $s = 13.5$ เป็นข้อมูลส่วนเกิน"
+  },
+  {
+    "id": 6,
+    "title": "ข้อ 6: CI ไม่ทราบ $\\sigma^2$ ประชากรปกติ ตัวอย่างเล็ก",
+    "scenario": "บริษัทขนส่งต้องการประมาณเวลาส่งมอบสินค้าเฉลี่ยด้วยช่วงความเชื่อมั่น 95% ข้อมูลประชากรมีการกระจายแบบปกติ แต่ไม่ทราบ $\\sigma$ สุ่มตัวอย่างการส่งมอบ $n = 12$ รายการ พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 54.0$ ชั่วโมง และส่วนเบี่ยงเบนมาตรฐานตัวอย่าง $s = 8.5$ ชั่วโมง",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 1,
+    "t_index": 1,
+    "df_options": [
+      "$$df = 11$$",
+      "$$df = 12$$",
+      "$$df = 10$$",
+      "$$df = 24$$"
+    ],
+    "df_correct": 0,
+    "feedback_formula": "$$54.0 \\pm t_{0.025,\\,11} \\cdot \\frac{8.5}{\\sqrt{12}} = 54.0 \\pm 2.201 \\cdot 2.454 = (48.598,\\, 59.402)$$",
+    "case": "unknown-sigma-small",
+    "difficulty": "ยาก",
+    "explanation": "ไม่ทราบ $\\sigma$ และ $n = 12 < 30$ ประชากรปกติ จึงใช้ CI ด้วย $t_{\\alpha/2,\\,n-1}$: $df = 12-1 = 11$ และ $t_{0.025,\\,11} = 2.201$"
+  },
+  {
+    "id": 7,
+    "title": "ข้อ 7: CI ทราบ $\\sigma^2$ ตัวอย่างเล็ก",
+    "scenario": "บริษัทผลิตหลอดไฟ LED ต้องการประมาณกำลังไฟฟ้าเฉลี่ยด้วยช่วงความเชื่อมั่น 95% ประชากรมีการกระจายแบบปกติและทราบส่วนเบี่ยงเบนมาตรฐานประชากร $\\sigma = 0.6$ วัตต์ ฝ่าย QC สุ่มตรวจหลอดไฟขนาดตัวอย่างเล็กเพียง $n = 8$ หลอด พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 15.6$ วัตต์",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 0,
+    "t_index": 1,
+    "df_options": [],
+    "df_correct": -1,
+    "feedback_formula": "$$15.6 \\pm 1.96 \\cdot \\frac{0.6}{\\sqrt{8}} = 15.6 \\pm 0.416 = (15.184,\\, 16.016)$$",
+    "case": "known-sigma",
+    "difficulty": "กลาง",
+    "explanation": "แม้ $n = 8 < 30$ แต่ทราบ $\\sigma = 0.6$ และประชากรปกติ จึงใช้ CI ด้วย $z_{\\alpha/2}$ กับ $\\sigma$ ได้ ไม่ต้องใช้ t"
+  },
+  {
+    "id": 8,
+    "title": "ข้อ 8: CI ไม่ทราบ $\\sigma^2$ ขอบเขต $n = 30$ พอดี",
+    "scenario": "ธนาคารต้องการประมาณยอดใช้จ่ายเฉลี่ยต่อรายการของลูกค้าด้วยช่วงความเชื่อมั่น 95% ข้อมูลประชากรไม่ทราบ $\\sigma$ สุ่มตัวอย่างรายการใช้จ่ายมา $n = 30$ รายการพอดี พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 1,260$ บาท และส่วนเบี่ยงเบนมาตรฐานตัวอย่าง $s = 180$ บาท",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 2,
+    "t_index": 1,
+    "df_options": [],
+    "df_correct": -1,
+    "feedback_formula": "$$1,260 \\pm 1.96 \\cdot \\frac{180}{\\sqrt{30}} = 1,260 \\pm 64.41 = (1,195.59,\\, 1,324.41)$$",
+    "case": "unknown-sigma-large",
+    "difficulty": "กลาง",
+    "explanation": "ไม่ทราบ $\\sigma$ และ $n = 30 \\ge 30$ พอดี เข้าเกณฑ์ CLT จึงใช้ CI ด้วย $z_{\\alpha/2}$ กับ $s$: $\\bar{x} \\pm 1.96 \\cdot s/\\sqrt{n}$"
+  },
+  {
+    "id": 9,
+    "title": "ข้อ 9: CI ไม่ทราบ $\\sigma^2$ ประชากรปกติ ระดับความเชื่อมั่น 99%",
+    "scenario": "นักโภชนาการต้องการประมาณปริมาณโซเดียมเฉลี่ยในบะหมี่กึ่งสำเร็จรูปด้วยช่วงความเชื่อมั่น 99% ประชากรมีการกระจายแบบปกติ ไม่ทราบ $\\sigma$ สุ่มตัวอย่าง $n = 20$ ซอง ได้ค่าเฉลี่ยตัวอย่าง $\\bar{x} = 1,540$ มก. และ $s = 80$ มก.",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 1,
+    "t_index": 1,
+    "df_options": [
+      "$$df = 19$$",
+      "$$df = 20$$",
+      "$$df = 18$$",
+      "$$df = 24$$"
+    ],
+    "df_correct": 0,
+    "feedback_formula": "$$1,540 \\pm t_{0.005,\\,19} \\cdot \\frac{80}{\\sqrt{20}} = 1,540 \\pm 2.861 \\cdot 17.889 = (1,488.82,\\, 1,591.18)$$",
+    "case": "unknown-sigma-small",
+    "difficulty": "กลาง",
+    "explanation": "ไม่ทราบ $\\sigma$ และ $n = 20 < 30$ ประชากรปกติ จึงใช้ CI ด้วย $t_{\\alpha/2,\\,n-1}$: $df = 19$ และระดับความเชื่อมั่น 99% ทำให้ $t_{0.005,\\,19} = 2.861$ (กว้างกว่า 95%)"
+  },
+  {
+    "id": 10,
+    "title": "ข้อ 10: CI ความแปรปรวนตัวอย่าง $s^2$ + $n = 27$ + ความเชื่อมั่น 98% (กับดัก CLT)",
+    "scenario": "ห้องปฏิบัติการทดสอบกำลังอัดเฉลี่ยของแท่งสี่เหลี่ยมซีเมนต์ด้วยช่วงความเชื่อมั่น 98% ข้อมูลประชากรมีการกระจายแบบปกติแต่ไม่ทราบ $\\sigma$ สุ่มทดสอบแท่งซีเมนต์ $n = 27$ ตัวอย่าง พบค่าเฉลี่ยตัวอย่าง $\\bar{x} = 350.0$ ksc และความแปรปรวนตัวอย่าง $s^2 = 225.0$ $(\\text{ksc})^2$",
+    "options": [
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm t_{\\alpha/2,\\,n-1} \\cdot \\frac{s}{\\sqrt{n}}$$",
+      "$$\\bar{x} \\pm z_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$$"
+    ],
+    "correct": 1,
+    "t_index": 1,
+    "df_options": [
+      "$$df = 26$$",
+      "$$df = 27$$",
+      "$$df = 28$$",
+      "$$df = 25$$"
+    ],
+    "df_correct": 0,
+    "feedback_formula": "$$350.0 \\pm 2.479 \\cdot \\frac{15.0}{\\sqrt{27}} = 350.0 \\pm 7.156 = (342.844,\\, 357.156)$$",
+    "case": "unknown-sigma-small",
+    "difficulty": "ยาก",
+    "explanation": "ไม่ทราบ $\\sigma$ และ $n = 27 < 30$ ประชากรปกติ ต้องใช้สูตรช่วงความเชื่อมั่นด้วย $t_{\\alpha/2,\\,n-1}$ (ตัวเลือกที่ 2) โดยคำนวณ $s = \\sqrt{225.0} = 15.0$ ksc, ใช้ $t_{0.01,\\,26} = 2.479$ และมี $df = 27 - 1 = 26$"
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+let selectedOption = -1;
+let selectedDf = -1;
+let state = []; // state[q] = {answered, selected, df, correct, skipped} | undefined
+
+function computeScore() {
+  return state.filter(s => s && s.answered && s.correct).length;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* KaTeX auto-render after dynamic content injection */
+function renderMath(el) {
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false }
+        ],
+        throwOnError: false
+      });
+    } catch (e) { /* KaTeX not ready yet */ }
+  }
+}
+function renderMathAll() { renderMath(document.body); }
+
+function startQuiz() {
+  current = 0; state = []; score = 0; answered = false; selectedOption = -1; selectedDf = -1;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  renderQuestion();
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const st = state[current];
+  answered = !!(st && st.answered);
+  selectedOption = st && st.answered ? st.selected : -1;
+  selectedDf = st && st.answered ? st.df : -1;
+  document.getElementById('progressFill').style.width = ((current) / QUESTIONS.length * 100) + '%';
+  document.getElementById('progressText').textContent = 'ข้อ ' + (current + 1) + ' / ' + QUESTIONS.length;
+  document.getElementById('scoreText').textContent = 'คะแนน: ' + score;
+  document.getElementById('qNum').textContent = 'ข้อ ' + (current + 1) + ' / ' + QUESTIONS.length + ' · ' + (q.difficulty || '');
+  document.getElementById('qScenario').innerHTML = q.scenario;
+
+  const list = document.getElementById('optList');
+  list.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'opt';
+    div.dataset.idx = i;
+    div.innerHTML = '<span class="opt-num">' + (i + 1) + '</span><span class="opt-math">' + opt + '</span><span class="opt-check"></span>';
+    div.addEventListener('click', () => selectOption(i));
+    list.appendChild(div);
+  });
+
+  const dfSec = document.getElementById('dfSection');
+  const dfList = document.getElementById('dfList');
+  dfList.innerHTML = '';
+  if (selectedOption === q.t_index && q.df_options && q.df_options.length > 0) {
+    q.df_options.forEach((dfOpt, j) => {
+      const chip = document.createElement('div');
+      chip.className = 'df-chip';
+      chip.dataset.idx = j;
+      chip.innerHTML = dfOpt;
+      chip.addEventListener('click', () => selectDf(j));
+      dfList.appendChild(chip);
+    });
+    dfSec.classList.add('show');
+  } else {
+    dfSec.classList.remove('show');
+  }
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.classList.remove('show', 'correct-fb', 'wrong-fb');
+  document.getElementById('fbExplanation').innerHTML = '';
+  document.getElementById('fbFormula').innerHTML = '';
+
+  if (answered) {
+    const opts = document.querySelectorAll('.opt');
+    opts.forEach((o, idx) => {
+      if (idx === q.correct) { o.classList.add('correct'); o.querySelector('.opt-check').textContent = '✓'; }
+      else if (idx === selectedOption) { o.classList.add('wrong'); o.querySelector('.opt-check').textContent = '✗'; }
+    });
+    if (selectedOption === q.t_index && q.df_options && q.df_options.length > 0) {
+      const chips = document.querySelectorAll('.df-chip');
+      chips.forEach((c, idx) => {
+        if (idx === q.df_correct) c.classList.add('correct');
+        else if (idx === selectedDf) c.classList.add('wrong');
+      });
+    }
+    fb.classList.add('show');
+    fb.classList.add(st.correct ? 'correct-fb' : 'wrong-fb');
+    document.getElementById('fbTitle').textContent = st.correct ? 'ถูกต้อง' : 'ไม่ถูก';
+    document.getElementById('fbExplanation').innerHTML = escapeHtml(q.explanation || '');
+    document.getElementById('fbFormula').innerHTML = q.feedback_formula || '';
+  }
+
+  document.getElementById('btnNext').disabled = !answered;
+  document.getElementById('btnNext').textContent = (current === QUESTIONS.length - 1) ? 'ดูผลสรุป →' : 'ข้อถัดไป →';
+  document.getElementById('btnSkip').disabled = answered;
+  document.getElementById('btnBack').disabled = (current === 0);
+  document.getElementById('quizCard').classList.remove('fade-in');
+  void document.getElementById('quizCard').offsetWidth;
+  document.getElementById('quizCard').classList.add('fade-in');
+  renderMath(document.getElementById('quizCard'));
+}
+
+/* ข้ามข้อนี้: ไม่ตอบ ไม่ได้คะแนน แต่ไปข้อถัดไปได้ */
+function skipQuestion() {
+  if (answered) return;
+  state[current] = { answered: false, selected: -1, df: -1, correct: false, skipped: true };
+  current++;
+  if (current < QUESTIONS.length) renderQuestion();
+  else showResult();
+}
+
+function selectOption(i) {
+  if (answered) {
+    // กลับมาแก้คำตอบข้อที่ตอบไปแล้ว: reset สถานะเป็นยังไม่ตอบ
+    answered = false;
+    const fb = document.getElementById('feedback');
+    fb.classList.remove('show', 'correct-fb', 'wrong-fb');
+    document.getElementById('fbExplanation').innerHTML = '';
+    document.getElementById('fbFormula').innerHTML = '';
+  }
+  selectedOption = i;
+  selectedDf = -1;
+  const opts = document.querySelectorAll('.opt');
+  opts.forEach((o, idx) => {
+    o.classList.remove('selected', 'correct', 'wrong');
+    o.querySelector('.opt-check').textContent = '';
+    o.classList.toggle('selected', idx === i);
+  });
+
+  const q = QUESTIONS[current];
+  const dfSec = document.getElementById('dfSection');
+  const dfList = document.getElementById('dfList');
+
+  if (i === q.t_index && q.df_options && q.df_options.length > 0) {
+    dfList.innerHTML = '';
+    q.df_options.forEach((dfOpt, j) => {
+      const chip = document.createElement('div');
+      chip.className = 'df-chip';
+      chip.dataset.idx = j;
+      chip.innerHTML = dfOpt;
+      chip.addEventListener('click', () => selectDf(j));
+      dfList.appendChild(chip);
+    });
+    dfSec.classList.add('show');
+    renderMath(dfSec);
+    document.getElementById('btnNext').disabled = true;
+  } else {
+    dfSec.classList.remove('show');
+    document.getElementById('dfList').innerHTML = '';
+    document.getElementById('btnNext').disabled = false;
+  }
+}
+
+function selectDf(j) {
+  if (answered) return;
+  selectedDf = j;
+  const chips = document.querySelectorAll('.df-chip');
+  chips.forEach((c, idx) => c.classList.toggle('selected', idx === j));
+  document.getElementById('btnNext').disabled = false;
+}
+
+/* ย้อนกลับไปข้อก่อนหน้า (ดู/แก้คำตอบได้) */
+function prevQuestion() {
+  if (current === 0) return;
+  current--;
+  renderQuestion();
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function nextQuestion() {
+  if (!answered) {
+    if (selectedOption < 0) return;
+    const q = QUESTIONS[current];
+    if (selectedOption === q.t_index && q.df_options && q.df_options.length > 0 && selectedDf < 0) return;
+    checkAnswer();
+    return;
+  }
+  current++;
+  if (current < QUESTIONS.length) renderQuestion();
+  else showResult();
+}
+
+function checkAnswer() {
+  const q = QUESTIONS[current];
+  let correct;
+  if (selectedOption === q.correct) {
+    if (selectedOption === q.t_index && q.df_options && q.df_options.length > 0) {
+      correct = (selectedDf === q.df_correct);
+    } else {
+      correct = true;
+    }
+  } else {
+    correct = false;
+  }
+  answered = true;
+  state[current] = { answered: true, selected: selectedOption, df: selectedDf, correct };
+  score = computeScore();
+
+  const opts = document.querySelectorAll('.opt');
+  opts.forEach((o, idx) => {
+    o.classList.remove('selected');
+    o.classList.add('disabled');
+    if (idx === q.correct) o.classList.add('correct');
+    else if (idx === selectedOption) o.classList.add('wrong');
+    const check = o.querySelector('.opt-check');
+    if (idx === q.correct) check.textContent = '✓';
+    else if (idx === selectedOption) check.textContent = '✗';
+  });
+
+  if (q.df_options && q.df_options.length > 0) {
+    const chips = document.querySelectorAll('.df-chip');
+    chips.forEach((c, idx) => {
+      c.classList.remove('selected');
+      c.classList.add('disabled');
+      if (idx === q.df_correct) c.classList.add('correct');
+      else if (idx === selectedDf) c.classList.add('wrong');
+    });
+  }
+
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show');
+  fb.classList.remove('correct-fb', 'wrong-fb');
+  fb.classList.add(correct ? 'correct-fb' : 'wrong-fb');
+  document.getElementById('fbTitle').textContent = correct ? 'ถูกต้อง' : 'ไม่ถูก';
+  document.getElementById('fbExplanation').innerHTML = escapeHtml(q.explanation || '');
+  document.getElementById('fbFormula').innerHTML = q.feedback_formula || '';
+  renderMath(document.getElementById('feedback'));
+
+  document.getElementById('btnNext').disabled = false;
+  document.getElementById('btnSkip').disabled = true;
+  document.getElementById('scoreText').textContent = 'คะแนน: ' + score;
+}
+
+function showResult() {
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('resultScore').innerHTML = score + '<span class="of"> / ' + QUESTIONS.length + '</span>';
+
+  const pct = score / QUESTIONS.length;
+  let msg, verdict, vcls;
+  if (pct === 1) { msg = 'สมบูรณ์แบบ: เลือกสูตร CI ถูกทุกข้อ เข้าใจเงื่อนไขครบถ้วน'; verdict = 'ผ่าน: ยอดเยี่ยม'; vcls = 'verdict-pass'; }
+  else if (pct >= 0.8) { msg = 'ดีมาก: ส่วนใหญ่ถูก เข้าใจหลักการดี เหลืออีกนิดเดียว'; verdict = 'ผ่าน'; vcls = 'verdict-pass'; }
+  else if (pct >= 0.6) { msg = 'พอใช้: ยังสับสนบางกรณี ลองทบทวน σ ทราบหรือไม่ กับขนาดตัวอย่าง'; verdict = 'ผ่านเกณฑ์'; vcls = 'verdict-pass'; }
+  else { msg = 'ยังต้องฝึกอีก: กลับไปทบทวน 3 กรณี (ทราบ σ: Z, n<30 ไม่ทราบ σ: t, n≥30 ไม่ทราบ σ: Z ใช้ s)'; verdict = 'ควรทบทวน'; vcls = 'verdict-fail'; }
+  document.getElementById('resultMsg').textContent = msg;
+  const v = document.getElementById('resultVerdict');
+  v.textContent = verdict;
+  v.className = 'result-verdict ' + vcls;
+
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  state.forEach((ua, idx) => {
+    if (!ua) return;
+    const q = QUESTIONS[idx];
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    let headText;
+    if (ua.skipped) headText = 'ข้าม (ไม่ตอบ)';
+    else if (ua.correct) headText = 'ตอบถูก';
+    else headText = 'ตอบผิด: สถิติที่ถูกคือข้อ ' + (q.correct + 1) + (q.df_options && q.df_options.length > 0 ? ', df = ' + q.df_correct + '' : '');
+    item.innerHTML =
+      '<div class="review-head"><span class="review-dot ' + (ua.correct ? 'ok' : 'no') + '"></span>' +
+      '<span class="review-title">ข้อ ' + (idx + 1) + ': ' + escapeHtml(q.title || '') + '</span>' +
+      '</div>' +
+      '<div class="review-detail">' + headText + '</div>' +
+      '<div class="review-explanation">' + escapeHtml(q.explanation || '') + '</div>' +
+      '<div class="review-math">' + (q.feedback_formula || '') + '</div>';
+    list.appendChild(item);
+  });
+  renderMath(document.getElementById('reviewList'));
+
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reviewWrong() {
+  const list = document.getElementById('reviewList');
+  const wrongItems = list.querySelectorAll('.review-item');
+  wrongItems.forEach((el, i) => {
+    const ok = el.querySelector('.review-dot').classList.contains('ok');
+    el.style.display = ok ? 'none' : '';
+  });
+  const btn = event.target;
+  btn.textContent = 'แสดงทั้งหมด';
+  btn.onclick = () => {
+    wrongItems.forEach(el => el.style.display = '');
+    btn.textContent = 'ดูเฉพาะข้อที่ผิด';
+    btn.onclick = reviewWrong;
+  };
+}
+
+/* Render hero formulas once KaTeX scripts are loaded (deferred) */
+window.addEventListener('load', function () {
+  renderMath(document.getElementById('intro'));
+});
+</script>
+</body>
+</html>

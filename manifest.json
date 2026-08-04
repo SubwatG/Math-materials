@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-05",
+  "contentGroups": [
+    {
+      "id": "statistics-01422111",
+      "title": "สถิติ 01422111",
+      "description": "สถิติสำหรับวิทยาศาสตร์",
+      "theme": "starbucks",
+      "designSystem": {
+        "primaryColor": "#006241",
+        "secondaryColor": "#cba258",
+        "bgColor": "#f2f0eb",
+        "fontFamily": "IBM Plex Sans Thai Looped",
+        "darkMode": true
+      },
+      "topics": [
+        {
+          "id": "stats-ch1",
+          "title": "บทที่ 1: ความหมายของสถิติ",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "stats-ch1-1",
+              "filename": "01422111-ch1-starbucks-purehtml.html",
+              "title": "01422111 หลักสถิติ - บทที่ 1 (Starbucks Theme)",
+              "type": "slides",
+              "tech": "katex-0.16.9"
+            }
+          ]
+        },
+        {
+          "id": "stats-ch2",
+          "title": "บทที่ 2: การวิเคราะห์ข้อมูลเบื้องต้น",
+          "order": 2,
+          "prerequisites": [
+            "stats-ch1"
+          ],
+          "items": [
+            {
+              "id": "stats-ch2-1",
+              "filename": "01422111-ch02-purehtml.html",
+              "title": "01422111 หลักสถิติ - บทที่ 2 (Carbon Hybrid)",
+              "type": "slides",
+              "tech": "katex-0.16.9"
+            }
+          ]
+        },
+        {
+          "id": "stats-ch3",
+          "title": "บทที่ 3: ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น",
+          "order": 3,
+          "prerequisites": [
+            "stats-ch2"
+          ],
+          "items": [
+            {
+              "id": "stats-ch3-1",
+              "filename": "01422111-ch03-purehtml.html",
+              "title": "01422111 หลักสถิติ - บทที่ 3 (KU Stats Claude)",
+              "type": "slides",
+              "tech": "katex-0.16.9"
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "title": "แบบฝึกหัด: เลือกตัวสถิติทดสอบ (Z หรือ t)",
+          "prerequisites": [
+            "บทที่ 5",
+            "บทที่ 6"
+          ],
+          "items": [
+            {
+              "filename": "01422111-ch5-statistic-choice-quiz.html"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "title": "แบบฝึกหัด: เลือกสูตรช่วงความเชื่อมั่น (CI)",
+          "prerequisites": [
+            "บทที่ 5",
+            "บทที่ 6"
+          ],
+          "items": [
+            {
+              "filename": "01422111-ch5-ci-formula-quiz.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m5-functions",
+      "title": "คณิตศาสตร์ ม.5: ฟังก์ชัน",
+      "description": "ความสัมพันธ์และฟังก์ชัน โดเมน โคโดเมน range ฟังก์ชันสับกลับ",
+      "theme": "warm-cream",
+      "designSystem": {
+        "primaryColor": "#007c89",
+        "secondaryColor": "#e36f3f",
+        "bgColor": "#f4f1ea",
+        "fontFamily": "IBM Plex Sans Thai Looped",
+        "darkMode": false
+      },
+      "topics": [
+        {
+          "id": "m5-relation-vs-function",
+          "title": "ความสัมพันธ์กับฟังก์ชัน",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m5-relation-vs-function-1",
+              "filename": "m5-relation-vs-function.html",
+              "title": "ความสัมพันธ์กับฟังก์ชัน",
+              "type": "interactive",
+              "tech": "svg-mapping"
+            }
+          ]
+        },
+        {
+          "id": "m5-domain-codomain-range",
+          "title": "โดเมน โคโดเมน และเรนจ์",
+          "order": 2,
+          "prerequisites": [
+            "m5-relation-vs-function"
+          ],
+          "items": [
+            {
+              "id": "m5-domain-codomain-range-1",
+              "filename": "m5-domain-codomain-range.html",
+              "title": "โดเมน โคโดเมน และเรนจ์",
+              "type": "interactive",
+              "tech": "svg-mapping"
+            }
+          ]
+        },
+        {
+          "id": "m5-one-to-one-onto",
+          "title": "One-to-one และ Onto",
+          "order": 3,
+          "prerequisites": [
+            "m5-domain-codomain-range"
+          ],
+          "items": [
+            {
+              "id": "m5-one-to-one-onto-1",
+              "filename": "m5-one-to-one-onto.html",
+              "title": "One-to-one และ Onto",
+              "type": "interactive",
+              "tech": "svg-mapping"
+            }
+          ]
+        },
+        {
+          "id": "m5-inverse-function",
+          "title": "Inverse Function",
+          "order": 4,
+          "prerequisites": [
+            "m5-one-to-one-onto"
+          ],
+          "items": [
+            {
+              "id": "m5-inverse-function-1",
+              "filename": "m5-inverse-function.html",
+              "title": "Inverse Function",
+              "type": "interactive",
+              "tech": "svg-mapping"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calculus",
+      "title": "แคลคูลัส",
+      "description": "ลู่เข้าของฟังก์ชัน logistic growth",
+      "theme": "warm-cream",
+      "designSystem": {
+        "primaryColor": "#007c89",
+        "secondaryColor": "#e36f3f",
+        "bgColor": "#f4f1ea",
+        "fontFamily": "IBM Plex Sans Thai Looped",
+        "darkMode": false
+      },
+      "topics": [
+        {
+          "id": "logistic-growth",
+          "title": "Logistic Growth",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "logistic-growth-1",
+              "filename": "logistic-growth.html",
+              "title": "Logistic Growth Function",
+              "type": "interactive",
+              "tech": "canvas"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
