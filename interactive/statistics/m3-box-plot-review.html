@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ทบทวน Box Plot แบบโต้ตอบ (ม.3)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Chakra+Petch:wght@400;600;700&family=Chakra+Petch+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --paper: #FAF6EF;
+    --ink: #221D18;
+    --accent: #A63D1C;
+    --accent-soft: #E8D5C8;
+    --muted: #6B6258;
+    --line: #D9CFC2;
+    --blue-box: #BBD4E0;
+    --red-median: #C0392B;
+    --green-ok: #3E6B4F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Chakra Petch", "IBM Plex Sans Thai Looped", "Noto Sans Thai", sans-serif;
+    line-height: 1.55;
+    padding: 24px 16px 48px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+  .card {
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(34,29,24,0.06);
+  }
+  .card h2 { font-size: 1.05rem; margin-bottom: 10px; color: var(--ink); }
+  label { font-weight: 600; display: block; margin-bottom: 6px; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: #FFFDF9;
+    color: var(--ink);
+  }
+  input[type="text"]:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  button {
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1.5px solid var(--accent);
+    background: var(--paper);
+    color: var(--accent);
+    transition: background 0.15s, color 0.15s;
+  }
+  button:hover { background: var(--accent); color: #FFF; }
+  button.primary { background: var(--accent); color: #FFF; }
+  button.primary:hover { background: #8A3115; }
+  .preset-label { font-size: 0.85rem; color: var(--muted); margin: 12px 0 6px; }
+  .preset-btn { font-size: 0.82rem; padding: 5px 10px; border-color: var(--line); color: var(--ink); background: #FFF; }
+  .preset-btn:hover { background: var(--accent-soft); color: var(--ink); }
+  .steps { counter-reset: step; }
+  .step {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.98rem;
+  }
+  .step:last-child { border-bottom: none; }
+  .step .num {
+    flex: 0 0 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+  .step .body { flex: 1; }
+  .step .body .label { font-weight: 600; }
+  .step .body .value { font-size: 1.05rem; margin-top: 2px; }
+  .math { font-family: "Chakra Petch Mono", "IBM Plex Mono", monospace; background: #F3EDE3; padding: 1px 6px; border-radius: 5px; }
+  .five-num { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .five-num .chip {
+    background: #FFF;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .five-num .chip b { display: block; font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; }
+  .badge.outlier { background: #F4D7CF; color: #8A3115; }
+  .badge.ok { background: #DCE8DC; color: var(--green-ok); }
+  canvas { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 8px; background: #FFFDF9; }
+  .canvas-wrap { margin-top: 8px; }
+  .footer-note { color: var(--muted); font-size: 0.85rem; margin-top: 14px; }
+  .error { color: #B0301A; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>ทบทวน Box Plot แบบโต้ตอบ</h1>
+<div class="subtitle">ใส่ข้อมูล แล้วกดคำนวณ ระบบจะแสดงขั้นตอนการหาค่าทั้งหมดและวาดแผนภาพกล่องให้อัตโนมัติ</div>
+
+<div class="card">
+  <label for="dataInput">ข้อมูล (คั่นด้วยเครื่องหมายจุลภาคหรือเว้นวรรค)</label>
+  <input type="text" id="dataInput" placeholder="เช่น 6, 2, 8, 5, 9, 4, 7">
+  <div class="btn-row">
+    <button class="primary" id="calcBtn">คำนวณและวาด Box Plot</button>
+    <button id="clearBtn">ล้าง</button>
+  </div>
+  <div class="preset-label">ตัวอย่างจากแบบฝึกหัดทบทวน</div>
+  <div class="btn-row">
+    <button class="preset-btn" data-preset="6, 2, 8, 5, 9, 4, 7">ข้อ 1 (คี่)</button>
+    <button class="preset-btn" data-preset="11, 15, 8, 13, 9, 14, 10, 12">ข้อ 2 (คู่)</button>
+    <button class="preset-btn" data-preset="4, 6, 7, 8, 10, 12, 14, 15, 27">ข้อ 3 (outlier)</button>
+    <button class="preset-btn" data-preset="3, 5, 7, 9, 12, 15, 18, 21">ข้อ 4 (วาด)</button>
+    <button class="preset-btn" data-preset="5, 8, 9, 11, 13, 15, 17, 19, 22, 24, 26">ข้อ 7 (11 ค่า)</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>ขั้นตอนการหาค่า</h2>
+  <div class="steps" id="stepsBox">
+    <div class="step"><div class="num">1</div><div class="body"><div class="label">รอข้อมูล</div><div class="value">กรุณาใส่ข้อมูลด้านบนแล้วกดปุ่มคำนวณ</div></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>สรุปห้าค่า</h2>
+  <div class="five-num" id="fiveNumBox">
+    <div class="chip"><b>min</b>–</div>
+    <div class="chip"><b>Q₁</b>–</div>
+    <div class="chip"><b>Median</b>–</div>
+    <div class="chip"><b>Q₃</b>–</div>
+    <div class="chip"><b>max</b>–</div>
+  </div>
+  <div id="outlierBox" style="margin-top:10px;"></div>
+</div>
+
+<div class="card">
+  <h2>แผนภาพกล่อง (Box Plot)</h2>
+  <div class="canvas-wrap">
+    <canvas id="plotCanvas" width="800" height="360"></canvas>
+  </div>
+  <div class="footer-note">กล่องสีฟ้าคือช่วง Q₁ ถึง Q₃ (ข้อมูลตรงกลางประมาณ 50%) เส้นแดงคือมัธยฐาน จุดกลมคือค่าผิดปกติ</div>
+</div>
+
+<script>
+"use strict";
+
+// ---------- การคำนวณ (วิธีระดับมัธยมต้น) ----------
+function parseData(raw) {
+  // รับ string เช่น "6, 2, 8, 5, 9, 4, 7" หรือ "6 2 8 5 9"
+  const parts = raw.split(/[\s,;]+/).filter(s => s.length > 0);
+  const nums = parts.map(Number);
+  if (nums.some(n => Number.isNaN(n))) {
+    throw new Error("มีค่าที่ไม่ใช่ตัวเลขในข้อมูล กรุณาตรวจสอบอีกครั้ง");
+  }
+  if (nums.length === 0) {
+    throw new Error("ไม่พบข้อมูลที่ใช้คำนวณ");
+  }
+  return nums;
+}
+
+function median(arr) {
+  const n = arr.length;
+  if (n === 0) return NaN;
+  if (n % 2 === 1) return arr[(n - 1) / 2];
+  return (arr[n / 2 - 1] + arr[n / 2]) / 2;
+}
+
+function analyzeBoxPlot(data) {
+  // data: array ตัวเลข (ยังไม่เรียง)
+  const sorted = data.slice().sort((a, b) => a - b);
+  const n = sorted.length;
+  const q2 = median(sorted);
+
+  // แบ่งครึ่ง: ถ้าจำนวนคี่ ไม่นำ Q2 ไปรวมในครึ่งล่าง/บน
+  let lower, upper;
+  if (n % 2 === 1) {
+    const mid = (n - 1) / 2;
+    lower = sorted.slice(0, mid);
+    upper = sorted.slice(mid + 1);
+  } else {
+    const mid = n / 2;
+    lower = sorted.slice(0, mid);
+    upper = sorted.slice(mid);
+  }
+  const q1 = median(lower);
+  const q3 = median(upper);
+  const iqr = q3 - q1;
+  const ll = q1 - 1.5 * iqr;
+  const ul = q3 + 1.5 * iqr;
+  const outliers = sorted.filter(x => x < ll || x > ul);
+  // ค่าต่ำสุด/สูงสุดที่ไม่ใช่ค่าผิดปกติ สำหรับปลายหนวด
+  const whiskerMin = sorted.filter(x => x >= ll)[0] ?? sorted[0];
+  const whiskerMax = sorted.filter(x => x <= ul).at(-1) ?? sorted[n - 1];
+
+  return {
+    raw: data,
+    sorted, n,
+    min: sorted[0], q1, q2, q3, max: sorted[n - 1],
+    iqr, ll, ul, outliers, whiskerMin, whiskerMax,
+    lower, upper
+  };
+}
+
+function fmt(x) {
+  return Number.isInteger(x) ? String(x) : (Math.round(x * 100) / 100).toString();
+}
+
+// ---------- แสดงขั้นตอน ----------
+function esc(s) {
+  return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+
+function renderSteps(r) {
+  const stepsBox = document.getElementById("stepsBox");
+  const sortedStr = r.sorted.map(fmt).join(", ");
+  const parity = r.n % 2 === 1 ? "คี่" : "คู่";
+  const q2Desc = r.n % 2 === 1
+    ? `มีข้อมูล ${r.n} ค่า (จำนวนคี่) ดังนั้น Q₂ คือค่าที่ ${(r.n + 1) / 2}`
+    : `มีข้อมูล ${r.n} ค่า (จำนวนคู่) ดังนั้น Q₂ คือค่าเฉลี่ยของค่าที่ ${r.n / 2} และ ${r.n / 2 + 1}`;
+
+  const steps = [];
+  steps.push({ label: "เรียงข้อมูลจากน้อยไปมาก", value: `<span class="math">${sortedStr}</span>` });
+  steps.push({ label: `หามัธยฐาน (Q₂) — จำนวนข้อมูลเป็น${parity}`, value: `${q2Desc} จึงได้ Q₂ = <span class="math">${fmt(r.q2)}</span>` });
+
+  if (r.n % 2 === 1) {
+    steps.push({
+      label: "แบ่งครึ่งล่างและครึ่งบน (ไม่นำ Q₂ ไปรวม)",
+      value: `ครึ่งล่าง: <span class="math">${r.lower.map(fmt).join(", ")}</span> &nbsp;|&nbsp; ครึ่งบน: <span class="math">${r.upper.map(fmt).join(", ")}</span>`
+    });
+  } else {
+    steps.push({
+      label: "แบ่งครึ่งล่างและครึ่งบน (แบ่งได้พอดี)",
+      value: `ครึ่งล่าง: <span class="math">${r.lower.map(fmt).join(", ")}</span> &nbsp;|&nbsp; ครึ่งบน: <span class="math">${r.upper.map(fmt).join(", ")}</span>`
+    });
+  }
+
+  const q1Expr = r.lower.length % 2 === 1
+    ? `ค่ากลางของครึ่งล่างคือค่าที่ ${(r.lower.length + 1) / 2}`
+    : `ค่าเฉลี่ยของสองค่ากลางในครึ่งล่างคือ ${fmt(r.lower[r.lower.length / 2 - 1])} และ ${fmt(r.lower[r.lower.length / 2])}`;
+  const q3Expr = r.upper.length % 2 === 1
+    ? `ค่ากลางของครึ่งบนคือค่าที่ ${(r.upper.length + 1) / 2}`
+    : `ค่าเฉลี่ยของสองค่ากลางในครึ่งบนคือ ${fmt(r.upper[r.upper.length / 2 - 1])} และ ${fmt(r.upper[r.upper.length / 2])}`;
+
+  steps.push({ label: "หาควอร์ไทล์ที่หนึ่ง (Q₁) จากครึ่งล่าง", value: `${q1Expr} จึงได้ Q₁ = <span class="math">${fmt(r.q1)}</span>` });
+  steps.push({ label: "หาควอร์ไทล์ที่สาม (Q₃) จากครึ่งบน", value: `${q3Expr} จึงได้ Q₃ = <span class="math">${fmt(r.q3)}</span>` });
+  steps.push({
+    label: "คำนวณพิสัยระหว่างควอร์ไทล์ (IQR)",
+    value: `IQR = Q₃ − Q₁ = <span class="math">${fmt(r.q3)} − ${fmt(r.q1)} = ${fmt(r.iqr)}</span>`
+  });
+  steps.push({
+    label: "หาขอบเขตล่างและขอบเขตบน",
+    value: `ขอบเขตล่าง = Q₁ − 1.5(IQR) = <span class="math">${fmt(r.q1)} − 1.5(${fmt(r.iqr)}) = ${fmt(r.ll)}</span><br>ขอบเขตบน = Q₃ + 1.5(IQR) = <span class="math">${fmt(r.q3)} + 1.5(${fmt(r.iqr)}) = ${fmt(r.ul)}</span>`
+  });
+
+  if (r.outliers.length > 0) {
+    steps.push({
+      label: "ตรวจค่าผิดปกติ (Outlier)",
+      value: `มีข้อมูลอยู่นอกช่วง [${fmt(r.ll)}, ${fmt(r.ul)}] คือ <span class="math">${r.outliers.map(fmt).join(", ")}</span> ดังนั้นค่าผิดปกติคือ ${r.outliers.map(fmt).join(", ")} และปลายหนวดจะหยุดที่ค่าที่ไม่ใช่ค่าผิดปกติ`
+    });
+  } else {
+    steps.push({
+      label: "ตรวจค่าผิดปกติ (Outlier)",
+      value: `ข้อมูลทุกค่าอยู่ในช่วง [${fmt(r.ll)}, ${fmt(r.ul)}] ดังนั้นไม่มีค่าผิดปกติ`
+    });
+  }
+
+  stepsBox.innerHTML = steps.map((s, i) =>
+    `<div class="step"><div class="num">${i + 1}</div><div class="body"><div class="label">${esc(s.label)}</div><div class="value">${s.value}</div></div></div>`
+  ).join("");
+}
+
+// ---------- สรุปห้าค่า + ค่าผิดปกติ ----------
+function renderFiveNum(r) {
+  const box = document.getElementById("fiveNumBox");
+  const chips = [
+    ["min", fmt(r.whiskerMin)],
+    ["Q₁", fmt(r.q1)],
+    ["Median", fmt(r.q2)],
+    ["Q₃", fmt(r.q3)],
+    ["max", fmt(r.whiskerMax)]
+  ];
+  box.innerHTML = chips.map(([k, v]) => `<div class="chip"><b>${k}</b>${v}</div>`).join("");
+
+  const ob = document.getElementById("outlierBox");
+  if (r.outliers.length > 0) {
+    ob.innerHTML = `<span class="badge outlier">มีค่าผิดปกติ: ${r.outliers.map(fmt).join(", ")}</span>`;
+  } else {
+    ob.innerHTML = `<span class="badge ok">ไม่มีค่าผิดปกติ</span>`;
+  }
+}
+
+// ---------- วาด Box Plot บน Canvas ----------
+function drawBoxPlot(r) {
+  const canvas = document.getElementById("plotCanvas");
+  const dpr = window.devicePixelRatio || 1;
+  const W = 800, H = 360;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const padL = 56, padR = 30, padT = 46, padB = 46;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  // ช่วงแกน: ขยายให้ครอบข้อมูลและขอบเขตที่มองเห็น
+  const allVals = r.sorted.concat(r.ll > 0 ? [r.ll] : []).concat(r.ul < 0 ? [r.ul] : []);
+  let lo = Math.min(...r.sorted, r.ll), hi = Math.max(...r.sorted, r.ul);
+  const span = hi - lo;
+  lo -= span * 0.06;
+  hi += span * 0.06;
+  const x = v => padL + (v - lo) / (hi - lo) * plotW;
+
+  // แกน + เส้นตาราง
+  ctx.strokeStyle = "#D9CFC2";
+  ctx.fillStyle = "#6B6258";
+  ctx.font = "12px 'Chakra Petch Mono', 'IBM Plex Mono', monospace";
+  ctx.textAlign = "center";
+  const tickStep = niceStep(span);
+  for (let v = Math.ceil(lo / tickStep) * tickStep; v <= hi; v += tickStep) {
+    const px = x(v);
+    ctx.beginPath();
+    ctx.moveTo(px, padT);
+    ctx.lineTo(px, padT + plotH);
+    ctx.stroke();
+    ctx.fillText(fmt(v), px, H - padB + 18);
+  }
+  ctx.beginPath();
+  ctx.moveTo(padL, padT + plotH);
+  ctx.lineTo(W - padR, padT + plotH);
+  ctx.strokeStyle = "#221D18";
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
+
+  // ตำแหน่งกล่อง
+  const boxTop = padT + plotH * 0.30;
+  const boxBot = padT + plotH * 0.70;
+  const boxH = boxBot - boxTop;
+  const xMin = x(r.whiskerMin), xQ1 = x(r.q1), xQ2 = x(r.q2), xQ3 = x(r.q3), xMax = x(r.whiskerMax);
+
+  // หนวด
+  ctx.strokeStyle = "#221D18";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(xMin, boxTop + boxH / 2);
+  ctx.lineTo(xQ1, boxTop + boxH / 2);
+  ctx.moveTo(xQ3, boxTop + boxH / 2);
+  ctx.lineTo(xMax, boxTop + boxH / 2);
+  ctx.stroke();
+  // ขีดปลายหนวด
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.moveTo(xMin, boxTop);
+  ctx.lineTo(xMin, boxBot);
+  ctx.moveTo(xMax, boxTop);
+  ctx.lineTo(xMax, boxBot);
+  ctx.stroke();
+
+  // กล่อง Q1-Q3
+  ctx.fillStyle = "#BBD4E0";
+  ctx.strokeStyle = "#221D18";
+  ctx.lineWidth = 2;
+  ctx.fillRect(xQ1, boxTop, xQ3 - xQ1, boxH);
+  ctx.strokeRect(xQ1, boxTop, xQ3 - xQ1, boxH);
+
+  // เส้นมัธยฐาน
+  ctx.strokeStyle = "#C0392B";
+  ctx.lineWidth = 2.6;
+  ctx.beginPath();
+  ctx.moveTo(xQ2, boxTop - 4);
+  ctx.lineTo(xQ2, boxBot + 4);
+  ctx.stroke();
+
+  // ค่าผิดปกติ
+  if (r.outliers.length > 0) {
+    ctx.fillStyle = "#A63D1C";
+    for (const o of r.outliers) {
+      ctx.beginPath();
+      ctx.arc(x(o), boxTop + boxH / 2, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#221D18";
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+  }
+
+  // ป้ายกำกับ
+  ctx.font = "600 12px 'Chakra Petch Mono', 'IBM Plex Mono', monospace";
+  ctx.fillStyle = "#221D18";
+  ctx.textAlign = "center";
+  ctx.fillText("Min", xMin, boxTop - 10);
+  ctx.fillText("Q₁", xQ1, boxBot + 24);
+  ctx.fillText("Median", xQ2, boxTop - 10);
+  ctx.fillText("Q₃", xQ3, boxBot + 24);
+  ctx.fillText("Max", xMax, boxTop - 10);
+  if (r.outliers.length > 0) {
+    ctx.fillStyle = "#A63D1C";
+    ctx.fillText("Outlier", x(r.outliers[0]), boxTop + boxH / 2 - 14);
+  }
+}
+
+function niceStep(span) {
+  const raw = span / 8;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw / mag;
+  let step;
+  if (norm <= 1) step = 1;
+  else if (norm <= 2) step = 2;
+  else if (norm <= 5) step = 5;
+  else step = 10;
+  return step * mag;
+}
+
+// ---------- ควบคุมการทำงาน ----------
+function run() {
+  const input = document.getElementById("dataInput");
+  const stepsBox = document.getElementById("stepsBox");
+  try {
+    const data = parseData(input.value);
+    const r = analyzeBoxPlot(data);
+    renderSteps(r);
+    renderFiveNum(r);
+    drawBoxPlot(r);
+  } catch (err) {
+    stepsBox.innerHTML = `<div class="step"><div class="num">!</div><div class="body"><div class="label error">${esc(err.message)}</div></div></div>`;
+  }
+}
+
+function clearAll() {
+  document.getElementById("dataInput").value = "";
+  document.getElementById("stepsBox").innerHTML =
+    `<div class="step"><div class="num">1</div><div class="body"><div class="label">รอข้อมูล</div><div class="value">กรุณาใส่ข้อมูลด้านบนแล้วกดปุ่มคำนวณ</div></div></div>`;
+  document.getElementById("fiveNumBox").innerHTML =
+    `<div class="chip"><b>min</b>–</div><div class="chip"><b>Q₁</b>–</div><div class="chip"><b>Median</b>–</div><div class="chip"><b>Q₃</b>–</div><div class="chip"><b>max</b>–</div>`;
+  document.getElementById("outlierBox").innerHTML = "";
+  const canvas = document.getElementById("plotCanvas");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+document.getElementById("calcBtn").addEventListener("click", run);
+document.getElementById("clearBtn").addEventListener("click", clearAll);
+document.getElementById("dataInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") run();
+});
+
+document.querySelectorAll(".preset-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById("dataInput").value = btn.dataset.preset;
+    run();
+  });
+});
+
+// ตัวอย่างเริ่มต้น
+document.getElementById("dataInput").value = "6, 2, 8, 5, 9, 4, 7";
+run();
+
+</script>

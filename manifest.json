@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "2.0.0",
-  "lastUpdated": "2026-08-04",
+  "lastUpdated": "2026-08-13",
   "site": {
     "title": "สื่อการสอนคณิตศาสตร์",
     "description": "คลังสื่อคณิตศาสตร์แบบอ่าน อธิบาย และทดลองได้ด้วยตนเอง"
@@ -25,12 +25,42 @@
             {
               "id": "m3-parabola-guide",
               "filename": "interactive/m3-parabola/index.html",
-              "alternateFiles": ["interactive/m3-parabola-summary.html"],
+              "alternateFiles": [
+                "interactive/m3-parabola-summary.html"
+              ],
               "title": "Parabola guide",
               "description": "บทนำ รูปแบบสมการ การแปลงสมการ จุดยอด แกนสมมาตร และตัวอย่างโจทย์",
               "type": "guide",
               "typeLabel": "บทสรุป",
               "tech": "quarto-html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3-statistics",
+      "level": "m3",
+      "levelLabel": "มัธยมศึกษาตอนต้น",
+      "title": "ม.3: สถิติ",
+      "description": "ทบทวนการวิเคราะห์ข้อมูลด้วยสรุปห้าค่า แผนภาพกล่อง (Box Plot) ค่าผิดปกติ และการเปรียบเทียบข้อมูลสองชุด",
+      "theme": "blue",
+      "order": 2,
+      "topics": [
+        {
+          "id": "m3-box-plot-review",
+          "title": "ทบทวนสถิติ: แผนภาพกล่อง (Box Plot)",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m3-box-plot-review-tool",
+              "filename": "interactive/statistics/m3-box-plot-review.html",
+              "title": "เครื่องคำนวณและวาด Box Plot แบบโต้ตอบ",
+              "description": "ใส่ข้อมูลแล้วระบบแสดงขั้นตอนหาค่า Q1/Q2/Q3, IQR, ขอบเขต, ค่าผิดปกติ พร้อมวาดแผนภาพกล่องให้อัตโนมัติ",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "html-canvas"
             }
           ]
         }
@@ -43,82 +73,98 @@
       "title": "ม.5: ฟังก์ชัน",
       "description": "เรียนรู้ฟังก์ชันผ่านแผนภาพการจับคู่ ตั้งแต่ domain และ range ไปจนถึง inverse function",
       "theme": "teal",
-      "order": 2,
+      "order": 3,
       "topics": [
         {
           "id": "m5-relation-vs-function",
           "title": "ความสัมพันธ์กับฟังก์ชัน",
           "order": 1,
           "prerequisites": [],
-          "items": [{
-            "id": "m5-relation-vs-function-1",
-            "filename": "interactive/m5-relation-vs-function.html",
-            "title": "ความสัมพันธ์กับฟังก์ชัน",
-            "description": "ทดลองสร้างลูกศรจากเซตหนึ่งไปอีกเซตหนึ่ง และตรวจว่าเป็นฟังก์ชันหรือไม่",
-            "type": "interactive",
-            "typeLabel": "ทดลองได้",
-            "tech": "svg-mapping"
-          }]
+          "items": [
+            {
+              "id": "m5-relation-vs-function-1",
+              "filename": "interactive/m5-relation-vs-function.html",
+              "title": "ความสัมพันธ์กับฟังก์ชัน",
+              "description": "ทดลองสร้างลูกศรจากเซตหนึ่งไปอีกเซตหนึ่ง และตรวจว่าเป็นฟังก์ชันหรือไม่",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "svg-mapping"
+            }
+          ]
         },
         {
           "id": "m5-domain-codomain-range",
           "title": "โดเมน โคโดเมน และเรนจ์",
           "order": 2,
-          "prerequisites": ["m5-relation-vs-function"],
-          "items": [{
-            "id": "m5-domain-codomain-range-1",
-            "filename": "interactive/m5-domain-codomain-range.html",
-            "title": "โดเมน โคโดเมน และเรนจ์",
-            "description": "แยกความหมายของ domain, codomain และ range ผ่าน mapping diagram",
-            "type": "interactive",
-            "typeLabel": "ทดลองได้",
-            "tech": "svg-mapping"
-          }]
+          "prerequisites": [
+            "m5-relation-vs-function"
+          ],
+          "items": [
+            {
+              "id": "m5-domain-codomain-range-1",
+              "filename": "interactive/m5-domain-codomain-range.html",
+              "title": "โดเมน โคโดเมน และเรนจ์",
+              "description": "แยกความหมายของ domain, codomain และ range ผ่าน mapping diagram",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "svg-mapping"
+            }
+          ]
         },
         {
           "id": "m5-one-to-one-onto",
           "title": "One-to-one และ Onto",
           "order": 3,
-          "prerequisites": ["m5-domain-codomain-range"],
-          "items": [{
-            "id": "m5-one-to-one-onto-1",
-            "filename": "interactive/m5-one-to-one-onto.html",
-            "title": "One-to-one และ Onto",
-            "description": "ตรวจสอบ injective, surjective และ bijective จากภาพการจับคู่",
-            "type": "interactive",
-            "typeLabel": "ทดลองได้",
-            "tech": "svg-mapping"
-          }]
+          "prerequisites": [
+            "m5-domain-codomain-range"
+          ],
+          "items": [
+            {
+              "id": "m5-one-to-one-onto-1",
+              "filename": "interactive/m5-one-to-one-onto.html",
+              "title": "One-to-one และ Onto",
+              "description": "ตรวจสอบ injective, surjective และ bijective จากภาพการจับคู่",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "svg-mapping"
+            }
+          ]
         },
         {
           "id": "m5-inverse-function",
           "title": "Inverse Function",
           "order": 4,
-          "prerequisites": ["m5-one-to-one-onto"],
-          "items": [{
-            "id": "m5-inverse-function-1",
-            "filename": "interactive/m5-inverse-function.html",
-            "title": "Inverse Function",
-            "description": "เชื่อมโยง inverse function กับเงื่อนไข bijective และการสลับบทบาทของเซต",
-            "type": "interactive",
-            "typeLabel": "ทดลองได้",
-            "tech": "svg-mapping"
-          }]
+          "prerequisites": [
+            "m5-one-to-one-onto"
+          ],
+          "items": [
+            {
+              "id": "m5-inverse-function-1",
+              "filename": "interactive/m5-inverse-function.html",
+              "title": "Inverse Function",
+              "description": "เชื่อมโยง inverse function กับเงื่อนไข bijective และการสลับบทบาทของเซต",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "svg-mapping"
+            }
+          ]
         },
         {
           "id": "m5-nim-number-theory",
           "title": "ทฤษฎีจำนวนและทฤษฎีเกม (Nim Duel)",
           "order": 5,
           "prerequisites": [],
-          "items": [{
-            "id": "m5-nim-number-theory-deck",
-            "filename": "interactive/nim-number-theory/",
-            "title": "Nim Duel : ศึกชิงกองเบี้ยและทฤษฎีจำนวน",
-            "description": "บทเรียน 18 สไลด์ พร้อมเกมโต้ตอบ A/B/C ทฤษฎีบทของ Bouton และปัญหา Chicken McNugget",
-            "type": "interactive",
-            "typeLabel": "สไลด์ + เกมโต้ตอบ",
-            "tech": "purehtml-vanilla"
-          }]
+          "items": [
+            {
+              "id": "m5-nim-number-theory-deck",
+              "filename": "interactive/nim-number-theory/",
+              "title": "Nim Duel : ศึกชิงกองเบี้ยและทฤษฎีจำนวน",
+              "description": "บทเรียน 18 สไลด์ พร้อมเกมโต้ตอบ A/B/C ทฤษฎีบทของ Bouton และปัญหา Chicken McNugget",
+              "type": "interactive",
+              "typeLabel": "สไลด์ + เกมโต้ตอบ",
+              "tech": "purehtml-vanilla"
+            }
+          ]
         }
       ]
     },
@@ -129,73 +175,89 @@
       "title": "01422111: หลักสถิติ",
       "description": "สื่อประกอบรายวิชาสำหรับเรียนแนวคิด วิเคราะห์ข้อมูล สุ่มตัวแปร และเริ่มต้นการอนุมานเชิงสถิติ",
       "theme": "green",
-      "order": 3,
+      "order": 4,
       "topics": [
         {
           "id": "stats-ch1",
           "title": "บทที่ 1: ความหมายของสถิติ",
           "order": 1,
           "prerequisites": [],
-          "items": [{
-            "id": "stats-ch1-1",
-            "filename": "interactive/statistics/01422111-ch1-starbucks-purehtml.html",
-            "title": "ความหมายของสถิติ",
-            "description": "ประชากร ตัวอย่าง ข้อมูล พารามิเตอร์ ค่าสถิติ และเครื่องหมายผลรวม",
-            "type": "slides",
-            "typeLabel": "บทเรียน",
-            "tech": "katex"
-          }]
+          "items": [
+            {
+              "id": "stats-ch1-1",
+              "filename": "interactive/statistics/01422111-ch1-starbucks-purehtml.html",
+              "title": "ความหมายของสถิติ",
+              "description": "ประชากร ตัวอย่าง ข้อมูล พารามิเตอร์ ค่าสถิติ และเครื่องหมายผลรวม",
+              "type": "slides",
+              "typeLabel": "บทเรียน",
+              "tech": "katex"
+            }
+          ]
         },
         {
           "id": "stats-ch2",
           "title": "บทที่ 2: การวิเคราะห์ข้อมูลเบื้องต้น",
           "order": 2,
-          "prerequisites": ["stats-ch1"],
-          "items": [{
-            "id": "stats-ch2-1",
-            "filename": "interactive/statistics/01422111-ch02-purehtml.html",
-            "title": "การวิเคราะห์ข้อมูลเบื้องต้น",
-            "description": "การนำเสนอข้อมูล ค่ากลาง ตำแหน่ง การกระจาย และรูปร่างของการแจกแจง",
-            "type": "slides",
-            "typeLabel": "บทเรียน",
-            "tech": "katex"
-          }]
+          "prerequisites": [
+            "stats-ch1"
+          ],
+          "items": [
+            {
+              "id": "stats-ch2-1",
+              "filename": "interactive/statistics/01422111-ch02-purehtml.html",
+              "title": "การวิเคราะห์ข้อมูลเบื้องต้น",
+              "description": "การนำเสนอข้อมูล ค่ากลาง ตำแหน่ง การกระจาย และรูปร่างของการแจกแจง",
+              "type": "slides",
+              "typeLabel": "บทเรียน",
+              "tech": "katex"
+            }
+          ]
         },
         {
           "id": "stats-ch3",
           "title": "บทที่ 3: ตัวแปรสุ่มและการแจกแจง",
           "order": 3,
-          "prerequisites": ["stats-ch2"],
-          "items": [{
-            "id": "stats-ch3-1",
-            "filename": "interactive/statistics/01422111-ch03-purehtml.html",
-            "title": "ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น",
-            "description": "สำรวจตัวแปรสุ่มแบบไม่ต่อเนื่อง แบบต่อเนื่อง และการแจกแจงความน่าจะเป็น",
-            "type": "slides",
-            "typeLabel": "บทเรียน",
-            "tech": "katex"
-          }]
+          "prerequisites": [
+            "stats-ch2"
+          ],
+          "items": [
+            {
+              "id": "stats-ch3-1",
+              "filename": "interactive/statistics/01422111-ch03-purehtml.html",
+              "title": "ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น",
+              "description": "สำรวจตัวแปรสุ่มแบบไม่ต่อเนื่อง แบบต่อเนื่อง และการแจกแจงความน่าจะเป็น",
+              "type": "slides",
+              "typeLabel": "บทเรียน",
+              "tech": "katex"
+            }
+          ]
         },
         {
           "id": "stats-ch5-visual-guide",
           "title": "บทที่ 5: การอนุมานเชิงสถิติ",
           "order": 4,
-          "prerequisites": ["stats-ch2"],
-          "items": [{
-            "id": "stats-ch5-visual-guide-1",
-            "filename": "interactive/statistics/stat-inference-visual-guide-ch5.html",
-            "title": "Visual Field Guide: การอนุมานเชิงสถิติ",
-            "description": "ภาพรวมช่วงความเชื่อมั่น กระบวนการตัดสินใจ และสูตรที่ควรจำ",
-            "type": "guide",
-            "typeLabel": "คู่มือภาพ",
-            "tech": "katex"
-          }]
+          "prerequisites": [
+            "stats-ch2"
+          ],
+          "items": [
+            {
+              "id": "stats-ch5-visual-guide-1",
+              "filename": "interactive/statistics/stat-inference-visual-guide-ch5.html",
+              "title": "Visual Field Guide: การอนุมานเชิงสถิติ",
+              "description": "ภาพรวมช่วงความเชื่อมั่น กระบวนการตัดสินใจ และสูตรที่ควรจำ",
+              "type": "guide",
+              "typeLabel": "คู่มือภาพ",
+              "tech": "katex"
+            }
+          ]
         },
         {
           "id": "stats-practice",
           "title": "แบบฝึกหัดเลือกวิธีทำ",
           "order": 5,
-          "prerequisites": ["stats-ch5-visual-guide"],
+          "prerequisites": [
+            "stats-ch5-visual-guide"
+          ],
           "items": [
             {
               "id": "stats-statistic-choice-quiz",
@@ -216,6 +278,23 @@
               "tech": "katex"
             }
           ]
+        },
+        {
+          "id": "01422111-streamlit-tools",
+          "title": "เครื่องมือช่วยสอน: แอป Streamlit",
+          "order": 6,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "01422111-streamlit-solver",
+              "filename": "https://github.com/SubwatG/stat-distribution-solver",
+              "title": "Statistics Interactive Teaching Assistant (Streamlit)",
+              "description": "แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (รันจากโค้ดใน repo นี้)",
+              "type": "external",
+              "typeLabel": "ลิงก์ภายนอก",
+              "tech": "streamlit"
+            }
+          ]
         }
       ]
     },
@@ -226,22 +305,24 @@
       "title": "แคลคูลัส: Logistic Growth",
       "description": "ทดลองดูพฤติกรรมของฟังก์ชัน logistic และผลของพารามิเตอร์ต่อกราฟ",
       "theme": "blue",
-      "order": 4,
+      "order": 5,
       "topics": [
         {
           "id": "logistic-growth",
           "title": "Logistic Growth",
           "order": 1,
           "prerequisites": [],
-          "items": [{
-            "id": "logistic-growth-1",
-            "filename": "interactive/logistic-growth.html",
-            "title": "Logistic Growth Function",
-            "description": "ปรับค่าพารามิเตอร์และสำรวจกราฟของฟังก์ชัน logistic แบบ interactive",
-            "type": "interactive",
-            "typeLabel": "ทดลองได้",
-            "tech": "katex-canvas"
-          }]
+          "items": [
+            {
+              "id": "logistic-growth-1",
+              "filename": "interactive/logistic-growth.html",
+              "title": "Logistic Growth Function",
+              "description": "ปรับค่าพารามิเตอร์และสำรวจกราฟของฟังก์ชัน logistic แบบ interactive",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "katex-canvas"
+            }
+          ]
         }
       ]
     }

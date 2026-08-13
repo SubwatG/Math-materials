@@ -6,6 +6,10 @@
 
 - [Logistic Growth Functions](interactive/logistic-growth.html) — ปรับค่า `a`, `b`, `c` เพื่อสำรวจกราฟของฟังก์ชันโลจิสติกและขอบเขตการเพิ่มปริมาณ
 
+### ม.3 — สถิติ
+
+- [ทบทวนแผนภาพกล่อง (Box Plot) แบบโต้ตอบ](interactive/statistics/m3-box-plot-review.html) — ใส่ข้อมูลแล้วระบบแสดงขั้นตอนหาค่า Q1/Q2/Q3, IQR, ขอบเขต และค่าผิดปกติ พร้อมวาด Box Plot ให้อัตโนมัติ
+
 ### ม.5 บทที่ 0 — ทบทวนความสัมพันธ์และฟังก์ชัน
 
 - [ความสัมพันธ์กับฟังก์ชัน](interactive/m5-relation-vs-function.html) — สร้างลูกศรจากเซต A ไปเซต B เพื่อตรวจว่าเป็นฟังก์ชันหรือไม่ พร้อมนิยามวิชาการด้วย KaTeX
@@ -15,6 +19,7 @@
 
 ### 01422111 หลักสถิติ
 
+- [Statistics Interactive Teaching Assistant (Streamlit)](https://github.com/SubwatG/stat-distribution-solver) — แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (รันจากโค้ดใน repo นี้)
 - [บทที่ 3 ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น](interactive/statistics/01422111-ch03-purehtml.html) — สไลด์ interactive สำหรับสำรวจ random variable และ probability distribution พร้อมตัวอย่างคำนวณ
 
 ## GitHub Pages

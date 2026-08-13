@@ -234,7 +234,11 @@
               ${topics.map((topic) => `<li class="topic">
                 <div class="topic-heading"><strong>${escapeHtml(topic.title)}</strong><span class="topic-order">${String(topic.order || '').padStart(2, '0')}</span></div>
                 <ul class="item-list">
-                  ${(topic.items || []).map((item) => `<li><a class="item-link" href="${escapeHtml(item.filename)}"><span>${escapeHtml(item.title)}</span><span class="item-type">${escapeHtml(item.typeLabel || item.type || 'เปิด')}</span></a></li>`).join('')}
+                  ${(topic.items || []).map((item) => {
+                    const isExternal = /^https?:\/\//.test(item.filename || '');
+                    const attrs = isExternal ? ' target="_blank" rel="noopener"' : '';
+                    return `<li><a class="item-link" href="${escapeHtml(item.filename)}"${attrs}><span>${escapeHtml(item.title)}</span><span class="item-type">${escapeHtml(item.typeLabel || item.type || 'เปิด')}</span></a></li>`;
+                  }).join('')}
                 </ul>
               </li>`).join('')}
             </ol>
