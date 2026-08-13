@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nim Classroom : ศึกชิงกองเบี้ยและทฤษฎีเกม</title>
+  <link rel="stylesheet" href="vendor/katex-0.16.9/katex.min.css">
 
   <style>
 /* thai */
@@ -1864,65 +1865,67 @@
         </div>
       </div>
 
-<!-- Slide 11: ทบทวนเลขฐานสองและพลังของกำลังของ 2 -->
+      <!-- Slide 11: ทบทวนเลขฐานสองและทฤษฎีบทการแทนจำนวน -->
       <div class="slide" data-slide="11">
         <div class="slide-header">
-          <div class="slide-title">ทบทวนเลขฐานสอง : แนวคิดตาชั่งเลขและพลังของ 2<sup><em>k</em></sup></div>
-          <div class="slide-subtitle">การแทนจำนวนเต็ม 0 ถึง 31 ด้วยผลบวกของกำลังของ 2 (16, 8, 4, 2, 1) แบบเดียวเสมอ</div>
+          <div class="slide-title">ทบทวนเลขฐานสอง : ทฤษฎีบทการแทนจำนวนในระบบฐานสอง</div>
+          <div class="slide-subtitle">โครงสร้างของจำนวนเต็มไม่ลบกับการกระจายในรูปผลบวกของกำลังของ 2 ($2^k$)</div>
         </div>
         <div class="slide-content">
-          <div class="callout bq-purple" style="margin-bottom: 0.75rem; font-size: 0.9rem;">
-            ⚖️ <strong>แนวคิดตาชั่งเลข:</strong> ถ้ามีลูกตุ้มน้ำหนักขนาด <strong>16, 8, 4, 2, 1 กรัม</strong> อย่างละ 1 ลูก เราสามารถเลือกชุดลูกตุ้มมารวมกันเพื่อชั่งน้ำหนักจำนวน <strong>0 ถึง 31 กรัม</strong> ได้ <strong>"เพียงแบบเดียวเสมอ (Unique Representation)"</strong>
+          <!-- Formal Theorem Box -->
+          <div class="callout bq-purple" style="margin-bottom: 0.75rem; font-size: 0.92rem;">
+            📌 <strong>ทฤษฎีบทการแทนในระบบเลขฐานสอง (Binary Representation Theorem):</strong><br>
+            สำหรับจำนวนเต็มบวก $n \ge 1$ ใดๆ จะมีจำนวนเต็ม $m \ge 0$ และลำดับของบิต $b_k \in \{0, 1\}$ (โดยที่ $b_m = 1$) <strong>เพียงชุดเดียวเท่านั้น (Unique)</strong> ซึ่งทำให้
+            $$\begin{align}n = \sum_{k=0}^{m} b_k \cdot 2^k = b_m 2^m + b_{m-1} 2^{m-1} + \dots + b_1 2^1 + b_0 2^0\end{align}$$
           </div>
 
-          <div style="display: flex; gap: 0.6rem; justify-content: center; margin: 0.6rem 0;">
-            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.4rem 0.8rem; text-align: center; min-width: 80px;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">2⁴</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--color-primary);">16</div>
+          <!-- Powers of 2 Cards (0-31) -->
+          <div style="display: flex; gap: 0.6rem; justify-content: center; margin: 0.5rem 0;">
+            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.35rem 0.75rem; text-align: center; min-width: 75px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">$2^4$</div>
+              <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">16</div>
             </div>
-            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.4rem 0.8rem; text-align: center; min-width: 80px;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">2³</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--color-primary);">8</div>
+            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.35rem 0.75rem; text-align: center; min-width: 75px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">$2^3$</div>
+              <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">8</div>
             </div>
-            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.4rem 0.8rem; text-align: center; min-width: 80px;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">2²</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--color-primary);">4</div>
+            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.35rem 0.75rem; text-align: center; min-width: 75px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">$2^2$</div>
+              <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">4</div>
             </div>
-            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.4rem 0.8rem; text-align: center; min-width: 80px;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">2¹</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--color-primary);">2</div>
+            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.35rem 0.75rem; text-align: center; min-width: 75px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">$2^1$</div>
+              <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">2</div>
             </div>
-            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.4rem 0.8rem; text-align: center; min-width: 80px;">
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">2⁰</div>
-              <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--color-primary);">1</div>
+            <div style="background: var(--color-card); border: 2px solid var(--color-primary); padding: 0.35rem 0.75rem; text-align: center; min-width: 75px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-soft);">$2^0$</div>
+              <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--color-primary);">1</div>
             </div>
           </div>
 
-          <div class="grid-2 fragment" data-step="1" style="margin-top: 0.6rem;">
-            <div class="sub-card" style="border-left-color: var(--color-primary);">
-              <h4 style="font-size: 0.95rem;">🔍 ตัวอย่างการแยก 13 ชิ้น</h4>
-              <ul style="font-size: 0.86rem;">
-                <li>13 ≥ 8 ➔ ใช้ 8 (✓) เหลือ 13 − 8 = 5</li>
-                <li>5 ≥ 4 ➔ ใช้ 4 (✓) เหลือ 5 − 4 = 1</li>
-                <li>1 < 2 ➔ ไม่ใช้ 2 (✗) | 1 ≥ 1 ➔ ใช้ 1 (✓)</li>
-                <li>👉 <strong>13 = 8 + 4 + 1</strong> (ฐานสอง: 1101₂)</li>
+          <div class="grid-2 fragment" data-step="1" style="margin-top: 0.5rem;">
+            <div class="sub-card" style="border-left-color: var(--color-primary); padding: 0.6rem 0.8rem;">
+              <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">🔍 ตัวอย่างการแทนค่า $n = 13$</h4>
+              <ul style="font-size: 0.84rem;">
+                <li>$13 = 1\cdot 2^3 + 1\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 8 + 4 + 1$</li>
+                <li>เขียนในระบบฐานสองได้เป็น $13_{10} = 1101_2$</li>
               </ul>
             </div>
 
-            <div class="sub-card" style="border-left-color: var(--color-accent);">
-              <h4 style="font-size: 0.95rem;">💡 ทำไมต้องใช้ในเกมนิม C?</h4>
-              <p style="font-size: 0.86rem;">
-                เพราะเกมนิมปรับเบี้ยได้ <strong>กองเดียวต่อตา</strong> การแตกเป็นกำลังของ 2 ช่วยให้เรา <strong>"ปรับสถานะคู่-คี่ (Parity) แต่ละหลักได้อย่างอิสระ"</strong> โดยไม่กระทบหลักอื่น!
+            <div class="sub-card" style="border-left-color: var(--color-accent); padding: 0.6rem 0.8rem;">
+              <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">💡 ทำไมต้องใช้ในเกมนิม C?</h4>
+              <p style="font-size: 0.84rem;">
+                เพราะแต่ละตาเราเลือกหยิบได้เพียง <strong>กองเดียว</strong> การกระจายเป็นผลบวก $2^k$ ช่วยให้เราสามารถ <strong>"ปรับสถานะคู่-คี่ (Parity) แต่ละหลักได้อย่างอิสระ"</strong> เพื่อคุมเกม
               </p>
             </div>
           </div>
 
-          <div class="fragment" data-step="2" style="text-align: center; margin-top: 0.6rem;">
+          <div class="fragment" data-step="2" style="text-align: center; margin-top: 0.5rem;">
             <a href="binary-nim-calculator.html" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-accent" style="background-color: var(--color-accent); color: #FFF; text-decoration: none;">🧮 [เปิดเครื่องคำนวณและวิเคราะห์เลขฐานสองแบบละเอียด]</a>
           </div>
         </div>
         <div class="slide-footer">
-          <span>BINARY SYSTEM · POWERS OF 2 &amp; UNIQUE REPRESENTATION</span>
+          <span>BINARY SYSTEM · BINARY REPRESENTATION THEOREM</span>
           <span>SLIDE 11 / 19</span>
         </div>
       </div>
@@ -3863,6 +3866,21 @@
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('selftest') === '1') {
         openSelfTestModal();
+      }
+    });
+  </script>
+  <script src="vendor/katex-0.16.9/katex.min.js"></script>
+  <script src="vendor/katex-0.16.9/auto-render.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
       }
     });
   </script>

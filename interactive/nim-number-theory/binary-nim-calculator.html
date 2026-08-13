@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>เครื่องมือทบทวนเลขฐานสองและวิเคราะห์นิม (Binary & Nim-Sum Analyzer)</title>
+  <link rel="stylesheet" href="vendor/katex-0.16.9/katex.min.css">
 
   <style>
 /* thai */
@@ -635,46 +636,44 @@
     <!-- TAB 1: STORY & CONCEPT -->
     <div id="tab-story" class="tab-pane">
       <div class="card">
-        <div class="card-title">⚖️ แนวคิดตาชั่งเลข: พลังของกำลังของ 2 (2<sup><em>k</em></sup>)</div>
-        <p style="margin-bottom: 0.75rem; font-size: 0.92rem;">
-          ลองจินตนาการว่าเรามีลูกตุ้มน้ำหนักขนาด <strong>16, 8, 4, 2, 1 กรัม</strong> (กำลังของ 2) เพียงอย่างละ 1 ลูกเท่านั้น
-        </p>
-        <p style="margin-bottom: 0.75rem; font-size: 0.92rem;">
-          <strong>ทฤษฎีบทการแทนจำนวน (Binary Representation Theorem):</strong> ไม่ว่าเราจะต้องการชั่งของน้ำหนักกี่กรัม (0 ถึง 31 กรัม) เราสามารถเลือกชุดลูกตุ้มเหล่านี้มารวมกันให้ได้น้ำหนักนั้นได้ <strong>"เพียงแบบเดียวเสมอ (Unique)"</strong> โดยไม่ต้องมีลูกตุ้มซ้ำเลย!
-        </p>
+        <div class="card-title">📌 ทฤษฎีบทการแทนในระบบเลขฐานสอง (Binary Representation Theorem)</div>
+        <div class="callout callout-purple" style="margin-top: 0; margin-bottom: 1rem; font-size: 0.92rem;">
+          สำหรับจำนวนเต็มบวก $n \ge 1$ ใดๆ จะมีจำนวนเต็ม $m \ge 0$ และลำดับของบิต $b_k \in \{0, 1\}$ (โดยที่ $b_m = 1$) <strong>เพียงชุดเดียวเท่านั้น (Unique)</strong> ซึ่งทำให้
+          $$\begin{align}n = \sum_{k=0}^{m} b_k \cdot 2^k = b_m 2^m + b_{m-1} 2^{m-1} + \dots + b_1 2^1 + b_0 2^0\end{align}$$
+        </div>
 
         <div class="weights-grid">
           <div class="weight-box active">
-            <div class="weight-power">2⁴</div>
+            <div class="weight-power">$2^4$</div>
             <div class="weight-val">16</div>
             <span class="weight-status">ใช้ / ไม่ใช้</span>
           </div>
           <div class="weight-box active">
-            <div class="weight-power">2³</div>
+            <div class="weight-power">$2^3$</div>
             <div class="weight-val">8</div>
             <span class="weight-status">ใช้ / ไม่ใช้</span>
           </div>
           <div class="weight-box active">
-            <div class="weight-power">2²</div>
+            <div class="weight-power">$2^2$</div>
             <div class="weight-val">4</div>
             <span class="weight-status">ใช้ / ไม่ใช้</span>
           </div>
           <div class="weight-box active">
-            <div class="weight-power">2¹</div>
+            <div class="weight-power">$2^1$</div>
             <div class="weight-val">2</div>
             <span class="weight-status">ใช้ / ไม่ใช้</span>
           </div>
           <div class="weight-box active">
-            <div class="weight-power">2⁰</div>
+            <div class="weight-power">$2^0$</div>
             <div class="weight-val">1</div>
             <span class="weight-status">ใช้ / ไม่ใช้</span>
           </div>
         </div>
 
-        <div class="callout callout-purple">
+        <div class="callout" style="font-size: 0.88rem;">
           <strong>💡 ทำไมเกมนิมจึงเชื่อมกับเลขฐานสอง?</strong><br>
           ในเกมนิม เมื่อถึงตาเรา เราสามารถเลือกหยิบเบี้ยได้จาก <strong>"กองเดียวเท่านั้น"</strong><br>
-          การแตกจำนวนเบี้ยในแต่ละกองออกเป็นชิ้นส่วนกำลังของ 2 (8, 4, 2, 1) ทำให้เรามองเห็นโครงสร้างย่อย และสามารถ <strong>"เปลี่ยนสถานะคู่-คี่ (Parity) ของแต่ละหลักได้อย่างอิสระ"</strong> เพื่อส่งตำแหน่งกับดักให้ฝ่ายตรงข้าม!
+          การกระจายจำนวนเบี้ยในแต่ละกองออกเป็นชิ้นส่วนกำลังของ 2 ($2^k$) ทำให้เรามองเห็นโครงสร้างย่อย และสามารถ <strong>"เปลี่ยนสถานะคู่-คี่ (Parity) ของแต่ละหลักได้อย่างอิสระ"</strong> เพื่อส่งตำแหน่งกับดักให้ฝ่ายตรงข้าม!
         </div>
       </div>
     </div>
@@ -937,9 +936,24 @@
       }
     }
 
-    // Init on load
+    function renderMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+  </script>
+  <script src="vendor/katex-0.16.9/katex.min.js"></script>
+  <script src="vendor/katex-0.16.9/auto-render.min.js"></script>
+  <script>
     window.addEventListener('DOMContentLoaded', () => {
       calculateSingleBinary();
+      renderMath();
     });
   </script>
 </body>
