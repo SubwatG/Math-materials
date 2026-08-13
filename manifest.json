@@ -287,9 +287,9 @@
           "items": [
             {
               "id": "01422111-streamlit-solver",
-              "filename": "https://github.com/SubwatG/stat-distribution-solver",
+              "filename": "https://stat-distribution-solver-naaptzyidcew7rrys9xj2q.streamlit.app/",
               "title": "Statistics Interactive Teaching Assistant (Streamlit)",
-              "description": "แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (รันจากโค้ดใน repo นี้)",
+              "description": "แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (แอปหลับเมื่อไม่ได้ใช้ ต้องกดปุ่ม Wake up เพื่อปลุกก่อนใช้งาน)",
               "type": "external",
               "typeLabel": "ลิงก์ภายนอก",
               "tech": "streamlit"
