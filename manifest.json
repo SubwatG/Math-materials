@@ -113,7 +113,7 @@
           "items": [{
             "id": "m5-nim-number-theory-deck",
             "filename": "interactive/nim-number-theory/",
-            "title": "Nim Duel — ศึกชิงกองเบี้ยและทฤษฎีจำนวน",
+            "title": "Nim Duel : ศึกชิงกองเบี้ยและทฤษฎีจำนวน",
             "description": "บทเรียน 18 สไลด์ พร้อมเกมโต้ตอบ A/B/C ทฤษฎีบทของ Bouton และปัญหา Chicken McNugget",
             "type": "interactive",
             "typeLabel": "สไลด์ + เกมโต้ตอบ",
