@@ -1327,24 +1327,45 @@
 
     @media (max-height: 500px) {
       .deck-viewport, .game-viewport {
-        padding: 2.8rem 0.5rem 2.5rem !important;
+        padding: 3.25rem 0.5rem 2.2rem !important;
       }
       .topnav {
-        padding: 0.25rem 0.6rem !important;
+        padding: 0.25rem 0.5rem !important;
+        flex-wrap: nowrap !important;
+      }
+      .topnav-brand span:last-child {
+        display: none !important;
+      }
+      .topnav-actions {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.2rem;
+        max-width: calc(100vw - 125px);
+        scrollbar-width: none;
+      }
+      .topnav-actions::-webkit-scrollbar {
+        display: none;
+      }
+      .btn-sm {
+        min-height: 34px !important;
+        min-width: 34px !important;
+        padding: 0.2rem 0.4rem !important;
+        font-size: 0.72rem !important;
       }
       .slide {
-        padding: 0.85rem 0.75rem !important;
+        padding: 0.75rem 0.75rem !important;
         min-height: auto !important;
       }
       .slide-header {
-        margin-bottom: 0.5rem !important;
+        margin-bottom: 0.4rem !important;
       }
       .slide-title {
-        font-size: 1.1rem !important;
+        font-size: 1.05rem !important;
         margin-bottom: 0.15rem !important;
       }
       .slide-subtitle {
-        font-size: 0.78rem !important;
+        font-size: 0.75rem !important;
       }
       .slide-content {
         margin-bottom: 0.5rem !important;
@@ -3663,6 +3684,56 @@
               takeItemC(count);
             }
           }
+        }
+      }
+    });
+
+    /* Touch & Gesture Navigation Shortcuts for Touch Devices */
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (appMode !== 'slides') return;
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      const duration = Date.now() - touchStartTime;
+
+      // Ignore touches originating on interactive controls
+      const target = e.target;
+      if (target.closest('button, input, textarea, select, a, .btn, label, header, .nav-arrows, .slide-counter-badge, .modal-overlay, #selftest-modal')) {
+        return;
+      }
+
+      // Horizontal Swipe Gesture Detection
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaY) < 60 && duration < 500) {
+        if (deltaX < -40) {
+          nextSlide(); // Swipe Left -> Advance step / slide
+        } else if (deltaX > 40) {
+          prevSlide(); // Swipe Right -> Previous step / slide
+        }
+        return;
+      }
+
+      // Tap Gesture (Short tap with minimal finger movement)
+      if (Math.abs(deltaX) < 12 && Math.abs(deltaY) < 12 && duration < 350) {
+        const screenWidth = window.innerWidth;
+        if (touchEndX < screenWidth * 0.22) {
+          prevSlide(); // Tap on left 22% -> Previous step / slide
+        } else {
+          nextSlide(); // Tap on main slide area -> Advance step / next slide
         }
       }
     });
