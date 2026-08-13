@@ -628,19 +628,19 @@
     <!-- Tabs Navigation -->
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('tab-story')">📖 1. ทำไมต้องเลขฐานสอง?</button>
-      <button class="tab-btn" onclick="switchTab('tab-single')">🔍 2. เครื่องคำนวณแยกเลขฐานสอง ($N$)</button>
+      <button class="tab-btn" onclick="switchTab('tab-single')">🔍 2. เครื่องคำนวณแยกเลขฐานสอง (<em>N</em>)</button>
       <button class="tab-btn" onclick="switchTab('tab-nim')">⚔️ 3. ตัววิเคราะห์นิม 3 กอง (Nim-Sum XOR)</button>
     </div>
 
     <!-- TAB 1: STORY & CONCEPT -->
     <div id="tab-story" class="tab-pane">
       <div class="card">
-        <div class="card-title">⚖️ แนวคิดตาชั่งเลข: พลังของกำลังของ 2 ($2^k$)</div>
+        <div class="card-title">⚖️ แนวคิดตาชั่งเลข: พลังของกำลังของ 2 (2<sup><em>k</em></sup>)</div>
         <p style="margin-bottom: 0.75rem; font-size: 0.92rem;">
           ลองจินตนาการว่าเรามีลูกตุ้มน้ำหนักขนาด <strong>16, 8, 4, 2, 1 กรัม</strong> (กำลังของ 2) เพียงอย่างละ 1 ลูกเท่านั้น
         </p>
         <p style="margin-bottom: 0.75rem; font-size: 0.92rem;">
-          <strong>ทฤษฎีบทการแทนจำนวน (Binary Representation Theorem):</strong> ไม่ว่าเราจะต้องการชั่งของน้ำหนักกี่กรัม เราสามารถเลือกชุดลูกตุ้มเหล่านี้มารวมกันให้ได้น้ำหนักนั้นได้ <strong>"เพียงแบบเดียวเสมอ (Unique)"</strong> โดยไม่ต้องมีลูกตุ้มซ้ำเลย!
+          <strong>ทฤษฎีบทการแทนจำนวน (Binary Representation Theorem):</strong> ไม่ว่าเราจะต้องการชั่งของน้ำหนักกี่กรัม (0 ถึง 31 กรัม) เราสามารถเลือกชุดลูกตุ้มเหล่านี้มารวมกันให้ได้น้ำหนักนั้นได้ <strong>"เพียงแบบเดียวเสมอ (Unique)"</strong> โดยไม่ต้องมีลูกตุ้มซ้ำเลย!
         </p>
 
         <div class="weights-grid">
@@ -674,7 +674,7 @@
         <div class="callout callout-purple">
           <strong>💡 ทำไมเกมนิมจึงเชื่อมกับเลขฐานสอง?</strong><br>
           ในเกมนิม เมื่อถึงตาเรา เราสามารถเลือกหยิบเบี้ยได้จาก <strong>"กองเดียวเท่านั้น"</strong><br>
-          การแตกจำนวนเบี้ยในแต่ละกองออกเป็นชิ้นส่วนกำลังของ 2 ($8, 4, 2, 1$) ทำให้เรามองเห็นโครงสร้างย่อย และสามารถ <strong>"เปลี่ยนสถานะคู่-คี่ (Parity) ของแต่ละหลักได้อย่างอิสระ"</strong> เพื่อส่งตำแหน่งกับดักให้ฝ่ายตรงข้าม!
+          การแตกจำนวนเบี้ยในแต่ละกองออกเป็นชิ้นส่วนกำลังของ 2 (8, 4, 2, 1) ทำให้เรามองเห็นโครงสร้างย่อย และสามารถ <strong>"เปลี่ยนสถานะคู่-คี่ (Parity) ของแต่ละหลักได้อย่างอิสระ"</strong> เพื่อส่งตำแหน่งกับดักให้ฝ่ายตรงข้าม!
         </div>
       </div>
     </div>
@@ -688,7 +688,7 @@
         </p>
 
         <div class="calc-input-group">
-          <label for="singleNumInput" style="font-weight: 600; font-size: 0.9rem;">จำนวน $N$ =</label>
+          <label for="singleNumInput" style="font-weight: 600; font-size: 0.9rem;">จำนวน <em>N</em> =</label>
           <input type="number" id="singleNumInput" class="input-field" value="13" min="1" max="63" oninput="calculateSingleBinary()">
           <button class="btn btn-primary" onclick="calculateSingleBinary()">คำนวณ</button>
 
@@ -741,10 +741,10 @@
             <tr>
               <th>กองเบี้ย</th>
               <th>จำนวน</th>
-              <th>หลัก 8 ($2^3$)</th>
-              <th>หลัก 4 ($2^2$)</th>
-              <th>หลัก 2 ($2^1$)</th>
-              <th>หลัก 1 ($2^0$)</th>
+              <th>หลัก 8 (2<sup>3</sup>)</th>
+              <th>หลัก 4 (2<sup>2</sup>)</th>
+              <th>หลัก 2 (2<sup>1</sup>)</th>
+              <th>หลัก 1 (2<sup>0</sup>)</th>
               <th>รูปผลบวก</th>
             </tr>
           </thead>
