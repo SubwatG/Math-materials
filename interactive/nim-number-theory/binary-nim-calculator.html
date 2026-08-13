@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เครื่องมือทบทวนเลขฐานสองและวิเคราะห์เกมนิม 3 กอง (Binary & Nim-Sum Analyzer)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      
+      --color-bg: #F4F4F4;
+      --color-surface: #FFFFFF;
+      --color-card: #FFFFFF;
+      --color-border: #E0E0E0;
+      --color-text: #161616;
+      --color-text-soft: #525252;
+      --color-muted-surface: #F4F4F4;
+      
+      --color-primary: #0F62FE;
+      --color-primary-dark: #0043CE;
+      --color-secondary: #393939;
+      --color-accent: #8A3FFC;
+      --color-success: #198038;
+      --color-warning: #F1C21B;
+      --color-error: #DA1E28;
+      --color-table-header: #E0E0E0;
+      
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #161616;
+        --color-surface: #262626;
+        --color-card: #262626;
+        --color-border: #393939;
+        --color-text: #F4F4F4;
+        --color-text-soft: #C6C6C6;
+        --color-muted-surface: #1E1E1E;
+        --color-table-header: #393939;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      padding: 1.5rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 6px solid var(--color-primary);
+      padding: 1.5rem 1.75rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: var(--color-text-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+    .btn-primary:hover {
+      background-color: var(--color-primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--color-border);
+      color: var(--color-text);
+    }
+    .btn-outline:hover {
+      background-color: var(--color-muted-surface);
+      border-color: var(--color-text-soft);
+    }
+
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: 1.5rem;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      background: none;
+      color: var(--color-text-soft);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Weights / Balance Visualization */
+    .weights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+
+    .weight-box {
+      background: var(--color-muted-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1rem 0.75rem;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .weight-box.active {
+      border-color: var(--color-primary);
+      background: rgba(15, 98, 254, 0.08);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .weight-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--color-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .weight-power {
+      font-size: 0.8rem;
+      color: var(--color-text-soft);
+      font-family: var(--font-mono);
+    }
+
+    .weight-status {
+      margin-top: 0.5rem;
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--color-border);
+      color: var(--color-text-soft);
+    }
+
+    .weight-box.active .weight-status {
+      background: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    /* Calculator inputs */
+    .calc-input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .input-field {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+      width: 100px;
+      text-align: center;
+    }
+
+    .input-field:focus {
+      outline: 2px solid var(--color-primary);
+      border-color: transparent;
+    }
+
+    .step-list {
+      list-style: none;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .step-item {
+      background: var(--color-muted-surface);
+      border-left: 4px solid var(--color-primary);
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .step-item.success {
+      border-left-color: var(--color-success);
+    }
+
+    .step-item.skip {
+      border-left-color: var(--color-border);
+      color: var(--color-text-soft);
+      opacity: 0.75;
+    }
+
+    /* Parity Table */
+    .parity-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+
+    .parity-table th, .parity-table td {
+      border: 1px solid var(--color-border);
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .parity-table th {
+      background-color: var(--color-table-header);
+      font-weight: 700;
+    }
+
+    .tag-even {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background-color: rgba(25, 128, 56, 0.15);
+      color: var(--color-success);
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+    }
+
+    .tag-odd {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background-color: rgba(218, 30, 40, 0.15);
+      color: var(--color-error);
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+    }
+
+    .verdict-box {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      margin-top: 1rem;
+      border: 2px solid;
+    }
+
+    .verdict-win {
+      background-color: rgba(15, 98, 254, 0.08);
+      border-color: var(--color-primary);
+    }
+
+    .verdict-lose {
+      background-color: rgba(241, 194, 27, 0.15);
+      border-color: var(--color-warning);
+    }
+
+    .callout {
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--color-muted-surface);
+      border-left: 4px solid var(--color-primary);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .callout-purple {
+      border-left-color: var(--color-accent);
+      background: rgba(138, 63, 252, 0.06);
+    }
+
+    .callout-success {
+      border-left-color: var(--color-success);
+      background: rgba(25, 128, 56, 0.06);
+    }
+
+    .code-badge {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      background: rgba(0,0,0,0.06);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>🧮 เครื่องมือทบทวนเลขฐานสองและวิเคราะห์นิม (Binary & Nim-Sum)</h1>
+        <p>สำหรับบทเรียน "เกมนิมและทฤษฎีจำนวน" ม.5 · Department of Mathematics</p>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="btn btn-outline">⬅️ กลับสู่สไลด์บทเรียน</a>
+      </div>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-story')">📖 1. ทำไมต้องเลขฐานสอง?</button>
+      <button class="tab-btn" onclick="switchTab('tab-single')">🔍 2. เครื่องคำนวณแยกเลขฐานสอง ($N$)</button>
+      <button class="tab-btn" onclick="switchTab('tab-nim')">⚔️ 3. ตัววิเคราะห์นิม 3 กอง (Nim-Sum XOR)</button>
+    </div>
+
+    <!-- TAB 1: STORY & CONCEPT -->
+    <div id="tab-story" class="tab-pane">
+      <div class="card">
+        <div class="card-title">⚖️ แนวคิดตาชั่งเลข: พลังของกำลังของ 2 ($2^k$)</div>
+        <p style="margin-bottom: 0.75rem;">
+          ลองจินตนาการว่าเรามีลูกตุ้มน้ำหนักขนาด <strong>16, 8, 4, 2, 1 กรัม</strong> (กำลังของ 2) เพียงอย่างละ 1 ลูกเท่านั้น
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          <strong>ทฤษฎีบทการแทนจำนวน (Binary Representation Theorem):</strong> ไม่ว่าเราจะต้องการชั่งของน้ำหนักกี่กรัม เราสามารถเลือกชุดลูกตุ้มเหล่านี้มารวมกันให้ได้น้ำหนักนั้นได้ <strong>"เพียงแบบเดียวเสมอ (Unique)"</strong> โดยไม่ต้องมีลูกตุ้มซ้ำเลย!
+        </p>
+
+        <div class="weights-grid">
+          <div class="weight-box active">
+            <div class="weight-power">2⁴</div>
+            <div class="weight-val">16</div>
+            <span class="weight-status">ใช้ / ไม่ใช้</span>
+          </div>
+          <div class="weight-box active">
+            <div class="weight-power">2³</div>
+            <div class="weight-val">8</div>
+            <span class="weight-status">ใช้ / ไม่ใช้</span>
+          </div>
+          <div class="weight-box active">
+            <div class="weight-power">2²</div>
+            <div class="weight-val">4</div>
+            <span class="weight-status">ใช้ / ไม่ใช้</span>
+          </div>
+          <div class="weight-box active">
+            <div class="weight-power">2¹</div>
+            <div class="weight-val">2</div>
+            <span class="weight-status">ใช้ / ไม่ใช้</span>
+          </div>
+          <div class="weight-box active">
+            <div class="weight-power">2⁰</div>
+            <div class="weight-val">1</div>
+            <span class="weight-status">ใช้ / ไม่ใช้</span>
+          </div>
+        </div>
+
+        <div class="callout callout-purple">
+          <strong>💡 ทำไมเกมนิมจึงเชื่อมกับเลขฐานสอง?</strong><br>
+          ในเกมนิม เมื่อถึงตาเรา เราสามารถเลือกหยิบเบี้ยได้จาก <strong>"กองเดียวเท่านั้น"</strong><br>
+          การแตกจำนวนเบี้ยในแต่ละกองออกเป็นชิ้นส่วนกำลังของ 2 ($8, 4, 2, 1$) ทำให้เรามองเห็นโครงสร้างย่อย และสามารถ <strong>"เปลี่ยนสถานะคู่-คี่ (Parity) ของแต่ละหลักได้อย่างอิสระ"</strong> เพื่อส่งตำแหน่งกับดักให้ฝ่ายตรงข้าม!
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: SINGLE NUMBER CALCULATOR -->
+    <div id="tab-single" class="tab-pane" style="display: none;">
+      <div class="card">
+        <div class="card-title">🔍 แปลงจำนวนเต็มเป็นผลบวกกำลังของ 2 (Binary Decomposition)</div>
+        <p style="margin-bottom: 1rem; color: var(--color-text-soft);">
+          กรอกจำนวนเต็มที่ต้องการ (1–63) เพื่อดูขั้นตอนวิธีคิดแบบหักลบทีละขั้น (Greedy Decomposition):
+        </p>
+
+        <div class="calc-input-group">
+          <label for="singleNumInput" style="font-weight: 600;">จำนวน $N$ =</label>
+          <input type="number" id="singleNumInput" class="input-field" value="13" min="1" max="63" oninput="calculateSingleBinary()">
+          <button class="btn btn-primary" onclick="calculateSingleBinary()">คำนวณ</button>
+          
+          <div style="display: flex; gap: 0.3rem; margin-left: auto;">
+            <button class="btn btn-outline" onclick="setSingleNum(5)">5</button>
+            <button class="btn btn-outline" onclick="setSingleNum(7)">7</button>
+            <button class="btn btn-outline" onclick="setSingleNum(11)">11</button>
+            <button class="btn btn-outline" onclick="setSingleNum(13)">13</button>
+            <button class="btn btn-outline" onclick="setSingleNum(23)">23</button>
+          </div>
+        </div>
+
+        <div class="weights-grid" id="singleWeightsGrid"></div>
+
+        <h4 style="margin-top: 1.25rem; font-size: 1rem;">📝 ขั้นตอนวิธีทำ (Step-by-Step Breakdown):</h4>
+        <ul class="step-list" id="singleStepList"></ul>
+
+        <div class="callout callout-success" id="singleSummaryBox"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: NIM 3 HEAPS ANALYZER -->
+    <div id="tab-nim" class="tab-pane" style="display: none;">
+      <div class="card">
+        <div class="card-title">⚔️ เครื่องมือวิเคราะห์ความสมดุลนิม 3 กอง (3-Heap Nim Parity & Strategy)</div>
+        <p style="margin-bottom: 1rem; color: var(--color-text-soft);">
+          กรอกจำนวนเบี้ยของแต่ละกอง เพื่อสร้างตาราง Parity และหาทางเดินที่ดีที่สุด (Best Winning Move):
+        </p>
+
+        <div class="calc-input-group">
+          <label style="font-weight: 600;">กอง 1:</label>
+          <input type="number" id="heap1" class="input-field" value="1" min="0" max="31" oninput="analyzeNim()">
+          <label style="font-weight: 600;">กอง 2:</label>
+          <input type="number" id="heap2" class="input-field" value="3" min="0" max="31" oninput="analyzeNim()">
+          <label style="font-weight: 600;">กอง 3:</label>
+          <input type="number" id="heap3" class="input-field" value="5" min="0" max="31" oninput="analyzeNim()">
+          <button class="btn btn-primary" onclick="analyzeNim()">วิเคราะห์</button>
+
+          <div style="display: flex; gap: 0.3rem; margin-left: auto; flex-wrap: wrap;">
+            <button class="btn btn-outline" onclick="setNimPreset(1,3,5)">(1,3,5)</button>
+            <button class="btn btn-outline" onclick="setNimPreset(1,2,3)">(1,2,3)</button>
+            <button class="btn btn-outline" onclick="setNimPreset(1,4,5)">(1,4,5)</button>
+            <button class="btn btn-outline" onclick="setNimPreset(3,4,5)">(3,4,5)</button>
+            <button class="btn btn-outline" onclick="setNimPreset(2,4,7)">(2,4,7)</button>
+          </div>
+        </div>
+
+        <table class="parity-table" id="nimParityTable">
+          <thead>
+            <tr>
+              <th>กองเบี้ย</th>
+              <th>จำนวน</th>
+              <th>หลัก 8 ($2^3$)</th>
+              <th>หลัก 4 ($2^2$)</th>
+              <th>หลัก 2 ($2^1$)</th>
+              <th>หลัก 1 ($2^0$)</th>
+              <th>รูปผลบวก</th>
+            </tr>
+          </thead>
+          <tbody id="nimTableBody"></tbody>
+          <tfoot id="nimTableFoot"></tfoot>
+        </table>
+
+        <div id="nimVerdictBox" class="verdict-box"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active');
+
+      if (tabId === 'tab-single') calculateSingleBinary();
+      if (tabId === 'tab-nim') analyzeNim();
+    }
+
+    function setSingleNum(val) {
+      document.getElementById('singleNumInput').value = val;
+      calculateSingleBinary();
+    }
+
+    function calculateSingleBinary() {
+      const num = parseInt(document.getElementById('singleNumInput').value, 10);
+      if (isNaN(num) || num < 0) return;
+
+      const powers = [32, 16, 8, 4, 2, 1];
+      let remaining = num;
+      const used = {};
+      const steps = [];
+
+      powers.forEach(p => {
+        if (remaining >= p) {
+          used[p] = true;
+          steps.push({
+            power: p,
+            status: 'use',
+            text: `ลองหลัก ${p}: ค่าคงเหลือ ${remaining} ≥ ${p} ➔ <strong>ใช้ ${p} (✓)</strong> ➔ เหลือ ${remaining} − ${p} = ${remaining - p}`
+          });
+          remaining -= p;
+        } else {
+          used[p] = false;
+          steps.push({
+            power: p,
+            status: 'skip',
+            text: `ลองหลัก ${p}: ค่าคงเหลือ ${remaining} < ${p} ➔ <strong>ไม่ใช้ (✗)</strong>`
+          });
+        }
+      });
+
+      // Render weights grid
+      const grid = document.getElementById('singleWeightsGrid');
+      grid.innerHTML = powers.filter(p => p <= Math.max(16, Math.pow(2, Math.floor(Math.log2(num || 1))))).map(p => `
+        <div class="weight-box ${used[p] ? 'active' : ''}">
+          <div class="weight-power">2<sup>${Math.log2(p)}</sup></div>
+          <div class="weight-val">${p}</div>
+          <span class="weight-status">${used[p] ? '✓ ใช้' : '✗ ไม่ใช้'}</span>
+        </div>
+      `).join('');
+
+      // Render steps
+      const list = document.getElementById('singleStepList');
+      list.innerHTML = steps.filter(s => s.power <= Math.max(16, Math.pow(2, Math.floor(Math.log2(num || 1))))).map(s => `
+        <li class="step-item ${s.status === 'use' ? 'success' : 'skip'}">${s.text}</li>
+      `).join('');
+
+      // Render summary
+      const sumTerms = powers.filter(p => used[p]);
+      const binaryStr = powers.filter(p => p <= Math.max(1, Math.pow(2, Math.floor(Math.log2(num || 1))))).map(p => used[p] ? '1' : '0').join('');
+      document.getElementById('singleSummaryBox').innerHTML = `
+        🎉 <strong>ข้อสรุป:</strong> จำนวน <strong>${num}</strong> เขียนในรูปผลบวกกำลังของ 2 ได้เป็น:<br>
+        <span class="code-badge" style="font-size: 1.1rem; color: var(--color-primary);">${num} = ${sumTerms.join(' + ') || '0'}</span>
+        <span style="margin-left: 1rem; color: var(--color-text-soft); font-family: var(--font-mono);">(เลขฐานสอง: ${binaryStr}₂)</span>
+      `;
+    }
+
+    function setNimPreset(h1, h2, h3) {
+      document.getElementById('heap1').value = h1;
+      document.getElementById('heap2').value = h2;
+      document.getElementById('heap3').value = h3;
+      analyzeNim();
+    }
+
+    function analyzeNim() {
+      const h1 = parseInt(document.getElementById('heap1').value, 10) || 0;
+      const h2 = parseInt(document.getElementById('heap2').value, 10) || 0;
+      const h3 = parseInt(document.getElementById('heap3').value, 10) || 0;
+      const heaps = [h1, h2, h3];
+
+      const bits = [8, 4, 2, 1];
+      const tableBody = document.getElementById('nimTableBody');
+      const tableFoot = document.getElementById('nimTableFoot');
+
+      let rowsHtml = '';
+      const counts = [0, 0, 0, 0];
+
+      heaps.forEach((h, idx) => {
+        const decomp = bits.map((b, bIdx) => {
+          const hasBit = (h & b) > 0;
+          if (hasBit) counts[bIdx]++;
+          return hasBit ? '<span style="color:var(--color-primary); font-weight:bold;">✓</span>' : '<span style="color:var(--color-text-soft); opacity:0.4;">✗</span>';
+        });
+
+        const sumStr = bits.filter(b => (h & b) > 0).join(' + ') || '0';
+        rowsHtml += `
+          <tr>
+            <td style="font-weight:600;">กองที่ ${idx + 1}</td>
+            <td style="font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--color-primary);">${h}</td>
+            <td>${decomp[0]}</td>
+            <td>${decomp[1]}</td>
+            <td>${decomp[2]}</td>
+            <td>${decomp[3]}</td>
+            <td style="font-family:var(--font-mono); font-size:0.88rem;">${h} = ${sumStr}</td>
+          </tr>
+        `;
+      });
+      tableBody.innerHTML = rowsHtml;
+
+      // Foot: Parity count
+      const isAllEven = counts.every(c => c % 2 === 0);
+      const footHtml = `
+        <tr style="background:var(--color-table-header); font-weight:bold;">
+          <td colspan="2">จำนวนเครื่องหมาย ✓ (สถานะ Parity)</td>
+          <td>${counts[0]} <span class="${counts[0] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[0] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
+          <td>${counts[1]} <span class="${counts[1] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[1] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
+          <td>${counts[2]} <span class="${counts[2] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[2] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
+          <td>${counts[3]} <span class="${counts[3] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[3] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
+          <td>${isAllEven ? '✅ สมดุลทุกหลัก' : '⚠️ มีหลักที่เป็นคี่'}</td>
+        </tr>
+      `;
+      tableFoot.innerHTML = footHtml;
+
+      // Nim-Sum XOR
+      const nimSum = h1 ^ h2 ^ h3;
+      const verdictBox = document.getElementById('nimVerdictBox');
+
+      if (nimSum === 0) {
+        verdictBox.className = 'verdict-box verdict-lose';
+        verdictBox.innerHTML = `
+          <h3 style="color: var(--color-warning); margin-bottom: 0.4rem;">⚠️ ตำแหน่งกับดัก / ตำแหน่งปลอดภัย (Losing Position for Next Player)</h3>
+          <p style="font-size: 0.92rem; margin-bottom: 0.5rem;">
+            <strong>Nim-Sum = 0</strong> และ <strong>ทุกหลักเลขฐานสองเป็นจำนวนคู่ทั้งหมดแล้ว!</strong>
+          </p>
+          <p style="font-size: 0.88rem; color: var(--color-text-soft);">
+            👉 <strong>ผลการวิเคราะห์:</strong> ผู้เล่นที่ถึงตานี้เป็น <strong>ฝ่ายเสียเปรียบ (ฝ่ายแพ้)</strong> เพราะไม่ว่าจะหยิบเบี้ยจากกองใด จะทำให้เกิดหลักคี่เสมอ ส่งผลให้ผู้เล่นอีกฝ่ายสามารถปรับกลับเป็นคู่เพื่อคุมเกมได้ตลอด!
+          </p>
+        `;
+      } else {
+        // Find winning moves
+        let winningMoves = [];
+        heaps.forEach((h, idx) => {
+          const target = h ^ nimSum;
+          if (target < h) {
+            const takeCount = h - target;
+            winningMoves.push(`ลด <strong>กองที่ ${idx + 1}</strong> จาก ${h} ชิ้น เหลือ <strong>${target} ชิ้น</strong> (หยิบออก ${takeCount} ชิ้น)`);
+          }
+        });
+
+        verdictBox.className = 'verdict-box verdict-win';
+        verdictBox.innerHTML = `
+          <h3 style="color: var(--color-primary); margin-bottom: 0.4rem;">🎯 ตำแหน่งได้เปรียบ / ผู้เริ่มก่อนเป็นฝ่ายชนะ (Winning Position)</h3>
+          <p style="font-size: 0.92rem; margin-bottom: 0.5rem;">
+            <strong>Nim-Sum = ${nimSum} ≠ 0</strong> มีหลักที่เป็นจำนวนคี่หลงเหลืออยู่
+          </p>
+          <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <strong>💡 ทางเดินสู่ชัยชนะ (Winning Moves):</strong>
+            <ul style="margin-left: 1.25rem; margin-top: 0.3rem;">
+              ${winningMoves.map(m => `<li style="margin-bottom: 0.2rem;">${m}</li>`).join('')}
+            </ul>
+            <p style="font-size: 0.84rem; color: var(--color-success); margin-top: 0.4rem;">
+              ✓ เมื่อเดินตามนี้ จะทำให้ทุกหลัก (8, 4, 2, 1) กลายเป็นจำนวนคู่ทั้งหมด และส่งต่อกับดักให้ฝ่ายตรงข้ามทันที!
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    // Init on load
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateSingleBinary();
+    });
+  </script>
+</body>
+</html>
