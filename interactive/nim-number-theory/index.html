@@ -625,19 +625,22 @@
       background: var(--color-primary);
     }
 
-    /* Cover Slide Styling */
-    .slide.cover {
-      background: #161616;
-      color: var(--color-text-inverse);
-      border-color: #393939;
+    /* Cover & Closing Slide Styling */
+    .slide.cover,
+    .slide.closing {
+      background: #161616 !important;
+      color: var(--color-text-inverse) !important;
+      border-color: #393939 !important;
       padding: 3.25rem 3.25rem;
     }
 
-    .slide.cover::before {
+    .slide.cover::before,
+    .slide.closing::before {
       display: none;
     }
 
-    .slide.cover::after {
+    .slide.cover::after,
+    .slide.closing::after {
       content: '';
       position: absolute;
       top: 0;
@@ -647,20 +650,29 @@
       background: var(--color-primary);
     }
 
-    .slide.cover h1 {
+    .slide.cover h1,
+    .slide.closing h1 {
       font-size: 3rem;
       font-weight: 300;
       line-height: 1.15;
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       margin-bottom: 0.5rem;
     }
 
-    .slide.cover h2 {
+    .slide.cover h2,
+    .slide.closing h2 {
       font-size: 1.25rem;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.8) !important;
       margin-bottom: 1.5rem;
     }
+
+    .slide.cover .slide-footer,
+    .slide.closing .slide-footer {
+      color: rgba(255, 255, 255, 0.6) !important;
+      border-top-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
 
     .slide-header {
       margin-bottom: 1.25rem;
