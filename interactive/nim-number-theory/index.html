@@ -1997,39 +1997,39 @@
             <tbody>
               <tr>
                 <td>กองที่ 1 (1 ชิ้น)</td>
-                <td>✗</td>
-                <td>✗</td>
-                <td>✗</td>
-                <td>✓</td>
-              </tr>
-              <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                </tr>
+                <tr>
                 <td>กองที่ 2 (3 ชิ้น = 2 + 1)</td>
-                <td>✗</td>
-                <td>✗</td>
-                <td>✓</td>
-                <td>✓</td>
-              </tr>
-              <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                </tr>
+                <tr>
                 <td>กองที่ 3 (5 ชิ้น = 4 + 1)</td>
-                <td>✗</td>
-                <td>✓</td>
-                <td>✗</td>
-                <td>✓</td>
-              </tr>
-              <tr style="font-weight: bold; background: var(--color-muted-surface);">
-                <td>จำนวนเครื่องหมาย ✓ แต่ละหลัก</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+                </tr>
+                <tr style="font-weight: bold; background: var(--color-muted-surface);">
+                <td>ผลรวมเลข 1 แต่ละหลัก</td>
                 <td>0 (คู่)</td>
                 <td>1 (<span style="color: var(--color-error);">คี่</span>)</td>
                 <td>1 (<span style="color: var(--color-error);">คี่</span>)</td>
                 <td>3 (<span style="color: var(--color-error);">คี่</span>)</td>
-              </tr>
+                </tr>
             </tbody>
           </table>
 
           <div class="grid-2 fragment" data-step="1" style="margin-top: 0.4rem;">
             <div class="sub-card" style="border-left-color: var(--color-primary); padding: 0.6rem 0.8rem;">
               <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">🔢 สาระทฤษฎีจำนวน</h4>
-              <p style="font-size: 0.82rem;">การแทนจำนวนในระบบเลขฐานสอง และการตรวจคู่คี่ของจำนวนเครื่องหมาย ✓ ในแต่ละหลัก</p>
+              <p style="font-size: 0.82rem;">การแทนจำนวนในระบบเลขฐานสอง และการตรวจคู่คี่ของผลรวมเลข 1 ในแต่ละหลัก</p>
             </div>
             <div class="sub-card" style="border-left-color: var(--color-purple); padding: 0.6rem 0.8rem;">
               <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">♟️ กรอบทฤษฎีเกม</h4>
@@ -2168,7 +2168,7 @@
               </div>
               <div class="sub-card" style="border-left-color: #8B5CF6; padding: 0.6rem 0.8rem;">
                 <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">2. ระบบเลขฐานสองและการตรวจคู่คี่</h4>
-                <p style="font-size: 0.82rem;">เขียนกองด้วยกำลังของ 2 (8,4,2,1) และตรวจว่าจำนวนเครื่องหมาย ✓ แต่ละหลักเป็นคู่หรือคี่</p>
+                <p style="font-size: 0.82rem;">เขียนกองด้วยกำลังของ 2 (8,4,2,1) และตรวจว่าผลรวมเลข 1 แต่ละหลักเป็นคู่หรือคี่</p>
               </div>
               <div class="sub-card" style="border-left-color: #10B981; padding: 0.6rem 0.8rem;">
                 <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">3. สมการไดโอแฟนไทน์เชิงเส้น</h4>
@@ -3535,15 +3535,15 @@
       heaps.forEach((h, idx) => {
         tableHtml += `<tr>
           <td>กองที่ ${idx + 1} (${h} ชิ้น)</td>
-          <td>${bits[idx].b8 ? '✓' : '✗'}</td>
-          <td>${bits[idx].b4 ? '✓' : '✗'}</td>
-          <td>${bits[idx].b2 ? '✓' : '✗'}</td>
-          <td>${bits[idx].b1 ? '✓' : '✗'}</td>
+          <td>${bits[idx].b8 ? '1' : '0'}</td>
+          <td>${bits[idx].b4 ? '1' : '0'}</td>
+          <td>${bits[idx].b2 ? '1' : '0'}</td>
+          <td>${bits[idx].b1 ? '1' : '0'}</td>
         </tr>`;
       });
 
       tableHtml += `<tr style="font-weight: bold;">
-        <td>ผลรวมเครื่องหมาย ✓</td>
+        <td>ผลรวมเลข 1</td>
         <td class="${revealStage >= 2 && isOdd8 ? 'highlight-odd' : ''}">${sumBits.b8} (${sumBits.b8 % 2 === 0 ? 'คู่' : 'คี่'})</td>
         <td class="${revealStage >= 2 && isOdd4 ? 'highlight-odd' : ''}">${sumBits.b4} (${sumBits.b4 % 2 === 0 ? 'คู่' : 'คี่'})</td>
         <td class="${revealStage >= 2 && isOdd2 ? 'highlight-odd' : ''}">${sumBits.b2} (${sumBits.b2 % 2 === 0 ? 'คู่' : 'คี่'})</td>
@@ -3556,7 +3556,7 @@
       if (revealStage >= 2) {
         const stage2Box = document.createElement('div');
         stage2Box.className = 'reveal-stage-item';
-        stage2Box.innerHTML = `<strong>ขั้นที่ 2: ไฮไลต์หลักที่มีจำนวน ✓ เป็นคี่</strong><br>
+        stage2Box.innerHTML = `<strong>ขั้นที่ 2: ไฮไลต์หลักที่มีผลรวมเลข 1 เป็นคี่</strong><br>
           หลักที่ไม่สมดุล (จำนวนคี่): ${[isOdd8 ? 'หลัก 8' : '', isOdd4 ? 'หลัก 4' : '', isOdd2 ? 'หลัก 2' : '', isOdd1 ? 'หลัก 1' : ''].filter(Boolean).join(', ') || 'ไม่มี (สมดุลทุกหลัก)'}`;
         container.appendChild(stage2Box);
       }

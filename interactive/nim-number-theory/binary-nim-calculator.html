@@ -859,7 +859,7 @@
         const decomp = bits.map((b, bIdx) => {
           const hasBit = (h & b) > 0;
           if (hasBit) counts[bIdx]++;
-          return hasBit ? '<span style="color:var(--color-primary); font-weight:bold;">✓</span>' : '<span style="color:var(--color-text-soft); opacity:0.35;">✗</span>';
+          return hasBit ? '<span style="color:var(--color-primary); font-weight:bold;">1</span>' : '<span style="color:var(--color-text-soft); opacity:0.35;">0</span>';
         });
 
         const sumStr = bits.filter(b => (h & b) > 0).join(' + ') || '0';
@@ -881,7 +881,7 @@
       const isAllEven = counts.every(c => c % 2 === 0);
       const footHtml = `
         <tr style="background:var(--color-table-header); font-weight:bold;">
-          <td colspan="2">จำนวนเครื่องหมาย ✓ (สถานะ Parity)</td>
+          <td colspan="2">ผลรวมเลข 1 (สถานะ Parity)</td>
           <td>${counts[0]} <span class="${counts[0] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[0] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
           <td>${counts[1]} <span class="${counts[1] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[1] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
           <td>${counts[2]} <span class="${counts[2] % 2 === 0 ? 'tag-even' : 'tag-odd'}">${counts[2] % 2 === 0 ? 'คู่' : 'คี่'}</span></td>
