@@ -272,6 +272,8 @@
       --color-success: #24A148;
       --color-warning: #F1C21B;
       --color-error: #DA1E28;
+      --color-accent: #8A3FFC;
+      --color-accent-dark: #6929C4;
 
       --team-a: #DA1E28;
       --team-a-dark: #A2191F;
@@ -503,6 +505,17 @@
       background-color: var(--color-error);
       color: #FFFFFF !important;
       border-color: var(--color-error);
+    }
+
+    .btn-accent {
+      background-color: var(--color-accent) !important;
+      color: #FFFFFF !important;
+      border-color: var(--color-accent) !important;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background-color: var(--color-accent-dark) !important;
+      border-color: var(--color-accent-dark) !important;
     }
 
     .btn-team-a {
@@ -1921,7 +1934,7 @@
           </div>
 
           <div class="fragment" data-step="2" style="text-align: center; margin-top: 0.5rem;">
-            <a href="binary-nim-calculator.html" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-accent" style="background-color: var(--color-accent); color: #FFF; text-decoration: none;">🧮 [เปิดเครื่องคำนวณและวิเคราะห์เลขฐานสองแบบละเอียด]</a>
+            <a href="binary-nim-calculator.html" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-accent" style="background-color: #8A3FFC !important; color: #FFFFFF !important; text-decoration: none; border-color: #8A3FFC !important;">🧮 [เปิดเครื่องคำนวณและวิเคราะห์เลขฐานสองแบบละเอียด]</a>
           </div>
         </div>
         <div class="slide-footer">
