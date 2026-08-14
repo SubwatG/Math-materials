@@ -2192,45 +2192,104 @@
         </div>
       </div>
 
-      <!-- Slide 17: สมการไดโอแฟนไทน์เชิงเส้น -->
-      <div class="slide" data-slide="17">
+      <!-- Slide 17: สมการไดโอแฟนไทน์เชิงเส้น และ Diophantine Race -->
+      <div class="slide" data-slide="17" style="overflow-y: auto;">
         <div class="slide-header">
-          <div class="slide-title">สมการไดโอแฟนไทน์เชิงเส้น (Linear Diophantine Equation)</div>
-          <div class="slide-subtitle">การแทนจำนวนด้วย 2<em>x</em> + 5<em>y</em> = <em>c</em> และเงื่อนไขจาก ห.ร.ม.</div>
+          <div class="slide-title">สมการไดโอแฟนไทน์เชิงเส้น &amp; เกม Diophantine Race</div>
+          <div class="slide-subtitle">การแทนจำนวน $2x + 5y = N - c$ สู่กับดักเลข $P \equiv 0, 1, 4 \pmod 7$ และกลยุทธ์ตอบโต้ $2 \leftrightarrow 5$</div>
         </div>
         <div class="slide-content">
-          <div class="callout bq-purple" style="margin-bottom: 0.6rem; font-size: 0.88rem;">
-            <strong>❓ กิจกรรมเสริม:</strong> ถ้าเปลี่ยนกติกาเป็นหยิบได้ครั้งละ <strong>2 หรือ 5 เม็ดเท่านั้น</strong> ผลรวม <em>c</em> เม็ดที่หยิบออกได้เขียนในรูป <strong>2<em>x</em> + 5<em>y</em> = <em>c</em></strong> โดย <em>x</em>, <em>y</em> เป็นจำนวนเต็มไม่ลบ (<em>x</em>, <em>y</em> ≥ 0)
+          <!-- Intro / Rule -->
+          <div class="callout bq-purple" style="margin-bottom: 0.5rem; font-size: 0.85rem; padding: 0.5rem 0.8rem;">
+            🎯 <strong>เกม Diophantine Race (หยิบ 2 หรือ 5):</strong> เริ่มจากกองเบี้ย $N$ เม็ด สลับกันหยิบได้เพียง <strong>2</strong> หรือ <strong>5</strong> เม็ด ใครทำให้เหลือ $< 2$ เม็ด (ไม่มีตาเดิน) เป็นฝ่ายแพ้!
           </div>
 
-          <div class="grid-2">
-            <div class="sub-card">
-              <h4 style="font-size: 0.95rem;">📐 การแทนจำนวนและเงื่อนไข ห.ร.ม.</h4>
-              <ul style="font-size: 0.88rem;">
-                <li><em>c</em> = 13 ✓ ➔ 13 = 2(4) + 5(1) (ใช้ 2 เม็ด 4 ครั้ง, 5 เม็ด 1 ครั้ง)</li>
-                <li><em>c</em> = 1 ✗ | <em>c</em> = 3 ✗ ➔ ไม่มีคำตอบ <em>x</em>, <em>y</em> ≥ 0</li>
-                <li>🔍 <strong>เงื่อนไข ห.ร.ม.:</strong> เนื่องจาก ห.ร.ม.(2, 5) = 1 จึงไม่มีข้อจำกัดเรื่องการหารลงตัวสำหรับคำตอบจำนวนเต็ม แต่เมื่อกำหนด <em>x</em>, <em>y</em> ≥ 0 ยังต้องตรวจว่ามีคำตอบไม่ติดลบหรือไม่</li>
-              </ul>
-            </div>
-            <div class="sub-card fragment" data-step="1" style="border-left-color: var(--color-error);">
-              <h4 style="font-size: 0.95rem;">⚠️ การแยกเรื่องจำนวนออกจากผลเกม</h4>
-              <p style="font-size: 0.88rem;">
-                สมการ 2<em>x</em> + 5<em>y</em> = <em>c</em> ตอบคำถามว่า <strong>"สร้างผลรวมได้หรือไม่"</strong> ไม่ได้ตอบโดยตรงว่า <strong>"ใครชนะ"</strong>
+          <div class="grid-2" style="gap: 0.6rem; align-items: start;">
+            <!-- Column 1: Math & Backward Induction -->
+            <div class="sub-card" style="border-left-color: var(--color-primary); padding: 0.6rem 0.8rem;">
+              <h4 style="font-size: 0.88rem; margin-bottom: 0.3rem;">🔍 วิเคราะห์สถานะย้อนกลับ (Backward Induction)</h4>
+              <p style="font-size: 0.8rem; margin-bottom: 0.3rem;">
+                ผลรวมเบี้ยที่หยิบออกเขียนในรูป $2x + 5y = N - c$ โดย $c$ คือจำนวนเบี้ยที่เหลือ:
               </p>
-              <ul style="font-size: 0.85rem; margin-top: 0.3rem;">
-                <li><em>c</em> = 1 ➔ แทนไม่ได้ และผู้เล่นถึงตาไม่มีทางเดิน ➔ <strong>แพ้</strong></li>
-                <li><em>c</em> = 3 ➔ แทนไม่ได้เช่นกัน แต่ผู้เล่นหยิบ 2 เม็ด เหลือ 1 เม็ด (ส่งตำแหน่งแพ้ให้คู่แข่ง) ➔ <strong>ชนะ!</strong></li>
-                <li>👉 <strong>ข้อสรุป:</strong> แทนไม่ได้ ≠ แพ้เกมเสมอไป</li>
+              <div style="font-size: 0.78rem; overflow-x: auto;">
+                <table style="width: 100%; text-align: center; font-size: 0.76rem; margin-bottom: 0.3rem;">
+                  <thead>
+                    <tr style="background: var(--color-muted-surface);">
+                      <th>เหลือ $c$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: bold;">สถานะ</td>
+                      <td style="color: var(--color-warning); font-weight: bold;">P</td>
+                      <td style="color: var(--color-warning); font-weight: bold;">P</td>
+                      <td style="color: var(--color-success);">N</td>
+                      <td style="color: var(--color-success);">N</td>
+                      <td style="color: var(--color-warning); font-weight: bold;">P</td>
+                      <td style="color: var(--color-success);">N</td>
+                      <td style="color: var(--color-success);">N</td>
+                      <td style="color: var(--color-warning); font-weight: bold;">P</td>
+                      <td style="color: var(--color-warning); font-weight: bold;">P</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ul style="font-size: 0.78rem; margin: 0; padding-left: 1.1rem; line-height: 1.35;">
+                <li><strong>เลขกับดัก (Losing Position - P):</strong> $c \equiv 0, 1, 4 \pmod 7$</li>
+                <li><strong>กลยุทธ์ตอบโต้ ($2 \leftrightarrow 5$):</strong> เนื่องจาก $2 + 5 = 7$ ถ้าเราคุมตำแหน่ง $7k$ ได้ เมื่อคู่แข่งหยิบ $2$ เราหยิบ $5$ และเมื่อคู่แข่งหยิบ $5$ เราหยิบ $2$ จะลดทีละ $7$ เสมอ!</li>
+                <li><strong>ข้อสรุปสำคัญ:</strong> $c = 1, 3$ แทนด้วย $2x+5y$ ไม่ได้ทั้งคู่ แต่ $c=1$ เป็น <strong>P</strong> ขณะที่ $c=3$ เป็น <strong>N</strong> (หยิบ 2 เหลือ 1 ส่งกับดักให้คู่แข่ง) ➔ <em>แทนไม่ได้ $\neq$ แพ้เกม</em></li>
               </ul>
+            </div>
+
+            <!-- Column 2: Interactive Race Simulator -->
+            <div class="sub-card" style="border-left-color: var(--color-success); padding: 0.6rem 0.8rem; background: rgba(16, 185, 129, 0.03);">
+              <h4 style="font-size: 0.88rem; margin-bottom: 0.3rem; color: var(--color-success);">🧪 ทดลองเล่น Diophantine Race</h4>
+              
+              <!-- Presets -->
+              <div style="display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
+                <span style="font-size: 0.75rem; align-self: center; font-weight: 600;">เลือก $N$:</span>
+                <button class="btn btn-sm" onclick="initDioRace(13)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">13 ($N$ ชนะ)</button>
+                <button class="btn btn-sm" onclick="initDioRace(14)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">14 ($P$ ชนะ)</button>
+                <button class="btn btn-sm" onclick="initDioRace(15)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">15 ($P$ ชนะ)</button>
+                <button class="btn btn-sm btn-primary" onclick="initDioRace(20)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">20 ($N$ ชนะ)</button>
+                <button class="btn btn-sm btn-warning" onclick="initDioRace(21)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">21 ($P$ ชนะ)</button>
+                <button class="btn btn-sm" onclick="initDioRace(22)" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">22 ($P$ ชนะ)</button>
+              </div>
+
+              <!-- Game Stage Box -->
+              <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 6px; padding: 0.5rem; text-align: center;">
+                <div style="font-size: 0.8rem; margin-bottom: 0.2rem;">
+                  เบี้ยคงเหลือ: <span id="dio-remain-count" style="font-size: 1.25rem; font-weight: 800; color: var(--color-primary);">20</span> เม็ด
+                  <span id="dio-mod-info" style="font-size: 0.75rem; color: var(--color-text-soft); margin-left: 0.4rem;">(20 ≡ 6 mod 7)</span>
+                </div>
+                <div id="dio-turn-msg" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--color-text);">
+                  ตาเดิน: <span id="dio-current-player" style="color: #8A3FFC;">ผู้เล่นคนที่ 1</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 0.3rem;">
+                  <button id="dio-btn-take2" class="btn btn-sm btn-primary" onclick="playDioMove(2)" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">หยิบ -2 เม็ด</button>
+                  <button id="dio-btn-take5" class="btn btn-sm btn-success" onclick="playDioMove(5)" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">หยิบ -5 เม็ด</button>
+                  <button class="btn btn-sm" onclick="resetDioCurrent()" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">🔄 รีเซ็ต</button>
+                </div>
+
+                <!-- Move Log / Hint -->
+                <div id="dio-log-msg" style="font-size: 0.74rem; color: var(--color-text-soft); min-height: 1.2rem;">
+                  💡 แนะนำ: $20 \equiv 6 \pmod 7$ หยิบ 5 เม็ด เพื่อเหลือ 15 ($15 \equiv 1 \pmod 7$ กับดัก!)
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="callout bq-blue fragment" data-step="2" style="margin-top: 0.6rem; font-size: 0.85rem;">
-            💡 <strong>คำศัพท์ทางคณิตศาสตร์:</strong> ปัญหานี้เรียกว่า <strong>สมการไดโอแฟนไทน์เชิงเส้น (Linear Diophantine Equation)</strong> ที่มีเงื่อนไขคำตอบเป็นจำนวนเต็มไม่ลบ
+          <!-- Bottom Summary -->
+          <div class="callout bq-blue fragment" data-step="1" style="margin-top: 0.4rem; font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            📌 <strong>ทฤษฎีบทสรุป:</strong> 
+            $N \equiv 0, 1, 4 \pmod 7 \implies$ <strong>ผู้เริ่มก่อนแพ้ (ถ้าอีกฝ่ายเล่นสมบูรณ์)</strong> &nbsp;|&nbsp; 
+            $N \equiv 2, 3, 5, 6 \pmod 7 \implies$ <strong>ผู้เริ่มก่อนชนะ (หยิบ 2 หรือ 5 เข้าหาเลข $\{0,1,4\} \pmod 7$)</strong>
           </div>
         </div>
         <div class="slide-footer">
-          <span>LINEAR DIOPHANTINE EQUATIONS · GCD &amp; NON-NEGATIVE SOLUTIONS</span>
+          <span>LINEAR DIOPHANTINE RACE · MODULO 7 &amp; COMPLEMENTARY STRATEGY</span>
           <span>SLIDE 17 / 19</span>
         </div>
       </div>
@@ -2256,9 +2315,11 @@
               <p style="font-size: 0.85rem; margin-top: 0.3rem; color: var(--color-text-soft);">
                 จำนวนที่มากที่สุดซึ่งไม่สามารถจ่ายได้คือ <strong>7 บาท</strong>
               </p>
-              <p style="font-size: 0.82rem; margin-top: 0.3rem; color: var(--color-text-soft);">
-                🔗 เหรียญทำหน้าที่เหมือนขนาดการหยิบ และจำนวนเงินรวมทำหน้าที่เหมือนจำนวน <em>c</em>
-              </p>
+              <div style="font-size: 0.8rem; background: var(--color-muted-surface); padding: 0.4rem 0.6rem; border-radius: 4px; margin-top: 0.4rem;">
+                ⚖️ <strong>Frobenius Trap vs Game Trap:</strong><br>
+                • จ่ายไม่ได้ (Frobenius): {1, 2, 4, 7}<br>
+                • กับดักเกม (Losing): {0, 1, 4} (mod 7)
+              </div>
             </div>
             <div class="sub-card fragment" data-step="1" style="border-left-color: var(--color-success);">
               <h4 style="font-size: 0.95rem;">💡 สูตรจำนวนโฟรเบนิอุส (Frobenius Number)</h4>
@@ -3577,6 +3638,87 @@
     }
 
     /* ==========================================================================
+       8.1 DIOPHANTINE RACE SIMULATOR (SLIDE 17)
+       ========================================================================== */
+    let dioInitialN = 20;
+    let dioRemain = 20;
+    let dioTurn = 1; // 1: ผู้เล่นคนที่ 1, 2: ผู้เล่นคนที่ 2
+    let dioGameOver = false;
+
+    function initDioRace(n) {
+      dioInitialN = n;
+      dioRemain = n;
+      dioTurn = 1;
+      dioGameOver = false;
+      updateDioRaceUI();
+    }
+
+    function resetDioCurrent() {
+      initDioRace(dioInitialN);
+    }
+
+    function playDioMove(take) {
+      if (dioGameOver) return;
+      if (dioRemain < take) {
+        alert(`เบี้ยเหลือเพียง ${dioRemain} เม็ด ไม่พอให้หยิบ ${take} เม็ด`);
+        return;
+      }
+
+      dioRemain -= take;
+      const nextTurn = dioTurn === 1 ? 2 : 1;
+
+      // Check win/lose
+      if (dioRemain < 2) {
+        dioGameOver = true;
+        updateDioRaceUI(true, dioTurn);
+      } else {
+        dioTurn = nextTurn;
+        updateDioRaceUI();
+      }
+    }
+
+    function updateDioRaceUI(isWin, winner) {
+      const countEl = document.getElementById('dio-remain-count');
+      const modEl = document.getElementById('dio-mod-info');
+      const playerEl = document.getElementById('dio-current-player');
+      const logEl = document.getElementById('dio-log-msg');
+      const btn2 = document.getElementById('dio-btn-take2');
+      const btn5 = document.getElementById('dio-btn-take5');
+
+      if (!countEl || !playerEl || !logEl) return;
+
+      countEl.textContent = dioRemain;
+      const mod7 = dioRemain % 7;
+      modEl.textContent = `(${dioRemain} ≡ ${mod7} mod 7)`;
+
+      if (btn2) btn2.disabled = dioGameOver || dioRemain < 2;
+      if (btn5) btn5.disabled = dioGameOver || dioRemain < 5;
+
+      if (isWin) {
+        playerEl.innerHTML = `<span style="color: var(--color-success); font-weight: bold;">🎉 ผู้เล่นคนที่ ${winner} ชนะ!</span>`;
+        logEl.innerHTML = `🏁 จบเกม! เบี้ยเหลือ ${dioRemain} เม็ด ผู้เล่นคนที่ ${dioTurn === 1 ? 2 : 1} ไม่มีตาเดิน (แพ้)`;
+        return;
+      }
+
+      playerEl.textContent = `ผู้เล่นคนที่ ${dioTurn}`;
+      playerEl.style.color = dioTurn === 1 ? '#8A3FFC' : '#3B82F6';
+
+      // Hints
+      const isLosing = (mod7 === 0 || mod7 === 1 || mod7 === 4);
+      if (isLosing) {
+        logEl.innerHTML = `⚠️ <em>ตำแหน่งกับดัก (${dioRemain} ≡ ${mod7} mod 7):</em> ฝ่ายตรงข้ามคุมเกมได้ถ้าเล่นสมบูรณ์`;
+      } else {
+        let best = '';
+        if ((dioRemain - 2) % 7 === 0 || (dioRemain - 2) % 7 === 1 || (dioRemain - 2) % 7 === 4) {
+          best = `หยิบ 2 เม็ด (เหลือ ${dioRemain - 2} ≡ ${(dioRemain - 2) % 7} mod 7 กับดัก!)`;
+        } else if (dioRemain >= 5 && ((dioRemain - 5) % 7 === 0 || (dioRemain - 5) % 7 === 1 || (dioRemain - 5) % 7 === 4)) {
+          best = `หยิบ 5 เม็ด (เหลือ ${dioRemain - 5} ≡ ${(dioRemain - 5) % 7} mod 7 กับดัก!)`;
+        }
+        logEl.innerHTML = `💡 แนะนำกลยุทธ์: ${best || 'เลือกเดินเพื่อคุมเกม'}`;
+      }
+    }
+
+    /* ==========================================================================
        9. SCOREBOARD MANAGEMENT
        ========================================================================== */
     function toggleTeamScore(gKey, field, teamKey) {
@@ -3879,6 +4021,7 @@
       updateTeamInputsUI();
       updateTeamNamesFromInput();
       resetDemo();
+      initDioRace(20);
       ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'keydown', 'scroll'].forEach(evt => {
         window.addEventListener(evt, resetFloatingBtnTimer, { passive: true });
       });
