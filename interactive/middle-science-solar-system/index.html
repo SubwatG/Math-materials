@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>บทที่ 4: ระบบสุริยะของเรา (The Solar System) — Swiss Academic Edition</title>
+  
+  <!-- Google Fonts: Chakra Petch, IBM Plex Sans Thai Looped, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Math Equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM: Gridgeist Swiss Academic (Light Paper & Dark Obsidian)
+       ========================================================================== */
+    :root {
+      /* LIGHT MODE: Paper / Ink / Rust */
+      --paper-bg: #FAF8F5;
+      --paper-surface: #FFFFFF;
+      --paper-subtle: #F3EFEA;
+      --paper-muted: #EBE5DB;
+      --border-dark: #1C1917;
+      --border-grid: #D6CEBF;
+      --border-light: #E7E0D4;
+      
+      --ink-primary: #1C1917;
+      --ink-body: #383431;
+      --ink-muted: #66615C;
+      --ink-faint: #918A82;
+      
+      --rust: #A63D1C;
+      --rust-light: #FBF1ED;
+      --rust-border: #E8A892;
+      --ochre: #B45309;
+      --ochre-light: #FEF3C7;
+      --navy: #1E3A8A;
+      --navy-light: #EFF6FF;
+      --green: #15803D;
+      --green-light: #F0FDF4;
+      
+      --sidebar-w: 300px;
+      --content-max-w: 1140px;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    [data-theme="dark"] {
+      /* DARK MODE: Swiss Technical Obsidian */
+      --paper-bg: #0C0E14;
+      --paper-surface: #141824;
+      --paper-subtle: #1B2130;
+      --paper-muted: #252D3F;
+      --border-dark: #E2E8F0;
+      --border-grid: #2D3748;
+      --border-light: #1F2737;
+      
+      --ink-primary: #F8FAFC;
+      --ink-body: #CBD5E1;
+      --ink-muted: #94A3B8;
+      --ink-faint: #64748B;
+      
+      --rust: #E05D38;
+      --rust-light: rgba(224, 93, 56, 0.15);
+      --rust-border: rgba(224, 93, 56, 0.4);
+      --ochre: #F59E0B;
+      --ochre-light: rgba(245, 158, 11, 0.15);
+      --navy: #60A5FA;
+      --navy-light: rgba(96, 165, 250, 0.15);
+      --green: #22C55E;
+      --green-light: rgba(34, 197, 94, 0.15);
+      
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-body);
+      font-family: 'IBM Plex Sans Thai Looped', -apple-system, sans-serif;
+      font-size: 15.5px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6, .display-num, .tag-label, .btn-swiss, .hud-meta {
+      font-family: 'Chakra Petch', sans-serif;
+      color: var(--ink-primary);
+      letter-spacing: 0.2px;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .katex {
+      font-size: 1.05em;
+    }
+
+    /* Inline Interactive Citation Badge */
+    .cite-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+      background: var(--rust-light);
+      border: 1px solid var(--rust-border);
+      border-radius: 3px;
+      padding: 0 5px;
+      margin: 0 2px;
+      cursor: pointer;
+      text-decoration: none;
+      vertical-align: super;
+      line-height: 1.4;
+      transition: all 0.15s;
+    }
+
+    .cite-badge:hover {
+      background: var(--rust);
+      color: #FFF;
+      transform: scale(1.08);
+    }
+
+    /* Layout Wrapper */
+    .layout-wrapper {
+      display: flex;
+      min-height: 100vh;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    /* Mobile Header Bar */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: var(--paper-surface);
+      border-bottom: 1px solid var(--border-grid);
+      padding: 12px 18px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       SIDEBAR: Swiss Rational TOC
+       ========================================================================== */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--paper-surface);
+      border-right: 1px solid var(--border-grid);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 18px;
+      z-index: 50;
+      flex-shrink: 0;
+      transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .layout-wrapper.collapsed .sidebar {
+      margin-left: calc(-1 * var(--sidebar-w));
+      transform: translateX(-100%);
+    }
+
+    .sidebar-header {
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-dark);
+      margin-bottom: 16px;
+    }
+
+    .sidebar-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .series-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--rust);
+      letter-spacing: 1px;
+    }
+
+    .sidebar-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-icon-square {
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-grid);
+      color: var(--ink-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .btn-icon-square:hover {
+      background: var(--rust-light);
+      border-color: var(--rust);
+      color: var(--rust);
+    }
+
+    .sidebar-title {
+      font-size: 17.5px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      line-height: 1.25;
+    }
+
+    .sidebar-meta {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    .nav-items {
+      list-style: none;
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-right: 4px;
+    }
+
+    .nav-items::-webkit-scrollbar {
+      width: 3px;
+    }
+    .nav-items::-webkit-scrollbar-thumb {
+      background: var(--border-grid);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 6.5px 8px;
+      color: var(--ink-body);
+      text-decoration: none;
+      font-size: 13px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+      transition: all 0.15s ease;
+      border-left: 2px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: var(--paper-subtle);
+      color: var(--rust);
+      border-left-color: var(--rust);
+    }
+
+    .nav-link.active {
+      background: var(--rust-light);
+      color: var(--rust);
+      border-left-color: var(--rust);
+      font-weight: 600;
+    }
+
+    .nav-idx {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink-faint);
+    }
+
+    .nav-link.active .nav-idx {
+      color: var(--rust);
+    }
+
+    .sidebar-quiz-cta {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .btn-sidebar-quiz {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--border-dark);
+      color: var(--paper-surface);
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+
+    .btn-sidebar-quiz:hover {
+      background: var(--rust);
+      color: #FFF;
+    }
+
+    /* Fixed Left Dock Button to reopen TOC */
+    .btn-reopen-toc {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 999;
+      background: var(--paper-surface);
+      border: 2px solid var(--border-dark);
+      border-left: none;
+      color: var(--ink-primary);
+      padding: 14px 10px;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .layout-wrapper.collapsed .btn-reopen-toc {
+      display: flex !important;
+    }
+
+    .btn-reopen-toc:hover {
+      background: var(--rust);
+      color: #FFF;
+      padding-left: 14px;
+      box-shadow: 5px 0 20px rgba(166, 61, 28, 0.35);
+    }
+
+    /* Theme Toggle Switcher Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-grid);
+      color: var(--ink-body);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--rust);
+      color: var(--rust);
+    }
+
+    /* Mobile Backdrop Overlay */
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 48;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT & EDITORIAL GRID
+       ========================================================================== */
+    .content-area {
+      flex-grow: 1;
+      max-width: var(--content-max-w);
+      margin: 0 auto;
+      padding: 48px 40px 120px;
+      transition: max-width 0.3s ease;
+      width: 100%;
+    }
+
+    .layout-wrapper.collapsed .content-area {
+      max-width: 1220px;
+    }
+
+    /* Masthead / Hero */
+    .masthead {
+      border: 1px solid var(--border-grid);
+      border-top: 4px solid var(--rust);
+      background: var(--paper-surface);
+      padding: 36px 40px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .masthead-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      gap: 10px;
+    }
+
+    .masthead-title {
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .masthead-desc {
+      font-size: 16px;
+      color: var(--ink-body);
+      max-width: 860px;
+      line-height: 1.7;
+    }
+
+    /* Section Structure */
+    .editorial-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-banner {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border-dark);
+      margin-bottom: 28px;
+    }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--rust);
+    }
+
+    .section-heading {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .section-subhead {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+
+    /* 4K Infographic Frame */
+    .figure-frame {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      padding: 10px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .figure-img-wrap {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .figure-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .figure-img-wrap:hover .figure-img {
+      transform: scale(1.01);
+    }
+
+    .figure-zoom-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(28, 25, 23, 0.85);
+      color: #FFF;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    .figure-caption {
+      padding: 10px 4px 2px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-light);
+      margin-top: 8px;
+    }
+
+    .figure-caption strong {
+      color: var(--ink-primary);
+    }
+
+    /* ==========================================================================
+       MODULAR DATA GRIDS (SWISS CARDS & TABLES)
+       ========================================================================== */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .grid-card {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .grid-card.highlight {
+      border-top: 3px solid var(--rust);
+    }
+
+    .grid-card.navy-top {
+      border-top: 3px solid var(--navy);
+    }
+
+    .grid-card.green-top {
+      border-top: 3px solid var(--green);
+    }
+
+    .grid-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-card-body {
+      font-size: 14.5px;
+      color: var(--ink-body);
+      line-height: 1.65;
+    }
+
+    /* Planetary Data Cards (8 Planets) */
+    .planets-editorial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .planet-box {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-card);
+    }
+
+    .planet-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .planet-title {
+      font-size: 16.5px;
+      font-weight: 700;
+    }
+
+    .planet-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    .planet-key-stat {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--rust);
+      margin-bottom: 6px;
+    }
+
+    .planet-details {
+      font-size: 13.5px;
+      color: var(--ink-body);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .planet-metrics-list {
+      background: var(--paper-subtle);
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .metric-row:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Structured Step Sequence (Genesis) */
+    .step-seq {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .step-box {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      border-left: 4px solid var(--border-dark);
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+      align-items: baseline;
+      box-shadow: var(--shadow-card);
+    }
+
+    .step-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--rust);
+    }
+
+    .step-content h4 {
+      font-size: 16.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      font-size: 14.5px;
+      color: var(--ink-body);
+    }
+
+    /* Editorial Callouts */
+    .callout-editorial {
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-grid);
+      border-left: 4px solid var(--rust);
+      padding: 18px 22px;
+      margin: 24px 0;
+    }
+
+    .callout-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--rust);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Editorial Data Table */
+    .table-container {
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--border-grid);
+      background: var(--paper-surface);
+      box-shadow: var(--shadow-card);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+      min-width: 600px;
+    }
+
+    .data-table th {
+      background: var(--paper-subtle);
+      color: var(--ink-primary);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--border-dark);
+      border-right: 1px solid var(--border-grid);
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      color: var(--ink-body);
+    }
+
+    .data-table tr:hover td {
+      background: var(--rust-light);
+    }
+
+    /* Mission Dossier Cards */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .mission-card {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      border-top: 3px solid var(--navy);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+    }
+
+    .mission-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .mission-agency {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+    }
+
+    .mission-target {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .mission-desc {
+      font-size: 13.5px;
+      color: var(--ink-body);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .mission-specs {
+      background: var(--paper-subtle);
+      padding: 8px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ink-muted);
+    }
+
+    /* References Section List */
+    .ref-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .ref-item-card {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      border-left: 3px solid var(--border-dark);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.15s;
+    }
+
+    .ref-item-card:hover {
+      border-left-color: var(--rust);
+      transform: translateY(-2px);
+    }
+
+    .ref-item-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+      margin-bottom: 4px;
+    }
+
+    .ref-item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .ref-item-desc {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .ref-item-link {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ref-item-link:hover {
+      text-decoration: underline;
+      color: var(--rust);
+    }
+
+    /* Quiz Link Hub */
+    .quiz-hub-card {
+      background: var(--border-dark);
+      color: var(--paper-surface);
+      padding: 36px 40px;
+      margin-top: 56px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .quiz-hub-text h3 {
+      color: var(--paper-surface);
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-hub-text p {
+      font-size: 14.5px;
+      color: var(--ink-faint);
+      max-width: 580px;
+    }
+
+    .btn-quiz-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rust);
+      color: #FFF;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 2px 2px 0 #000;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .btn-quiz-launch:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 #000;
+      background: #B91C1C;
+    }
+
+    /* Modal / Lightbox (4K Zoom) */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(12, 14, 20, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      max-width: 95vw;
+      max-height: 90vh;
+      position: relative;
+      background: #000;
+      border: 1px solid var(--border-grid);
+      padding: 8px;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 82vh;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      color: #FFF;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 13px;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -36px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: #FFF;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       MOBILE RESPONSIVE TWEAKS (< 860px)
+       ========================================================================== */
+    @media (max-width: 860px) {
+      .mobile-header {
+        display: flex;
+      }
+      .btn-reopen-toc {
+        display: none !important;
+      }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        box-shadow: 4px 0 25px rgba(0,0,0,0.3);
+        transform: translateX(-100%);
+        margin-left: 0 !important;
+      }
+      .layout-wrapper.mobile-open .sidebar {
+        transform: translateX(0);
+      }
+      .layout-wrapper.mobile-open .mobile-overlay {
+        display: block;
+      }
+      .content-area {
+        padding: 20px 16px 80px;
+      }
+      .masthead {
+        padding: 24px 18px;
+        margin-bottom: 32px;
+      }
+      .masthead-title {
+        font-size: 25px;
+      }
+      .masthead-desc {
+        font-size: 15px;
+      }
+      .section-banner {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .section-heading {
+        font-size: 19px;
+      }
+      .section-subhead {
+        width: 100%;
+        margin-left: 0;
+      }
+      .step-box {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 14px 16px;
+      }
+      .grid-3, .grid-2, .planets-editorial-grid, .mission-grid, .ref-list-grid {
+        grid-template-columns: 1fr;
+      }
+      .quiz-hub-card {
+        padding: 24px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn-quiz-launch {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile Sticky Top Bar -->
+<div class="mobile-header">
+  <button class="btn-icon-square" onclick="toggleMobileSidebar()" aria-label="เปิดเมนู">☰ สารบัญ</button>
+  <div class="mobile-brand-title">หน่วยที่ 4: ระบบสุริยะ</div>
+  <div class="mobile-actions">
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="สลับโหมดมืด/สว่าง">
+      <span class="theme-icon">🌙</span>
+    </button>
+  </div>
+</div>
+
+<!-- Fixed Left Dock Reopen Button (Shows when TOC is collapsed on Desktop) -->
+<button class="btn-reopen-toc" id="reopen-toc-btn" onclick="openSidebar()" title="คลิกเพื่อเปิดแถบสารบัญ">
+  <span>▶ เปิดสารบัญ</span>
+</button>
+
+<!-- Mobile Overlay Backdrop -->
+<div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileSidebar()"></div>
+
+<div class="layout-wrapper" id="layout-wrapper">
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar" id="sidebar-aside">
+    <div class="sidebar-header">
+      <div class="sidebar-top-row">
+        <span class="series-tag">Science • Ch 04</span>
+        <div class="sidebar-header-actions">
+          <button class="theme-toggle-btn" onclick="toggleTheme()" title="สลับโหมดมืด/สว่าง">
+            <span class="theme-icon">🌙</span>
+          </button>
+          <button class="btn-icon-square" onclick="closeSidebar()" title="ซ่อนแถบสารบัญ">◀ ซ่อน</button>
+        </div>
+      </div>
+      <div class="sidebar-title">ระบบสุริยะของเรา</div>
+      <div class="sidebar-meta">สสวท. ม.3 • Swiss Academic Edition</div>
+    </div>
+
+    <ul class="nav-items">
+      <li>
+        <a href="#sec-1" class="nav-link active" onclick="handleNavClick()">
+          <span class="nav-idx">01</span>
+          <span>สถาปัตยกรรม &amp; มาตราส่วน</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-2" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">02</span>
+          <span>3 เกณฑ์จำแนกดาวเคราะห์</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-3" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">03</span>
+          <span>การประลองสถิติ 8 ดาว</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-4" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">04</span>
+          <span>กำเนิด 4.6 พันล้านปี</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-5" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">05</span>
+          <span>ดาวหาง &amp; สะเก็ดดาว</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-6" class="nav-link" onclick="handleNavClick()" style="color: var(--navy); font-weight: 600;">
+          <span class="nav-idx" style="color: var(--navy);">06</span>
+          <span>แรงโน้มถ่วง &amp; การโคจร (สสวท.)</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-7" class="nav-link" onclick="handleNavClick()" style="color: var(--navy); font-weight: 600;">
+          <span class="nav-idx" style="color: var(--navy);">07</span>
+          <span>ปรากฏการณ์ โลก-จันทร์-อาทิตย์</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-8" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">08</span>
+          <span>ยานสำรวจ &amp; เกราะอวกาศ</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-9" class="nav-link" style="color: var(--rust); font-weight: 600;" onclick="handleNavClick()">
+          <span class="nav-idx" style="color: var(--rust);">09</span>
+          <span>สรุปย่อ 1 นาที (Cheat Sheet)</span>
+        </a>
+      </li>
+      <li>
+        <a href="#sec-10" class="nav-link" onclick="handleNavClick()">
+          <span class="nav-idx">10</span>
+          <span>แหล่งอ้างอิง &amp; ภารกิจวิจัย</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-quiz-cta">
+      <a href="quiz.html" class="btn-sidebar-quiz">
+        <span>🎮 คลังข้อสอบ 20 ข้อ</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="content-area">
+
+    <!-- Masthead -->
+    <header class="masthead">
+      <div class="masthead-meta">
+        <span>หมวด: ดาราศาสตร์และอวกาศ (วิทยาศาสตร์ ม.3 สสวท. ว 3.1)</span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <span>Swiss Editorial Grid</span>
+          <button class="theme-toggle-btn" onclick="toggleTheme()" style="padding: 2px 8px; font-size: 11px;">
+            <span class="theme-icon">🌙</span> <span class="theme-label">Dark Mode</span>
+          </button>
+        </div>
+      </div>
+      <h1 class="masthead-title">บทที่ 4: ระบบสุริยะของเรา (The Solar System)</h1>
+      <p class="masthead-desc">
+        คู่มือบทเรียนดาราศาสตร์ฉบับสมบูรณ์ตามหลักสูตรแกนกลาง สสวท. ม.3 ครอบคลุมสถาปัตยกรรมระบบสุริยะ 8 ดาวเคราะห์ กฎแรงโน้มถ่วงนิวตัน ปรากฏการณ์ฤดูกาล-ข้างขึ้นข้างแรม-น้ำขึ้นน้ำลง-อุปราคา เทคโนโลยีอวกาศยุคใหม่ และแผ่นสรุปย่อทบทวนด่วนก่อนสอบ
+      </p>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section id="sec-1" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">01</span>
+        <h2 class="section-heading">สถาปัตยกรรมและโครงสร้างของระบบสุริยะ</h2>
+        <span class="section-subhead">Scale &amp; Architecture</span>
+      </div>
+
+      <!-- Figure 1 -->
+      <div class="figure-frame">
+        <div class="figure-img-wrap" onclick="openLightbox('./assets/01-solar-system-architecture.png', 'Architecture of Our Cosmic Home — โครงสร้างและมาตราส่วนระบบสุริยะ')">
+          <img src="./assets/01-solar-system-architecture.png" alt="Solar System Architecture" class="figure-img" loading="lazy">
+          <div class="figure-zoom-hint">🔍 คลิกเพื่อเปิดภาพ 4K</div>
+        </div>
+        <div class="figure-caption">
+          <span><strong>ภาพที่ 1:</strong> แผนผังโครงสร้าง 5 เขตแดนของระบบสุริยะและมาตราส่วนระยะทาง AU</span>
+          <span class="mono">2752×1536 PNG</span>
+        </div>
+      </div>
+
+      <!-- Key Metrics Strip -->
+      <div class="grid-3">
+        <div class="grid-card highlight">
+          <div class="grid-card-title">☀️ ดวงอาทิตย์ (The Sun) <a href="#ref-nasa" class="cite-badge" title="NASA Solar System Facts">[NASA]</a></div>
+          <div class="grid-card-body">
+            ศูนย์กลางและแหล่งแรงโน้มถ่วงหลัก ครอบครองมวลสารมากกว่า <strong>99.8%</strong> ของระบบสุริยะทั้งหมด <a href="#ref-wiki-ss" class="cite-badge">[Ref 1]</a>
+          </div>
+        </div>
+        <div class="grid-card highlight">
+          <div class="grid-card-title">📏 หน่วย AU (Astronomical Unit) <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
+          <div class="grid-card-body">
+            $$1\text{ AU} \approx 150,000,000\text{ km}$$
+            ระยะทางเฉลี่ยจากโลกถึงดวงอาทิตย์ ใช้วัดระยะห่างภายในระบบสุริยะ
+          </div>
+        </div>
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🌌 1 ปีแสง (Light-Year) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
+          <div class="grid-card-body">
+            $$1\text{ ly} \approx 9.46 \times 10^{12}\text{ km} \approx 63,241\text{ AU}$$
+            ระยะที่แสงเดินทางใน 1 ปี ใช้วัดระยะระหว่างดาวฤกษ์
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Zones Matrix -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>เขตแดน (Zoning)</th>
+              <th>ระยะห่าง (AU)</th>
+              <th>สมาชิกหลัก</th>
+              <th>ลักษณะสำคัญ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. ดาวเคราะห์หินชั้นใน</strong></td>
+              <td class="mono">0.4 – 1.5 AU</td>
+              <td>พุธ, ศุกร์, โลก, อังคาร</td>
+              <td>พื้นผิวของแข็ง ความหนาแน่นสูง ไม่มีวงแหวน <a href="#ref-nasa" class="cite-badge">[NASA]</a></td>
+            </tr>
+            <tr>
+              <td><strong>2. แถบดาวเคราะห์น้อย</strong></td>
+              <td class="mono">2.3 – 3.3 AU</td>
+              <td>เศษหิน/โลหะ, ซีรีส (Ceres)</td>
+              <td>กำแพงกั้นระหว่างดาวอังคารและพฤหัสบดี มวลรวม &lt; 1% ของโลก</td>
+            </tr>
+            <tr>
+              <td><strong>3. ดาวเคราะห์ยักษ์ชั้นนอก</strong></td>
+              <td class="mono">5.2 – 30.0 AU</td>
+              <td>พฤหัสบดี, เสาร์, ยูเรนัส, เนปจูน</td>
+              <td>แก๊สยักษ์ (H/He) + น้ำแข็งยักษ์ (H₂O/CH₄) ทุกดวงมีวงแหวนและดวงจันทร์มาก</td>
+            </tr>
+            <tr>
+              <td><strong>4. แถบไคเปอร์ (Kuiper Belt)</strong></td>
+              <td class="mono">30 – 50 AU</td>
+              <td>พลูโต, เฮาเมอา, มาคีมาคี</td>
+              <td>วงแหวนน้ำแข็งพ้นดาวเนปจูน แหล่งกำเนิด <strong>ดาวหางคาบสั้น</strong> <a href="#ref-wiki-ss" class="cite-badge">[Ref 1]</a></td>
+            </tr>
+            <tr>
+              <td><strong>5. เมฆออร์ต (Oort Cloud)</strong></td>
+              <td class="mono">5,000 – 100,000 AU</td>
+              <td>ก้อนน้ำแข็งนับล้านล้านชิ้น</td>
+              <td>ทรงกลมน้ำแข็งโอบล้อมระบบสุริยะ แหล่งกำเนิด <strong>ดาวหางคาบยาว</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-editorial">
+        <div class="callout-title">💡 เกร็ดความรู้: "1 ปีดาราจักร" โลกเรากำลังวิ่งอยู่</div>
+        <p style="font-size: 14.5px; color: var(--ink-body);">
+          ระบบสุริยะโคจรรอบใจกลางดาราจักรทางช้างเผือกด้วยความเร็ว $720,000\text{ km/h}$ ใช้เวลา <strong>230 ล้านปี</strong> ต่อการหมุนครบ 1 รอบ เรียกว่า <strong>"1 ปีดาราจักร (Galactic Year)"</strong> แปลว่าตั้งแต่ยุคไดโนเสาร์ถือกำเนิด โลกเราเพิ่งวิ่งรอบทางช้างเผือกไปได้เพียงรอบเดียวเท่านั้น! <a href="#ref-narit" class="cite-badge">[NARIT]</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section id="sec-2" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">02</span>
+        <h2 class="section-heading">3 เกณฑ์การจำแนกดาวเคราะห์ตามมาตรฐานดาราศาสตร์</h2>
+        <span class="section-subhead">Classification Criteria</span>
+      </div>
+
+      <div class="grid-3">
+        
+        <div class="grid-card navy-top">
+          <div class="grid-card-title">1. ใช้วงโคจรของโลกเป็นเกณฑ์ <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
+          <div class="grid-card-body">
+            <strong>• ดาวเคราะห์วงใน (Inferior):</strong> พุธ, ศุกร์ (ใกล้ดวงอาทิตย์กว่าโลก)<br>
+            <em style="color: var(--rust);">*จุดเน้นสอบ:* ทำมุมห่างดวงอาทิตย์จำกัด (&lt; 48°) จึง <strong>ไม่มีทางมองเห็นตอนเที่ยงคืนได้เด็ดขาด!</strong> จะเห็นเฉพาะเช้ามืดหรือหัวค่ำ</em><br><br>
+            <strong>• ดาวเคราะห์วงนอก (Superior):</strong> อังคาร, พฤหัสบดี, เสาร์, ยูเรนัส, เนปจูน (เห็นตอนเที่ยงคืนได้)
+          </div>
+        </div>
+
+        <div class="grid-card navy-top">
+          <div class="grid-card-title">2. ใช้แถบดาวเคราะห์น้อยเป็นเกณฑ์</div>
+          <div class="grid-card-body">
+            <strong>• ดาวเคราะห์ชั้นใน (Inner Planets):</strong> พุธ, ศุกร์, โลก, อังคาร (อยู่ระหว่างดวงอาทิตย์กับแถบดาวเคราะห์น้อย เป็นหินแข็ง)<br><br>
+            <strong>• ดาวเคราะห์ชั้นนอก (Outer Planets):</strong> พฤหัสบดี, เสาร์, ยูเรนัส, เนปจูน (อยู่พ้นแถบดาวเคราะห์น้อยออกไป เป็นแก๊ส/น้ำแข็งยักษ์)
+          </div>
+        </div>
+
+        <div class="grid-card navy-top">
+          <div class="grid-card-title">3. ใช้องค์ประกอบทางกายภาพ <a href="#ref-nasa" class="cite-badge">[NASA]</a></div>
+          <div class="grid-card-body">
+            <strong>• ดาวเคราะห์หิน (Terrestrial):</strong> พุธ, ศุกร์, โลก, อังคาร (ผิวแข็ง หนาแน่นสูง มีแกนเหล็ก)<br><br>
+            <strong>• ดาวแก๊สยักษ์ (Gas Giants):</strong> พฤหัสบดี, เสาร์ (ไฮโดรเจน/ฮีเลียม หนาแน่นต่ำ)<br><br>
+            <strong>• ดาวน้ำแข็งยักษ์ (Ice Giants):</strong> ยูเรนัส, เนปจูน (น้ำ/มีเทนแช่แข็ง)
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section id="sec-3" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">03</span>
+        <h2 class="section-heading">การประลองสถิติขั้นสุดของดาวเคราะห์ 8 ดวง</h2>
+        <span class="section-subhead">Planetary Records</span>
+      </div>
+
+      <!-- Figure 2 -->
+      <div class="figure-frame">
+        <div class="figure-img-wrap" onclick="openLightbox('./assets/02-planetary-showdown-records.png', 'Planetary Showdown — สถิติขั้นสุดของดาวเคราะห์ 8 ดวง')">
+          <img src="./assets/02-planetary-showdown-records.png" alt="Planetary Showdown" class="figure-img" loading="lazy">
+          <div class="figure-zoom-hint">🔍 คลิกเพื่อเปิดภาพ 4K</div>
+        </div>
+        <div class="figure-caption">
+          <span><strong>ภาพที่ 2:</strong> การประลองสถิติขั้นสุดของดาวเคราะห์ 8 ดวง สไตล์ Game HUD Stat Cards</span>
+          <span class="mono">2752×1536 PNG</span>
+        </div>
+      </div>
+
+      <!-- 8 Planets Swiss Cards -->
+      <div class="planets-editorial-grid">
+        
+        <!-- Mercury -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">☿ ดาวพุธ (Mercury)</span>
+              <span class="planet-category">หินชั้นใน</span>
+            </div>
+            <div class="planet-key-stat">⚡ เร็วสุด &amp; ฉายา "เตาไฟแช่แข็ง"</div>
+            <p class="planet-details">
+              โคจรเร็วสุด (88 วัน) แกนเหล็กใหญ่ 70% ไร้บรรยากาศทำให้อุณหภูมิกลางวัน-กลางคืนต่างกันสุดขั้ว <a href="#ref-nasa" class="cite-badge">[NASA]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>0.4 AU</span></div>
+            <div class="metric-row"><span>คาบโคจร:</span><span>88 วัน</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>0 ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Venus -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♀ ดาวศุกร์ (Venus)</span>
+              <span class="planet-category">หินชั้นใน</span>
+            </div>
+            <div class="planet-key-stat">🔥 ร้อนที่สุดในระบบ (465°C)</div>
+            <p class="planet-details">
+              เรือนกระจก $CO_2$ หนา 90 เท่า ฝนกรดกำมะถัน หมุนตามเข็มนาฬิกา เห็นเป็นดาวประกายพรึก/ประจำเมือง <a href="#ref-narit" class="cite-badge">[NARIT]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>0.7 AU</span></div>
+            <div class="metric-row"><span>อุณหภูมิ:</span><span>465 °C</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>0 ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Earth -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♁ โลก (Earth)</span>
+              <span class="planet-category">หินชั้นใน</span>
+            </div>
+            <div class="planet-key-stat">🌍 หนาแน่นที่สุด &amp; มีสิ่งมีชีวิต</div>
+            <p class="planet-details">
+              ดาวดวงเดียวที่มีสิ่งมีชีวิต น้ำของเหลว 71% ออกซิเจน 21% มีสนามแม่เหล็กหนาแน่นปกป้องรังสี <a href="#ref-scimath" class="cite-badge">[สสวท.]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>1.0 AU</span></div>
+            <div class="metric-row"><span>ความหนาแน่น:</span><span>5.51 g/cm³</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>1 ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Mars -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♂ ดาวอังคาร (Mars)</span>
+              <span class="planet-category">หินชั้นใน</span>
+            </div>
+            <div class="planet-key-stat">🌋 ภูเขาไฟสูงที่สุดในระบบ</div>
+            <p class="planet-details">
+              ดินสนิมเหล็กแดง ที่ตั้งของ <em>Olympus Mons</em> สูง 21.9 km (สูงกว่าเอเวอเรสต์ 3 เท่า) มีดวงจันทร์ 2 ดวง <a href="#ref-nasa" class="cite-badge">[NASA]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>1.5 AU</span></div>
+            <div class="metric-row"><span>ยอดโอลิมปัส:</span><span>21.9 km</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>2 ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Jupiter -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♃ พฤหัสบดี (Jupiter)</span>
+              <span class="planet-category">แก๊สยักษ์</span>
+            </div>
+            <div class="planet-key-stat">👑 มวลมากสุด (318 เท่าของโลก)</div>
+            <p class="planet-details">
+              หนักกว่าดาวอื่นรวมกัน 2.5 เท่า พายุจุดแดงใหญ่ มีดวงจันทร์ <em>แกนิมีด</em> ใหญ่ที่สุดในระบบ (ใหญ่กว่าพุธ) <a href="#ref-esa-juice" class="cite-badge">[ESA]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>5.2 AU</span></div>
+            <div class="metric-row"><span>มวล:</span><span>318 M⊕</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>95+ ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Saturn -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♄ ดาวเสาร์ (Saturn)</span>
+              <span class="planet-category">แก๊สยักษ์</span>
+            </div>
+            <div class="planet-key-stat">🪐 ความหนาแน่นต่ำสุด (ลอยน้ำได้)</div>
+            <p class="planet-details">
+              วงแหวนน้ำแข็งอลังการ ความหนาแน่น 0.687 g/cm³ ลอยน้ำได้ มีดวงจันทร์ไททันที่มีชั้นบรรยากาศหนาแน่น <a href="#ref-jwst" class="cite-badge">[JWST]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>9.5 AU</span></div>
+            <div class="metric-row"><span>ความหนาแน่น:</span><span>0.687 g/cm³</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>146+ ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Uranus -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♅ ยูเรนัส (Uranus)</span>
+              <span class="planet-category">น้ำแข็งยักษ์</span>
+            </div>
+            <div class="planet-key-stat">🌀 แกนเอียง 98° (กลิ้งตะแคงข้าง)</div>
+            <p class="planet-details">
+              แกนเอียง 97.77° โคจรกลิ้งไปตามระนาบ บรรยากาศมีเทนสีฟ้าอมเขียว อุณหภูมิเย็นสุดขั้ว (-224 °C) <a href="#ref-nasa" class="cite-badge">[NASA]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>19.6 AU</span></div>
+            <div class="metric-row"><span>แกนเอียง:</span><span>97.77°</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>28 ดวง</span></div>
+          </div>
+        </div>
+
+        <!-- Neptune -->
+        <div class="planet-box">
+          <div>
+            <div class="planet-box-header">
+              <span class="planet-title">♆ เนปจูน (Neptune)</span>
+              <span class="planet-category">น้ำแข็งยักษ์</span>
+            </div>
+            <div class="planet-key-stat">💨 ลมพายุเร็วสุด (2,000 km/h)</div>
+            <p class="planet-details">
+              พายุลมกรดเร็วเหนือเสียง 2,000 km/h มีดวงจันทร์ <em>ไทรทัน</em> โคจรสวนทางดาวแม่พร้อมน้ำพุไนโตรเจน <a href="#ref-wiki-ss" class="cite-badge">[Ref 1]</a>
+            </p>
+          </div>
+          <div class="planet-metrics-list">
+            <div class="metric-row"><span>ระยะ:</span><span>30.0 AU</span></div>
+            <div class="metric-row"><span>ความเร็วลม:</span><span>2,100 km/h</span></div>
+            <div class="metric-row"><span>บริวาร:</span><span>16 ดวง</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section id="sec-4" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">04</span>
+        <h2 class="section-heading">กำเนิดและวิวัฒนาการของระบบสุริยะ</h2>
+        <span class="section-subhead">Cosmic Genesis</span>
+      </div>
+
+      <!-- Figure 3 -->
+      <div class="figure-frame">
+        <div class="figure-img-wrap" onclick="openLightbox('./assets/03-cosmic-genesis-formation.png', 'Cosmic Genesis — 4 ขั้นตอนการกำเนิดระบบสุริยะ')">
+          <img src="./assets/03-cosmic-genesis-formation.png" alt="Cosmic Genesis" class="figure-img" loading="lazy">
+          <div class="figure-zoom-hint">🔍 คลิกเพื่อเปิดภาพ 4K</div>
+        </div>
+        <div class="figure-caption">
+          <span><strong>ภาพที่ 3:</strong> ไทม์ไลน์ 4.6 พันล้านปีจากเนบิวลาสู่สถาปัตยกรรมดาวเคราะห์</span>
+          <span class="mono">2752×1536 PNG</span>
+        </div>
+      </div>
+
+      <!-- Structured 4 Steps -->
+      <div class="step-seq">
+        
+        <div class="step-box">
+          <div class="step-tag">ขั้นที่ 1</div>
+          <div class="step-content">
+            <h4>The Great Collapse (การยุบตัวของเนบิวลาด้วยซูเปอร์โนวา) <a href="#ref-wiki-genesis" class="cite-badge">[Genesis]</a></h4>
+            <p>เมื่อ 4,600 ล้านปีก่อน คลื่นกระแทกจากการระเบิดของดาวฤกษ์ซูเปอร์โนวาในบริเวณใกล้เคียงบีบอัดเมฆโมเลกุลแก๊สจนยุบตัวลงด้วยแรงโน้มถ่วงและหมุนวนแบนลงเป็นจานดาวเคราะห์ก่อนเกิด (Protoplanetary Disk)</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-tag">ขั้นที่ 2</div>
+          <div class="step-content">
+            <h4>Proto-Sun Ignition (การจุดฟิวชันของดวงอาทิตย์) <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></h4>
+            <p>มวลสารกว่า 99% อัดแน่นที่ใจกลางจนเกิดความร้อนและความดันวิกฤต จุดปฏิกิริยานิวเคลียร์ฟิวชันหลอมไฮโดรเจนเป็นฮีเลียม ปลดปล่อยพลังงาน กำเนิดดวงอาทิตย์</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-tag">ขั้นที่ 3</div>
+          <div class="step-content">
+            <h4>Accretion Process (การพอกพูนมวลของเศษดาวเคราะห์)</h4>
+            <p>เม็ดฝุ่นในจานหมุนวนชนและเกาะตัวกันเหนียวแน่น เรียกว่าการพอกพูนมวล (Accretion) พัฒนาเป็นก้อนหินขนาดกิโลเมตร (Planetesimals) และเติบโตเป็นดาวเคราะห์</p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-tag">ขั้นที่ 4</div>
+          <div class="step-content">
+            <h4>Frost Line &amp; Planetary Zoning (แนวเส้นน้ำแข็งแบ่งเขต) <a href="#ref-nasa" class="cite-badge">[NASA]</a></h4>
+            <p>
+              <strong>เส้น Frost Line (~5 AU):</strong> ข้างในร้อนจนสารระเหยแข็งตัวไม่ได้ เหลือเพียงหิน/โลหะ กลายเป็นดาวเคราะห์หินขนาดเล็ก (พุธ ศุกร์ โลก อังคาร) ส่วนข้างนอกหนาวเย็นจนน้ำแข็งคงสภาพได้ แกนดาวเติบโตเร็วและดึงดูดแก๊สมาห่อหุ้ม กลายเป็นดาวแก๊สและน้ำแข็งยักษ์ (พฤหัส เสาร์ ยูเรนัส เนปจูน)
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section id="sec-5" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">05</span>
+        <h2 class="section-heading">วัตถุขนาดเล็กในระบบสุริยะ (Comets &amp; Meteors)</h2>
+        <span class="section-subhead">Small Bodies</span>
+      </div>
+
+      <div class="grid-3">
+        
+        <div class="grid-card highlight">
+          <div class="grid-card-title">☄️ ดาวหาง (Comet) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
+          <div class="grid-card-body">
+            ก้อนน้ำแข็งและฝุ่นหินสกปรก<br>
+            <strong style="color: var(--rust);">*กฎเหล็กออกสอบ:*</strong> หางดาวหางจะ <strong>ชี้หนีออกจากดวงอาทิตย์เสมอ</strong> เพราะถูกลมสุริยะและแรงดันรังสีพัดเป่า ไม่ได้ชี้ตามทิศการเคลื่อนที่
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🪨 3 ขั้นบันไดหินอวกาศ <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
+          <div class="grid-card-body">
+            <strong>1. สะเก็ดดาว (Meteoroid):</strong> เศษหินลอยในอวกาศ<br>
+            <strong>2. ดาวตก/ผีพุ่งไต้ (Meteor):</strong> ลุกไหม้ในชั้นบรรยากาศ<br>
+            <strong>3. อุกกาบาต (Meteorite):</strong> เผาไหม้ไม่หมด <strong>ตกถึงพื้นผิวโลก</strong>
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🪐 เกณฑ์ปลดดาวพลูโต (IAU 2006) <a href="#ref-wiki-ss" class="cite-badge">[IAU]</a></div>
+          <div class="grid-card-body">
+            พลูโตทรงกลมและโคจรรอบดวงอาทิตย์จริง แต่ <strong>"ไม่สามารถกวาดวัตถุข้างเคียงรอบวงโคจรได้ (ไม่ผ่านข้อ 3)"</strong> เพราะซ้อนทับดาวเนปจูนและแถบไคเปอร์ จึงถูกลดเป็นดาวเคราะห์แคระ
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6 (NEW: สสวท. ว 3.1 ม.3/1) -->
+    <section id="sec-6" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">06</span>
+        <h2 class="section-heading">แรงโน้มถ่วงกับการโคจรของดาวเคราะห์ (สสวท. ว 3.1 ม.3/1)</h2>
+        <span class="section-subhead">Gravity &amp; Orbits</span>
+      </div>
+
+      <!-- Figure 6 (NEW) -->
+      <div class="figure-frame">
+        <div class="figure-img-wrap" onclick="openLightbox('./assets/06-gravity-planetary-orbits.png', 'Gravity: The Invisible Cosmic Tether — กฎแรงโน้มถ่วงและการโคจรของดาวเคราะห์')">
+          <img src="./assets/06-gravity-planetary-orbits.png" alt="Gravity and Planetary Orbits" class="figure-img" loading="lazy">
+          <div class="figure-zoom-hint">🔍 คลิกดูภาพ 4K</div>
+        </div>
+        <div class="figure-caption">
+          <span><strong>ภาพที่ 6:</strong> GRAVITY: กฎความโน้มถ่วงสากล $F = G\frac{m_1 m_2}{r^2}$ และความเร็วโคจรดาวเคราะห์</span>
+          <span class="mono">2752×1536 PNG</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="grid-card navy-top">
+          <div class="grid-card-title">📐 1. กฎความโน้มถ่วงสากลของนิวตัน <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
+          <div class="grid-card-body">
+            วัตถุสองก้อนในเอกภพจะดึงดูดกันด้วยแรงโน้มถ่วง ($F$) ซึ่งเป็นสัดส่วนตรงกับผลคูณของมวล ($m_1, m_2$) และแปรผกผันกับกำลังสองของระยะห่าง ($r$):
+            $$F = G \frac{m_1 m_2}{r^2}$$
+            <em>*กฎกำลังสองผกผัน (Inverse-Square Law):* ถ้าระยะห่างเพิ่มขึ้น <strong>2 เท่า</strong> แรงดึงดูดจะลดลงเหลือเพียง <strong>$\frac{1}{4}$ เท่า</strong> ($1/2^2$)</em>
+          </div>
+        </div>
+
+        <div class="grid-card navy-top">
+          <div class="grid-card-title">🚀 2. ผลของแรงโน้มถ่วงต่อความเร็วโคจร <a href="#ref-nasa" class="cite-badge">[NASA]</a></div>
+          <div class="grid-card-body">
+            ดาวเคราะห์ที่อยู่ใกล้ดวงอาทิตย์ได้รับแรงโน้มถ่วงสูงมาก จึงต้อง <strong>โคจรด้วยความเร็วสูงกว่า</strong> เพื่อรักษาสมดุลวงโคจรไม่ให้ตกลงสู่ดวงอาทิตย์:
+            <ul style="padding-left: 18px; margin-top: 6px; font-size: 13.5px;">
+              <li><strong>ดาวพุธ (0.4 AU):</strong> โคจรเร็วที่สุดในระบบ $\approx \mathbf{47.4\text{ km/s}}$</li>
+              <li><strong>โลก (1.0 AU):</strong> โคจรด้วยความเร็วเฉลี่ย $\approx \mathbf{29.8\text{ km/s}}$</li>
+              <li><strong>ดาวเนปจูน (30.0 AU):</strong> อยู่ไกลสุด โคจรช้าเพียง $\approx \mathbf{5.4\text{ km/s}}$</li>
+              <li><strong>บนวงโคจรวงรี:</strong> วิ่งเร็วสุดที่จุดใกล้สุด (Perihelion) และช้าสุดที่จุดไกลสุด (Aphelion)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+            <!-- Worked Examples Box (Step-by-Step Problem Solving) -->
+      <div style="background: var(--paper-surface); border: 1px solid var(--border-grid); border-top: 4px solid var(--navy); border-radius: 6px; padding: 24px 28px; margin: 28px 0; box-shadow: var(--shadow-card);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 18px;">
+          <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 8px; margin: 0;">
+            🧮 ตัวอย่างโจทย์คำนวณฟิสิกส์ดาราศาสตร์ ม.ต้น (Worked Examples)
+          </h3>
+          <span class="mono" style="font-size: 12px; color: var(--ink-faint);">สสวท. ว 3.1 ม.3/1</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          
+          <!-- Example 1 -->
+          <div style="background: var(--paper-subtle); border-left: 3px solid var(--rust); border-radius: 4px; padding: 16px;">
+            <div style="font-size: 14px; font-weight: 700; color: var(--rust); margin-bottom: 6px;">
+              📌 ตัวอย่างที่ 1: กฎกำลังสองผกผัน (Inverse-Square Law)
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-body); margin-bottom: 8px;">
+              <strong>โจทย์:</strong> หากดาวเคราะห์ดวงหนึ่งถูกย้ายตำแหน่งให้มีระยะห่างจากดวงอาทิตย์เพิ่มขึ้นเป็น <strong>3 เท่า</strong> ของระยะเดิม แรงดึงดูดโน้มถ่วงที่ดวงอาทิตย์กระทำต่อดาวดวงนี้จะเปลี่ยนแปลงไปอย่างไร?
+            </p>
+            <div style="font-size: 13px; color: var(--ink-body); line-height: 1.6; background: var(--paper-surface); padding: 10px 12px; border-radius: 4px; border: 1px dashed var(--border-grid);">
+              <strong>วิธีคิดแบบสเต็ป:</strong><br>
+              1. จากสมการ $$F = G\frac{m_1 m_2}{r^2} \implies F \propto \frac{1}{r^2}$$
+              2. เมื่อระยะห่างใหม่ $r' = 3r$ จะได้ $$F' = \frac{1}{(3)^2} F = \frac{1}{9} F$$
+              <strong>คำตอบ:</strong> แรงดึงดูดโน้มถ่วงจะ <strong>ลดลงเหลือ $\frac{1}{9}$ เท่า (หรือประมาณ $11.1\%$)</strong> ของแรงดึงดูดเดิม
+            </div>
+          </div>
+
+          <!-- Example 2 -->
+          <div style="background: var(--paper-subtle); border-left: 3px solid var(--navy); border-radius: 4px; padding: 16px;">
+            <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">
+              📌 ตัวอย่างที่ 2: ความแตกต่างระหว่าง 'มวล' vs 'น้ำหนัก'
+            </div>
+            <p style="font-size: 13.5px; color: var(--ink-body); margin-bottom: 8px;">
+              <strong>โจทย์:</strong> นักบินอวกาศมีมวล $60\text{ kg}$ บนโลก เมื่อเดินทางไปลงจอดบนดวงจันทร์ซึ่งมีสนามโน้มถ่วง $g_{\text{moon}} \approx \frac{1}{6} g_{\text{earth}}$ มวลและน้ำหนักของเขาจะเป็นเท่าใด?
+            </p>
+            <div style="font-size: 13px; color: var(--ink-body); line-height: 1.6; background: var(--paper-surface); padding: 10px 12px; border-radius: 4px; border: 1px dashed var(--border-grid);">
+              <strong>วิธีคิดแบบสเต็ป:</strong><br>
+              1. <strong>มวล (Mass):</strong> เป็นปริมาณสสารคงที่ $\implies \mathbf{60\text{ kg}}$ เท่าเดิมไม่ว่าจะอยู่ที่ใด<br>
+              2. <strong>น้ำหนัก (Weight):</strong> $$W = m g_{\text{moon}} = 60 \times 1.63 \approx \mathbf{98\text{ N}}$$ (ลดลงเหลือ $\frac{1}{6}$ ของโลก)<br>
+              <strong>คำตอบ:</strong> มวลคงที่ $60\text{ kg}$ แต่น้ำหนักลดลงเหลือ $98\text{ นิวตัน}$
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 (NEW: สสวท. ว 3.1 ม.3/2 - ม.3/4) -->
+    <section id="sec-7" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">07</span>
+        <h2 class="section-heading">ปรากฏการณ์ โลก ดวงอาทิตย์ และดวงจันทร์ (สสวท. ม.3)</h2>
+        <span class="section-subhead">Earth-Moon-Sun</span>
+      </div>
+
+      <!-- Figure 7 (NEW) -->
+      <div class="figure-frame">
+        <div class="figure-img-wrap" onclick="openLightbox('./assets/07-earth-moon-sun-phenomena.png', 'Earth Moon Sun Phenomena Guide — 4 ปรากฏการณ์สำคัญดาราศาสตร์ ม.ต้น')">
+          <img src="./assets/07-earth-moon-sun-phenomena.png" alt="Earth Moon Sun Phenomena" class="figure-img" loading="lazy">
+          <div class="figure-zoom-hint">🔍 คลิกดูภาพ 4K</div>
+        </div>
+        <div class="figure-caption">
+          <span><strong>ภาพที่ 7:</strong> 4 ปรากฏการณ์ดาราศาสตร์ สสวท.: ฤดูกาล ($23.5^\circ$), ข้างขึ้น-ข้างแรม, น้ำเกิด-น้ำตาย, อุปราคา</span>
+          <span class="mono">2752×1536 PNG</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        
+        <!-- Seasons -->
+        <div class="grid-card green-top">
+          <div class="grid-card-title">🌍 1. การเกิดฤดูกาล (Seasons) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
+          <div class="grid-card-body">
+            เกิดจาก <strong>แกนหมุนของโลกเอียง $23.5^\circ$ กับระนาบวงโคจร</strong> (ไม่ใช่ระยะห่างจากดวงอาทิตย์) ทำให้แต่ละซีกโลกรับแสงและความร้อนไม่เท่ากันในแต่ละช่วงของปี:
+            <ul style="padding-left: 18px; margin-top: 6px; font-size: 13.5px;">
+              <li><strong>วสันตวิษุวัต (~21 มี.ค.):</strong> ดวงอาทิตย์ตั้งฉากเส้นศูนย์สูตร เริ่มฤดูใบไม้ผลิ (กลางวัน=กลางคืน)</li>
+              <li><strong>ครีษมายัน (~21 มิ.ย.):</strong> ซีกโลกเหนือเอียงหาดวงอาทิตย์มากสุด <strong>กลางวันยาวนานที่สุดในรอบปี</strong></li>
+              <li><strong>ศารทวิษุวัต (~22 ก.ย.):</strong> ดวงอาทิตย์ตั้งฉากเส้นศูนย์สูตร เริ่มฤดูใบไม้ร่วง (กลางวัน=กลางคืน)</li>
+              <li><strong>เหมายัน (~22 ธ.ค.):</strong> ซีกโลกเหนือเอียงหนีดวงอาทิตย์มากสุด <strong>กลางคืนยาวนานที่สุดในรอบปี</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Moon Phases & Tides -->
+        <div class="grid-card green-top">
+          <div class="grid-card-title">🌊 2. ข้างขึ้น-ข้างแรม &amp; น้ำขึ้น-น้ำลง <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
+          <div class="grid-card-body">
+            <strong>• ข้างขึ้น-ข้างแรม (29.5 วัน):</strong> ดวงจันทร์โคจรรอบโลก ทำให้มุมสะท้อนแสงเปลี่ยนไป สว่างขึ้นจาก <em>จันทร์ดับ (New Moon)</em> → <em>จันทร์เต็มดวง (Full Moon)</em><br><br>
+            <strong>• น้ำเกิด (Spring Tide):</strong> วันจันทร์ดับ &amp; วันเพ็ญ (ขึ้น/แรม 15 ค่ำ) ดวงอาทิตย์-โลก-ดวงจันทร์ <strong>เรียงเป็นเส้นตรงเดียวกัน</strong> แรงโน้มถ่วงเสริมกัน → <strong>น้ำขึ้นสูงสุดและลงต่ำสุด</strong><br><br>
+            <strong>• น้ำตาย (Neap Tide):</strong> วันขึ้น/แรม 8 ค่ำ ดวงจันทร์ <strong>ทำมุมตั้งฉาก $90^\circ$ กับดวงอาทิตย์</strong> แรงดึงดูดหักล้างกัน → <strong>ระดับน้ำขึ้น-ลงแตกต่างกันน้อยที่สุด</strong>
+          </div>
+        </div>
+
+        <!-- Eclipses -->
+        <div class="grid-card green-top" style="grid-column: 1 / -1;">
+          <div class="grid-card-title">🌑 3. สุริยุปราคา และ จันทรุปราคา (Eclipses) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
+          <div class="grid-card-body">
+            เกิดเมื่อระนาบวงโคจรของดวงจันทร์ตัดผ่านระนาบสุริยวิถี (ระนาบเอียง $5^\circ$ จึงไม่เกิดทุกเดือน):
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 8px;">
+              <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
+                <strong>☀️ สุริยุปราคา (Solar Eclipse):</strong> วันจันทร์ดับ (New Moon)<br>
+                <code>ดวงอาทิตย์ → ดวงจันทร์ → โลก</code><br>
+                ดวงจันทร์บังดวงอาทิตย์ ทอดเงาลงบนผิวโลก (เงามืด = เต็มดวง / เงามัว = บางส่วน)
+              </div>
+              <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
+                <strong>🌕 จันทรุปราคา (Lunar Eclipse):</strong> วันเพ็ญ (Full Moon)<br>
+                <code>ดวงอาทิตย์ → โลก → ดวงจันทร์</code><br>
+                โลกบังแสงอาทิตย์ ดวงจันทร์โคจรผ่านเข้าไปในเงาของโลก (เห็นได้พร้อมกันทั้งซีกโลกกลางคืน)
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 8 (เดิมคือ Section 6) -->
+    <section id="sec-8" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">08</span>
+        <h2 class="section-heading">ยานสำรวจอวกาศยุคใหม่และเทคโนโลยีอวกาศ (สสวท. ว 3.1 ม.3/5)</h2>
+        <span class="section-subhead">Probes &amp; Space Tech</span>
+      </div>
+
+      <p style="font-size: 15.5px; color: var(--ink-body); margin-bottom: 24px; line-height: 1.7;">
+        ในยุคปัจจุบัน การสำรวจดาราศาสตร์ไม่ได้หยุดอยู่เพียงแค่การส่องกล้องดูผิวดาว แต่กำลังมุ่งเป้าไปที่ <strong>"การค้นหาสิ่งมีชีวิตต่างดาวใต้ผืนน้ำแข็ง"</strong> และ <strong>"ระบบป้องกันภัยพิบัติจากอวกาศ"</strong> ซึ่งเป็นหัวข้อฟิสิกส์ดาราศาสตร์สมัยใหม่ที่สำคัญ:
+      </p>
+
+      <!-- Figures 4 & 5 Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 28px;">
+        <div class="figure-frame">
+          <div class="figure-img-wrap" onclick="openLightbox('./assets/04-nextgen-space-probes-oceans.png', 'Next-Gen Space Probes — ยานสำรวจอวกาศยุคใหม่ตามล่ามหาสมุทรต่างดาว')">
+            <img src="./assets/04-nextgen-space-probes-oceans.png" alt="Next-Gen Space Probes" class="figure-img" loading="lazy">
+            <div class="figure-zoom-hint">🔍 คลิกดูภาพ 4K</div>
+          </div>
+          <div class="figure-caption">
+            <span><strong>ภาพที่ 4:</strong> NEXT-GEN SPACE PROBES: NASA Europa Clipper, ESA JUICE &amp; JWST</span>
+            <span class="mono">2752×1536</span>
+          </div>
+        </div>
+
+        <div class="figure-frame">
+          <div class="figure-img-wrap" onclick="openLightbox('./assets/05-space-hazards-shields.png', 'Space Hazards & Shields — เกราะป้องกันอวกาศและภัยพิบัติจากนอกโลก')">
+            <img src="./assets/05-space-hazards-shields.png" alt="Space Hazards and Shields" class="figure-img" loading="lazy">
+            <div class="figure-zoom-hint">🔍 คลิกดูภาพ 4K</div>
+          </div>
+          <div class="figure-caption">
+            <span><strong>ภาพที่ 5:</strong> COSMIC SHIELDS: สนามแม่เหล็กโลก, ฟองเฮลิโอสเฟียร์ และภารกิจ DART</span>
+            <span class="mono">2752×1536</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Space Probes Dossiers -->
+      <h3 style="font-size: 18px; color: var(--ink-primary); margin-bottom: 12px; font-weight: 700;">
+        🚀 3 ภารกิจหลักในการตามล่ามหาสมุทรและสัญญาณชีพต่างดาว
+      </h3>
+      
+      <div class="mission-grid">
+        
+        <div class="mission-card">
+          <div>
+            <div class="mission-header">
+              <span class="mission-name">NASA Europa Clipper</span>
+              <span class="mission-agency">NASA • 2024 → 2030</span>
+            </div>
+            <div class="mission-target">🎯 เป้าหมาย: ดวงจันทร์ยูโรปา (ดวงจันทร์น้ำแข็งของดาวพฤหัสบดี) <a href="#ref-europa" class="cite-badge">[Mission]</a></div>
+            <p class="mission-desc">
+              มีเป้าหมายพิสูจน์ว่าใต้เปลือกน้ำแข็งหนาของยูโรปามีมหาสมุทรน้ำเค็มที่เอื้อต่อสิ่งมีชีวิตหรือไม่ ติดตั้งเรดาร์ <strong>REASON</strong> ยิงทะลุแผ่นน้ำแข็งลึก 30 km และเครื่องตรวจ <strong>SUDA</strong> ดักจับเซลล์สิ่งมีชีวิตในละอองน้ำพุที่พุ่งขึ้นมา
+            </p>
+          </div>
+          <div class="mission-specs">
+            <span>เครื่องมือหลัก: REASON Radar, SUDA Dust Analyzer</span>
+          </div>
+        </div>
+
+        <div class="mission-card">
+          <div>
+            <div class="mission-header">
+              <span class="mission-name">ESA JUICE</span>
+              <span class="mission-agency">ESA • กำลังเดินทาง</span>
+            </div>
+            <div class="mission-target">🎯 เป้าหมาย: ดวงจันทร์แกนิมีด, คัลลิสโต, ยูโรปา <a href="#ref-esa-juice" class="cite-badge">[ESA]</a></div>
+            <p class="mission-desc">
+              ยานขององค์การอวกาศยุโรป ออกแบบมาเพื่อรับมือกับสภาพแสงแดดที่ริบหรี่รอบดาวพฤหัสบดี (มีแสงเพียง 3% ของโลก) ด้วยแผงโซลาร์เซลล์ขนาดมหึมา 85 ตร.ม. เพื่อสำรวจแกนิมีดซึ่งเป็นดวงจันทร์เดียวที่มีสนามแม่เหล็กในตัวเอง
+            </p>
+          </div>
+          <div class="mission-specs">
+            <span>เทคโนโลยี: 85 m² Low-Light Solar Array, 3G28 LILT Cells</span>
+          </div>
+        </div>
+
+        <div class="mission-card">
+          <div>
+            <div class="mission-header">
+              <span class="mission-name">JWST Space Telescope</span>
+              <span class="mission-agency">NASA / ESA / CSA</span>
+            </div>
+            <div class="mission-target">🎯 เป้าหมาย: ตรวจวิเคราะห์บรรยากาศและสารอินทรีย์ <a href="#ref-jwst" class="cite-badge">[STScI]</a></div>
+            <p class="mission-desc">
+              กล้องโทรทรรศน์อวกาศอินฟราเรดยุคใหม่ ตรวจพบสารประกอบคาร์บอน (Carbon Source) บนผิวดวงจันทร์ยูโรปา และตรวจพบพวยไอน้ำ (Water Plume) พุ่งสูงกว่า 9,600 km บนดวงจันทร์เอนเซลาดัสของดาวเสาร์
+            </p>
+          </div>
+          <div class="mission-specs">
+            <span>ผลงาน: พบคาร์บอนบนยูโรปา &amp; พวยน้ำ 9,600 km บนเอนเซลาดัส</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2 Shields & DART -->
+      <h3 style="font-size: 18px; color: var(--ink-primary); margin: 28px 0 12px; font-weight: 700;">
+        🛡️ เกราะป้องกันธรรมชาติ 2 ชั้น และภารกิจพิทักษ์โลก
+      </h3>
+
+      <div class="grid-3">
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🌐 เกราะชั้นที่ 1: สนามแม่เหล็กโลก (Magnetosphere) <a href="#ref-nasa" class="cite-badge">[NASA]</a></div>
+          <div class="grid-card-body">
+            ทำหน้าที่เบี่ยงเบนลมสุริยะ (Solar Wind) และพายุสุริยะ (CME) ไม่ให้พัดทำลายชั้นบรรยากาศโลก อนุภาคที่ไหลลงสู่ขั้วโลกจะชนกับแก๊สในบรรยากาศเกิดเป็น <strong>แสงเหนือ-แสงใต้ (Aurora)</strong> (ดาวศุกร์และอังคารไร้สนามแม่เหล็กจึงสูญเสียน้ำและบรรยากาศ)
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🌌 เกราะชั้นที่ 2: ฟองเฮลิโอสเฟียร์ (Heliosphere) <a href="#ref-nasa" class="cite-badge">[NASA]</a></div>
+          <div class="grid-card-body">
+            ฟองพลาสมาขนาดมหึมาที่แผ่ออกไปกว้างกว่า <strong>120 AU</strong> จากแรงดันของลมสุริยะ ทำหน้าที่เป็นเกราะยักษ์บล็อก <strong>รังสีคอสมิกพลังงานสูง (Galactic Cosmic Rays)</strong> จากนอกดาราจักรไม่ให้ทะลุเข้ามาทำลายดีเอ็นเอของสิ่งมีชีวิต
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🎯 ภารกิจ NASA DART (พิทักษ์โลก) <a href="#ref-dart" class="cite-badge">[DART]</a></div>
+          <div class="grid-card-body">
+            ภารกิจ <em>Double Asteroid Redirection Test</em> ส่งยานพุ่งชนดาวเคราะห์น้อย <strong>Dimorphos</strong> เพื่อทดสอบการเบี่ยงเบนวงโคจรสำเร็จเป็นครั้งแรกในประวัติศาสตร์ พิสูจน์ว่ามนุษยชาติสามารถเปลี่ยนทิศทางอุกกาบาตเพื่อป้องกันโลกได้
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 9: QUICK-REVIEW CHEAT SHEET -->
+    <section id="sec-9" class="editorial-section">
+      <div class="section-banner" style="border-bottom-color: var(--rust);">
+        <span class="section-num" style="color: var(--rust);">09</span>
+        <h2 class="section-heading" style="color: var(--rust);">แผ่นสรุปย่อทบทวนด่วน 1 นาที พิชิตข้อสอบ สสวท. (Cheat Sheet)</h2>
+        <span class="section-subhead">1-Min Revision</span>
+      </div>
+
+      <!-- 8 Planets Summary Matrix -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ดาวเคราะห์</th>
+              <th>ประเภท</th>
+              <th>ระยะห่าง</th>
+              <th>จุดเด่นความเป็นที่สุด</th>
+              <th>จุดที่ข้อสอบชอบถาม</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>☿ พุธ</strong></td>
+              <td>หินชั้นใน</td>
+              <td class="mono">0.4 AU</td>
+              <td>เล็กสุด, โคจรเร็วสุด (88 วัน)</td>
+              <td>ไม่มีบรรยากาศ / ฉายา "เตาไฟแช่แข็ง" / ไม่มีดวงจันทร์</td>
+            </tr>
+            <tr>
+              <td><strong>♀ ศุกร์</strong></td>
+              <td>หินชั้นใน</td>
+              <td class="mono">0.7 AU</td>
+              <td><strong style="color: var(--rust);">ร้อนที่สุด (465°C)</strong></td>
+              <td>เรือนกระจก $CO_2$ หนา 90 เท่า / หมุนตามเข็มนาฬิกา / ไม่มีดวงจันทร์</td>
+            </tr>
+            <tr>
+              <td><strong>♁ โลก</strong></td>
+              <td>หินชั้นใน</td>
+              <td class="mono">1.0 AU</td>
+              <td><strong style="color: var(--navy);">หนาแน่นที่สุด (5.51 g/cm³)</strong></td>
+              <td>ดาวดวงเดียวที่มีสิ่งมีชีวิต / มีน้ำ 71% / ออกซิเจน 21%</td>
+            </tr>
+            <tr>
+              <td><strong>♂ อังคาร</strong></td>
+              <td>หินชั้นใน</td>
+              <td class="mono">1.5 AU</td>
+              <td>ภูเขาไฟสูงที่สุด (Olympus Mons)</td>
+              <td>ดินสนิมเหล็กแดง / ดวงจันทร์ 2 ดวง (โฟบอส, ดีมอส)</td>
+            </tr>
+            <tr>
+              <td><strong>♃ พฤหัสบดี</strong></td>
+              <td>แก๊สยักษ์</td>
+              <td class="mono">5.2 AU</td>
+              <td><strong style="color: var(--ochre);">ใหญ่สุด &amp; มวลมากสุด (318 เท่า)</strong></td>
+              <td>พายุจุดแดงใหญ่ / ดวงจันทร์แกนิมีดใหญ่กว่าดาวพุธ</td>
+            </tr>
+            <tr>
+              <td><strong>♄ เสาร์</strong></td>
+              <td>แก๊สยักษ์</td>
+              <td class="mono">9.5 AU</td>
+              <td><strong style="color: var(--green);">ความหนาแน่นต่ำสุด (0.687 g/cm³)</strong></td>
+              <td><strong style="color: var(--green);">ลอยน้ำได้</strong> / วงแหวนสวยสุด / ไททันมีบรรยากาศหนา</td>
+            </tr>
+            <tr>
+              <td><strong>♅ ยูเรนัส</strong></td>
+              <td>น้ำแข็งยักษ์</td>
+              <td class="mono">19.6 AU</td>
+              <td>บรรยากาศเย็นที่สุด (-224°C)</td>
+              <td><strong>แกนเอียง 98° (กลิ้งตะแคงข้าง)</strong> / บรรยากาศมีเทนสีฟ้า</td>
+            </tr>
+            <tr>
+              <td><strong>♆ เนปจูน</strong></td>
+              <td>น้ำแข็งยักษ์</td>
+              <td class="mono">30.0 AU</td>
+              <td><strong>ลมพายุแรงที่สุด (2,000 km/h)</strong></td>
+              <td>ดวงจันทร์ไทรทันโคจรสวนทาง / ไกลสุดในระบบสุริยะ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 8 Core Exam Rules -->
+      <div class="grid-3">
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🚫 1. กฎดาวเคราะห์วงใน</div>
+          <div class="grid-card-body">
+            <strong>ดาวพุธและดาวศุกร์ ไม่มีทางมองเห็นตอนเที่ยงคืนได้เด็ดขาด!</strong> ทำมุมห่างดวงอาทิตย์ได้จำกัด (&lt; 48°) เห็นเฉพาะหัวค่ำหรือเช้ามืด
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">💨 2. กฎหางดาวหาง</div>
+          <div class="grid-card-body">
+            <strong>หางดาวหางชี้หนีออกจากดวงอาทิตย์เสมอ!</strong> เพราะถูกลมสุริยะและแรงดันรังสีพัดเป่า ไม่ได้ชี้ตามทิศทางการเคลื่อนที่
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🪨 3. ลำดับหินอวกาศ</div>
+          <div class="grid-card-body">
+            $$\text{สะเก็ดดาว (อวกาศ)} → \text{ดาวตก (ในฟ้า)} → \text{อุกกาบาต (ถึงพื้นโลก)}$$
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">❄️ 4. กฎ Frost Line (~5 AU)</div>
+          <div class="grid-card-body">
+            • ข้างในร้อน → <strong>ดาวเคราะห์หิน (พุธ ศุกร์ โลก อังคาร)</strong><br>
+            • ข้างนอกหนาว → <strong>ดาวแก๊ส &amp; น้ำแข็งยักษ์ (พฤหัส เสาร์ ยูเรนัส เนปจูน)</strong>
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">📐 5. กฎแรงโน้มถ่วงนิวตัน</div>
+          <div class="grid-card-body">
+            $$F \propto \frac{1}{r^2}$$
+            ระยะห่างเพิ่ม 2 เท่า แรงดึงดูดลดเหลือ $\frac{1}{4}$ / ดาวเคราะห์ใกล้ดวงอาทิตย์โคจรเร็วกว่าดาวไกล
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🌍 6. กฎฤดูกาล ($23.5^\circ$)</div>
+          <div class="grid-card-body">
+            เกิดจากแกนโลกเอียง ครีษมายัน (กลางวันยาวสุด) vs เหมายัน (กลางคืนยาวสุด) vs วิษุวัต (วัน=คืน)
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🌊 7. กฎน้ำเกิด-น้ำตาย</div>
+          <div class="grid-card-body">
+            • <strong>น้ำเกิด:</strong> ขึ้น/แรม 15 ค่ำ (เรียงตรงกัน น้ำขึ้นสูงสุด-ลงต่ำสุด)<br>
+            • <strong>น้ำตาย:</strong> ขึ้น/แรม 8 ค่ำ (ตั้งฉาก $90^\circ$ ระดับน้ำต่างกันน้อยสุด)
+          </div>
+        </div>
+
+        <div class="grid-card highlight">
+          <div class="grid-card-title">🛡️ 8. เกราะอวกาศ 2 ชั้น</div>
+          <div class="grid-card-body">
+            • <strong>สนามแม่เหล็กโลก:</strong> กันลมสุริยะ → แสงออโรรา<br>
+            • <strong>เฮลิโอสเฟียร์ 120 AU:</strong> กันรังสีคอสมิกจากนอกดาราจักร
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action Banner to Quiz -->
+      <div class="quiz-hub-card">
+        <div class="quiz-hub-text">
+          <h3>🎯 ทบทวนเนื้อหาแน่นแล้ว พร้อมลุยข้อสอบ 20 ข้อ!</h3>
+          <p>
+            ท้าทายความเข้าใจด้วยคลังข้อสอบดาราศาสตร์ ม.ต้น 20 ข้อ พร้อมระบบ Gamification นับคะแนนสดและเฉลยละเอียดทุกข้อในหน้าข้อสอบแยกเดี่ยว
+          </p>
+        </div>
+        <a href="quiz.html" class="btn-quiz-launch">🚀 เข้าสู่แบบทดสอบ 20 ข้อ ↗</a>
+      </div>
+
+    </section>
+
+    <!-- SECTION 10: ACADEMIC REFERENCES & MISSION TRACKERS -->
+    <section id="sec-10" class="editorial-section">
+      <div class="section-banner">
+        <span class="section-num">10</span>
+        <h2 class="section-heading">แหล่งข้อมูลอ้างอิงและศูนย์ติดตามภารกิจวิจัย (Academic References)</h2>
+        <span class="section-subhead">Curated Sources</span>
+      </div>
+
+      <p style="font-size: 14.5px; color: var(--ink-muted); margin-bottom: 20px;">
+        เนื้อหา ตัวเลขสถิติ และภาพกราฟิกทั้งหมดในบทเรียนนี้ ได้รับการสังเคราะห์และตรวจสอบความถูกต้องทางดาราศาสตร์จากสถาบันการศึกษาและองค์กรอวกาศชั้นนำระดับโลก:
+      </p>
+
+      <div class="ref-list-grid">
+        
+        <!-- Ref 1 -->
+        <div class="ref-item-card" id="ref-scimath">
+          <div>
+            <div class="ref-item-tag">[สสวท.] SCIMATH EDUCATION</div>
+            <div class="ref-item-title">บทเรียนกำเนิดระบบสุริยะ ฟิสิกส์แรงโน้มถ่วง และปรากฏการณ์ดาราศาสตร์</div>
+            <p class="ref-item-desc">สถาบันส่งเสริมการสอนวิทยาศาสตร์และเทคโนโลยี (สสวท.) — แหล่งอ้างอิงหลักสูตรแกนกลางวิทยาศาสตร์ ม.ต้น ประเทศไทย</p>
+          </div>
+          <a href="https://www.scimath.org/lesson-physics/item/7316-origin-of-solar-system" target="_blank" class="ref-item-link">เปิดอ่านเอกสาร สสวท. ↗</a>
+        </div>
+
+        <!-- Ref 2 -->
+        <div class="ref-item-card" id="ref-narit">
+          <div>
+            <div class="ref-item-tag">[NARIT] สดร.</div>
+            <div class="ref-item-title">ปรากฏการณ์ดาราศาสตร์ การเกิดฤดูกาล และเทคโนโลยีอวกาศ</div>
+            <p class="ref-item-desc">สถาบันวิจัยดาราศาสตร์แห่งชาติ (องค์การมหาชน) — ข้อมูลมุมห่างเชิงมุม ปรากฏการณ์ดาวเคียงเดือน อุปราคา และดาราศาสตร์ไทย</p>
+          </div>
+          <a href="https://www.narit.or.th/th/AstronomyNews-20260605-Venus-Jupiter-Conjunction" target="_blank" class="ref-item-link">เปิดข่าววิจัย สดร. ↗</a>
+        </div>
+
+        <!-- Ref 3 -->
+        <div class="ref-item-card" id="ref-nasa">
+          <div>
+            <div class="ref-item-tag">[NASA] SOLAR SYSTEM PORTAL</div>
+            <div class="ref-item-title">NASA Solar System Exploration: Facts &amp; Planetary Metrics</div>
+            <p class="ref-item-desc">National Aeronautics and Space Administration — ข้อมูลสถิติเชิงกายภาพ ความหนาแน่น ชั้นบรรยากาศ และฟิสิกส์ดวงอาทิตย์</p>
+          </div>
+          <a href="https://science.nasa.gov/solar-system/facts/" target="_blank" class="ref-item-link">เข้าสู่ NASA Science Portal ↗</a>
+        </div>
+
+        <!-- Ref 4 -->
+        <div class="ref-item-card" id="ref-europa">
+          <div>
+            <div class="ref-item-tag">[NASA] EUROPA CLIPPER</div>
+            <div class="ref-item-title">NASA Europa Clipper Mission: Journey to an Ocean World</div>
+            <p class="ref-item-desc">ศูนย์ข้อมูลภารกิจสำรวจมหาสมุทรใต้แผ่นน้ำแข็งดวงจันทร์ยูโรปา รายละเอียดเรดาร์ REASON และเครื่องตรวจวิเคราะห์มวลสาร SUDA</p>
+          </div>
+          <a href="https://en.wikipedia.org/wiki/Europa_Clipper" target="_blank" class="ref-item-link">อ่านรายงานภารกิจ Europa Clipper ↗</a>
+        </div>
+
+        <!-- Ref 5 -->
+        <div class="ref-item-card" id="ref-esa-juice">
+          <div>
+            <div class="ref-item-tag">[ESA] JUICE MISSION</div>
+            <div class="ref-item-title">ESA JUICE: Running on Solar Power in the Dark</div>
+            <p class="ref-item-desc">European Space Agency — รายงานเทคโนโลยีแผงโซลาร์เซลล์ 85 ตร.ม. และภารกิจสำรวจดวงจันทร์แกนิมีดรอบดาวพฤหัสบดี</p>
+          </div>
+          <a href="https://www.esa.int/Enabling_Support/Space_Engineering_Technology/Juice_running_on_solar_power_in_the_dark" target="_blank" class="ref-item-link">อ่านเอกสารวิศวกรรม ESA ↗</a>
+        </div>
+
+        <!-- Ref 6 -->
+        <div class="ref-item-card" id="ref-jwst">
+          <div>
+            <div class="ref-item-tag">[STScI] JAMES WEBB TELESCOPE</div>
+            <div class="ref-item-title">Exploring Our Solar System with the James Webb Space Telescope</div>
+            <p class="ref-item-desc">Space Telescope Science Institute — การค้นพบสารประกอบคาร์บอนบนผิวยูโรปาและพวยไอน้ำ 9,600 km บนเอนเซลาดัส</p>
+          </div>
+          <a href="https://webbtelescope.org/contents/articles/exploring-our-solar-system-with-webb" target="_blank" class="ref-item-link">ดูบทความ STScI / JWST ↗</a>
+        </div>
+
+        <!-- Ref 7 -->
+        <div class="ref-item-card" id="ref-wiki-genesis">
+          <div>
+            <div class="ref-item-tag">[RESEARCH] NEBULAR HYPOTHESIS</div>
+            <div class="ref-item-title">Formation and Evolution of the Solar System</div>
+            <p class="ref-item-desc">สารานุกรมฟิสิกส์ดาราศาสตร์ — แบบจำลองการยุบตัวของเนบิวลา เส้น Frost Line และวิวัฒนาการ 4.6 พันล้านปี</p>
+          </div>
+          <a href="https://en.wikipedia.org/wiki/Formation_and_evolution_of_the_Solar_System" target="_blank" class="ref-item-link">อ่านบทความวิจัยเนบิวลา ↗</a>
+        </div>
+
+        <!-- Ref 8 -->
+        <div class="ref-item-card" id="ref-dart">
+          <div>
+            <div class="ref-item-tag">[NASA] PLANETARY DEFENSE</div>
+            <div class="ref-item-title">NASA DART: Double Asteroid Redirection Test Results</div>
+            <p class="ref-item-desc">รายงานผลการพุ่งชนดาวเคราะห์น้อย Dimorphos เพื่อทดสอบการเบี่ยงเบนวงโคจรป้องกันโลกจากภัยพิบัติอวกาศ</p>
+          </div>
+          <a href="https://science.nasa.gov/solar-system/facts/" target="_blank" class="ref-item-link">อ่านผลงาน NASA DART ↗</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- 4K Image Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightboxDirect()">&times;</button>
+    <img src="" alt="Enlarged Infographic" class="lightbox-img" id="lightbox-img">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+<script>
+  // Robust KaTeX auto-render init
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    }
+
+    // Init Theme from localStorage or system preference
+    const savedTheme = localStorage.getItem('subwatg-theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeUI(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      updateThemeUI('dark');
+    }
+  });
+
+  // Dark/Light Theme Switcher
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('subwatg-theme', newTheme);
+    updateThemeUI(newTheme);
+  }
+
+  function updateThemeUI(theme) {
+    const icons = document.querySelectorAll('.theme-icon');
+    const labels = document.querySelectorAll('.theme-label');
+    icons.forEach(el => el.textContent = theme === 'dark' ? '☀️' : '🌙');
+    labels.forEach(el => el.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode');
+  }
+
+  // Sidebar Controls (Desktop)
+  function closeSidebar() {
+    const layout = document.getElementById('layout-wrapper');
+    layout.classList.add('collapsed');
+  }
+
+  function openSidebar() {
+    const layout = document.getElementById('layout-wrapper');
+    layout.classList.remove('collapsed');
+  }
+
+  // Mobile Drawer Controls
+  function toggleMobileSidebar() {
+    const layout = document.getElementById('layout-wrapper');
+    layout.classList.toggle('mobile-open');
+  }
+
+  function closeMobileSidebar() {
+    const layout = document.getElementById('layout-wrapper');
+    layout.classList.remove('mobile-open');
+  }
+
+  function handleNavClick() {
+    if (window.innerWidth <= 860) {
+      closeMobileSidebar();
+    }
+  }
+
+  // Lightbox functionality
+  function openLightbox(src, caption) {
+    const modal = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-caption');
+    img.src = src;
+    cap.textContent = caption;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e.target.id === 'lightbox') {
+      closeLightboxDirect();
+    }
+  }
+
+  function closeLightboxDirect() {
+    const modal = document.getElementById('lightbox');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightboxDirect();
+  });
+
+  // Active Navigation Scrollspy
+  const sections = document.querySelectorAll('.editorial-section');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

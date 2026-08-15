@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "2.0.0",
-  "lastUpdated": "2026-08-13",
+  "lastUpdated": "2026-08-15",
   "site": {
     "title": "สื่อการสอนคณิตศาสตร์",
     "description": "คลังสื่อคณิตศาสตร์แบบอ่าน อธิบาย และทดลองได้ด้วยตนเอง"
@@ -61,6 +61,43 @@
               "type": "interactive",
               "typeLabel": "ทดลองได้",
               "tech": "html-canvas"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m3-astronomy-space",
+      "level": "m3",
+      "levelLabel": "มัธยมศึกษาตอนต้น (หัวข้อเสริม)",
+      "title": "ม.3: ดาราศาสตร์และระบบสุริยะ",
+      "description": "คู่มือบทเรียนดาราศาสตร์ สถาปัตยกรรมระบบสุริยะ แรงโน้มถ่วงนิวตัน ปรากฏการณ์โลก-ดวงจันทร์ และคลังข้อสอบ 30 ข้อ",
+      "theme": "orange",
+      "order": 3,
+      "topics": [
+        {
+          "id": "m3-solar-system-topic",
+          "title": "หน่วยที่ 4: ระบบสุริยะของเรา (The Solar System)",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m3-solar-system-ebook",
+              "filename": "interactive/middle-science-solar-system/index.html",
+              "title": "หนังสือเรียนออนไลน์: ระบบสุริยะของเรา",
+              "description": "บทเรียนสไตล์ Swiss Academic ครอบคลุม 8 ดาวเคราะห์ กฎแรงโน้มถ่วง ปรากฏการณ์ดาราศาสตร์ และ 7 Infographics (4K)",
+              "type": "guide",
+              "typeLabel": "บทเรียน",
+              "tech": "html-katex"
+            },
+            {
+              "id": "m3-solar-system-quiz-app",
+              "filename": "interactive/middle-science-solar-system/quiz.html",
+              "title": "คลังข้อสอบดาราศาสตร์ ม.ต้น (30 ข้อ)",
+              "description": "แบบทดสอบปรนัย O-NET & สอบเข้า ม.4 พร้อมระบบตรวจคะแนนสด เฉลยละเอียด และลิงก์เชื่อมโยงบทเรียน",
+              "type": "interactive",
+              "typeLabel": "คลังข้อสอบ",
+              "tech": "html-js"
             }
           ]
         }

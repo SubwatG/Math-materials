@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>แบบทดสอบดาราศาสตร์ ม.ต้น 30 ข้อ — Swiss Academic Edition</title>
+  
+  <!-- Google Fonts: Chakra Petch, IBM Plex Sans Thai Looped, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- KaTeX for Math Equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM: Gridgeist Swiss Academic (Light Paper & Dark Obsidian)
+       ========================================================================== */
+    :root {
+      /* LIGHT MODE */
+      --paper-bg: #FAF8F5;
+      --paper-surface: #FFFFFF;
+      --paper-subtle: #F3EFEA;
+      --paper-muted: #EBE5DB;
+      --border-dark: #1C1917;
+      --border-grid: #D6CEBF;
+      --border-light: #E7E0D4;
+      
+      --ink-primary: #1C1917;
+      --ink-body: #383431;
+      --ink-muted: #66615C;
+      --ink-faint: #918A82;
+      
+      --rust: #A63D1C;
+      --rust-light: #FBF1ED;
+      --rust-border: #E8A892;
+      --navy: #1E3A8A;
+      --navy-light: #EFF6FF;
+      --green: #15803D;
+      --green-light: #F0FDF4;
+      --red: #B91C1C;
+      --red-light: #FEF2F2;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    [data-theme="dark"] {
+      /* DARK MODE */
+      --paper-bg: #0C0E14;
+      --paper-surface: #141824;
+      --paper-subtle: #1B2130;
+      --paper-muted: #252D3F;
+      --border-dark: #E2E8F0;
+      --border-grid: #2D3748;
+      --border-light: #1F2737;
+      
+      --ink-primary: #F8FAFC;
+      --ink-body: #CBD5E1;
+      --ink-muted: #94A3B8;
+      --ink-faint: #64748B;
+      
+      --rust: #E05D38;
+      --rust-light: rgba(224, 93, 56, 0.15);
+      --rust-border: rgba(224, 93, 56, 0.4);
+      --navy: #60A5FA;
+      --navy-light: rgba(96, 165, 250, 0.15);
+      --green: #22C55E;
+      --green-light: rgba(34, 197, 94, 0.15);
+      --red: #EF4444;
+      --red-light: rgba(239, 68, 68, 0.15);
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper-bg);
+      color: var(--ink-body);
+      font-family: 'IBM Plex Sans Thai Looped', -apple-system, sans-serif;
+      font-size: 15.5px;
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    h1, h2, h3, h4, .score-num, .tag-label, .btn-swiss {
+      font-family: 'Chakra Petch', sans-serif;
+      color: var(--ink-primary);
+      letter-spacing: 0.2px;
+    }
+
+    .katex {
+      font-size: 1.05em;
+    }
+
+    /* Top Sticky HUD Navbar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper-surface);
+      border-bottom: 2px solid var(--border-dark);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .btn-back-book {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-dark);
+      color: var(--ink-primary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      border-radius: 4px;
+      box-shadow: 2px 2px 0 var(--border-dark);
+      transition: all 0.15s;
+    }
+
+    .btn-back-book:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--border-dark);
+      background: var(--rust-light);
+      color: var(--rust);
+    }
+
+    .hud-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .score-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .score-box {
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-grid);
+      padding: 4px 14px;
+      border-radius: 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .score-label {
+      font-size: 11px;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    .score-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--rust);
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border-grid);
+      color: var(--ink-muted);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-reset:hover {
+      border-color: var(--border-dark);
+      color: var(--ink-primary);
+      background: var(--paper-muted);
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-grid);
+      color: var(--ink-body);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--rust);
+      color: var(--rust);
+    }
+
+    /* Container */
+    .quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
+    }
+
+    /* Header Masthead */
+    .quiz-masthead {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      border-top: 4px solid var(--border-dark);
+      padding: 32px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .quiz-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .quiz-heading {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+    }
+
+    .quiz-subhead {
+      font-size: 14.5px;
+      color: var(--ink-body);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .progress-track {
+      background: var(--paper-muted);
+      height: 6px;
+      border-radius: 3px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--rust);
+      transition: width 0.25s ease;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      color: var(--ink-body);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Chakra Petch', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--border-dark);
+      border-color: var(--border-dark);
+      color: var(--paper-surface);
+    }
+
+    /* Question Cards */
+    .quiz-card {
+      background: var(--paper-surface);
+      border: 1px solid var(--border-grid);
+      padding: 24px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      transition: border-color 0.15s;
+      box-shadow: var(--shadow-card);
+    }
+
+    .quiz-card:hover {
+      border-color: var(--border-dark);
+    }
+
+    .quiz-cat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .quiz-question-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 14px;
+      line-height: 1.55;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-btn {
+      background: var(--paper-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14.5px;
+      color: var(--ink-body);
+      text-align: left;
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: var(--paper-muted);
+      border-color: var(--border-grid);
+      color: var(--ink-primary);
+    }
+
+    .option-btn.correct {
+      background: var(--green-light) !important;
+      border-color: var(--green) !important;
+      color: var(--green) !important;
+      font-weight: 600;
+    }
+
+    .option-btn.wrong {
+      background: var(--red-light) !important;
+      border-color: var(--red) !important;
+      color: var(--red) !important;
+    }
+
+    /* Unified Seamless Explanation Flow (No Nested Cards) */
+    .explanation-box {
+      margin-top: 14px;
+      padding: 14px 18px;
+      background: var(--paper-subtle);
+      border-left: 3px solid var(--rust);
+      border-top: 1px solid var(--border-light);
+      font-size: 14px;
+      color: var(--ink-body);
+      display: none;
+      line-height: 1.65;
+    }
+
+    .exp-text {
+      margin-bottom: 10px;
+    }
+
+    .exp-footer-cite {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-grid);
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    .cite-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    .cite-link-btn {
+      color: var(--rust);
+      text-decoration: none;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+
+    .cite-link-btn:hover {
+      text-decoration: underline;
+      color: var(--border-dark);
+    }
+
+    /* Result Banner */
+    .result-card {
+      background: var(--paper-surface);
+      border: 2px solid var(--border-dark);
+      padding: 28px;
+      text-align: center;
+      margin-top: 32px;
+      display: none;
+      box-shadow: var(--shadow-card);
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .top-nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 16px;
+      }
+      .hud-title {
+        display: none;
+      }
+      .score-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .quiz-container {
+        padding: 20px 14px 60px;
+      }
+      .quiz-masthead {
+        padding: 20px 16px;
+      }
+      .quiz-heading {
+        font-size: 22px;
+      }
+      .quiz-card {
+        padding: 18px 14px;
+      }
+      .exp-footer-cite {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top HUD Bar -->
+  <header class="top-nav">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <a href="index.html" class="btn-back-book">📖 หน้าเรียน</a>
+      <span class="hud-title">แบบทดสอบดาราศาสตร์ (30 ข้อ)</span>
+    </div>
+
+    <div class="score-group">
+      <button class="theme-toggle-btn" onclick="toggleTheme()" title="สลับโหมดมืด/สว่าง">
+        <span class="theme-icon">🌙</span> <span class="theme-label">Dark</span>
+      </button>
+      <div class="score-box">
+        <span class="score-label">คะแนน:</span>
+        <span class="score-num" id="score-display">0 / 30</span>
+      </div>
+      <button class="btn-reset" onclick="resetQuiz()">🔄 รีเซ็ต</button>
+    </div>
+  </header>
+
+  <!-- Quiz Container -->
+  <main class="quiz-container">
+    
+    <div class="quiz-masthead">
+      <span class="quiz-tag">O-NET &amp; ม.4 Examination Prep</span>
+      <h1 class="quiz-heading">คลังข้อสอบดาราศาสตร์ระบบสุริยะ ม.ต้น (30 ข้อ)</h1>
+      <p class="quiz-subhead">
+        ประเมินความเข้าใจดาราศาสตร์ ม.ต้น พร้อมจุดอ้างอิงและลิงก์เชื่อมโยงกลับไปยังหัวข้อที่เกี่ยวข้องในหนังสือเรียน
+      </p>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+        <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterQuiz('all')">ทั้งหมด (30 ข้อ)</button>
+      <button class="filter-btn" onclick="filterQuiz('arch')">สถาปัตยกรรม &amp; เกณฑ์ (1-6)</button>
+      <button class="filter-btn" onclick="filterQuiz('stats')">สถิติดาวเคราะห์ (7-12)</button>
+      <button class="filter-btn" onclick="filterQuiz('genesis')">กำเนิด &amp; วัตถุเล็ก (13-17)</button>
+      <button class="filter-btn" onclick="filterQuiz('gravity')">🧮 คำนวณแรงโน้มถ่วง (18-22)</button>
+      <button class="filter-btn" onclick="filterQuiz('phenomena')">🌍 ปรากฏการณ์ สสวท. (23-27)</button>
+      <button class="filter-btn" onclick="filterQuiz('probes')">🛸 ยานสำรวจ &amp; เทคโนโลยี (28-30)</button>
+    </div>
+
+    <!-- Questions Injected Here -->
+    <div id="quiz-list"></div>
+
+    <!-- Result Banner -->
+    <div class="result-card" id="result-banner">
+      <div class="result-title" id="result-title">🎉 ทำข้อสอบครบ 30 ข้อแล้ว!</div>
+      <p id="result-desc" style="font-size: 14.5px; color: var(--ink-muted); margin-bottom: 16px;"></p>
+      <a href="index.html" class="btn-back-book" style="font-size: 14px; padding: 10px 24px;">📖 กลับไปทบทวนเนื้อหาในหนังสือเรียน</a>
+    </div>
+
+  </main>
+
+<script>
+  // Clean Unified Structure: Single flow explanation + Inline Footer Citation Link
+  const quizData = [
+    {
+      id: 1,
+      cat: "arch",
+      catName: "สถาปัตยกรรมระบบสุริยะ",
+      q: "1. มวลสารส่วนใหญ่มากกว่า 99.8% ของระบบสุริยะทั้งหมดสะสมอยู่ที่วัตถุใด?",
+      opts: [
+        "ก. ดวงอาทิตย์ (The Sun)",
+        "ข. ดาวพฤหัสบดี (Jupiter)",
+        "ค. แถบดาวเคราะห์น้อยหลัก",
+        "ง. เมฆออร์ต (Oort Cloud)"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> ดวงอาทิตย์ครอบครองมวลสารมากกว่า 99.8% ของทั้งระบบสุริยะ โดยมวลที่เหลืออีกไม่ถึง 0.2% คือดาวเคราะห์และวัตถุบริวารทั้งหมดรวมกัน",
+      refSection: "ตอนที่ 01 • สถาปัตยกรรมระบบสุริยะ",
+      refLink: "index.html#sec-1"
+    },
+    {
+      id: 2,
+      cat: "arch",
+      catName: "มาตราส่วนดาราศาสตร์",
+      q: "2. หน่วยวัดระยะทาง 1 AU (Astronomical Unit) มีนิยามตรงกับข้อใด?",
+      opts: [
+        "ก. ระยะทางที่แสงเดินทางในเวลา 1 ปี",
+        "ข. ระยะทางเฉลี่ยจากโลกถึงดวงอาทิตย์ (~150 ล้านกิโลเมตร)",
+        "ค. ระยะทางจากโลกถึงดวงจันทร์",
+        "ง. เส้นผ่านศูนย์กลางของระบบสุริยะ"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> 1 AU คือระยะทางเฉลี่ยระหว่างโลกถึงดวงอาทิตย์ ประมาณ 150 ล้านกิโลเมตร ($1.496 \\times 10^8\\text{ km}$) เหมาะสำหรับใช้วัดระยะห่างในระบบสุริยะ",
+      refSection: "ตอนที่ 01 • การ์ดมาตราส่วน AU",
+      refLink: "index.html#sec-1"
+    },
+    {
+      id: 3,
+      cat: "arch",
+      catName: "การสังเกตการณ์ดาราศาสตร์",
+      q: "3. เหตุใดผู้สังเกตบนโลกจึงไม่มีทางมองเห็น 'ดาวศุกร์' ปรากฏอยู่กลางท้องฟ้าในเวลาเที่ยงคืนได้?",
+      opts: [
+        "ก. เพราะดาวศุกร์ไม่มีแสงสว่างในตัวเอง",
+        "ข. เพราะดาวศุกร์ถูกบดบังด้วยวงแหวนของดาวเสาร์",
+        "ค. เพราะดาวศุกร์เป็นดาวเคราะห์วงใน ทำมุมห่างเชิงมุมจากดวงอาทิตย์ได้ไม่เกิน 48 องศา",
+        "ง. เพราะแกนหมุนของดาวศุกร์หมุนตามเข็มนาฬิกา"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> ดาวเคราะห์วงใน (พุธ, ศุกร์) มีวงโคจรอยู่ใกล้ดวงอาทิตย์กว่าโลก จึงทำมุมห่างดวงอาทิตย์ได้จำกัด ($< 48^\\circ$) ทำให้เห็นได้เฉพาะช่วงหัวค่ำ (ดาวประจำเมือง) หรือเช้ามืด (ดาวประกายพรึก) เท่านั้น",
+      refSection: "ตอนที่ 02 • เกณฑ์วงโคจรโลก & กฎข้อ 1",
+      refLink: "index.html#sec-2"
+    },
+    {
+      id: 4,
+      cat: "arch",
+      catName: "สถาปัตยกรรมระบบสุริยะ",
+      q: "4. แถบดาวเคราะห์น้อยหลัก (Main Asteroid Belt) ตั้งอยู่ระหว่างวงโคจรของดาวเคราะห์คู่ใด?",
+      opts: [
+        "ก. ดาวพุธ กับ ดาวศุกร์",
+        "ข. โลก กับ ดาวอังคาร",
+        "ค. ดาวพฤหัสบดี กับ ดาวเสาร์",
+        "ง. ดาวอังคาร กับ ดาวพฤหัสบดี"
+      ],
+      ans: 3, // ง
+      exp: "<strong>ข้อ ง. ถูกต้อง:</strong> แถบดาวเคราะห์น้อยหลักอยู่ที่ระยะ 2.3 – 3.3 AU ทำหน้าที่เป็นกำแพงกั้นระหว่างดาวอังคาร (ดาวเคราะห์หิน) และดาวพฤหัสบดี (ดาวแก๊สยักษ์)",
+      refSection: "ตอนที่ 01 • ตาราง 5 เขตแดนระบบสุริยะ",
+      refLink: "index.html#sec-1"
+    },
+    {
+      id: 5,
+      cat: "arch",
+      catName: "เกณฑ์การจำแนกดาวเคราะห์",
+      q: "5. หากใช้องค์ประกอบทางกายภาพเป็นเกณฑ์ ดาวเคราะห์คู่ใดจัดเป็น 'ดาวน้ำแข็งยักษ์' (Ice Giants)?",
+      opts: [
+        "ก. ดาวยูเรนัส และ ดาวเนปจูน",
+        "ข. ดาวพฤหัสบดี และ ดาวเสาร์",
+        "ค. ดาวอังคาร และ ดาวพฤหัสบดี",
+        "ง. ดาวเสาร์ และ ดาวยูเรนัส"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> ยูเรนัสและเนปจูนมีแกนและเนื้อดาวเป็นน้ำ, แอมโมเนีย, และมีเทนแช่แข็ง จึงจัดเป็น Ice Giants ส่วนพฤหัสบดีและเสาร์เป็น Gas Giants (ไฮโดรเจนและฮีเลียม)",
+      refSection: "ตอนที่ 02 • เกณฑ์องค์ประกอบกายภาพ",
+      refLink: "index.html#sec-2"
+    },
+    {
+      id: 6,
+      cat: "arch",
+      catName: "สถาปัตยกรรมระบบสุริยะ",
+      q: "6. แหล่งกำเนิดของ 'ดาวหางคาบยาว' ที่มีวงโคจรหลายพันปี และโอบล้อมระบบสุริยะเป็นทรงกลมที่ระยะ 5,000 – 100,000 AU คือบริเวณใด?",
+      opts: [
+        "ก. แถบดาวเคราะห์น้อย",
+        "ข. เมฆออร์ต (Oort Cloud)",
+        "ค. แถบไคเปอร์ (Kuiper Belt)",
+        "ง. ฟองเฮลิโอสเฟียร์"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> เมฆออร์ต (Oort Cloud) เป็นกลุ่มหมอกทรงกลมน้ำแข็งรอบนอกสุด และเป็นแหล่งกำเนิดของดาวหางคาบยาว ส่วนแถบไคเปอร์เป็นแหล่งกำเนิดดาวหางคาบสั้น",
+      refSection: "ตอนที่ 01 • เขตแดนที่ 5 เมฆออร์ต",
+      refLink: "index.html#sec-1"
+    },
+    {
+      id: 7,
+      cat: "stats",
+      catName: "สถิติดาวเคราะห์",
+      q: "7. เหตุใดดาวศุกร์จึงเป็นดาวเคราะห์ที่ร้อนที่สุดในระบบสุริยะ (465°C) แม้จะอยู่ไกลกว่าดาวพุธ?",
+      opts: [
+        "ก. เพราะมีปฏิกิริยานิวเคลียร์ฟิวชันใต้ผิวดาว",
+        "ข. เพราะโคจรใกล้ดวงอาทิตย์ที่สุดในเวลากลางวัน",
+        "ค. เพราะเกิดปรากฏการณ์เรือนกระจกยิ่งยวดจากแก๊สคาร์บอนไดออกไซด์หนาแน่นกว่าโลก 90 เท่า",
+        "ง. เพราะมีลาวาปะทุตลอดเวลา 100% ของพื้นที่"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> ชั้นบรรยากาศ $\\text{CO}_2$ ที่หนาแน่นถึง 90 เท่าของโลกทำให้กักเก็บความร้อนไว้จนอุณหภูมิพุ่งสูงถึง $465^\\circ\\text{C}$ สูงกว่าดาวพุธที่ไม่มีชั้นบรรยากาศคอยดักความร้อน",
+      refSection: "ตอนที่ 03 • สถิติดาวศุกร์ (Super Inferno)",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 8,
+      cat: "stats",
+      catName: "สถิติดาวเคราะห์",
+      q: "8. 'Olympus Mons' ภูเขาไฟที่สูงที่สุดในระบบสุริยะ (สูงกว่าเอเวอเรสต์ 3 เท่า) ตั้งอยู่บนดาวเคราะห์ดวงใด?",
+      opts: [
+        "ก. ดาวพุธ",
+        "ข. ดาวศุกร์",
+        "ค. โลก",
+        "ง. ดาวอังคาร"
+      ],
+      ans: 3, // ง
+      exp: "<strong>ข้อ ง. ถูกต้อง:</strong> ยอดเขาโอลิมปัสสูงถึง $21.9\\text{ km}$ ตั้งอยู่บนดาวอังคาร เกิดจากการสะสมตัวของลาวาภูเขาไฟในอดีตเนื่องจากดาวอังคารไม่มีการเคลื่อนตัวของแผ่นเปลือกโลก",
+      refSection: "ตอนที่ 03 • สถิติดาวอังคาร (Mega Volcano)",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 9,
+      cat: "stats",
+      catName: "สถิติดาวเคราะห์",
+      q: "9. ดาวเคราะห์ดวงใดมีความหนาแน่นเฉลี่ยต่ำกว่าน้ำบริสุทธิ์ ($0.687\\text{ g/cm}^3$) ทำให้สามารถ 'ลอยน้ำได้' หากมีอ่างน้ำใหญ่พอ?",
+      opts: [
+        "ก. ดาวเสาร์ (Saturn)",
+        "ข. ดาวยูเรนัส (Uranus)",
+        "ค. ดาวพฤหัสบดี (Jupiter)",
+        "ง. ดาวเนปจูน (Neptune)"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> ดาวเสาร์มีความหนาแน่นเฉลี่ยเพียง $0.687\\text{ g/cm}^3$ ซึ่งน้อยกว่าความหนาแน่นของน้ำ ($1.0\\text{ g/cm}^3$) จึงเป็นดาวดวงเดียวที่ลอยน้ำได้",
+      refSection: "ตอนที่ 03 • สถิติดาวเสาร์ (Floating Lord)",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 10,
+      cat: "stats",
+      catName: "สถิติดาวเคราะห์",
+      q: "10. ดาวเคราะห์ดวงใดมีแกนหมุนเอียงทำมุมถึง 98 องศา ทำให้โคจรหมุนรอบตัวเองในลักษณะ 'กลิ้งตะแคงข้าง'?",
+      opts: [
+        "ก. ดาวพฤหัสบดี",
+        "ข. ดาวยูเรนัส (Uranus)",
+        "ค. ดาวเสาร์",
+        "ง. ดาวเนปจูน"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> ดาวยูเรนัสมีแกนเอียง $97.77^\\circ$ หมุนตะแคงข้างตามแนวระนาบวงโคจร สันนิษฐานว่าถูกวัตถุขนาดใหญ่พุ่งชนในยุคกำเนิดระบบสุริยะ",
+      refSection: "ตอนที่ 03 • สถิติดาวยูเรนัส (Sideways Roller)",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 11,
+      cat: "stats",
+      catName: "ดวงจันทร์บริวาร",
+      q: "11. 'ดวงจันทร์แกนิมีด' (Ganymede) ซึ่งมีขนาดใหญ่ที่สุดในระบบสุริยะ (ใหญ่กว่าดาวพุธ) เป็นบริวารของดาวดวงใด?",
+      opts: [
+        "ก. ดาวเสาร์",
+        "ข. ดาวยูเรนัส",
+        "ค. ดาวพฤหัสบดี (Jupiter)",
+        "ง. ดาวเนปจูน"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> แกนิมีดเป็นดวงจันทร์บริวารของดาวพฤหัสบดี มีเส้นผ่านศูนย์กลาง $5,268\\text{ km}$ ใหญ่กว่าดาวพุธและดาวพลูโต",
+      refSection: "ตอนที่ 03 • สถิติดาวพฤหัสบดี (Heavyweight King)",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 12,
+      cat: "stats",
+      catName: "ดวงจันทร์บริวาร",
+      q: "12. ลักษณะเฉพาะตัวที่โดดเด่นของดวงจันทร์ 'ไทรทัน' (Triton) ของดาวเนปจูนคือข้อใด?",
+      opts: [
+        "ก. มีขนาดใหญ่กว่าดวงอาทิตย์",
+        "ข. มีวงแหวนน้ำแข็งเป็นของตัวเอง",
+        "ค. มีความหนาแน่นสูงสุดในระบบสุริยะ",
+        "ง. โคจรสวนทาง (Retrograde) กับทิศทางการหมุนรอบตัวเองของดาวเนปจูน"
+      ],
+      ans: 3, // ง
+      exp: "<strong>ข้อ ง. ถูกต้อง:</strong> ไทรทันเป็นดวงจันทร์ขนาดใหญ่ดวงเดียวที่โคจรสวนทางกับดาวแม่ ชี้ชัดว่าเดิมเป็นวัตถุแถบไคเปอร์ที่ถูกแรงโน้มถ่วงดาวเนปจูนดึงดูดจับไว้",
+      refSection: "ตอนที่ 03 • สถิติดาวเนปจูน & ไทรทัน",
+      refLink: "index.html#sec-3"
+    },
+    {
+      id: 13,
+      cat: "genesis",
+      catName: "กำเนิดระบบสุริยะ",
+      q: "13. ในสมมติฐานเนบิวลา เส้นแบ่ง 'Frost Line' (~5 AU) ทำหน้าที่แบ่งประเภทดาวเคราะห์อย่างไร?",
+      opts: [
+        "ก. ด้านในร้อน สารระเหยแข็งตัวไม่ได้ เกิดดาวเคราะห์หิน ส่วนด้านนอกหนาวเย็น เกิดดาวแก๊สและน้ำแข็งยักษ์",
+        "ข. ด้านในมีดวงจันทร์บริวารมาก ส่วนด้านนอกไม่มีดวงจันทร์บริวาร",
+        "ค. ด้านในหมุนตามเข็มนาฬิกา ส่วนด้านนอกหมุนทวนเข็มนาฬิกา",
+        "ง. ด้านในมีวงแหวน ส่วนด้านนอกไม่มีวงแหวน"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> ภายในแนว Frost Line สารระเหยไม่สามารถแข็งตัวได้ จึงมีเพียงหินและโลหะก่อตัวเป็นดาวเคราะห์หิน ส่วนภายนอกน้ำแข็งจับตัวได้ปริมาณมหาศาล ดึงดูดแก๊สมาหุ้มเป็นดาวเคราะห์ยักษ์",
+      refSection: "ตอนที่ 04 • ขั้นที่ 4 เส้น Frost Line",
+      refLink: "index.html#sec-4"
+    },
+    {
+      id: 14,
+      cat: "genesis",
+      catName: "ดาวหางและสะเก็ดดาว",
+      q: "14. เหตุใดหางของดาวหางจึง 'ชี้หนีออกจากดวงอาทิตย์เสมอ' เมื่อโคจรเข้าใกล้ระบบสุริยะชั้นใน?",
+      opts: [
+        "ก. เพราะแรงเหวี่ยงหนีศูนย์กลางของการเคลื่อนที่",
+        "ข. เพราะถูกลมสุริยะ (Solar Wind) และแรงดันรังสีจากดวงอาทิตย์พัดเป่าออกไป",
+        "ค. เพราะสนามแม่เหล็กของดาวเคราะห์ยักษ์ผลักออกไป",
+        "ง. เพราะแรงดึงดูดของเมฆออร์ต"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> ลมสุริยะและแรงดันรังสีจากดวงอาทิตย์จะเป่าแก๊สไอออนและฝุ่นให้พุ่งชี้หนีออกจากดวงอาทิตย์เสมอ ไม่ได้ชี้ตามทิศทางการเคลื่อนที่ของดาวหาง",
+      refSection: "ตอนที่ 05 • กฎเหล็กทิศทางหางดาวหาง",
+      refLink: "index.html#sec-5"
+    },
+    {
+      id: 15,
+      cat: "genesis",
+      catName: "ดาวหางและสะเก็ดดาว",
+      q: "15. ข้อใดเรียงลำดับวิวัฒนาการของหินอวกาศจากนอกโลกสู่พื้นโลกได้อย่างถูกต้อง?",
+      opts: [
+        "ก. ดาวตก → อุกกาบาต → สะเก็ดดาว",
+        "ข. อุกกาบาต → สะเก็ดดาว → ดาวตก",
+        "ค. สะเก็ดดาว (Meteoroid) → ดาวตก (Meteor) → อุกกาบาต (Meteorite)",
+        "ง. ดาวหาง → ดาวตก → สะเก็ดดาว"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> สะเก็ดดาว (Meteoroid ในอวกาศ) → ดาวตก/ผีพุ่งไต้ (Meteor ลุกไหม้ในชั้นบรรยากาศ) → อุกกาบาต (Meteorite เผาไหม้ไม่หมด ตกถึงพื้นผิวโลก)",
+      refSection: "ตอนที่ 05 • 3 ขั้นบันไดหินอวกาศ",
+      refLink: "index.html#sec-5"
+    },
+    {
+      id: 16,
+      cat: "genesis",
+      catName: "เกณฑ์ดาวเคราะห์ IAU",
+      q: "16. ตามเกณฑ์ของ IAU ปี 2006 ข้อใดคือเหตุผลสำคัญที่ทำให้ 'ดาวพลูโต' ถูกลดสถานะเป็นดาวเคราะห์แคระ?",
+      opts: [
+        "ก. พลูโตไม่ได้โคจรรอบดวงอาทิตย์",
+        "ข. พลูโตไม่มีแรงโน้มถ่วงมากพอที่จะเป็นทรงกลม",
+        "ค. พลูโตไม่มีดวงจันทร์บริวาร",
+        "ง. พลูโตไม่สามารถกวาดวัตถุข้างเคียงรอบวงโคจรของตนเองได้ (วงโคจรซ้อนทับกับเนปจูนและแถบไคเปอร์)"
+      ],
+      ans: 3, // ง
+      exp: "<strong>ข้อ ง. ถูกต้อง:</strong> พลูโตไม่ผ่านเกณฑ์ข้อ 3 (Clear the neighborhood) เพราะวงโคจรมีวัตถุแถบไคเปอร์ลอยปะปนอยู่เป็นจำนวนมาก จึงถูกจัดเป็นดาวเคราะห์แคระ (Dwarf Planet)",
+      refSection: "ตอนที่ 05 • เกณฑ์ปลดดาวพลูโต (IAU 2006)",
+      refLink: "index.html#sec-5"
+    },
+    {
+      id: 17,
+      cat: "genesis",
+      catName: "ปรากฏการณ์ดาราศาสตร์",
+      q: "17. ปรากฏการณ์ 'แสงเหนือ-แสงใต้' (Aurora) ที่ขั้วโลก เกิดจากสิ่งใด?",
+      opts: [
+        "ก. อนุภาคมีประจุในลมสุริยะถูกสนามแม่เหล็กโลกเบี่ยงเบนเข้าปะทะกับแก๊สในชั้นบรรยากาศ",
+        "ข. แสงสะท้อนจากดวงอาทิตย์กับผืนน้ำแข็งขั้วโลก",
+        "ค. การระเบิดของดาวตกจำนวนมากในชั้นบรรยากาศ",
+        "ง. รังสีอัลตราไวโอเลตสะท้อนกับก๊าซโอโซน"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> สนามแม่เหล็กโลก (Magnetosphere) ช่วยดักจับและเบี่ยงเบนอนุภาคมีประจุพลังงานสูงจากลมสุริยะลงสู่ขั้วโลก ชนกับอะตอมออกซิเจน/ไนโตรเจนจนเปล่งแสงออโรราออกมา",
+      refSection: "ตอนที่ 08 • เกราะชั้นที่ 1 สนามแม่เหล็กโลก",
+      refLink: "index.html#sec-8"
+    },
+    {
+      id: 18,
+      cat: "gravity",
+      catName: "คำนวณแรงโน้มถ่วง",
+      q: "18. หากดาวเคราะห์ A ถูกย้ายตำแหน่งให้มีระยะห่างจากดวงอาทิตย์เพิ่มขึ้นเป็น 2 เท่าของระยะเดิม (r' = 2r) แรงดึงดูดโน้มถ่วงที่ดวงอาทิตย์กระทำต่อดาวเคราะห์ดวงนี้จะเปลี่ยนแปลงไปอย่างไร?",
+      opts: [
+        "ก. ลดลงเหลือ 1/4 เท่าของแรงเดิม",
+        "ข. ลดลงเหลือ 1/2 เท่าของแรงเดิม",
+        "ค. เพิ่มขึ้นเป็น 2 เท่าของแรงเดิม",
+        "ง. เพิ่มขึ้นเป็น 4 เท่าของแรงเดิม"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> จากกฎกำลังสองผกผัน $F = G\\frac{Mm}{r^2} \\implies F \\propto \\frac{1}{r^2}$ เมื่อระยะห่างเพิ่มเป็น 2 เท่า ($r'=2r$) แรงดึงดูดจะกลายเป็น $F' = \\frac{1}{(2)^2} F = \\frac{1}{4} F$ (ลดลงเหลือ 1/4 หรือ 25% ของแรงเดิม)",
+      refSection: "ตอนที่ 06 • กฎกำลังสองผกผัน & ตัวอย่างที่ 1",
+      refLink: "index.html#sec-6"
+    },
+    {
+      id: 19,
+      cat: "gravity",
+      catName: "คำนวณแรงโน้มถ่วง",
+      q: "19. หากดาวเคราะห์ดวงหนึ่งมีระยะห่างจากดวงอาทิตย์เพิ่มขึ้นเป็น 3 เท่า แรงดึงดูดระหว่างดวงอาทิตย์กับดาวเคราะห์ดวงนั้นจะลดลงเหลือสัดส่วนเท่าใด?",
+      opts: [
+        "ก. 1/3 เท่า",
+        "ข. 1/6 เท่า",
+        "ค. 1/9 เท่า",
+        "ง. 1/27 เท่า"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> ตามกฎกำลังสองผกผัน $F \\propto \\frac{1}{r^2}$ เมื่อระยะห่าง $r'=3r$ แรงดึงดูดจะลดลงเป็น $\\frac{1}{3^2} = \\frac{1}{9}$ เท่าของแรงดั้งเดิม",
+      refSection: "ตอนที่ 06 • กฎกำลังสองผกผัน & ตัวอย่างที่ 1",
+      refLink: "index.html#sec-6"
+    },
+    {
+      id: 20,
+      cat: "gravity",
+      catName: "คำนวณแรงโน้มถ่วง",
+      q: "20. นักบินอวกาศมีมวล 60 kg บนโลก เมื่อเดินทางไปลงจอดบนดวงจันทร์ซึ่งมีค่าความเร่งโน้มถ่วง g ประมาณ 1/6 เท่าของโลก มวลและน้ำหนักของเขาบนดวงจันทร์จะเป็นเท่าใด?",
+      opts: [
+        "ก. มวล 10 kg, น้ำหนัก 98 นิวตัน",
+        "ข. มวล 60 kg, น้ำหนักประมาณ 98 นิวตัน",
+        "ค. มวล 60 kg, น้ำหนัก 588 นิวตัน",
+        "ง. มวล 10 kg, น้ำหนัก 588 นิวตัน"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> มวล (Mass) เป็นปริมาณเนื้อสารที่คงที่เสมอ (60 kg เท่าเดิม) ส่วนน้ำหนัก (Weight = mg) บนดวงจันทร์จะลดลงเหลือ $60 \\times 1.63 \\approx 98\\text{ นิวตัน}$ (ลดลงเหลือ 1/6 ของน้ำหนักบนโลก)",
+      refSection: "ตอนที่ 06 • ตัวอย่างที่ 2: มวล vs น้ำหนัก",
+      refLink: "index.html#sec-6"
+    },
+    {
+      id: 21,
+      cat: "gravity",
+      catName: "ความเร็วในการโคจร",
+      q: "21. เหตุใดดาวพุธ (0.4 AU) จึงต้องโคจรรอบดวงอาทิตย์ด้วยความเร็วเฉลี่ยถึง 47.4 km/s ซึ่งเร็วกว่าดาวเนปจูน (30 AU) ที่โคจรเพียง 5.4 km/s?",
+      opts: [
+        "ก. เพราะดาวพุธมีมวลมากกว่าดาวเนปจูน",
+        "ข. เพราะดาวพุธมีอุณหภูมิสูงกว่าจึงมีพลังงานจลน์มากกว่า",
+        "ค. เพราะดาวพุธอยู่ใกล้ดวงอาทิตย์ จึงได้รับแรงโน้มถ่วงมหาศาล จำเป็นต้องมีความเร็วโคจรสูงเพื่อรักษาสมดุลวงโคจร",
+        "ง. เพราะดาวเนปจูนมีวงแหวนช่วยพยุงไม่ให้ตกลงสู่ดวงอาทิตย์"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> ยิ่งอยู่ใกล้ดวงอาทิตย์ ($r$ น้อย) แรงโน้มถ่วงจากดวงอาทิตย์จะยิ่งมหาศาล ดาวเคราะห์จึงต้องเคลื่อนที่ด้วยความเร็วสูงมากเพื่อสร้างแรงหนีศูนย์กลางรักษาวงโคจรไว้",
+      refSection: "ตอนที่ 06 • ผลของแรงโน้มถ่วงต่อความเร็วโคจร",
+      refLink: "index.html#sec-6"
+    },
+    {
+      id: 22,
+      cat: "gravity",
+      catName: "ความเร็วในวงโคจรวงรี",
+      q: "22. สำหรับดาวเคราะห์ที่โคจรรอบดวงอาทิตย์เป็นวงรี ดาวเคราะห์จะเคลื่อนที่ด้วยอัตราเร็วสูงที่สุด ณ ตำแหน่งใด?",
+      opts: [
+        "ก. จุดที่อยู่ใกล้ดวงอาทิตย์มากที่สุด (Perihelion)",
+        "ข. จุดที่อยู่ไกลดวงอาทิตย์มากที่สุด (Aphelion)",
+        "ค. จุดกึ่งกลางระนาบสุริยวิถี",
+        "ง. ความเร็วจะคงที่เท่ากันทุกตำแหน่งบนวงโคจร"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> ที่จุด Perihelion ดาวเคราะห์อยู่ใกล้ดวงอาทิตย์ที่สุด แรงดึงดูดโน้มถ่วงมีค่าสูงสุด ทำให้ดาวเคราะห์เร่งความเร็วจนมีอัตราเร็วโคจรสูงสุดในรอบปี",
+      refSection: "ตอนที่ 06 • วงโคจรวงรี Perihelion vs Aphelion",
+      refLink: "index.html#sec-6"
+    },
+    {
+      id: 23,
+      cat: "phenomena",
+      catName: "การเกิดฤดูกาล",
+      q: "23. สาเหตุที่แท้จริงที่ทำให้โลกเกิด 'ฤดูกาล' (Seasons) คือข้อใด?",
+      opts: [
+        "ก. ระยะห่างระหว่างโลกกับดวงอาทิตย์เปลี่ยนแปลงไปตามวงโคจรวงรี",
+        "ข. แกนหมุนของโลกเอียง 23.5 องศากับระนาบวงโคจร ทำให้แต่ละซีกโลกรับแสงอาทิตย์ไม่เท่ากันในรอบปี",
+        "ค. การเกิดพายุสุริยะและจุดดับบนดวงอาทิตย์ที่เพิ่มขึ้นเป็นรอบๆ",
+        "ง. การบดบังแสงของดวงจันทร์ในแต่ละเดือน"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> ฤดูกาลเกิดจาก 'แกนโลกเอียง $23.5^\\circ$' ทำให้ในแต่ละช่วงของปี ซีกโลกเหนือและใต้เอียงเข้าหาหรือเอียงหนีดวงอาทิตย์ ส่งผลให้มุมตกกระทบของแสงอาทิตย์และความยาวนานของกลางวัน-กลางคืนเปลี่ยนไป",
+      refSection: "ตอนที่ 07 • 1. การเกิดฤดูกาล (Seasons)",
+      refLink: "index.html#sec-7"
+    },
+    {
+      id: 24,
+      cat: "phenomena",
+      catName: "การเกิดฤดูกาล",
+      q: "24. ในวัน 'ครีษมายัน' (Summer Solstice ประมาณวันที่ 21 มิถุนายน) ปรากฏการณ์บนท้องฟ้าในซีกโลกเหนือจะเป็นอย่างไร?",
+      opts: [
+        "ก. กลางวันและกลางคืนยาวเท่ากันพอดี 12 ชั่วโมง",
+        "ข. กลางคืนยาวนานที่สุดในรอบปี",
+        "ค. กลางวันยาวนานที่สุดในรอบปี (ดวงอาทิตย์ขึ้นเร็วและตกช้าที่สุด)",
+        "ง. ดวงอาทิตย์ไม่ขึ้นเลยตลอด 24 ชั่วโมงทั่วทั้งโลก"
+      ],
+      ans: 2, // ค
+      exp: "<strong>ข้อ ค. ถูกต้อง:</strong> วันครีษมายัน (~21 มิ.ย.) ซีกโลกเหนือจะเอียงเข้าหาดวงอาทิตย์มากที่สุด ส่งผลให้เป็นจุดเริ่มต้นของฤดูร้อนและมีช่วงกลางวันยาวนานที่สุดในรอบปี",
+      refSection: "ตอนที่ 07 • วันครีษมายัน vs เหมายัน",
+      refLink: "index.html#sec-7"
+    },
+    {
+      id: 25,
+      cat: "phenomena",
+      catName: "ข้างขึ้น-ข้างแรม & น้ำขึ้น-น้ำลง",
+      q: "25. ปรากฏการณ์ 'น้ำเกิด' (Spring Tide) ที่ระดับน้ำขึ้นสูงสุดและน้ำลงต่ำสุด จะเกิดขึ้นในวันใดของรอบเดือน?",
+      opts: [
+        "ก. วันขึ้น 8 ค่ำ และ แรม 8 ค่ำ",
+        "ข. วันขึ้น 15 ค่ำ (จันทร์เพ็ญ) และ วันแรม 15 ค่ำ (จันทร์ดับ)",
+        "ค. วันขึ้น 1 ค่ำ และ แรม 1 ค่ำ",
+        "ง. วันที่เกิดสุริยุปราคาเท่านั้น"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> วันขึ้น 15 ค่ำ และ แรม 15 ค่ำ ดวงอาทิตย์ โลก และดวงจันทร์ เรียงตัวอยู่ในแนวเส้นตรงเดียวกัน (Syzygy) ทำให้แรงดึงดูดของดวงอาทิตย์และดวงจันทร์เสริมกัน เกิดเป็น 'น้ำเกิด'",
+      refSection: "ตอนที่ 07 • น้ำเกิด vs น้ำตาย",
+      refLink: "index.html#sec-7"
+    },
+    {
+      id: 26,
+      cat: "phenomena",
+      catName: "ข้างขึ้น-ข้างแรม & น้ำขึ้น-น้ำลง",
+      q: "26. ในวัน 'น้ำตาย' (Neap Tide) ตำแหน่งของดวงอาทิตย์ โลก และดวงจันทร์ จะมีลักษณะการจัดวางเชิงมุมอย่างไร?",
+      opts: [
+        "ก. ดวงอาทิตย์ โลก และดวงจันทร์ เรียงเป็นแนวเส้นตรงเดียวกัน",
+        "ข. ดวงจันทร์ทำมุมตั้งฉาก 90 องศากับดวงอาทิตย์โดยมีโลกเป็นจุดกึ่งกลาง (ขึ้น/แรม 8 ค่ำ)",
+        "ค. ดวงจันทร์โคจรมาบดบังดวงอาทิตย์พอดี",
+        "ง. โลกอยู่ตรงกลางระหว่างดวงอาทิตย์กับดาวเสาร์"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> ในวันขึ้น/แรม 8 ค่ำ ดวงจันทร์จะทำมุมตั้งฉาก $90^\\circ$ กับดวงอาทิตย์ แรงดึงดูดไทดัลจากดวงอาทิตย์จะหักล้างกับดวงจันทร์บางส่วน ทำให้ระดับน้ำขึ้นและน้ำลงแตกต่างกันน้อยที่สุด",
+      refSection: "ตอนที่ 07 • น้ำตาย (Neap Tide)",
+      refLink: "index.html#sec-7"
+    },
+    {
+      id: 27,
+      cat: "phenomena",
+      catName: "สุริยุปราคา & จันทรุปราคา",
+      q: "27. การเรียงลำดับตำแหน่งของเทหวัตถุในข้อใดทำให้เกิดปรากฏการณ์ 'สุริยุปราคา' (Solar Eclipse)?",
+      opts: [
+        "ก. ดวงอาทิตย์ → โลก → ดวงจันทร์ (เกิดวันเพ็ญ)",
+        "ข. ดวงอาทิตย์ → ดวงจันทร์ → โลก (เกิดวันจันทร์ดับ)",
+        "ค. โลก → ดวงอาทิตย์ → ดวงจันทร์",
+        "ง. ดวงจันทร์ → ดวงอาทิตย์ → โลก"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> สุริยุปราคาเกิดเมื่อ 'ดวงจันทร์โคจรเข้ามาอยู่ตรงกลางระหว่างดวงอาทิตย์กับโลก' ในวันจันทร์ดับ (New Moon) และทอดเงาลงมาบนพื้นผิวโลก",
+      refSection: "ตอนที่ 07 • 3. สุริยุปราคา และ จันทรุปราคา",
+      refLink: "index.html#sec-7"
+    },
+    {
+      id: 28,
+      cat: "probes",
+      catName: "เทคโนโลยีอวกาศ & ดาวเทียม",
+      q: "28. ดาวเทียมประเภท 'วงโคจรค้างฟ้า' (Geostationary Orbit / GEO ที่ระดับความสูง ~35,786 km) มีลักษณะการเคลื่อนที่อย่างไรเมื่อสังเกตจากพื้นโลก?",
+      opts: [
+        "ก. วิ่งผ่านขอบฟ้าจากทิศเหนือไปทิศใต้อย่างรวดเร็วใน 90 นาที",
+        "ข. เคลื่อนที่ด้วยความเร็วรอบโลกเท่ากับการหมุนรอบตัวเองของโลก (24 ชม.) เสมือนลอยนิ่งอยู่เหนือตำแหน่งเดิมตลอดเวลา",
+        "ค. โคจรสวนทางกับการหมุนของโลกเพื่อประหยัดพลังงาน",
+        "ง. ลอยออกนอกสนามแม่เหล็กโลกไปสู่แถบไคเปอร์"
+      ],
+      ans: 1, // ข
+      exp: "<strong>ข้อ ข. ถูกต้อง:</strong> ดาวเทียม GEO มีคาบการโคจร 24 ชั่วโมงเท่ากับคาบการหมุนของโลก จึงปรากฏเสมือนลอยนิ่งอยู่ประจำตำแหน่งเดิม เหมาะอย่างยิ่งสำหรับ 'ดาวเทียมสื่อสารและถ่ายทอดสัญญาณ'",
+      refSection: "ตอนที่ 08 • เทคโนโลยีอวกาศและดาวเทียมในชีวิตประจำวัน",
+      refLink: "index.html#sec-8"
+    },
+    {
+      id: 29,
+      cat: "probes",
+      catName: "เทคโนโลยีอวกาศ & ดาวเทียม",
+      q: "29. ข้อใดจัดเป็น 'เทคโนโลยีพลอยได้จากอวกาศ' (Spinoff Technology) ที่มนุษย์นำมาประยุกต์ใช้ในชีวิตประจำวันบนโลก?",
+      opts: [
+        "ก. แผงโซลาร์เซลล์ประสิทธิภาพสูง และ เบาะโฟมเมมโมรี (Memory Foam)",
+        "ข. รถยนต์พลังงานน้ำมันดีเซล",
+        "ค. หลอดไฟไส้ทังสเตนแบบดั้งเดิม",
+        "ง. เครื่องจักรไอน้ำในโรงงานอุตสาหกรรม"
+      ],
+      ans: 0, // ก
+      exp: "<strong>ข้อ ก. ถูกต้อง:</strong> เทคโนโลยีอวกาศที่ถูกถ่ายทอดสู่ชีวิตประจำวัน (Spinoff) ได้แก่ เมมโมรีโฟม (เดิมพัฒนาเพื่อลดแรงกระแทกให้นักบินอวกาศ), เซนเซอร์กล้อง CMOS, และเซลล์สุริยะประสิทธิภาพสูง",
+      refSection: "ตอนที่ 08 • Spinoff Technologies",
+      refLink: "index.html#sec-8"
+    },
+    {
+      id: 30,
+      cat: "probes",
+      catName: "ภารกิจสำรวจยุคใหม่",
+      q: "30. ภารกิจ Europa Clipper (NASA) และ JUICE (ESA) มุ่งเน้นการสำรวจสิ่งใดบนดวงจันทร์ของดาวพฤหัสบดี?",
+      opts: [
+        "ก. สำรวจแร่ทองคำและโลหะมีค่าเพื่อทำเหมืองอวกาศ",
+        "ข. สร้างสถานีวิจัยสำหรับมนุษย์ไปตั้งถิ่นฐาน",
+        "ค. วางระบบกล้องโทรทรรศน์ขนาดยักษ์บนผิวน้ำแข็ง",
+        "ง. สำรวจมหาสมุทรใต้ผิวน้ำแข็งและการค้นหาสัญญาณของสิ่งมีชีวิตต่างดาว"
+      ],
+      ans: 3, // ง
+      exp: "<strong>ข้อ ง. ถูกต้อง:</strong> ทั้ง Europa Clipper และ JUICE ถูกส่งไปสำรวจมหาสมุทรน้ำเค็มใต้ผิวน้ำแข็งของดวงจันทร์ยูโรปา, แกนิมีด และคัลลิสโต เพื่อประเมินสภาวะที่เอื้อต่อการมีชีวิต",
+      refSection: "ตอนที่ 08 • 3 ภารกิจตามล่ามหาสมุทรต่างดาว",
+      refLink: "index.html#sec-8"
+    }
+  ];
+
+  let currentScore = 0;
+  let answeredCount = 0;
+  let userAnswers = {};
+
+  function renderQuiz(filter = 'all') {
+    const list = document.getElementById('quiz-list');
+    list.innerHTML = '';
+
+    quizData.forEach((item) => {
+      if (filter !== 'all' && item.cat !== filter) return;
+
+      const qDiv = document.createElement('div');
+      qDiv.className = 'quiz-card';
+      qDiv.id = `quiz-node-${item.id}`;
+
+      let optsHtml = '';
+      item.opts.forEach((opt, optIdx) => {
+        let btnClass = 'option-btn';
+        let disabledAttr = '';
+        
+        if (userAnswers[item.id] !== undefined) {
+          disabledAttr = 'disabled';
+          if (optIdx === item.ans) {
+            btnClass += ' correct';
+          } else if (userAnswers[item.id] === optIdx) {
+            btnClass += ' wrong';
+          }
+        }
+
+        optsHtml += `<button class="${btnClass}" ${disabledAttr} onclick="submitAnswer(${item.id}, ${optIdx})">${opt}</button>`;
+      });
+
+      const expDisplay = userAnswers[item.id] !== undefined ? 'block' : 'none';
+
+      qDiv.innerHTML = `
+        <span class="quiz-cat-label">หมวด: ${item.catName}</span>
+        <div class="quiz-question-text">${item.q}</div>
+        <div class="options-group">${optsHtml}</div>
+        <div class="explanation-box" id="exp-node-${item.id}" style="display: ${expDisplay};">
+          <div class="exp-text">${item.exp}</div>
+          <div class="exp-footer-cite">
+            <span class="cite-label">📖 ตำแหน่งในหนังสือเรียน:</span>
+            <a href="${item.refLink}" target="_blank" class="cite-link-btn">${item.refSection} ↗</a>
+          </div>
+        </div>
+      `;
+
+      list.appendChild(qDiv);
+    });
+
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(list, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    }
+
+    updateProgress();
+  }
+
+  function submitAnswer(qId, optIdx) {
+    if (userAnswers[qId] !== undefined) return;
+
+    userAnswers[qId] = optIdx;
+    answeredCount++;
+
+    const item = quizData.find(q => q.id === qId);
+    if (optIdx === item.ans) {
+      currentScore++;
+    }
+
+    document.getElementById('score-display').textContent = `${currentScore} / ${quizData.length}`;
+    
+    const activeBtn = document.querySelector('.filter-btn.active');
+    const currentFilter = activeBtn ? activeBtn.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+    renderQuiz(currentFilter);
+
+    if (answeredCount === quizData.length) {
+      showFinalResult();
+    }
+  }
+
+  function updateProgress() {
+    const pct = (answeredCount / quizData.length) * 100;
+    document.getElementById('progress-fill').style.width = `${pct}%`;
+  }
+
+  function filterQuiz(cat) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderQuiz(cat);
+  }
+
+  function resetQuiz() {
+    if (confirm('คุณต้องการรีเซ็ตคะแนนและเริ่มทำแบบทดสอบใหม่ทั้งหมดใช่หรือไม่?')) {
+      currentScore = 0;
+      answeredCount = 0;
+      userAnswers = {};
+      document.getElementById('score-display').textContent = `0 / ${quizData.length}`;
+      document.getElementById('result-banner').style.display = 'none';
+      renderQuiz('all');
+      document.querySelectorAll('.filter-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === 0);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function showFinalResult() {
+    const banner = document.getElementById('result-banner');
+    const title = document.getElementById('result-title');
+    const desc = document.getElementById('result-desc');
+
+    banner.style.display = 'block';
+    if (currentScore >= 27) {
+      title.textContent = `🏆 ยอดเยี่ยมระดับปรมาจารย์ดาราศาสตร์! (${currentScore} / 30 คะแนน)`;
+      desc.textContent = 'น้องมีความรู้ความเข้าใจในเนื้อหาระบบสุริยะแน่นปึ้ก พร้อมลุยทุกสนามสอบทั้ง O-NET และสอบเข้า ม.4 โรงเรียนชั้นนำ!';
+    } else if (currentScore >= 21) {
+      title.textContent = `🎯 เยี่ยมมาก! (${currentScore} / 30 คะแนน)`;
+      desc.textContent = 'ผ่านเกณฑ์ระดับดีมาก ลองทบทวนข้อที่พลาดเพิ่มเติมอีกนิด รับรองคะแนนเต็มแน่นอนครับ!';
+    } else {
+      title.textContent = `💪 ทำได้ ${currentScore} / 30 คะแนน พยายามได้ดีมาก!`;
+      desc.textContent = 'ยังมีจุดที่น่าสนใจให้กลับไปอ่านทบทวนในหนังสือเรียน ลองคลิกอ่านทบทวนได้เลย!';
+    }
+  }
+
+  // Dark/Light Theme Switcher
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('subwatg-theme', newTheme);
+    updateThemeUI(newTheme);
+  }
+
+  function updateThemeUI(theme) {
+    const icons = document.querySelectorAll('.theme-icon');
+    const labels = document.querySelectorAll('.theme-label');
+    icons.forEach(el => el.textContent = theme === 'dark' ? '☀️' : '🌙');
+    labels.forEach(el => el.textContent = theme === 'dark' ? 'Light' : 'Dark');
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const savedTheme = localStorage.getItem('subwatg-theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeUI(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      updateThemeUI('dark');
+    }
+    renderQuiz('all');
+  });
+</script>
+
+</body>
+</html>
