@@ -1712,7 +1712,7 @@
         <span class="section-subhead">Earth-Moon-Sun</span>
       </div>
 
-      <!-- Figure 7 (NEW) -->
+      <!-- Figure 7 (Overview Infographic) -->
       <div class="figure-frame">
         <div class="figure-img-wrap" onclick="openLightbox('./assets/07-earth-moon-sun-phenomena.png', 'Earth Moon Sun Phenomena Guide — 4 ปรากฏการณ์สำคัญดาราศาสตร์ ม.ต้น')">
           <img src="./assets/07-earth-moon-sun-phenomena.png" alt="Earth Moon Sun Phenomena" class="figure-img" loading="lazy">
@@ -1724,14 +1724,24 @@
         </div>
       </div>
 
-      <div class="grid-2">
-        
-        <!-- Seasons -->
-        <div class="grid-card green-top">
+      <!-- Item 1: Seasons (Image Left, Explanation Right) -->
+      <div class="grid-2" style="margin-bottom: 24px; align-items: start;">
+        <div class="figure-frame" style="margin-bottom: 0;">
+          <div class="figure-img-wrap" onclick="openLightbox('./assets/season-changes.jpg', 'การเกิดฤดูกาล — แกนโลกเอียง 23.5 องศา และการโคจรรอบดวงอาทิตย์ (NARIT)')">
+            <img src="./assets/season-changes.jpg" alt="การเกิดฤดูกาล (Seasons)" class="figure-img" loading="lazy">
+            <div class="figure-zoom-hint">🔍 คลิกดูภาพเต็ม</div>
+          </div>
+          <div class="figure-caption">
+            <span><strong>ภาพประกอบ:</strong> กลไกการเกิดฤดูกาลและช่วงเวลากลางวัน-กลางคืน (สดร. NARIT)</span>
+            <span class="mono">2048×1366 JPG</span>
+          </div>
+        </div>
+
+        <div class="grid-card green-top" style="margin: 0;">
           <div class="grid-card-title">🌍 1. การเกิดฤดูกาล (Seasons) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
           <div class="grid-card-body">
             เกิดจาก <strong>แกนหมุนของโลกเอียง $23.5^\circ$ กับระนาบวงโคจร</strong> (ไม่ใช่ระยะห่างจากดวงอาทิตย์) ทำให้แต่ละซีกโลกรับแสงและความร้อนไม่เท่ากันในแต่ละช่วงของปี:
-            <ul style="padding-left: 18px; margin-top: 6px; font-size: 13.5px;">
+            <ul style="padding-left: 18px; margin-top: 10px; font-size: 13.5px; line-height: 1.7;">
               <li><strong>วสันตวิษุวัต (~21 มี.ค.):</strong> ดวงอาทิตย์ตั้งฉากเส้นศูนย์สูตร เริ่มฤดูใบไม้ผลิ (กลางวัน=กลางคืน)</li>
               <li><strong>ครีษมายัน (~21 มิ.ย.):</strong> ซีกโลกเหนือเอียงหาดวงอาทิตย์มากสุด <strong>กลางวันยาวนานที่สุดในรอบปี</strong></li>
               <li><strong>ศารทวิษุวัต (~22 ก.ย.):</strong> ดวงอาทิตย์ตั้งฉากเส้นศูนย์สูตร เริ่มฤดูใบไม้ร่วง (กลางวัน=กลางคืน)</li>
@@ -1739,9 +1749,11 @@
             </ul>
           </div>
         </div>
+      </div>
 
-        <!-- Moon Phases & Tides -->
-        <div class="grid-card green-top">
+      <!-- Item 2: Moon Phases & Tides (Explanation Left, Image Right) -->
+      <div class="grid-2" style="margin-bottom: 24px; align-items: start;">
+        <div class="grid-card green-top" style="margin: 0;">
           <div class="grid-card-title">🌊 2. ข้างขึ้น-ข้างแรม &amp; น้ำขึ้น-น้ำลง <a href="#ref-scimath" class="cite-badge">[สสวท.]</a></div>
           <div class="grid-card-body">
             <strong>• ข้างขึ้น-ข้างแรม (29.5 วัน):</strong> ดวงจันทร์โคจรรอบโลก ทำให้มุมสะท้อนแสงเปลี่ยนไป สว่างขึ้นจาก <em>จันทร์ดับ (New Moon)</em> → <em>จันทร์เต็มดวง (Full Moon)</em><br><br>
@@ -1750,26 +1762,36 @@
           </div>
         </div>
 
-        <!-- Eclipses -->
-        <div class="grid-card green-top" style="grid-column: 1 / -1;">
-          <div class="grid-card-title">🌑 3. สุริยุปราคา และ จันทรุปราคา (Eclipses) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
-          <div class="grid-card-body">
-            เกิดเมื่อระนาบวงโคจรของดวงจันทร์ตัดผ่านระนาบสุริยวิถี (ระนาบเอียง $5^\circ$ จึงไม่เกิดทุกเดือน):
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 8px;">
-              <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
-                <strong>☀️ สุริยุปราคา (Solar Eclipse):</strong> วันจันทร์ดับ (New Moon)<br>
-                <code>ดวงอาทิตย์ → ดวงจันทร์ → โลก</code><br>
-                ดวงจันทร์บังดวงอาทิตย์ ทอดเงาลงบนผิวโลก (เงามืด = เต็มดวง / เงามัว = บางส่วน)
-              </div>
-              <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
-                <strong>🌕 จันทรุปราคา (Lunar Eclipse):</strong> วันเพ็ญ (Full Moon)<br>
-                <code>ดวงอาทิตย์ → โลก → ดวงจันทร์</code><br>
-                โลกบังแสงอาทิตย์ ดวงจันทร์โคจรผ่านเข้าไปในเงาของโลก (เห็นได้พร้อมกันทั้งซีกโลกกลางคืน)
-              </div>
+        <div class="figure-frame" style="margin-bottom: 0;">
+          <div class="figure-img-wrap" onclick="openLightbox('./assets/น้ำขึ้น น้ำลงเกิดขึ้นได้อย่างไร 03.jpg', 'ปรากฏการณ์น้ำขึ้น-น้ำลง (Lunar Tides) — น้ำเกิด (Spring Tide) และ น้ำตาย (Neap Tide)')">
+            <img src="./assets/น้ำขึ้น น้ำลงเกิดขึ้นได้อย่างไร 03.jpg" alt="น้ำขึ้น-น้ำลง (Tides)" class="figure-img" loading="lazy">
+            <div class="figure-zoom-hint">🔍 คลิกดูภาพเต็ม</div>
+          </div>
+          <div class="figure-caption">
+            <span><strong>ภาพประกอบ:</strong> แผนผังตำแหน่งดวงจันทร์-ดวงอาทิตย์กับการเกิดน้ำเกิดและน้ำตาย (Lunar Tides)</span>
+            <span class="mono">1000×639 JPG</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3: Eclipses -->
+      <div class="grid-card green-top" style="margin-bottom: 24px;">
+        <div class="grid-card-title">🌑 3. สุริยุปราคา และ จันทรุปราคา (Eclipses) <a href="#ref-narit" class="cite-badge">[NARIT]</a></div>
+        <div class="grid-card-body">
+          เกิดเมื่อระนาบวงโคจรของดวงจันทร์ตัดผ่านระนาบสุริยวิถี (ระนาบเอียง $5^\circ$ จึงไม่เกิดทุกเดือน):
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 8px;">
+            <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
+              <strong>☀️ สุริยุปราคา (Solar Eclipse):</strong> วันจันทร์ดับ (New Moon)<br>
+              <code>ดวงอาทิตย์ → ดวงจันทร์ → โลก</code><br>
+              ดวงจันทร์บังดวงอาทิตย์ ทอดเงาลงบนผิวโลก (เงามืด = เต็มดวง / เงามัว = บางส่วน)
+            </div>
+            <div style="background: var(--paper-subtle); padding: 12px; border-radius: 4px;">
+              <strong>🌕 จันทรุปราคา (Lunar Eclipse):</strong> วันเพ็ญ (Full Moon)<br>
+              <code>ดวงอาทิตย์ → โลก → ดวงจันทร์</code><br>
+              โลกบังแสงอาทิตย์ ดวงจันทร์โคจรผ่านเข้าไปในเงาของโลก (เห็นได้พร้อมกันทั้งซีกโลกกลางคืน)
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
