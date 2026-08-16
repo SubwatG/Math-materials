@@ -362,6 +362,43 @@
           ]
         }
       ]
+    },
+    {
+      "id": "m5-complex-numbers",
+      "level": "m5",
+      "levelLabel": "มัธยมศึกษาตอนปลาย (ม.5)",
+      "title": "ม.5: จำนวนเชิงซ้อน (รูปเชิงขั้ว)",
+      "description": "แบบจำลองเรขาคณิตโต้ตอบและคู่มือเชิงลึก: การแปลงพิกัดเชิงขั้ว z = r(cos θ + i sin θ), การวิเคราะห์จัตุภาค Arg(z), แล็บการคูณ-หาร Phasors และทฤษฎีบท de Moivre",
+      "theme": "teal",
+      "order": 6,
+      "topics": [
+        {
+          "id": "m5-polar-form-topic",
+          "title": "บทที่ 2.3: รูปเชิงขั้วของจำนวนเชิงซ้อน (Polar Form)",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m5-polar-form-visualizer",
+              "filename": "interactive/m5-complex-polar/index.html",
+              "title": "Visualizer รูปเชิงขั้วของจำนวนเชิงซ้อน (4-in-1 Workbench)",
+              "description": "แบบจำลองเรขาคณิต 60 FPS โต้ตอบได้ 4 โหมด: การแปลงพิกัด, แล็บ Phasors คูณ-หาร, de Moivre และแบบฝึกหัดโต้ตอบ",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "katex-canvas"
+            },
+            {
+              "id": "m5-arg-arctan-deep-dive",
+              "filename": "interactive/m5-complex-polar/2.3-arg-arctan-deep-dive.html",
+              "title": "เจาะลึก: ทำไม Arg(z) ∈ (-π, π] และจุดบอดของ arctan(y/x)",
+              "description": "บทเรียนและ Sandbox เปรียบเทียบมุมจริง Arg(z) กับฟังก์ชัน arctan(y/x) พร้อมตารางสูตรคำนวณ 4 จัตุภาคที่ถูกต้อง 100%",
+              "type": "guide",
+              "typeLabel": "คู่มือเชิงลึก",
+              "tech": "katex-canvas"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

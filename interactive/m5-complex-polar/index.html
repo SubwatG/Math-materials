@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.3 รูปเชิงขั้วของจำนวนเชิงซ้อน — Technical Editorial Interactive Visualizer</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- KaTeX for pristine LaTeX Math Rendering (Synchronous + Auto-render) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==========================================================================
+       TECHNICAL EDITORIAL DESIGN TOKENS (3 THEMES: DARK / LIGHT / CYBER)
+       ========================================================================== */
+    :root[data-theme="dark"] {
+      --bg: #0c0b09;
+      --bg-elev: #14120e;
+      --bg-elev-2: #1c1a14;
+      --fg: #f0ead6;
+      --fg-dim: #c9c1ad;
+      --muted: #8a8275;
+      --accent: #f59e0b;
+      --accent-rgb: 245, 158, 11;
+      --accent-2: #06b6d4;
+      --accent-2-rgb: 6, 182, 212;
+      --border: rgba(240, 234, 214, 0.08);
+      --border-strong: rgba(240, 234, 214, 0.22);
+      --card: #15130e;
+      --code-bg: #060503;
+      --code-fg: #f0ead6;
+      --pitfall-bg: #1c130d;
+      --pitfall-fg: #f0ead6;
+      --slider-track: rgba(240, 234, 214, 0.15);
+      --slider-fill: #f59e0b;
+      --glow: rgba(245, 158, 11, 0.15);
+      --re-color: #f59e0b;
+      --im-color: #06b6d4;
+      --vec-color: #38bdf8;
+      --grid-line: rgba(240, 234, 214, 0.07);
+      --grid-axis: rgba(240, 234, 214, 0.35);
+      --unit-circle: rgba(245, 158, 11, 0.30);
+      --radius-circle: rgba(56, 189, 248, 0.55);
+      --scroll-track: #14120e;
+      --scroll-thumb: #332e26;
+      --scroll-thumb-hover: #f59e0b;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f3ecdc;
+      --bg-elev: #faf3e1;
+      --bg-elev-2: #fffaee;
+      --fg: #1a1610;
+      --fg-dim: #3d362b;
+      --muted: #6b6358;
+      --accent: #c2410c;
+      --accent-rgb: 194, 65, 12;
+      --accent-2: #0e7490;
+      --accent-2-rgb: 14, 116, 144;
+      --border: rgba(26, 22, 16, 0.12);
+      --border-strong: rgba(26, 22, 16, 0.28);
+      --card: #fffaee;
+      --code-bg: #1a1610;
+      --code-fg: #1a1610;
+      --pitfall-bg: #fdf2ea;
+      --pitfall-fg: #2c1a0e;
+      --slider-track: rgba(26, 22, 16, 0.18);
+      --slider-fill: #c2410c;
+      --glow: rgba(194, 65, 12, 0.12);
+      --re-color: #c2410c;
+      --im-color: #0e7490;
+      --vec-color: #0b2545;
+      --grid-line: rgba(26, 22, 16, 0.08);
+      --grid-axis: rgba(26, 22, 16, 0.40);
+      --unit-circle: rgba(194, 65, 12, 0.30);
+      --radius-circle: rgba(11, 37, 69, 0.50);
+      --scroll-track: #faf3e1;
+      --scroll-thumb: #d9cdb4;
+      --scroll-thumb-hover: #c2410c;
+    }
+
+    :root[data-theme="cyber"] {
+      --bg: #02060a;
+      --bg-elev: #050d10;
+      --bg-elev-2: #071318;
+      --fg: #4eff96;
+      --fg-dim: #8affb8;
+      --muted: #2a8a5e;
+      --accent: #ffea00;
+      --accent-rgb: 255, 234, 0;
+      --accent-2: #ff10f0;
+      --accent-2-rgb: 255, 16, 240;
+      --border: rgba(78, 255, 150, 0.18);
+      --border-strong: rgba(78, 255, 150, 0.45);
+      --card: #050d10;
+      --code-bg: #000000;
+      --code-fg: #4eff96;
+      --pitfall-bg: #10050d;
+      --pitfall-fg: #4eff96;
+      --slider-track: rgba(78, 255, 150, 0.20);
+      --slider-fill: #ffea00;
+      --glow: rgba(78, 255, 150, 0.20);
+      --re-color: #ffea00;
+      --im-color: #ff10f0;
+      --vec-color: #4eff96;
+      --grid-line: rgba(78, 255, 150, 0.10);
+      --grid-axis: rgba(78, 255, 150, 0.45);
+      --unit-circle: rgba(255, 234, 0, 0.35);
+      --radius-circle: rgba(255, 16, 240, 0.55);
+      --scroll-track: #050d10;
+      --scroll-thumb: #133a28;
+      --scroll-thumb-hover: #4eff96;
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 19px;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', 'IBM Plex Sans Thai Looped', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+      position: relative;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+    }
+
+    .font-display { font-family: 'Fraunces', 'Chakra Petch', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .font-thai { font-family: 'IBM Plex Sans Thai Looped', 'Chakra Petch', sans-serif; }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 3px; border: 1px solid var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }
+
+    /* CRT Scanlines for Cyber Theme */
+    [data-theme="cyber"] body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(78, 255, 150, 0.025) 2px, rgba(78, 255, 150, 0.025) 3px);
+      z-index: 200;
+      mix-blend-mode: overlay;
+    }
+
+    /* Background Grid 56px */
+    .bg-grid {
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      background-position: center center;
+    }
+
+    /* Top Progress Bar */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3.5px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      z-index: 150;
+      box-shadow: 0 0 12px var(--accent), 0 0 4px var(--accent-2);
+    }
+
+    /* Mouse Glow */
+    .mouse-glow {
+      position: fixed; width: 650px; height: 650px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12) 0%, transparent 65%);
+      pointer-events: none; transform: translate(-50%, -50%);
+      opacity: 0; transition: opacity 0.4s ease; filter: blur(35px); z-index: 1;
+    }
+
+    /* Terminal Mac Code Window */
+    .terminal-window {
+      background: var(--bg-elev);
+      color: var(--fg);
+      border: 1.5px solid var(--border-strong);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    .terminal-header {
+      background: var(--bg-elev-2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .mac-dots { display: flex; gap: 7px; }
+    .mac-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+
+    /* Canvas Container */
+    .canvas-frame {
+      position: relative;
+      background: var(--bg-elev);
+      border: 1.5px solid var(--border-strong);
+      overflow: hidden;
+    }
+    .canvas-frame canvas {
+      display: block; width: 100%; height: 100%; touch-action: none;
+    }
+    .corner-tick {
+      position: absolute; width: 10px; height: 10px;
+      border: 1.5px solid var(--accent);
+      background: var(--bg-elev);
+      z-index: 15; pointer-events: none;
+    }
+    .corner-tick.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .corner-tick.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+    .corner-tick.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+    .corner-tick.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+    .canvas-tag {
+      position: absolute; top: 10px; left: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 4px 8px;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      z-index: 12;
+      display: inline-flex; align-items: center; gap: 6px;
+      max-width: calc(100% - 150px);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .canvas-tag .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Editorial Styled Buttons */
+    .btn-editorial {
+      font-family: 'Space Grotesk', 'Chakra Petch', sans-serif;
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 9px 16px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev);
+      color: var(--fg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      min-height: 42px;
+    }
+    .btn-editorial:hover, .btn-editorial.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* Slider Styling */
+    .slider-custom {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 28px; background: transparent; cursor: pointer; margin: 4px 0;
+    }
+    .slider-custom:focus { outline: none; }
+    .slider-custom::-webkit-slider-runnable-track {
+      width: 100%; height: 6px; background: var(--slider-track);
+      border: 1px solid var(--border-strong); border-radius: 3px;
+    }
+    .slider-custom::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      height: 20px; width: 20px; border-radius: 50%;
+      background: var(--accent); border: 2.5px solid var(--bg-elev);
+      margin-top: -7.5px; box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
+      cursor: grab;
+    }
+    .slider-custom::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.2); }
+
+    /* Typewriter Cursor */
+    .typewriter-cursor::after {
+      content: '▌'; color: var(--accent); animation: blink 1s steps(1) infinite; margin-left: 2px;
+    }
+    @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+    /* Theme Pill Switcher */
+    .theme-toggle-pill {
+      display: inline-flex; background: var(--bg-elev); border: 1px solid var(--border-strong);
+      border-radius: 999px; padding: 3px; gap: 3px;
+    }
+    .theme-toggle-btn {
+      width: 36px; height: 36px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; background: transparent; color: var(--muted);
+      transition: all 0.25s ease; font-size: 0.85rem;
+    }
+    .theme-toggle-btn.active {
+      background: var(--accent); color: var(--bg); box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
+    }
+
+    .katex { font-size: 1.15em; color: inherit; }
+    .katex-display { margin: 0.35em 0 !important; }
+  </style>
+</head>
+<body class="bg-grid p-3 md:p-6 flex flex-col gap-5 max-w-[1680px] mx-auto">
+
+  <div class="mouse-glow" id="mouseGlow"></div>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- HEADER -->
+  <header class="relative z-10 p-5 md:p-6 rounded-md bg-[var(--bg-elev)] border border-[var(--border-strong)] flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+        <span class="px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-widest bg-[var(--bg-elev-2)] border border-[var(--border)] text-[var(--accent)] font-mono">
+          /dev/math • ค 30203 ม.5
+        </span>
+        <span class="px-2.5 py-0.5 text-[0.7rem] font-mono uppercase tracking-wider text-[var(--muted)] border border-[var(--border)]">
+          Chapter 2.3: Polar Form
+        </span>
+        <span class="px-2.5 py-0.5 text-[0.7rem] font-mono text-[var(--accent-2)] border border-[var(--border)]">
+          <i class="fa-solid fa-bolt text-[0.65rem]"></i> DUAL-ENGINE
+        </span>
+      </div>
+
+      <h1 class="text-2xl md:text-4xl font-bold tracking-tight font-display text-[var(--fg)] flex items-center gap-2">
+        <span id="typewriterText">2.3 รูปเชิงขั้วของจำนวนเชิงซ้อน</span>
+        <span class="typewriter-cursor"></span>
+      </h1>
+
+      <p class="text-sm md:text-base text-[var(--fg-dim)] font-thai mt-1 max-w-4xl leading-relaxed">
+        คู่มือเชิงลึกและแบบจำลองเรขาคณิตโต้ตอบ: แปลงพิกัด $z = x+yi \leftrightarrow r e^{i\theta}$, วิเคราะห์จัตุภาค $\mathrm{Arg}(z)$, แล็บการคูณ-หารเวกเตอร์ และการยกกำลัง de Moivre $z^n$
+      </p>
+    </div>
+
+    <!-- Theme Switcher & Actions -->
+    <div class="flex items-center flex-wrap gap-2.5">
+      <div class="theme-toggle-pill" title="สลับธีม (คีย์ลัด: T)">
+        <button onclick="setTheme('dark')" id="theme-btn-dark" class="theme-toggle-btn active" title="Dark Obsidian">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button onclick="setTheme('light')" id="theme-btn-light" class="theme-toggle-btn" title="Paper & Rust">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+        <button onclick="setTheme('cyber')" id="theme-btn-cyber" class="theme-toggle-btn" title="Cyber Matrix">
+          <i class="fa-solid fa-terminal"></i>
+        </button>
+      </div>
+
+      <button onclick="resetAllState()" class="btn-editorial" title="รีเซ็ตค่าเริ่มต้นทั้งหมด">
+        <i class="fa-solid fa-rotate-left"></i> รีเซ็ต
+      </button>
+
+      <a href="2.3-arg-arctan-deep-dive.html" class="btn-editorial text-[var(--accent)] border-[var(--accent)]" title="เปิดหน้าอธิบายเชิงลึกเรื่อง Arg(z) และ arctan(y/x)">
+        <i class="fa-solid fa-book-open"></i> เจาะลึก $\mathrm{Arg}(z)$
+      </a>
+
+      <button onclick="window.print()" class="btn-editorial" title="พิมพ์หรือบันทึกเป็น PDF">
+        <i class="fa-solid fa-print"></i> พิมพ์ / PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS (4-IN-1 EDITORIAL MODES) -->
+  <nav class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-2">
+    <button onclick="switchMode(1)" id="tab-1" class="btn-editorial active !justify-start p-3.5 text-left">
+      <i class="fa-solid fa-compass text-[var(--accent)] text-base flex-shrink-0"></i>
+      <div class="min-w-0">
+        <div class="font-bold text-sm truncate">1. พิกัดเชิงขั้ว & $\mathrm{Arg}(z)$</div>
+        <div class="text-[0.72rem] opacity-70 font-thai font-normal mt-0.5 truncate">แปลง $x+yi \leftrightarrow r\angle\theta$ และ 4 จัตุภาค</div>
+      </div>
+    </button>
+
+    <button onclick="switchMode(2)" id="tab-2" class="btn-editorial !justify-start p-3.5 text-left">
+      <i class="fa-solid fa-arrows-spin text-[var(--accent-2)] text-base flex-shrink-0"></i>
+      <div class="min-w-0">
+        <div class="font-bold text-sm truncate">2. แล็บการคูณ-หาร (Phasors)</div>
+        <div class="text-[0.72rem] opacity-70 font-thai font-normal mt-0.5 truncate">คูณขนาด บวกมุม • หารขนาด ลบมุม</div>
+      </div>
+    </button>
+
+    <button onclick="switchMode(3)" id="tab-3" class="btn-editorial !justify-start p-3.5 text-left">
+      <i class="fa-solid fa-hurricane text-[var(--accent)] text-base flex-shrink-0"></i>
+      <div class="min-w-0">
+        <div class="font-bold text-sm truncate">3. de Moivre & เกลียว $z^n$</div>
+        <div class="text-[0.72rem] opacity-70 font-thai font-normal mt-0.5 truncate">ทฤษฎีบทการยกกำลังและลำดับ $z^k$</div>
+      </div>
+    </button>
+
+    <button onclick="switchMode(4)" id="tab-4" class="btn-editorial !justify-start p-3.5 text-left">
+      <i class="fa-solid fa-clipboard-check text-[var(--accent-2)] text-base flex-shrink-0"></i>
+      <div class="min-w-0">
+        <div class="font-bold text-sm truncate">4. แบบฝึกหัดโต้ตอบ (Drills)</div>
+        <div class="text-[0.72rem] opacity-70 font-thai font-normal mt-0.5 truncate">แก้โจทย์ท้ายบท 2.1–2.4 พร้อมเฉลย</div>
+      </div>
+    </button>
+  </nav>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+    <!-- LEFT PANEL: Controls (4 Cols) -->
+    <aside class="lg:col-span-4 flex flex-col gap-4">
+
+      <!-- MASTER CONTROL CARD -->
+      <div class="p-4 md:p-5 rounded-md bg-[var(--bg-elev)] border border-[var(--border-strong)] flex flex-col gap-4">
+        
+        <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5 flex-wrap gap-2">
+          <div class="text-sm font-bold uppercase tracking-wider font-mono flex items-center gap-2 text-[var(--accent)]">
+            <i class="fa-solid fa-sliders"></i> พารามิเตอร์ควบคุม
+          </div>
+          <span id="activeModeBadge" class="text-[0.7rem] font-mono px-2.5 py-0.5 bg-[var(--bg-elev-2)] border border-[var(--border)]">
+            MODE 1: POLAR CONVERSION
+          </span>
+        </div>
+
+        <!-- DUAL-ANIMATION CONTROLLER -->
+        <div id="orbitControlContainer" class="p-3.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold font-thai flex items-center gap-1.5 text-[var(--fg)]">
+              <i class="fa-solid fa-circle-play text-[var(--accent)]"></i> โหมดแอนิเมชันอัตโนมัติ (Auto Orbit):
+            </span>
+            <button id="autoOrbitBtn" onclick="toggleAutoOrbit()" class="px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider border border-[var(--border-strong)] bg-[var(--bg)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition">
+              <i class="fa-solid fa-play text-[0.65rem]"></i> เล่น (Play)
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+            <div>
+              <div class="text-[0.7rem] text-[var(--muted)]">ความเร็วเชิงมุม ($\omega$):</div>
+              <input type="range" id="orbitSpeed" min="0.2" max="3.0" step="0.1" value="1.0" oninput="onOrbitSpeedChange()" class="slider-custom" />
+            </div>
+            <div>
+              <div class="text-[0.7rem] text-[var(--muted)]">ทิศทางการหมุน:</div>
+              <div class="flex gap-1.5 mt-1">
+                <button onclick="setOrbitDir(1)" id="dir-ccw-btn" class="px-2.5 py-1 text-xs bg-[var(--accent)] text-[var(--bg)] border border-[var(--accent)] font-bold">ทวนเข็ม (+)</button>
+                <button onclick="setOrbitDir(-1)" id="dir-cw-btn" class="px-2.5 py-1 text-xs bg-[var(--bg)] border border-[var(--border)]">ตามเข็ม (-)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODE 1 CONTROLS: Polar Explorer -->
+        <div id="panel-mode-1" class="mode-panel flex flex-col gap-3.5">
+          <div class="text-sm font-thai font-semibold text-[var(--fg-dim)]">
+            ปรับตำแหน่งเวกเตอร์ $z$ หรือคลิกลากจุดบนระนาบเชิงซ้อน:
+          </div>
+
+          <!-- Cartesian Sliders -->
+          <div class="p-3.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2">
+            <div class="flex justify-between items-center text-xs font-mono">
+              <span class="text-[var(--re-color)] font-bold">ส่วนจริง $x = \text{Re}(z)$</span>
+              <span id="val-x" class="font-bold text-sm">1.00</span>
+            </div>
+            <input type="range" id="input-x" min="-4.0" max="4.0" step="0.05" value="1.00" oninput="handleCartesianInput()" class="slider-custom" />
+
+            <div class="flex justify-between items-center text-xs font-mono mt-1">
+              <span class="text-[var(--im-color)] font-bold">ส่วนจินตภาพ $y = \text{Im}(z)$</span>
+              <span id="val-y" class="font-bold text-sm">1.00</span>
+            </div>
+            <input type="range" id="input-y" min="-4.0" max="4.0" step="0.05" value="1.00" oninput="handleCartesianInput()" class="slider-custom" />
+          </div>
+
+          <!-- Polar Sliders (r max expanded to 5.7 to fully support x,y in [-4,4]) -->
+          <div class="p-3.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2">
+            <div class="flex justify-between items-center text-xs font-mono">
+              <span class="text-[var(--vec-color)] font-bold">โมดูลัส $r = |z|$</span>
+              <span id="val-r" class="font-bold text-sm">1.414</span>
+            </div>
+            <input type="range" id="input-r" min="0.0" max="5.7" step="0.05" value="1.414" oninput="handlePolarInput()" class="slider-custom" />
+
+            <div class="flex justify-between items-center text-xs font-mono mt-1">
+              <span class="text-[var(--accent)] font-bold">อาร์กิวเมนต์ $\theta$ (องศา)</span>
+              <span id="val-theta" class="font-bold text-sm">45° (π/4)</span>
+            </div>
+            <input type="range" id="input-theta" min="-180" max="180" step="1" value="45" oninput="handlePolarInput()" class="slider-custom" />
+          </div>
+
+          <!-- Standard Book Presets -->
+          <div>
+            <div class="text-xs font-bold font-mono text-[var(--accent)] mb-1.5 flex items-center gap-1.5">
+              <i class="fa-solid fa-bookmark"></i> ตัวอย่างมาตรฐานจากคู่มือการสอน:
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <button onclick="setVectorPreset(-Math.sqrt(3), -1)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 <strong>Ex 2.1:</strong> $-\sqrt{3}-i$ <span class="opacity-60 text-[0.7rem]">(Q3)</span>
+              </button>
+              <button onclick="setVectorPreset(0, 1)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 <strong>Ex 2.2:</strong> $i$ <span class="opacity-60 text-[0.7rem]">(+Im Axis)</span>
+              </button>
+              <button onclick="setVectorPreset(Math.sqrt(3)/2, 0.5)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 <strong>Ex 2.7:</strong> $\frac{\sqrt{3}}{2}+\frac{1}{2}i$ <span class="opacity-60 text-[0.7rem]">($r=1$)</span>
+              </button>
+              <button onclick="setVectorPreset(-1, Math.sqrt(3))" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 <strong>HW 2.1:</strong> $-1+\sqrt{3}i$ <span class="opacity-60 text-[0.7rem]">(Q2)</span>
+              </button>
+              <button onclick="setVectorPreset(1, 1)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 $1+i$ <span class="opacity-60 text-[0.7rem]">($\pi/4$)</span>
+              </button>
+              <button onclick="setVectorPreset(1, -Math.sqrt(3))" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] transition text-xs font-thai">
+                📌 $1-\sqrt{3}i$ <span class="opacity-60 text-[0.7rem]">(Q4)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODE 2 CONTROLS: Phasors Mul/Div -->
+        <div id="panel-mode-2" class="mode-panel hidden flex flex-col gap-3.5">
+          <div class="text-sm font-thai font-semibold text-[var(--fg-dim)]">
+            กำหนดเวกเตอร์ 2 ตัว เพื่อตรวจสอบผลคูณหรือผลหารทางเรขาคณิต:
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 p-1 bg-[var(--bg-elev-2)] border border-[var(--border)] text-xs font-bold text-center font-mono">
+            <button id="op-mul-btn" onclick="setPhasorOp('mul')" class="py-2 bg-[var(--accent)] text-[var(--bg)] border border-[var(--accent)]">
+              คูณ: $z_1 \cdot z_2$
+            </button>
+            <button id="op-div-btn" onclick="setPhasorOp('div')" class="py-2 opacity-70 hover:opacity-100">
+              หาร: $\dfrac{z_1}{z_2}$
+            </button>
+          </div>
+
+          <!-- z1 Sliders -->
+          <div class="p-3 bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2 text-xs font-mono">
+            <div class="flex justify-between items-center text-[var(--accent-2)] font-bold">
+              <span>เวกเตอร์ $z_1 = r_1 e^{i\theta_1}$</span>
+              <span id="label-m2-z1">2.0 ∠ 60°</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="w-7 text-[var(--muted)]">$r_1$:</span>
+              <input type="range" id="slider-m2-r1" min="0.5" max="4.0" step="0.1" value="2.0" oninput="onMode2SliderChange()" class="slider-custom" />
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="w-7 text-[var(--muted)]">$\theta_1$:</span>
+              <input type="range" id="slider-m2-th1" min="-180" max="180" step="5" value="60" oninput="onMode2SliderChange()" class="slider-custom" />
+            </div>
+          </div>
+
+          <!-- z2 Sliders -->
+          <div class="p-3 bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2 text-xs font-mono">
+            <div class="flex justify-between items-center text-[var(--accent)] font-bold">
+              <span>เวกเตอร์ $z_2 = r_2 e^{i\theta_2}$</span>
+              <span id="label-m2-z2">1.5 ∠ 30°</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="w-7 text-[var(--muted)]">$r_2$:</span>
+              <input type="range" id="slider-m2-r2" min="0.2" max="4.0" step="0.1" value="1.5" oninput="onMode2SliderChange()" class="slider-custom" />
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="w-7 text-[var(--muted)]">$\theta_2$:</span>
+              <input type="range" id="slider-m2-th2" min="-180" max="180" step="5" value="30" oninput="onMode2SliderChange()" class="slider-custom" />
+            </div>
+          </div>
+
+          <button onclick="playPhasorAnimation()" class="btn-editorial w-full !justify-center py-2.5 text-xs">
+            <i class="fa-solid fa-play"></i> เล่นแอนิเมชันการหมุนและการสเกล
+          </button>
+        </div>
+
+        <!-- MODE 3 CONTROLS: de Moivre -->
+        <div id="panel-mode-3" class="mode-panel hidden flex flex-col gap-3.5">
+          <div class="text-sm font-thai font-semibold text-[var(--fg-dim)]">
+            กำหนดฐาน $z$ และเลขชี้กำลัง $n \in \mathbb{Z}$ เพื่อดูพฤติกรรมลำดับ $z^k$:
+          </div>
+
+          <div class="p-3.5 bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2 font-mono">
+            <div class="flex justify-between items-center text-xs font-bold">
+              <span>เลขชี้กำลัง $n$:</span>
+              <span id="label-m3-n" class="text-[var(--accent)] text-base">n = 3</span>
+            </div>
+            <input type="range" id="slider-m3-n" min="-4" max="10" step="1" value="3" oninput="onMode3SliderChange()" class="slider-custom" />
+            <div class="flex justify-between text-[0.7rem] text-[var(--muted)]">
+              <span>-4</span><span>0</span><span>3</span><span>6</span><span>10</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-2 font-mono">
+            <div class="flex justify-between items-center text-xs font-bold">
+              <span>โมดูลัสฐาน $r$:</span>
+              <span id="label-m3-r">1.00</span>
+            </div>
+            <input type="range" id="slider-m3-r" min="0.2" max="1.5" step="0.05" value="1.00" oninput="onMode3SliderChange()" class="slider-custom" />
+
+            <div class="flex justify-between items-center text-xs font-bold mt-1">
+              <span>มุมฐาน $\theta$:</span>
+              <span id="label-m3-th">45° (π/4)</span>
+            </div>
+            <input type="range" id="slider-m3-th" min="-180" max="180" step="5" value="45" oninput="onMode3SliderChange()" class="slider-custom" />
+          </div>
+
+          <div class="flex flex-col gap-2 text-xs font-thai">
+            <div class="font-bold text-[var(--accent)]">ตัวอย่างรูปแบบ:</div>
+            <button onclick="setMode3Preset(1.0, 45, 8)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] text-xs">
+              🌀 <strong>วงกลมหนึ่งหน่วย ($r=1$):</strong> de Moivre หมุนวนรอบจุดกำเนิด
+            </button>
+            <button onclick="setMode3Preset(1.15, 40, 6)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] text-xs">
+              🌀 <strong>ขยายตัว ($r > 1$):</strong> เวกเตอร์ยาวขึ้นตามลำดับเรขาคณิต ($r^n$)
+            </button>
+            <button onclick="setMode3Preset(0.85, 40, 8)" class="p-2.5 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] hover:border-[var(--accent)] text-xs">
+              🌀 <strong>ยุบตัว ($r < 1$):</strong> เวกเตอร์หดสั้นลงเข้าสู่จุดกำเนิด
+            </button>
+          </div>
+        </div>
+
+        <!-- MODE 4 CONTROLS: Drills -->
+        <div id="panel-mode-4" class="mode-panel hidden flex flex-col gap-3 font-thai">
+          <div class="text-sm font-semibold text-[var(--fg-dim)]">
+            เลือกข้อโจทย์เพื่อตรวจขั้นตอนวิธีคำนวณ:
+          </div>
+
+          <div class="flex flex-col gap-2 text-xs">
+            <button onclick="loadDrillProblem(1)" id="drill-opt-1" class="p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--accent)] text-[var(--accent)] font-bold text-xs">
+              ข้อ 1: แปลง $z = -1+\sqrt{3}i$ เป็นรูปเชิงขั้ว (HW 2.1)
+            </button>
+            <button onclick="loadDrillProblem(2)" id="drill-opt-2" class="p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-75 hover:opacity-100 text-xs">
+              ข้อ 2: การคูณ $z_1z_2$ และการหาร $\frac{z_1}{z_2}$ (HW 2.2)
+            </button>
+            <button onclick="loadDrillProblem(3)" id="drill-opt-3" class="p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-75 hover:opacity-100 text-xs">
+              ข้อ 3: การยกกำลัง $(1+i)^{10}$ ด้วย de Moivre (HW 2.3)
+            </button>
+            <button onclick="loadDrillProblem(4)" id="drill-opt-4" class="p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-75 hover:opacity-100 text-xs">
+              ข้อ 4: การหาค่า $z^{2024}$ เมื่อ $z = -\frac{1}{2}+\frac{\sqrt{3}}{2}i$ (HW 2.4)
+            </button>
+          </div>
+
+          <button onclick="generateRandomDrillProblem()" class="btn-editorial w-full !justify-center py-2.5 mt-1 text-xs">
+            <i class="fa-solid fa-dice"></i> สุ่มโจทย์ใหม่ (Infinite Drill)
+          </button>
+        </div>
+
+        <!-- Snap & Grid Options -->
+        <div class="border-t border-[var(--border)] pt-3 flex flex-col gap-2 font-mono text-xs">
+          <div class="flex justify-between items-center">
+            <span class="text-[var(--muted)]">รูปแบบกริด:</span>
+            <div class="flex gap-1.5 text-xs">
+              <button onclick="setGridType('both')" id="grid-both-btn" class="px-2.5 py-1 bg-[var(--accent)] text-[var(--bg)] font-bold">ทั้งคู่</button>
+              <button onclick="setGridType('polar')" id="grid-polar-btn" class="px-2.5 py-1 bg-[var(--bg-elev-2)] border border-[var(--border)]">ขั้ว</button>
+              <button onclick="setGridType('cartesian')" id="grid-cart-btn" class="px-2.5 py-1 bg-[var(--bg-elev-2)] border border-[var(--border)]">ฉาก</button>
+            </div>
+          </div>
+
+          <label class="flex items-center gap-2 cursor-pointer font-thai text-xs text-[var(--fg-dim)] mt-1">
+            <input type="checkbox" id="snapToggle" checked onchange="toggleAngleSnap()" class="cursor-pointer" />
+            <span>Snap มุมพิเศษ ($\frac{\pi}{6}, \frac{\pi}{4}, \frac{\pi}{3}, \frac{\pi}{2}, \dots$)</span>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- QUADRANT ANALYSIS & PITFALL CARD -->
+      <div class="p-4 rounded-md bg-[var(--bg-elev)] border border-[var(--border-strong)] flex flex-col gap-2.5 font-thai">
+        <div class="flex items-center justify-between font-bold text-sm border-b border-[var(--border)] pb-2 flex-wrap gap-1">
+          <span id="quadrantTitle" class="text-[var(--accent)] flex items-center gap-1.5">
+            <i class="fa-solid fa-location-crosshairs"></i> จัตุภาคที่ 1 (Quadrant I)
+          </span>
+          <span id="quadrantSign" class="font-mono text-xs text-[var(--muted)]">(x > 0, y > 0)</span>
+        </div>
+
+        <div id="quadrantRule" class="text-xs text-[var(--fg-dim)] leading-relaxed"></div>
+        <div id="quadrantFormula" class="p-2.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] font-mono text-center text-sm overflow-x-auto"></div>
+
+        <div class="p-3.5 rounded border-l-4 border-red-500 text-xs flex flex-col gap-2 mt-1" style="background-color: var(--pitfall-bg); color: var(--pitfall-fg);">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-red-500 flex items-center gap-1.5 text-sm">
+              <i class="fa-solid fa-triangle-exclamation"></i> ข้อควรระวังสำคัญ (Common Pitfall):
+            </div>
+            <a href="2.3-arg-arctan-deep-dive.html" class="font-mono text-[0.68rem] text-[var(--accent)] hover:underline flex items-center gap-1" title="อ่านบทเรียนเชิงลึกและเปิด Sandbox">
+              <span>อ่านต่อเชิงลึก</span> <i class="fa-solid fa-arrow-up-right-from-square text-[0.6rem]"></i>
+            </a>
+          </div>
+          <div id="pitfallExplainerText1" class="leading-relaxed opacity-95 text-xs"></div>
+          <div id="pitfallExplainerText2" class="leading-relaxed opacity-95 text-xs font-bold text-red-400"></div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT PANEL: Canvas & Terminal (8 Cols) -->
+    <section class="lg:col-span-8 flex flex-col gap-4">
+
+      <!-- CANVAS FRAME -->
+      <div class="canvas-frame rounded-md aspect-[4/3] md:aspect-[16/10] w-full select-none">
+        <div class="corner-tick tl"></div>
+        <div class="corner-tick tr"></div>
+        <div class="corner-tick bl"></div>
+        <div class="corner-tick br"></div>
+
+        <div class="canvas-tag">
+          <span class="dot bg-[var(--accent)] animate-pulse"></span>
+          <span id="canvasTagText">ARGAND PLANE $\mathbb{C}$ • DUAL-ENGINE</span>
+        </div>
+
+        <div class="absolute top-2.5 right-3 font-mono text-xs px-2.5 py-1 bg-[var(--bg-elev-2)] border border-[var(--border)] z-10 max-w-[50%] truncate" id="liveCoordsBadge">
+          z = 1.00 + 1.00i
+        </div>
+
+        <canvas id="complexCanvas" class="cursor-crosshair"></canvas>
+
+        <div class="absolute bottom-2.5 left-3 right-3 pointer-events-none flex justify-between items-end text-xs font-mono z-10 flex-wrap gap-2">
+          <div class="px-2.5 py-1 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-90 backdrop-blur-sm pointer-events-auto flex items-center gap-2">
+            <button onclick="zoomCanvas(1.2)" title="ขยาย" class="hover:text-[var(--accent)] px-1 min-h-[30px] min-w-[30px]"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+            <button onclick="zoomCanvas(0.83)" title="ย่อ" class="hover:text-[var(--accent)] px-1 min-h-[30px] min-w-[30px]"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+            <button onclick="resetCanvasOrigin()" title="จัดกึ่งกลาง" class="hover:text-[var(--accent)] px-1 min-h-[30px] min-w-[30px]"><i class="fa-solid fa-arrows-to-dot"></i></button>
+          </div>
+
+          <div id="canvasRadiusIndicator" class="px-2.5 py-1 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-90 backdrop-blur-sm font-bold text-right"></div>
+        </div>
+      </div>
+
+      <!-- MAC TERMINAL -->
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="flex items-center gap-3">
+            <div class="mac-dots">
+              <span class="mac-dot bg-[#ff5f56]"></span>
+              <span class="mac-dot bg-[#ffbd2e]"></span>
+              <span class="mac-dot bg-[#27c93f]"></span>
+            </div>
+            <span id="terminalFilename" class="font-mono text-xs text-[var(--muted)] flex items-center gap-1.5">
+              <i class="fa-solid fa-terminal text-[10px]"></i> live_math_inspector.tex
+            </span>
+          </div>
+
+          <button onclick="copyLatexToClipboard()" id="copyLatexBtn" class="px-2.5 py-1 text-xs font-mono border border-[var(--border)] rounded bg-[var(--bg-elev)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition flex items-center gap-1.5">
+            <i class="fa-regular fa-copy"></i> คัดลอก LaTeX
+          </button>
+        </div>
+
+        <div class="p-4 md:p-6 flex flex-col gap-4 font-mono text-[var(--fg)]">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <div class="p-3.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-1.5 min-w-0">
+              <div id="terminalBox1Label" class="text-[0.7rem] uppercase font-bold text-[var(--accent)] flex items-center justify-between">
+                <span>1. รูปเชิงขั้ว (Polar Form)</span>
+                <span class="text-[0.65rem] text-[var(--muted)]">z = r(cos θ + i sin θ)</span>
+              </div>
+              <div id="terminalPolarEq" class="text-base md:text-lg font-bold py-1 overflow-x-auto text-center"></div>
+            </div>
+
+            <div class="p-3.5 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-1.5 min-w-0">
+              <div id="terminalBox2Label" class="text-[0.7rem] uppercase font-bold text-[var(--accent-2)] flex items-center justify-between">
+                <span>2. รูปออยเลอร์ (Euler Form)</span>
+                <span class="text-[0.65rem] text-[var(--muted)]">z = r e^{iθ}</span>
+              </div>
+              <div id="terminalEulerEq" class="text-base md:text-lg font-bold py-1 overflow-x-auto text-center"></div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded bg-[var(--bg-elev-2)] border border-[var(--border)] flex flex-col gap-3 text-xs font-thai">
+            <div id="terminalStepHeader" class="font-bold text-[var(--fg)] flex items-center gap-2 border-b border-[var(--border)] pb-2 font-mono text-sm md:text-base"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 items-start">
+              <div class="p-3 rounded bg-[var(--bg-elev)] border border-[var(--border)] flex flex-col gap-2 min-w-0">
+                <span id="step1Header" class="font-bold text-[var(--accent)] text-sm md:text-base"></span>
+                <div id="stepModulusText" class="font-mono text-xs md:text-sm text-[var(--fg)] overflow-x-auto pb-1"></div>
+              </div>
+
+              <div class="p-3 rounded bg-[var(--bg-elev)] border border-[var(--border)] flex flex-col gap-2 min-w-0">
+                <span id="step2Header" class="font-bold text-[var(--accent-2)] text-sm md:text-base"></span>
+                <div id="stepQuadrantText" class="font-mono text-xs md:text-sm text-[var(--fg)] overflow-x-auto pb-1"></div>
+              </div>
+
+              <div class="p-3 rounded bg-[var(--bg-elev)] border border-[var(--border)] flex flex-col gap-2 min-w-0">
+                <span id="step3Header" class="font-bold text-[var(--re-color)] text-sm md:text-base"></span>
+                <div id="stepGeneralArgText" class="font-mono text-xs md:text-sm text-[var(--fg)] overflow-x-auto pb-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 p-5 rounded-md bg-[var(--bg-elev)] border border-[var(--border-strong)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-thai text-[var(--fg-dim)]">
+    <div class="flex flex-col gap-1">
+      <div class="font-bold text-[var(--fg)] uppercase tracking-wider font-mono flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-graduation-cap text-[var(--accent)]"></i> ทฤษฎีบทสำคัญในบทเรียน 2.3 (Theorem Matrix)
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+        <span>• <strong>การคูณ:</strong> $z_1 z_2 = r_1 r_2 [\cos(\theta_1+\theta_2) + i\sin(\theta_1+\theta_2)]$</span>
+        <span>• <strong>การหาร:</strong> $\frac{z_1}{z_2} = \frac{r_1}{r_2} [\cos(\theta_1-\theta_2) + i\sin(\theta_1-\theta_2)] \quad (z_2 \neq 0)$</span>
+        <span>• <strong>de Moivre:</strong> $z^n = r^n(\cos n\theta + i\sin n\theta) \quad (z \neq 0 \text{ เมื่อ } n < 0)$</span>
+      </div>
+    </div>
+
+    <div class="text-[0.75rem] font-mono text-[var(--muted)] text-right">
+      ค 30203 คณิตศาสตร์เพิ่มเติม 3 • อาจารย์กิตติพงศ์ ทรัพย์วัฒนชัย
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       JAVASCRIPT ENGINE (ROBUST MATHEMATICAL REFACTOR)
+       ========================================================================= -->
+  <script>
+    /* -------------------------------------------------------------------------
+       1. MATH & NUMERICAL HELPERS
+       ------------------------------------------------------------------------- */
+    const EPS = 1e-9;
+
+    function isZero(v) {
+      return Math.abs(v) < EPS;
+    }
+
+    function isZeroComplex(z) {
+      return isZero(z.x) && isZero(z.y);
+    }
+
+    function normalizeAngle(th) {
+      let t = th;
+      while (t > Math.PI) t -= 2 * Math.PI;
+      while (t <= -Math.PI) t += 2 * Math.PI;
+      return t;
+    }
+
+    function principalArg(x, y) {
+      if (isZero(x) && isZero(y)) return null;
+      let theta = Math.atan2(y, x);
+      if (theta === -Math.PI) theta = Math.PI;
+      return theta;
+    }
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    const SPECIAL_ANGLES = [
+      { deg: 0, rad: 0, label: "0", latex: "0" },
+      { deg: 30, rad: Math.PI/6, label: "π/6", latex: "\\frac{\\pi}{6}" },
+      { deg: 45, rad: Math.PI/4, label: "π/4", latex: "\\frac{\\pi}{4}" },
+      { deg: 60, rad: Math.PI/3, label: "π/3", latex: "\\frac{\\pi}{3}" },
+      { deg: 90, rad: Math.PI/2, label: "π/2", latex: "\\frac{\\pi}{2}" },
+      { deg: 120, rad: 2*Math.PI/3, label: "2π/3", latex: "\\frac{2\\pi}{3}" },
+      { deg: 135, rad: 3*Math.PI/4, label: "3π/4", latex: "\\frac{3\\pi}{4}" },
+      { deg: 150, rad: 5*Math.PI/6, label: "5π/6", latex: "\\frac{5\\pi}{6}" },
+      { deg: 180, rad: Math.PI, label: "π", latex: "\\pi" },
+      { deg: -150, rad: -5*Math.PI/6, label: "-5π/6", latex: "-\\frac{5\\pi}{6}" },
+      { deg: -135, rad: -3*Math.PI/4, label: "-3π/4", latex: "-\\frac{3\\pi}{4}" },
+      { deg: -120, rad: -2*Math.PI/3, label: "-2π/3", latex: "-\\frac{2\\pi}{3}" },
+      { deg: -90, rad: -Math.PI/2, label: "-π/2", latex: "-\\frac{\\pi}{2}" },
+      { deg: -60, rad: -Math.PI/3, label: "-π/3", latex: "-\\frac{\\pi}{3}" },
+      { deg: -45, rad: -Math.PI/4, label: "-π/4", latex: "-\\frac{\\pi}{4}" },
+      { deg: -30, rad: -Math.PI/6, label: "-π/6", latex: "-\\frac{\\pi}{6}" }
+    ];
+
+    function getExactAngleDetails(theta) {
+      if (theta === null) {
+        return { exact: false, deg: 0, radText: "ไม่นิยาม", latex: "\\text{ไม่นิยาม}" };
+      }
+      const normalized = normalizeAngle(theta);
+      for (let item of SPECIAL_ANGLES) {
+        if (Math.abs(item.rad - normalized) < 1e-4) {
+          return { exact: true, deg: item.deg, radText: item.label, latex: item.latex };
+        }
+      }
+      const deg = normalized * 180 / Math.PI;
+      return {
+        exact: false,
+        deg: deg,
+        radText: `${deg.toFixed(1)}°`,
+        latex: `${deg.toFixed(1)}^\\circ`
+      };
+    }
+
+    /* -------------------------------------------------------------------------
+       2. DECLARATIVE STATE NAMESPACE
+       ------------------------------------------------------------------------- */
+    const state = {
+      mode: 1,
+      gridType: 'both',
+      snapAngles: true,
+      scale: 55,
+      originX: 0,
+      originY: 0,
+      isDragging: false,
+      draggedTarget: null,
+
+      // Mode 1: Polar
+      polar: {
+        x: 1.0, y: 1.0, r: 1.4142, theta: Math.PI / 4,
+        autoOrbit: false, orbitSpeed: 1.0, orbitDir: 1
+      },
+
+      // Mode 2: Phasor
+      phasor: {
+        z1: { x: 1.0, y: Math.sqrt(3), r: 2.0, theta: Math.PI / 3 },
+        z2: { x: 1.299, y: 0.75, r: 1.5, theta: Math.PI / 6 },
+        op: 'mul',
+        animProgress: 0,
+        isAnimating: false
+      },
+
+      // Mode 3: de Moivre
+      power: {
+        n: 3,
+        baseR: 1.0,
+        baseTheta: Math.PI / 4
+      },
+
+      // Mode 4: Drill
+      drill: {
+        id: 1,
+        type: 'polar'
+      },
+
+      lastTimestamp: 0
+    };
+
+    let canvas, ctx;
+
+    /* -------------------------------------------------------------------------
+       3. LIFECYCLE & INITIALIZATION
+       ------------------------------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      canvas = document.getElementById('complexCanvas');
+      ctx = canvas.getContext('2d');
+
+      setupCanvasDPI();
+      window.addEventListener('resize', setupCanvasDPI);
+
+      setupMouseGlow();
+      setupProgressBar();
+      setupPointerInteraction();
+      setupKeyboardShortcuts();
+
+      triggerKaTeXAutoRender();
+
+      // Render Static Pitfall Text cleanly
+      const pitfallEl1 = document.getElementById('pitfallExplainerText1');
+      const pitfallEl2 = document.getElementById('pitfallExplainerText2');
+      if (pitfallEl1) {
+        katex.render("\\text{ฟังก์ชัน } \\arctan \\text{ ให้ผลลัพธ์เฉพาะช่วง } \\left(-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right) \\text{ เท่านั้น}", pitfallEl1, { displayMode: false, throwOnError: false });
+      }
+      if (pitfallEl2) {
+        katex.render("\\text{⚠️ หากจุดตกใน Q2 หรือ Q3 ต้องปรับมุมเสมอ!}", pitfallEl2, { displayMode: false, throwOnError: false });
+      }
+
+      syncUIForMode(state.mode);
+      updateCalculationsAndMath();
+      requestAnimationFrame(animationLoop);
+    });
+
+    function triggerKaTeXAutoRender() {
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      } else {
+        setTimeout(triggerKaTeXAutoRender, 80);
+      }
+    }
+
+    function setupCanvasDPI() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      state.originX = rect.width / 2;
+      state.originY = rect.height / 2;
+
+      fitCanvasScale(rect.width, rect.height);
+      renderCanvas();
+    }
+
+    function fitCanvasScale(w, h) {
+      const minDim = Math.min(w, h);
+      let maxR = 4.5;
+      if (state.mode === 2) {
+        const r1 = state.phasor.z1.r;
+        const r2 = state.phasor.z2.r;
+        const rRes = state.phasor.op === 'mul' ? r1 * r2 : (r2 > EPS ? r1 / r2 : r1);
+        maxR = Math.max(r1, r2, rRes, 4.0);
+      } else if (state.mode === 3) {
+        const rn = Math.pow(state.power.baseR, Math.max(0, state.power.n));
+        maxR = Math.max(state.power.baseR, rn, 4.0);
+      }
+      state.scale = (minDim * 0.42) / maxR;
+    }
+
+    /* -------------------------------------------------------------------------
+       4. THEME & UI SHORTCUTS
+       ------------------------------------------------------------------------- */
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      ['dark', 'light', 'cyber'].forEach(t => {
+        const btn = document.getElementById(`theme-btn-${t}`);
+        if (btn) {
+          if (t === theme) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function setupKeyboardShortcuts() {
+      window.addEventListener('keydown', (e) => {
+        const tag = e.target.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') return;
+        if (e.key === 't' || e.key === 'T') {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          const next = current === 'dark' ? 'light' : (current === 'light' ? 'cyber' : 'dark');
+          setTheme(next);
+        } else if (e.key === ' ') {
+          if (state.mode === 1) {
+            e.preventDefault();
+            toggleAutoOrbit();
+          }
+        }
+      });
+    }
+
+    function setupMouseGlow() {
+      const glow = document.getElementById('mouseGlow');
+      window.addEventListener('mousemove', (e) => {
+        glow.style.left = `${e.clientX}px`;
+        glow.style.top = `${e.clientY}px`;
+        glow.style.opacity = '1';
+      });
+      window.addEventListener('mouseleave', () => glow.style.opacity = '0');
+    }
+
+    function setupProgressBar() {
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / (h || 1)) * 100;
+        document.getElementById('progressBar').style.width = `${scrolled}%`;
+      });
+    }
+
+    /* -------------------------------------------------------------------------
+       5. MODE SWITCHING & STATE SYNC
+       ------------------------------------------------------------------------- */
+    function switchMode(modeNum) {
+      state.mode = modeNum;
+      
+      // Stop orbit when leaving mode 1
+      if (modeNum !== 1 && state.polar.autoOrbit) {
+        toggleAutoOrbit();
+      }
+
+      // Hide orbit controller on modes 2, 3, 4
+      const orbitBox = document.getElementById('orbitControlContainer');
+      if (orbitBox) {
+        if (modeNum === 1) orbitBox.classList.remove('hidden');
+        else orbitBox.classList.add('hidden');
+      }
+
+      for (let i = 1; i <= 4; i++) {
+        const tab = document.getElementById(`tab-${i}`);
+        const panel = document.getElementById(`panel-mode-${i}`);
+        if (i === modeNum) {
+          tab.classList.add('active');
+          panel.classList.remove('hidden');
+        } else {
+          tab.classList.remove('active');
+          panel.classList.add('hidden');
+        }
+      }
+
+      const badges = {
+        1: "MODE 1: POLAR CONVERSION",
+        2: "MODE 2: PHASOR MULTIPLICATION & DIVISION",
+        3: "MODE 3: DE MOIVRE SEQUENCE POWERS",
+        4: "MODE 4: INTERACTIVE EXERCISE SOLVER"
+      };
+      document.getElementById('activeModeBadge').innerText = badges[modeNum];
+      document.getElementById('canvasTagText').innerText = `MODE ${modeNum} • ARGAND PLANE`;
+
+      if (modeNum === 4) {
+        loadDrillProblem(state.drill.id);
+      }
+
+      syncUIForMode(modeNum);
+      setupCanvasDPI();
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function syncUIForMode(m) {
+      if (m === 1) {
+        document.getElementById('input-x').value = state.polar.x.toFixed(2);
+        document.getElementById('input-y').value = state.polar.y.toFixed(2);
+        document.getElementById('val-x').innerText = state.polar.x.toFixed(2);
+        document.getElementById('val-y').innerText = state.polar.y.toFixed(2);
+
+        document.getElementById('input-r').value = state.polar.r.toFixed(2);
+        const ang = getExactAngleDetails(state.polar.theta);
+        document.getElementById('input-theta').value = Math.round(ang.deg);
+        document.getElementById('val-r').innerText = state.polar.r.toFixed(3);
+        document.getElementById('val-theta').innerText = `${Math.round(ang.deg)}° (${ang.radText})`;
+      } else if (m === 2) {
+        document.getElementById('slider-m2-r1').value = state.phasor.z1.r.toFixed(1);
+        document.getElementById('slider-m2-th1').value = Math.round(state.phasor.z1.theta * 180 / Math.PI);
+        document.getElementById('slider-m2-r2').value = state.phasor.z2.r.toFixed(1);
+        document.getElementById('slider-m2-th2').value = Math.round(state.phasor.z2.theta * 180 / Math.PI);
+        document.getElementById('label-m2-z1').innerText = `${state.phasor.z1.r.toFixed(1)} ∠ ${Math.round(state.phasor.z1.theta*180/Math.PI)}°`;
+        document.getElementById('label-m2-z2').innerText = `${state.phasor.z2.r.toFixed(1)} ∠ ${Math.round(state.phasor.z2.theta*180/Math.PI)}°`;
+      } else if (m === 3) {
+        document.getElementById('slider-m3-n').value = state.power.n;
+        document.getElementById('slider-m3-r').value = state.power.baseR.toFixed(2);
+        document.getElementById('slider-m3-th').value = Math.round(state.power.baseTheta * 180 / Math.PI);
+        document.getElementById('label-m3-n').innerText = `n = ${state.power.n}`;
+        document.getElementById('label-m3-r').innerText = state.power.baseR.toFixed(2);
+        const ang = getExactAngleDetails(state.power.baseTheta);
+        document.getElementById('label-m3-th').innerText = `${Math.round(ang.deg)}° (${ang.radText})`;
+      }
+    }
+
+    /* -------------------------------------------------------------------------
+       6. COORDINATE CONVERSION & INPUT
+       ------------------------------------------------------------------------- */
+    function mathToPx(x, y) {
+      return { px: state.originX + x * state.scale, py: state.originY - y * state.scale };
+    }
+
+    function pxToMath(px, py) {
+      return { x: (px - state.originX) / state.scale, y: (state.originY - py) / state.scale };
+    }
+
+    function handleCartesianInput() {
+      state.polar.x = parseFloat(document.getElementById('input-x').value);
+      state.polar.y = parseFloat(document.getElementById('input-y').value);
+      if (isZero(state.polar.x)) state.polar.x = 0;
+      if (isZero(state.polar.y)) state.polar.y = 0;
+
+      state.polar.r = Math.hypot(state.polar.x, state.polar.y);
+      state.polar.theta = principalArg(state.polar.x, state.polar.y) || 0;
+
+      syncUIForMode(1);
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function handlePolarInput() {
+      const r = parseFloat(document.getElementById('input-r').value);
+      let deg = parseFloat(document.getElementById('input-theta').value);
+      let rad = (deg * Math.PI) / 180;
+
+      if (state.snapAngles) {
+        for (let item of SPECIAL_ANGLES) {
+          if (Math.abs(item.deg - deg) < 4.0) {
+            rad = item.rad;
+            deg = item.deg;
+            break;
+          }
+        }
+      }
+
+      state.polar.r = r;
+      state.polar.theta = rad;
+      state.polar.x = r * Math.cos(rad);
+      state.polar.y = r * Math.sin(rad);
+
+      syncUIForMode(1);
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function setVectorPreset(x, y) {
+      state.polar.x = x;
+      state.polar.y = y;
+      state.polar.r = Math.hypot(x, y);
+      state.polar.theta = principalArg(x, y) || 0;
+
+      syncUIForMode(1);
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function toggleAutoOrbit() {
+      state.polar.autoOrbit = !state.polar.autoOrbit;
+      const btn = document.getElementById('autoOrbitBtn');
+      if (state.polar.autoOrbit) {
+        btn.innerHTML = `<i class="fa-solid fa-pause text-[0.65rem]"></i> หยุด (Pause)`;
+        btn.classList.add('bg-[var(--accent)]', 'text-[var(--bg)]');
+      } else {
+        btn.innerHTML = `<i class="fa-solid fa-play text-[0.65rem]"></i> เล่น (Play)`;
+        btn.classList.remove('bg-[var(--accent)]', 'text-[var(--bg)]');
+      }
+    }
+
+    function onOrbitSpeedChange() {
+      state.polar.orbitSpeed = parseFloat(document.getElementById('orbitSpeed').value);
+    }
+
+    function setOrbitDir(dir) {
+      state.polar.orbitDir = dir;
+      const ccwBtn = document.getElementById('dir-ccw-btn');
+      const cwBtn = document.getElementById('dir-cw-btn');
+      if (dir === 1) {
+        ccwBtn.className = 'px-2.5 py-1 text-xs bg-[var(--accent)] text-[var(--bg)] font-bold border border-[var(--accent)]';
+        cwBtn.className = 'px-2.5 py-1 text-xs bg-[var(--bg)] border border-[var(--border)]';
+      } else {
+        cwBtn.className = 'px-2.5 py-1 text-xs bg-[var(--accent)] text-[var(--bg)] font-bold border border-[var(--accent)]';
+        ccwBtn.className = 'px-2.5 py-1 text-xs bg-[var(--bg)] border border-[var(--border)]';
+      }
+    }
+
+    function setPhasorOp(op) {
+      state.phasor.op = op;
+      const mulBtn = document.getElementById('op-mul-btn');
+      const divBtn = document.getElementById('op-div-btn');
+      if (op === 'mul') {
+        mulBtn.className = 'py-2 bg-[var(--accent)] text-[var(--bg)] border border-[var(--accent)] font-bold';
+        divBtn.className = 'py-2 opacity-70 hover:opacity-100 font-bold';
+      } else {
+        divBtn.className = 'py-2 bg-[var(--accent)] text-[var(--bg)] border border-[var(--accent)] font-bold';
+        mulBtn.className = 'py-2 opacity-70 hover:opacity-100 font-bold';
+      }
+      setupCanvasDPI();
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function onMode2SliderChange() {
+      const r1 = parseFloat(document.getElementById('slider-m2-r1').value);
+      const th1 = parseFloat(document.getElementById('slider-m2-th1').value) * Math.PI / 180;
+      const r2 = parseFloat(document.getElementById('slider-m2-r2').value);
+      const th2 = parseFloat(document.getElementById('slider-m2-th2').value) * Math.PI / 180;
+
+      state.phasor.z1 = { r: r1, theta: th1, x: r1 * Math.cos(th1), y: r1 * Math.sin(th1) };
+      state.phasor.z2 = { r: r2, theta: th2, x: r2 * Math.cos(th2), y: r2 * Math.sin(th2) };
+
+      document.getElementById('label-m2-z1').innerText = `${r1.toFixed(1)} ∠ ${Math.round(th1*180/Math.PI)}°`;
+      document.getElementById('label-m2-z2').innerText = `${r2.toFixed(1)} ∠ ${Math.round(th2*180/Math.PI)}°`;
+
+      setupCanvasDPI();
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function onMode3SliderChange() {
+      state.power.n = parseInt(document.getElementById('slider-m3-n').value);
+      state.power.baseR = parseFloat(document.getElementById('slider-m3-r').value);
+      state.power.baseTheta = parseFloat(document.getElementById('slider-m3-th').value) * Math.PI / 180;
+
+      document.getElementById('label-m3-n').innerText = `n = ${state.power.n}`;
+      document.getElementById('label-m3-r').innerText = state.power.baseR.toFixed(2);
+      const ang = getExactAngleDetails(state.power.baseTheta);
+      document.getElementById('label-m3-th').innerText = `${Math.round(ang.deg)}° (${ang.radText})`;
+
+      setupCanvasDPI();
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function setMode3Preset(r, deg, n) {
+      document.getElementById('slider-m3-r').value = r;
+      document.getElementById('slider-m3-th').value = deg;
+      document.getElementById('slider-m3-n').value = n;
+      onMode3SliderChange();
+    }
+
+    function toggleAngleSnap() {
+      state.snapAngles = document.getElementById('snapToggle').checked;
+    }
+
+    function setGridType(type) {
+      state.gridType = type;
+      ['both', 'polar', 'cart'].forEach(t => {
+        const btn = document.getElementById(`grid-${t}-btn`);
+        if ((t === 'cart' && type === 'cartesian') || t === type) {
+          btn.className = 'px-2.5 py-1 bg-[var(--accent)] text-[var(--bg)] font-bold';
+        } else {
+          btn.className = 'px-2.5 py-1 bg-[var(--bg-elev-2)] border border-[var(--border)]';
+        }
+      });
+      renderCanvas();
+    }
+
+    function zoomCanvas(f) {
+      state.scale = Math.max(15, Math.min(250, state.scale * f));
+      renderCanvas();
+    }
+
+    function resetCanvasOrigin() {
+      setupCanvasDPI();
+    }
+
+    function resetAllState() {
+      state.polar = { x: 1.0, y: 1.0, r: 1.4142, theta: Math.PI / 4, autoOrbit: false, orbitSpeed: 1.0, orbitDir: 1 };
+      state.phasor = {
+        z1: { x: 1.0, y: Math.sqrt(3), r: 2.0, theta: Math.PI / 3 },
+        z2: { x: 1.299, y: 0.75, r: 1.5, theta: Math.PI / 6 },
+        op: 'mul', animProgress: 0, isAnimating: false
+      };
+      state.power = { n: 3, baseR: 1.0, baseTheta: Math.PI / 4 };
+      state.drill = { id: 1, type: 'polar' };
+
+      const orbitBtn = document.getElementById('autoOrbitBtn');
+      if (orbitBtn) {
+        orbitBtn.innerHTML = `<i class="fa-solid fa-play text-[0.65rem]"></i> เล่น (Play)`;
+        orbitBtn.classList.remove('bg-[var(--accent)]', 'text-[var(--bg)]');
+      }
+
+      setGridType('both');
+      document.getElementById('snapToggle').checked = true;
+      state.snapAngles = true;
+
+      switchMode(1);
+    }
+
+    /* -------------------------------------------------------------------------
+       7. MATHEMATICAL CALCULATIONS & LIVE KATEX DISPATCHER
+       ------------------------------------------------------------------------- */
+    function updateCalculationsAndMath() {
+      if (typeof katex === 'undefined') {
+        setTimeout(updateCalculationsAndMath, 80);
+        return;
+      }
+
+      // Determine active context
+      let activeMode = state.mode;
+      if (activeMode === 4) {
+        // Dispatch Mode 4 drills accurately
+        if (state.drill.id === 1) activeMode = 1;
+        else if (state.drill.id === 2) activeMode = 2;
+        else if (state.drill.id === 3 || state.drill.id === 4) activeMode = 3;
+      }
+
+      // =========================================================================
+      // MODE 2: PHASORS (MULTIPLICATION & DIVISION)
+      // =========================================================================
+      if (activeMode === 2) {
+        const isMul = (state.phasor.op === 'mul');
+        const resName = isMul ? 'z_1 z_2' : '\\frac{z_1}{z_2}';
+        const z1 = state.phasor.z1;
+        const z2 = state.phasor.z2;
+
+        const isDivZero = (!isMul && z2.r < EPS);
+
+        if (isDivZero) {
+          document.getElementById('liveCoordsBadge').innerText = "หารด้วยศูนย์ (ไม่นิยาม)";
+          document.getElementById('canvasRadiusIndicator').innerHTML = "ไม่สามารถหารด้วยศูนย์ได้";
+          document.getElementById('terminalBox1Label').innerHTML = `<span>1. ผลลัพธ์รูปเชิงขั้ว</span>`;
+          document.getElementById('terminalBox2Label').innerHTML = `<span>2. ผลลัพธ์รูปออยเลอร์</span>`;
+          katex.render("\\text{ไม่นิยาม (Division by Zero)}", document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+          katex.render("\\text{ไม่นิยาม}", document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+          return;
+        }
+
+        const resR = isMul ? z1.r * z2.r : z1.r / z2.r;
+        const rawTheta = isMul ? z1.theta + z2.theta : z1.theta - z2.theta;
+        const normTheta = normalizeAngle(rawTheta);
+
+        const rawAngle = getExactAngleDetails(rawTheta);
+        const normAngle = getExactAngleDetails(normTheta);
+
+        const resX = resR * Math.cos(normTheta);
+        const resY = resR * Math.sin(normTheta);
+
+        const th1Info = getExactAngleDetails(z1.theta);
+        const th2Info = getExactAngleDetails(z2.theta);
+
+        const signY = resY >= 0 ? '+' : '-';
+        document.getElementById('liveCoordsBadge').innerText = `${isMul ? 'z₁·z₂' : 'z₁/z₂'} = ${resX.toFixed(2)} ${signY} ${Math.abs(resY).toFixed(2)}i`;
+
+        const radIndicator = document.getElementById('canvasRadiusIndicator');
+        if (radIndicator) {
+          katex.render(`|${resName}| = ${resR.toFixed(2)}`, radIndicator, { displayMode: false, throwOnError: false });
+        }
+
+        document.getElementById('terminalFilename').innerHTML = `<i class="fa-solid fa-terminal text-[10px]"></i> phasor_${isMul ? 'multiplication' : 'division'}.tex`;
+        document.getElementById('terminalBox1Label').innerHTML = `<span>1. ผลลัพธ์รูปเชิงขั้ว (${isMul ? 'ผลคูณ' : 'ผลหาร'})</span><span class="text-[0.65rem] text-[var(--muted)]">${isMul ? 'z_1 z_2' : 'z_1 / z_2'}</span>`;
+        document.getElementById('terminalBox2Label').innerHTML = `<span>2. ผลลัพธ์รูปออยเลอร์</span><span class="text-[0.65rem] text-[var(--muted)]">r e^{i\\theta}</span>`;
+        
+        katex.render(`\\text{ขั้นตอนการคำนวณ}${isMul ? '\\text{ผลคูณ (คูณขนาด บวกมุม)}' : '\\text{ผลหาร (หารขนาด ลบมุม)}'}:`, document.getElementById('terminalStepHeader'), { displayMode: false, throwOnError: false });
+
+        katex.render(isMul ? "\\text{ขั้นที่ 1: คูณโมดูลัส } |z_1 z_2|" : "\\text{ขั้นที่ 1: หารโมดูลัส } \\left|\\frac{z_1}{z_2}\\right|", document.getElementById('step1Header'), { displayMode: false, throwOnError: false });
+        katex.render(isMul ? "\\text{ขั้นที่ 2: บวกมุม } \\arg(z_1 z_2)" : "\\text{ขั้นที่ 2: ลบมุม } \\arg\\left(\\frac{z_1}{z_2}\\right)", document.getElementById('step2Header'), { displayMode: false, throwOnError: false });
+        katex.render("\\text{ขั้นที่ 3: พิกัดฉาก } a+bi", document.getElementById('step3Header'), { displayMode: false, throwOnError: false });
+
+        // Polar & Euler
+        const rStr = isZero(resR - 1) ? "" : resR.toFixed(2);
+        const polarLatex = `${resName} = ${rStr}\\left(\\cos\\left(${normAngle.latex}\\right) + i\\sin\\left(${normAngle.latex}\\right)\\right)`;
+        const eulerLatex = `${resName} = ${rStr} e^{i (${normAngle.latex})}`;
+
+        katex.render(polarLatex, document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+        katex.render(eulerLatex, document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+
+        // Step 1: Modulus
+        const modLatex = isMul 
+          ? `|z_1 z_2| = r_1 r_2 = (${z1.r.toFixed(2)})(${z2.r.toFixed(2)}) = ${resR.toFixed(2)}`
+          : `\\left|\\frac{z_1}{z_2}\\right| = \\frac{r_1}{r_2} = \\frac{${z1.r.toFixed(2)}}{${z2.r.toFixed(2)}} = ${resR.toFixed(2)}`;
+        katex.render(modLatex, document.getElementById('stepModulusText'), { displayMode: true, throwOnError: false });
+
+        // Step 2: Angle reduction (Rigorous Congruence)
+        const opSign = isMul ? '+' : '-';
+        let argLatex = "";
+        if (Math.abs(rawTheta - normTheta) < 1e-4) {
+          argLatex = `\\theta_1 ${opSign} \\theta_2 = ${th1Info.latex} ${opSign} \\left(${th2Info.latex}\\right) = ${normAngle.latex}`;
+        } else {
+          argLatex = `\\theta_1 ${opSign} \\theta_2 = ${rawAngle.latex} \\equiv ${normAngle.latex} \\pmod{2\\pi}`;
+        }
+        katex.render(argLatex, document.getElementById('stepQuadrantText'), { displayMode: true, throwOnError: false });
+
+        // Step 3: Rectangular
+        const rectLatex = `${resName} = ${resX.toFixed(2)} ${signY} ${Math.abs(resY).toFixed(2)}i`;
+        katex.render(rectLatex, document.getElementById('stepGeneralArgText'), { displayMode: true, throwOnError: false });
+
+        updateQuadrantExplainer(resX, resY, normAngle);
+        return;
+      }
+
+      // =========================================================================
+      // MODE 3: DE MOIVRE POWERS
+      // =========================================================================
+      if (activeMode === 3) {
+        let n = state.power.n;
+        let baseR = state.power.baseR;
+        let baseTheta = state.power.baseTheta;
+
+        if (state.mode === 4 && state.drill.id === 4) {
+          n = 2024;
+          baseR = 1.0;
+          baseTheta = 2 * Math.PI / 3;
+        }
+
+        const isZeroBase = isZero(baseR);
+        if (isZeroBase && n < 0) {
+          document.getElementById('liveCoordsBadge').innerText = "0 ยกกำลังลบไม่นิยาม";
+          katex.render("\\text{ไม่นิยาม (Division by Zero)}", document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+          katex.render("\\text{ไม่นิยาม}", document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+          return;
+        }
+
+        const resR = Math.pow(baseR, n);
+        const rawTheta = n * baseTheta;
+        const normTheta = normalizeAngle(rawTheta);
+
+        const rawAngle = getExactAngleDetails(rawTheta);
+        const normAngle = getExactAngleDetails(normTheta);
+        const baseAngle = getExactAngleDetails(baseTheta);
+
+        const resX = resR * Math.cos(normTheta);
+        const resY = resR * Math.sin(normTheta);
+
+        const signY = resY >= 0 ? '+' : '-';
+        document.getElementById('liveCoordsBadge').innerText = `z^${n} = ${resX.toFixed(2)} ${signY} ${Math.abs(resY).toFixed(2)}i`;
+
+        const radIndicator = document.getElementById('canvasRadiusIndicator');
+        if (radIndicator) {
+          katex.render(`|z^n| = ${resR.toFixed(2)}`, radIndicator, { displayMode: false, throwOnError: false });
+        }
+
+        document.getElementById('terminalFilename').innerHTML = `<i class="fa-solid fa-terminal text-[10px]"></i> demoivre_power_${n}.tex`;
+        document.getElementById('terminalBox1Label').innerHTML = `<span>1. ผลลัพธ์ยกกำลัง (de Moivre)</span><span class="text-[0.65rem] text-[var(--muted)]">z^{${n}}</span>`;
+        document.getElementById('terminalBox2Label').innerHTML = `<span>2. รูปออยเลอร์</span><span class="text-[0.65rem] text-[var(--muted)]">r^n e^{i n\\theta}</span>`;
+        
+        katex.render(`\\text{ขั้นตอนการยกกำลังด้วยทฤษฎีบทของ de Moivre }(z^n):`, document.getElementById('terminalStepHeader'), { displayMode: false, throwOnError: false });
+
+        katex.render("\\text{ขั้นที่ 1: ยกกำลังโมดูลัส } r^n", document.getElementById('step1Header'), { displayMode: false, throwOnError: false });
+        katex.render("\\text{ขั้นที่ 2: คูณมุมอาร์กิวเมนต์ } n\\theta", document.getElementById('step2Header'), { displayMode: false, throwOnError: false });
+        katex.render("\\text{ขั้นที่ 3: พิกัดฉาก } a+bi", document.getElementById('step3Header'), { displayMode: false, throwOnError: false });
+
+        const rStr = isZero(resR - 1) ? "" : resR.toFixed(2);
+        const polarLatex = `z^{${n}} = ${rStr}\\left(\\cos\\left(${normAngle.latex}\\right) + i\\sin\\left(${normAngle.latex}\\right)\\right)`;
+        const eulerLatex = `z^{${n}} = ${rStr} e^{i (${normAngle.latex})}`;
+
+        katex.render(polarLatex, document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+        katex.render(eulerLatex, document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+
+        // Step 1: r^n
+        const modLatex = `r^n = (${baseR.toFixed(2)})^{${n}} = ${resR.toFixed(3)}`;
+        katex.render(modLatex, document.getElementById('stepModulusText'), { displayMode: true, throwOnError: false });
+
+        // Step 2: n*theta reduction
+        let argLatex = "";
+        if (Math.abs(rawTheta - normTheta) < 1e-4) {
+          argLatex = `n\\theta = ${n} \\cdot \\left(${baseAngle.latex}\\right) = ${normAngle.latex}`;
+        } else {
+          argLatex = `n\\theta = ${n} \\cdot \\left(${baseAngle.latex}\\right) = ${rawAngle.latex} \\equiv ${normAngle.latex} \\pmod{2\\pi}`;
+        }
+        katex.render(argLatex, document.getElementById('stepQuadrantText'), { displayMode: true, throwOnError: false });
+
+        // Step 3: Rectangular
+        const rectLatex = `z^{${n}} = ${resX.toFixed(2)} ${signY} ${Math.abs(resY).toFixed(2)}i`;
+        katex.render(rectLatex, document.getElementById('stepGeneralArgText'), { displayMode: true, throwOnError: false });
+
+        updateQuadrantExplainer(resX, resY, normAngle);
+        return;
+      }
+
+      // =========================================================================
+      // MODE 1 & MODE 4: SINGLE VECTOR / DRILL 1
+      // =========================================================================
+      const z = state.polar;
+      const atOrigin = isZeroComplex(z);
+      const angle = getExactAngleDetails(atOrigin ? null : z.theta);
+
+      document.getElementById('terminalFilename').innerHTML = `<i class="fa-solid fa-terminal text-[10px]"></i> live_math_inspector.tex`;
+      document.getElementById('terminalBox1Label').innerHTML = `<span>1. รูปเชิงขั้ว (Polar Form)</span><span class="text-[0.65rem] text-[var(--muted)]">z = r(\\cos\\theta + i\\sin\\theta)</span>`;
+      document.getElementById('terminalBox2Label').innerHTML = `<span>2. รูปออยเลอร์ (Euler Form)</span><span class="text-[0.65rem] text-[var(--muted)]">z = r e^{i\\theta}</span>`;
+      
+      katex.render("\\text{การแปลงพิกัดและขั้นตอนการคำนวณอย่างละเอียด:}", document.getElementById('terminalStepHeader'), { displayMode: false, throwOnError: false });
+
+      katex.render("\\text{ขั้นที่ 1: หาโมดูลัส } r", document.getElementById('step1Header'), { displayMode: false, throwOnError: false });
+      katex.render("\\text{ขั้นที่ 2: เช็คจัตุภาคและมุม } \\theta", document.getElementById('step2Header'), { displayMode: false, throwOnError: false });
+      katex.render("\\text{ขั้นที่ 3: อาร์กิวเมนต์ทั่วไป } \\arg(z)", document.getElementById('step3Header'), { displayMode: false, throwOnError: false });
+
+      const signY = z.y >= 0 ? '+' : '-';
+      document.getElementById('liveCoordsBadge').innerText = atOrigin ? "z = 0" : `z = ${z.x.toFixed(2)} ${signY} ${Math.abs(z.y).toFixed(2)}i`;
+
+      const radIndicator = document.getElementById('canvasRadiusIndicator');
+      if (radIndicator) {
+        katex.render(`|z| = r = ${z.r.toFixed(2)}`, radIndicator, { displayMode: false, throwOnError: false });
+      }
+
+      if (atOrigin) {
+        katex.render("z = 0(\\cos\\theta + i\\sin\\theta) \\quad (\\forall\\theta)", document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+        katex.render("z = 0", document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+        katex.render("r = |0| = 0", document.getElementById('stepModulusText'), { displayMode: true, throwOnError: false });
+        katex.render("\\mathrm{Arg}(0) \\text{ ไม่นิยาม}", document.getElementById('stepQuadrantText'), { displayMode: true, throwOnError: false });
+        katex.render("\\arg(0) \\text{ ไม่นิยาม}", document.getElementById('stepGeneralArgText'), { displayMode: true, throwOnError: false });
+      } else {
+        const rStr = isZero(z.r - 1) ? "" : z.r.toFixed(2);
+        const polarLatex = `z = ${rStr}\\left(\\cos\\left(${angle.latex}\\right) + i\\sin\\left(${angle.latex}\\right)\\right)`;
+        const eulerLatex = `z = ${rStr} e^{i (${angle.latex})}`;
+
+        katex.render(polarLatex, document.getElementById('terminalPolarEq'), { displayMode: true, throwOnError: false });
+        katex.render(eulerLatex, document.getElementById('terminalEulerEq'), { displayMode: true, throwOnError: false });
+
+        const sqSum = (z.x * z.x + z.y * z.y).toFixed(2);
+        const modLatex = `r = \\sqrt{(${z.x.toFixed(2)})^2 + (${z.y.toFixed(2)})^2} = \\sqrt{${sqSum}} \\approx ${z.r.toFixed(3)}`;
+        katex.render(modLatex, document.getElementById('stepModulusText'), { displayMode: true, throwOnError: false });
+
+        const argLatex = `\\mathrm{Arg}(z) = ${angle.latex} \\quad (${angle.deg.toFixed(1)}^\\circ)`;
+        katex.render(argLatex, document.getElementById('stepQuadrantText'), { displayMode: true, throwOnError: false });
+
+        const genArgLatex = `\\arg(z) = ${angle.latex} + 2k\\pi, \\; k \\in \\mathbb{Z}`;
+        katex.render(genArgLatex, document.getElementById('stepGeneralArgText'), { displayMode: true, throwOnError: false });
+      }
+
+      updateQuadrantExplainer(z.x, z.y, angle);
+    }
+
+    function updateQuadrantExplainer(x, y, angle) {
+      const qTitle = document.getElementById('quadrantTitle');
+      const qSign = document.getElementById('quadrantSign');
+      const qRule = document.getElementById('quadrantRule');
+      const qFormula = document.getElementById('quadrantFormula');
+
+      let title = "", sign = "", ruleLatex = "", formulaLatex = "";
+
+      if (isZero(x) && isZero(y)) {
+        title = "จุดกำเนิด (Origin $z = 0$)";
+        sign = "(x = 0, y = 0)";
+        ruleLatex = "\\text{เวกเตอร์ศูนย์ไม่มีทิศทางแน่นอน } \\mathrm{Arg}(0) \\text{ ไม่นิยาม}";
+        formulaLatex = "\\mathrm{Arg}(0) \\text{ ไม่นิยาม}";
+      } else if (isZero(x)) {
+        if (y > 0) {
+          title = "แกนจินตภาพบวก (+Im Axis)";
+          sign = "(x = 0, y > 0)";
+          ruleLatex = "\\text{เวกเตอร์ตั้งฉากชี้ขึ้นด้านบน มุม } 90^\\circ";
+          formulaLatex = "\\mathrm{Arg}(z) = \\frac{\\pi}{2} = 90^\\circ";
+        } else {
+          title = "แกนจินตภาพลบ (-Im Axis)";
+          sign = "(x = 0, y < 0)";
+          ruleLatex = "\\text{เวกเตอร์ตั้งฉากชี้ลงด้านล่าง มุม } -90^\\circ";
+          formulaLatex = "\\mathrm{Arg}(z) = -\\frac{\\pi}{2} = -90^\\circ";
+        }
+      } else if (isZero(y)) {
+        if (x > 0) {
+          title = "แกนจริงบวก (+Re Axis)";
+          sign = "(x > 0, y = 0)";
+          ruleLatex = "\\text{เวกเตอร์ทับแกนจริงบวก มุมเป็นศูนย์ } 0^\\circ";
+          formulaLatex = "\\mathrm{Arg}(z) = 0";
+        } else {
+          title = "แกนจริงลบ (-Re Axis)";
+          sign = "(x < 0, y = 0)";
+          ruleLatex = "\\text{เวกเตอร์ชี้ไปทางซ้ายตามนิยามช่วง } (-\\pi, \\pi]";
+          formulaLatex = "\\mathrm{Arg}(z) = \\pi = 180^\\circ";
+        }
+      } else if (x > 0 && y > 0) {
+        title = "จัตุภาคที่ 1 (Quadrant I)";
+        sign = "(x > 0, y > 0)";
+        ruleLatex = "\\text{ใน Q1 ใช้สูตร } \\arctan(y/x) \\text{ ได้ทันทีโดยไม่ต้องปรับแต่ง}";
+        formulaLatex = `\\mathrm{Arg}(z) = \\arctan\\left(\\frac{${Math.abs(y).toFixed(2)}}{${Math.abs(x).toFixed(2)}}\\right) = ${angle.latex}`;
+      } else if (x < 0 && y > 0) {
+        title = "จัตุภาคที่ 2 (Quadrant II)";
+        sign = "(x < 0, y > 0)";
+        ruleLatex = "\\text{เนื่องจาก } \\arctan \\text{ คืนค่ามุมลบ ต้องปรับเป็น } \\arctan(y/x) + \\pi";
+        formulaLatex = `\\mathrm{Arg}(z) = \\arctan\\left(\\frac{${y.toFixed(2)}}{${x.toFixed(2)}}\\right) + \\pi = ${angle.latex}`;
+      } else if (x < 0 && y < 0) {
+        title = "จัตุภาคที่ 3 (Quadrant III)";
+        sign = "(x < 0, y < 0)";
+        ruleLatex = "\\text{เพื่อให้มุมอยู่ในช่วง } (-\\pi, \\pi] \\text{ ต้องปรับเป็น } \\arctan(y/x) - \\pi";
+        formulaLatex = `\\mathrm{Arg}(z) = \\arctan\\left(\\frac{${y.toFixed(2)}}{${x.toFixed(2)}}\\right) - \\pi = ${angle.latex}`;
+      } else {
+        title = "จัตุภาคที่ 4 (Quadrant IV)";
+        sign = "(x > 0, y < 0)";
+        ruleLatex = "\\text{มุมวัดตามเข็มนาฬิกา ค่ามุมเป็นลบ } \\mathrm{Arg}(z) = \\arctan(y/x)";
+        formulaLatex = `\\mathrm{Arg}(z) = \\arctan\\left(\\frac{${y.toFixed(2)}}{${x.toFixed(2)}}\\right) = ${angle.latex}`;
+      }
+
+      if (qTitle) qTitle.innerHTML = `<i class="fa-solid fa-location-crosshairs"></i> ${title}`;
+      if (qSign) qSign.innerText = sign;
+      if (qRule) katex.render(ruleLatex, qRule, { displayMode: false, throwOnError: false });
+      if (qFormula) katex.render(formulaLatex, qFormula, { displayMode: false, throwOnError: false });
+    }
+
+    function copyLatexToClipboard() {
+      let latex = "";
+      const isMul = (state.phasor.op === 'mul');
+      if (state.mode === 2 || (state.mode === 4 && state.drill.id === 2)) {
+        const resR = isMul ? state.phasor.z1.r * state.phasor.z2.r : state.phasor.z1.r / state.phasor.z2.r;
+        const normTheta = normalizeAngle(isMul ? state.phasor.z1.theta + state.phasor.z2.theta : state.phasor.z1.theta - state.phasor.z2.theta);
+        const resAngle = getExactAngleDetails(normTheta);
+        const resName = isMul ? "z_1 z_2" : "\\frac{z_1}{z_2}";
+        latex = `${resName} = ${resR.toFixed(2)}(\\cos(${resAngle.latex}) + i\\sin(${resAngle.latex})) = ${resR.toFixed(2)}e^{i(${resAngle.latex})}`;
+      } else if (state.mode === 3 || (state.mode === 4 && (state.drill.id === 3 || state.drill.id === 4))) {
+        const n = (state.mode === 4 && state.drill.id === 4) ? 2024 : state.power.n;
+        const r = (state.mode === 4 && state.drill.id === 4) ? 1.0 : state.power.baseR;
+        const th = (state.mode === 4 && state.drill.id === 4) ? 2*Math.PI/3 : state.power.baseTheta;
+        const resR = Math.pow(r, n);
+        const normTheta = normalizeAngle(n * th);
+        const resAngle = getExactAngleDetails(normTheta);
+        latex = `z^{${n}} = ${resR.toFixed(2)}(\\cos(${resAngle.latex}) + i\\sin(${resAngle.latex})) = ${resR.toFixed(2)}e^{i(${resAngle.latex})}`;
+      } else {
+        const z = state.polar;
+        const angle = getExactAngleDetails(isZeroComplex(z) ? null : z.theta);
+        const rStr = z.r.toFixed(2);
+        latex = `z = ${rStr}(\\cos(${angle.latex}) + i\\sin(${angle.latex})) = ${rStr}e^{i(${angle.latex})}`;
+      }
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(latex).then(() => {
+          const btn = document.getElementById('copyLatexBtn');
+          btn.innerHTML = `<i class="fa-solid fa-check text-green-400"></i> คัดลอกแล้ว!`;
+          setTimeout(() => {
+            btn.innerHTML = `<i class="fa-regular fa-copy"></i> คัดลอก LaTeX`;
+          }, 1800);
+        }).catch(() => {});
+      }
+    }
+
+    /* -------------------------------------------------------------------------
+       8. ANIMATION LOOP & ROTATION ENGINE
+       ------------------------------------------------------------------------- */
+    function animationLoop(timestamp) {
+      if (!state.lastTimestamp) state.lastTimestamp = timestamp;
+      const dt = (timestamp - state.lastTimestamp) / 1000;
+      state.lastTimestamp = timestamp;
+
+      // Auto Orbit (Mode 1 only)
+      if (state.mode === 1 && state.polar.autoOrbit && !state.isDragging) {
+        state.polar.theta += state.polar.orbitSpeed * state.polar.orbitDir * dt;
+        state.polar.theta = normalizeAngle(state.polar.theta);
+        state.polar.x = state.polar.r * Math.cos(state.polar.theta);
+        state.polar.y = state.polar.r * Math.sin(state.polar.theta);
+
+        syncUIForMode(1);
+        updateCalculationsAndMath();
+        renderCanvas();
+      }
+
+      // Phasor rotation/scaling animation
+      if (state.phasor.isAnimating) {
+        state.phasor.animProgress += dt / 1.2;
+        if (state.phasor.animProgress >= 1.0) {
+          state.phasor.animProgress = 0;
+          state.phasor.isAnimating = false;
+        }
+        renderCanvas();
+      }
+
+      requestAnimationFrame(animationLoop);
+    }
+
+    /* -------------------------------------------------------------------------
+       9. CANVAS 2D RENDERING ENGINE
+       ------------------------------------------------------------------------- */
+    function renderCanvas() {
+      if (!ctx) return;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      drawArgandGrid(width, height);
+
+      let activeMode = state.mode;
+      if (activeMode === 4) {
+        if (state.drill.id === 1) activeMode = 1;
+        else if (state.drill.id === 2) activeMode = 2;
+        else if (state.drill.id === 3 || state.drill.id === 4) activeMode = 3;
+      }
+
+      if (activeMode === 1) renderSingleVectorMode(width, height);
+      else if (activeMode === 2) renderPhasorMulDivMode(width, height);
+      else if (activeMode === 3) renderDeMoivreSpiralMode(width, height);
+    }
+
+    function drawArgandGrid(width, height) {
+      const computed = getComputedStyle(document.documentElement);
+      const axisColor = computed.getPropertyValue('--grid-axis').trim() || '#666';
+      const lineColor = computed.getPropertyValue('--grid-line').trim() || '#333';
+      const unitCircleColor = computed.getPropertyValue('--unit-circle').trim() || 'rgba(245,158,11,0.3)';
+
+      if (state.gridType === 'both' || state.gridType === 'polar') {
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+
+        for (let r = 1; r <= 8; r++) {
+          ctx.beginPath();
+          ctx.arc(state.originX, state.originY, r * state.scale, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.fillStyle = axisColor;
+          ctx.font = "10px JetBrains Mono";
+          ctx.fillText(`r=${r}`, state.originX + r * state.scale + 3, state.originY - 4);
+        }
+
+        for (let deg = 0; deg < 360; deg += 30) {
+          const rad = deg * Math.PI / 180;
+          ctx.beginPath();
+          ctx.moveTo(state.originX, state.originY);
+          ctx.lineTo(state.originX + Math.cos(rad) * 800, state.originY - Math.sin(rad) * 800);
+          ctx.stroke();
+        }
+        ctx.setLineDash([]);
+      }
+
+      if (state.gridType === 'both' || state.gridType === 'cartesian') {
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([]);
+
+        const leftBound = -Math.ceil(state.originX / state.scale);
+        const rightBound = Math.ceil((width - state.originX) / state.scale);
+        for (let x = leftBound; x <= rightBound; x++) {
+          if (x === 0) continue;
+          const px = state.originX + x * state.scale;
+          ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, height); ctx.stroke();
+        }
+
+        const topBound = Math.ceil(state.originY / state.scale);
+        const bottomBound = -Math.ceil((height - state.originY) / state.scale);
+        for (let y = bottomBound; y <= topBound; y++) {
+          if (y === 0) continue;
+          const py = state.originY - y * state.scale;
+          ctx.beginPath(); ctx.moveTo(0, py); ctx.lineTo(width, py); ctx.stroke();
+        }
+      }
+
+      // Unit Circle |z| = 1
+      ctx.strokeStyle = unitCircleColor;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(state.originX, state.originY, state.scale, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Axes
+      ctx.strokeStyle = axisColor;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath(); ctx.moveTo(0, state.originY); ctx.lineTo(width, state.originY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(state.originX, 0); ctx.lineTo(state.originX, height); ctx.stroke();
+
+      drawArrowhead(ctx, width - 4, state.originY, 0, 8, axisColor);
+      drawArrowhead(ctx, state.originX, 4, -Math.PI / 2, 8, axisColor);
+
+      ctx.fillStyle = axisColor;
+      ctx.font = "bold 12px Space Grotesk, sans-serif";
+      ctx.fillText("Re", width - 25, state.originY - 8);
+      ctx.fillText("Im", state.originX + 8, 16);
+      ctx.fillText("O", state.originX - 12, state.originY + 14);
+    }
+
+    function renderSingleVectorMode(width, height) {
+      const computed = getComputedStyle(document.documentElement);
+      const reColor = computed.getPropertyValue('--re-color').trim() || '#f59e0b';
+      const imColor = computed.getPropertyValue('--im-color').trim() || '#06b6d4';
+      const vecColor = computed.getPropertyValue('--vec-color').trim() || '#38bdf8';
+      const accent = computed.getPropertyValue('--accent').trim() || '#f59e0b';
+      const radiusCircleColor = computed.getPropertyValue('--radius-circle').trim() || 'rgba(56,189,248,0.55)';
+
+      const z = state.polar;
+      const atOrigin = isZeroComplex(z);
+      const { px, py } = mathToPx(z.x, z.y);
+      const origin = mathToPx(0, 0);
+
+      // Dynamic Radius Circle
+      if (z.r > EPS) {
+        ctx.strokeStyle = radiusCircleColor;
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.arc(origin.px, origin.py, z.r * state.scale, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Projections
+      if (!atOrigin) {
+        const projX = mathToPx(z.x, 0);
+        const projY = mathToPx(0, z.y);
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.5;
+
+        ctx.strokeStyle = imColor;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(projX.px, projX.py); ctx.stroke();
+
+        ctx.strokeStyle = reColor;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(projY.px, projY.py); ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Angle Arc
+        const arcRadius = Math.min(42, Math.max(18, z.r * state.scale * 0.45));
+        if (arcRadius > 6 && Math.abs(z.theta) > 0.03) {
+          ctx.strokeStyle = accent;
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          const canvasAngle = -z.theta;
+          const isAnticlockwise = (z.theta >= 0);
+          ctx.arc(origin.px, origin.py, arcRadius, 0, canvasAngle, isAnticlockwise);
+          ctx.stroke();
+
+          const arrowX = origin.px + Math.cos(canvasAngle) * arcRadius;
+          const arrowY = origin.py + Math.sin(canvasAngle) * arcRadius;
+          const tangentDir = isAnticlockwise ? canvasAngle - Math.PI / 2 : canvasAngle + Math.PI / 2;
+          drawArrowhead(ctx, arrowX, arrowY, tangentDir, 6, accent);
+        }
+
+        // Vector Arrow
+        drawVector(origin.px, origin.py, px, py, vecColor, 3.2, "z");
+
+        // Labels
+        ctx.fillStyle = reColor;
+        ctx.font = "11px JetBrains Mono";
+        ctx.fillText(`x=${z.x.toFixed(2)}`, projX.px - 14, projX.py + (z.y >= 0 ? 15 : -8));
+
+        ctx.fillStyle = imColor;
+        ctx.fillText(`y=${z.y.toFixed(2)}`, projY.px + (z.x >= 0 ? -48 : 8), projY.py + 4);
+      }
+
+      drawDraggableHandle(px, py, vecColor);
+    }
+
+    function renderPhasorMulDivMode(width, height) {
+      const origin = mathToPx(0, 0);
+      const z1 = state.phasor.z1;
+      const z2 = state.phasor.z2;
+      const isMul = (state.phasor.op === 'mul');
+
+      let zRes = { r: 1, theta: 0, x: 0, y: 0 };
+      if (isMul) {
+        zRes.r = z1.r * z2.r;
+        zRes.theta = normalizeAngle(z1.theta + z2.theta);
+      } else {
+        zRes.r = z2.r > EPS ? z1.r / z2.r : 0;
+        zRes.theta = normalizeAngle(z1.theta - z2.theta);
+      }
+      zRes.x = zRes.r * Math.cos(zRes.theta);
+      zRes.y = zRes.r * Math.sin(zRes.theta);
+
+      const p1 = mathToPx(z1.x, z1.y);
+      const p2 = mathToPx(z2.x, z2.y);
+      const pRes = mathToPx(zRes.x, zRes.y);
+
+      // Dynamic Radius Circle for Result
+      if (zRes.r > EPS) {
+        ctx.strokeStyle = "rgba(168, 85, 247, 0.40)";
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.arc(origin.px, origin.py, zRes.r * state.scale, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Draw z1 & z2
+      drawVector(origin.px, origin.py, p1.px, p1.py, "#06b6d4", 2.6, "z₁");
+      drawDraggableHandle(p1.px, p1.py, "#06b6d4");
+
+      drawVector(origin.px, origin.py, p2.px, p2.py, "#f59e0b", 2.6, "z₂");
+      drawDraggableHandle(p2.px, p2.py, "#f59e0b");
+
+      // Draw Result (Non-draggable marker)
+      const resColor = "#a855f7";
+      if (zRes.r > EPS) {
+        drawVector(origin.px, origin.py, pRes.px, pRes.py, resColor, 3.8, isMul ? "z₁ · z₂" : "z₁ / z₂");
+        
+        ctx.fillStyle = resColor;
+        ctx.beginPath();
+        ctx.arc(pRes.px, pRes.py, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+
+      // Animated Ghost Vector during rotation animation
+      if (state.phasor.isAnimating) {
+        const ease = state.phasor.animProgress;
+        const curR = z1.r + (zRes.r - z1.r) * ease;
+        const curTh = z1.theta + (isMul ? z2.theta : -z2.theta) * ease;
+        const ghostPt = mathToPx(curR * Math.cos(curTh), curR * Math.sin(curTh));
+
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+        ctx.lineWidth = 2.0;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(origin.px, origin.py);
+        ctx.lineTo(ghostPt.px, ghostPt.py);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    function renderDeMoivreSpiralMode(width, height) {
+      const origin = mathToPx(0, 0);
+      const n = (state.mode === 4 && state.drill.id === 4) ? 2024 : state.power.n;
+      const r0 = (state.mode === 4 && state.drill.id === 4) ? 1.0 : state.power.baseR;
+      const th0 = (state.mode === 4 && state.drill.id === 4) ? 2*Math.PI/3 : state.power.baseTheta;
+
+      ctx.strokeStyle = "rgba(245, 158, 11, 0.40)";
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+
+      const points = [];
+      const renderMaxN = Math.min(Math.abs(n), 12);
+      const startK = n < 0 ? -renderMaxN : 0;
+      const endK = n < 0 ? 0 : renderMaxN;
+
+      for (let k = startK; k <= endK; k++) {
+        const r_k = Math.pow(r0, k);
+        const th_k = k * th0;
+        const pt = mathToPx(r_k * Math.cos(th_k), r_k * Math.sin(th_k));
+        points.push({ k, pt, r_k });
+
+        if (k === startK) ctx.moveTo(pt.px, pt.py);
+        else ctx.lineTo(pt.px, pt.py);
+      }
+      ctx.stroke();
+
+      points.forEach(({ k, pt }) => {
+        const isTarget = (k === n) || (n > 12 && k === renderMaxN);
+        ctx.fillStyle = isTarget ? "#ff10f0" : (k === 0 ? "#4eff96" : "#f59e0b");
+        ctx.beginPath();
+        ctx.arc(pt.px, pt.py, isTarget ? 6.5 : 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = isTarget ? "#ff10f0" : "#888";
+        ctx.font = isTarget ? "bold 11px JetBrains Mono" : "9px JetBrains Mono";
+        ctx.fillText(`z^${k}`, pt.px + 6, pt.py - 6);
+      });
+
+      const target = points.find(p => p.k === n) || points[points.length - 1];
+      if (target && target.r_k > EPS) {
+        drawVector(origin.px, origin.py, target.pt.px, target.pt.py, "#ff10f0", 3.2, `z^{${n}}`);
+      }
+    }
+
+    /* -------------------------------------------------------------------------
+       10. PRIMITIVES & ARROWS
+       ------------------------------------------------------------------------- */
+    function drawVector(x1, y1, x2, y2, color, lineWidth, label) {
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = lineWidth;
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+      drawArrowhead(ctx, x2, y2, angle, 9, color);
+
+      if (label) {
+        ctx.font = "bold 13px Space Grotesk, sans-serif";
+        ctx.fillText(label, x2 + Math.cos(angle) * 14 - 4, y2 + Math.sin(angle) * 14 + 4);
+      }
+    }
+
+    function drawArrowhead(ctx, x, y, angle, size, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - size * Math.cos(angle - Math.PI / 6), y - size * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(x - size * Math.cos(angle + Math.PI / 6), y - size * Math.sin(angle + Math.PI / 6));
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawDraggableHandle(px, py, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    /* -------------------------------------------------------------------------
+       11. POINTER EVENTS (TOUCH & MOUSE UNIFIED)
+       ------------------------------------------------------------------------- */
+    function setupPointerInteraction() {
+      const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        return { px: e.clientX - rect.left, py: e.clientY - rect.top };
+      };
+
+      canvas.addEventListener('pointerdown', (e) => {
+        const { px, py } = getPos(e);
+        let activeMode = state.mode;
+        if (activeMode === 4) {
+          activeMode = state.drill.id === 2 ? 2 : 1;
+        }
+
+        if (activeMode === 1) {
+          const p1 = mathToPx(state.polar.x, state.polar.y);
+          if (Math.hypot(px - p1.px, py - p1.py) < 36) {
+            state.isDragging = true;
+            state.draggedTarget = 'polar';
+            canvas.setPointerCapture(e.pointerId);
+            if (state.polar.autoOrbit) toggleAutoOrbit();
+          }
+        } else if (activeMode === 2) {
+          const p1 = mathToPx(state.phasor.z1.x, state.phasor.z1.y);
+          const p2 = mathToPx(state.phasor.z2.x, state.phasor.z2.y);
+          if (Math.hypot(px - p1.px, py - p1.py) < 36) {
+            state.isDragging = true;
+            state.draggedTarget = 'z1';
+            canvas.setPointerCapture(e.pointerId);
+          } else if (Math.hypot(px - p2.px, py - p2.py) < 36) {
+            state.isDragging = true;
+            state.draggedTarget = 'z2';
+            canvas.setPointerCapture(e.pointerId);
+          }
+        }
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!state.isDragging) return;
+        const { px, py } = getPos(e);
+        const mathCoord = pxToMath(px, py);
+
+        let target = null;
+        if (state.draggedTarget === 'polar') target = state.polar;
+        else if (state.draggedTarget === 'z1') target = state.phasor.z1;
+        else if (state.draggedTarget === 'z2') target = state.phasor.z2;
+
+        if (target) {
+          target.x = clamp(mathCoord.x, -5.5, 5.5);
+          target.y = clamp(mathCoord.y, -5.5, 5.5);
+          if (isZero(target.x)) target.x = 0;
+          if (isZero(target.y)) target.y = 0;
+
+          target.r = Math.hypot(target.x, target.y);
+          target.theta = principalArg(target.x, target.y) || 0;
+
+          // Snap Angles
+          if (state.snapAngles) {
+            for (let item of SPECIAL_ANGLES) {
+              if (Math.abs(item.rad - target.theta) < 0.08) {
+                target.theta = item.rad;
+                target.x = target.r * Math.cos(target.theta);
+                target.y = target.r * Math.sin(target.theta);
+                break;
+              }
+            }
+          }
+
+          syncUIForMode(state.mode);
+          updateCalculationsAndMath();
+          renderCanvas();
+        }
+      });
+
+      const endDrag = (e) => {
+        if (state.isDragging) {
+          state.isDragging = false;
+          state.draggedTarget = null;
+          try { canvas.releasePointerCapture(e.pointerId); } catch(err){}
+        }
+      };
+
+      canvas.addEventListener('pointerup', endDrag);
+      canvas.addEventListener('pointercancel', endDrag);
+    }
+
+    /* -------------------------------------------------------------------------
+       12. DRILL & PHASOR ANIMATION ENGINE
+       ------------------------------------------------------------------------- */
+    function playPhasorAnimation() {
+      if (state.phasor.isAnimating) return;
+      state.phasor.isAnimating = true;
+      state.phasor.animProgress = 0;
+    }
+
+    function loadDrillProblem(id) {
+      state.drill.id = id;
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`drill-opt-${i}`);
+        if (btn) {
+          if (i === id) {
+            btn.className = 'p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--accent)] text-[var(--accent)] font-bold text-xs';
+          } else {
+            btn.className = 'p-3 text-left bg-[var(--bg-elev-2)] border border-[var(--border)] opacity-75 hover:opacity-100 text-xs';
+          }
+        }
+      }
+
+      if (id === 1) {
+        state.drill.type = 'polar';
+        setVectorPreset(-1, Math.sqrt(3));
+      } else if (id === 2) {
+        state.drill.type = 'mulDiv';
+        state.phasor.z1 = { x: 1.0, y: Math.sqrt(3), r: 2.0, theta: Math.PI / 3 };
+        state.phasor.z2 = { x: 2 * Math.sqrt(3), y: 2.0, r: 4.0, theta: Math.PI / 6 };
+        state.phasor.op = 'mul';
+        syncUIForMode(2);
+      } else if (id === 3) {
+        state.drill.type = 'power';
+        state.power = { n: 10, baseR: Math.SQRT2, baseTheta: Math.PI / 4 };
+        syncUIForMode(3);
+      } else if (id === 4) {
+        state.drill.type = 'power';
+        state.power = { n: 2024, baseR: 1.0, baseTheta: 2 * Math.PI / 3 };
+        syncUIForMode(3);
+      }
+
+      setupCanvasDPI();
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+
+    function generateRandomDrillProblem() {
+      const special = SPECIAL_ANGLES[Math.floor(Math.random() * SPECIAL_ANGLES.length)];
+      const r = Math.floor(Math.random() * 3) + 1;
+      state.polar.r = r;
+      state.polar.theta = special.rad;
+      state.polar.x = r * Math.cos(special.rad);
+      state.polar.y = r * Math.sin(special.rad);
+      syncUIForMode(1);
+      updateCalculationsAndMath();
+      renderCanvas();
+    }
+  </script>
+</body>
+</html>
