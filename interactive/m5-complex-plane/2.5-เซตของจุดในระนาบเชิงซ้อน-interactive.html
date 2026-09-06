@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>2.5 เซตของจุดในระนาบเชิงซ้อน — Interactive Topology & Geometry Workbench</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]', '[data-theme="neon"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['"Bai Jamjuree"', '"Pridi"', 'sans-serif'],
+            body: ['"IBM Plex Sans Thai Looped"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- KaTeX for pristine LaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Google Fonts: Bai Jamjuree (Heading มีหัว สไตล์ Tech/Modern), Pridi, IBM Plex Sans Thai Looped (Body), JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Pridi:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM TOKENS (LIGHT STUDIO / DARK OBSIDIAN / CYBER NEON)
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-elevated: #f1f5f9;
+      --surface-muted: #e2e8f0;
+      --text: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --border-soft: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --accent-neon: #0284c7;
+      --neon-glow: 0 0 16px rgba(37, 99, 235, 0.25);
+      --accent-green: #10b981;
+      --accent-green-soft: rgba(16, 185, 129, 0.15);
+      --accent-amber: #f59e0b;
+      --accent-amber-soft: rgba(245, 158, 11, 0.15);
+      --accent-red: #ef4444;
+      --accent-red-soft: rgba(239, 68, 68, 0.15);
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.10);
+      --canvas-bg: #ffffff;
+      --canvas-grid: #f1f5f9;
+      --canvas-axis: #94a3b8;
+      --canvas-text: #0f172a;
+      --set-fill: rgba(37, 99, 235, 0.16);
+      --set-stroke: #2563eb;
+      --glow-intensity: 0px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --surface: #111827;
+      --surface-elevated: #1e293b;
+      --surface-muted: #334155;
+      --text: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-soft: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #60a5fa;
+      --accent-soft: rgba(56, 189, 248, 0.18);
+      --accent-neon: #38bdf8;
+      --neon-glow: 0 0 20px rgba(56, 189, 248, 0.35);
+      --accent-green: #34d399;
+      --accent-green-soft: rgba(52, 211, 153, 0.20);
+      --accent-amber: #fbbf24;
+      --accent-amber-soft: rgba(251, 191, 36, 0.20);
+      --accent-red: #f87171;
+      --accent-red-soft: rgba(248, 113, 113, 0.20);
+      --shadow-card: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 12px 32px -3px rgba(0, 0, 0, 0.60);
+      --canvas-bg: #0f172a;
+      --canvas-grid: #1e293b;
+      --canvas-axis: #64748b;
+      --canvas-text: #f8fafc;
+      --set-fill: rgba(56, 189, 248, 0.22);
+      --set-stroke: #38bdf8;
+      --glow-intensity: 6px;
+    }
+
+    [data-theme="neon"] {
+      --bg: #030712;
+      --surface: #0a0f1d;
+      --surface-elevated: #11182c;
+      --surface-muted: #1e294b;
+      --text: #f0fdf4;
+      --text-secondary: #99f6e4;
+      --text-muted: #5eead4;
+      --border: #14b8a6;
+      --border-soft: rgba(20, 184, 166, 0.35);
+      --accent: #00f0ff;
+      --accent-hover: #38bdf8;
+      --accent-soft: rgba(0, 240, 255, 0.22);
+      --accent-neon: #00f0ff;
+      --neon-glow: 0 0 25px rgba(0, 240, 255, 0.60);
+      --accent-green: #39ff14;
+      --accent-green-soft: rgba(57, 255, 20, 0.25);
+      --accent-amber: #ffea00;
+      --accent-amber-soft: rgba(255, 234, 0, 0.25);
+      --accent-red: #ff007f;
+      --accent-red-soft: rgba(255, 0, 127, 0.25);
+      --shadow-card: 0 0 30px rgba(0, 240, 255, 0.18);
+      --shadow-hover: 0 0 45px rgba(0, 240, 255, 0.35);
+      --canvas-bg: #030712;
+      --canvas-grid: rgba(0, 240, 255, 0.10);
+      --canvas-axis: #00f0ff;
+      --canvas-text: #00f0ff;
+      --set-fill: rgba(255, 0, 127, 0.22);
+      --set-stroke: #ff007f;
+      --glow-intensity: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 19px; /* Scaled up baseline for widescreen classroom projection */
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      margin: 0;
+      line-height: 1.68;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Headings with distinct Thai loops (มีหัว เท่ โมเดิร์น) */
+    h1, h2, h3, h4, h5, h6, .font-heading {
+      font-family: 'Bai Jamjuree', 'Pridi', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Neon Glow text utility */
+    [data-theme="neon"] .neon-text {
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.75), 0 0 24px rgba(0, 240, 255, 0.4);
+    }
+    [data-theme="neon"] .neon-border {
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+    }
+
+    /* Reading Progress Top Bar */
+    #reading-progress {
+      position: fixed; top: 0; left: 0; height: 3.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-green));
+      box-shadow: var(--neon-glow);
+      z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    /* Segmented pill control */
+    .segmented-control {
+      display: inline-flex;
+      background: var(--surface-muted);
+      border-radius: 9999px;
+      padding: 3px;
+      border: 1px solid var(--border-soft);
+    }
+    .segmented-button {
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .segmented-button.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-weight: 700;
+    }
+    [data-theme="neon"] .segmented-button.active {
+      background: var(--accent);
+      color: #000000;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
+    }
+
+    /* Range slider styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 9px;
+      border-radius: 6px;
+      background: var(--surface-muted);
+      outline: none;
+      border: 1px solid var(--border-soft);
+      margin: 10px 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+    }
+    [data-theme="neon"] input[type="range"]::-webkit-slider-thumb {
+      background: var(--accent);
+      border-color: #ffffff;
+      box-shadow: 0 0 14px var(--accent);
+    }
+    input[type="range"]::-webkit-slider-thumb:active {
+      transform: scale(1.18);
+    }
+
+    /* Glass card styling */
+    .studio-card {
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 22px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .studio-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Canvas touch optimization */
+    canvas {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* KaTeX clear styling */
+    .katex {
+      font-size: 1.15em;
+    }
+    .katex-display {
+      margin: 0.85em 0;
+      overflow-x: auto;
+      padding: 0.35em 0;
+    }
+
+    /* Hide scrollbars for pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen relative flex flex-col">
+  <!-- Top Progress Bar -->
+  <div id="reading-progress" style="width: 0%;"></div>
+
+  <!-- Header Nav -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl border-b transition-colors duration-300" style="background-color: rgba(var(--surface), 0.85); border-color: var(--border-soft);">
+    <div class="w-full px-4 sm:px-8 lg:px-12 h-20 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-heading font-bold text-white text-lg shadow-md" style="background: var(--accent); box-shadow: var(--neon-glow);">
+          2.5
+        </div>
+        <div>
+          <span class="font-heading font-bold text-xl sm:text-2xl block leading-tight text-current neon-text">
+            เซตของจุดในระนาบเชิงซ้อน
+          </span>
+          <span class="text-xs sm:text-sm font-mono font-medium block" style="color: var(--text-muted);">
+            ค 30203 คณิตศาสตร์เพิ่มเติม 3 (ชั้น ม.5)
+          </span>
+        </div>
+      </div>
+
+      <!-- Theme Switcher & Quick Navigation -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <nav class="hidden lg:flex items-center space-x-1 font-heading font-semibold text-sm">
+          <a href="#sandbox" class="px-3.5 py-2 rounded-xl transition-colors hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary);">
+            Interactive Sandbox
+          </a>
+          <a href="#concepts" class="px-3.5 py-2 rounded-xl transition-colors hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary);">
+            มโนทัศน์ & ที่มา
+          </a>
+          <a href="2.5-quiz-interactive.html" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl border transition-all hover:scale-105 shadow-sm font-bold" style="border-color: var(--accent); background: var(--accent-soft); color: var(--accent);">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>แบบทดสอบ 5 ข้อ</span>
+          </a>
+          <a href="#exercises" class="px-3.5 py-2 rounded-xl transition-colors hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary);">
+            แบบฝึกหัดท้ายบท
+          </a>
+        </nav>
+
+        <!-- 3-Way Segmented Theme Switcher (Light / Dark / Neon) -->
+        <div class="segmented-control">
+          <button onclick="setTheme('light')" class="segmented-button" id="btn-theme-light" title="Light Studio">
+            <i class="fa-solid fa-sun mr-1 text-amber-500"></i> สว่าง
+          </button>
+          <button onclick="setTheme('dark')" class="segmented-button" id="btn-theme-dark" title="Dark Obsidian">
+            <i class="fa-solid fa-moon mr-1 text-blue-400"></i> มืด
+          </button>
+          <button onclick="setTheme('neon')" class="segmented-button" id="btn-theme-neon" title="Cyber Neon">
+            <i class="fa-solid fa-bolt mr-1 text-cyan-400"></i> นีออน
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container: Ultra-wide fluid container with safe margins -->
+  <main class="flex-grow w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 py-8 sm:py-12 space-y-12 sm:space-y-16">
+
+    <!-- Hero Section -->
+    <section class="space-y-5 text-left max-w-5xl mx-auto pt-2">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full text-xs font-mono font-medium border" style="background: var(--surface-elevated); border-color: var(--border-soft); color: var(--accent);">
+        <span class="w-2 h-2 rounded-full" style="background: var(--accent);"></span>
+        <span>Complex Topology & Geometry Studio — Section 2.5</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-8 space-y-4">
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight neon-text">
+            เซตของจุดในระนาบเชิงซ้อน <br />
+            <span style="color: var(--accent);">มโนทัศน์ทางเรขาคณิตและโทโพโลยี</span>
+          </h1>
+
+          <p class="text-base sm:text-lg font-normal leading-relaxed" style="color: var(--text-secondary);">
+            การศึกษาฟังก์ชันของตัวแปรเชิงซ้อนจำเป็นต้องกำหนดขอบเขตบนระนาบสองมิติอย่างรัดกุม ต่างจากแคลคูลัสบนเส้นจำนวนจริงที่มีการเข้าใกล้เพียงสองทิศทาง ในระนาบเชิงซ้อนจุดสามารถเข้าใกล้ได้รอบทิศทาง 360 องศา จึงต้องอาศัยนิยามของ <strong>ย่านใกล้เคียง (Neighborhood)</strong>, <strong>จุดขอบ (Boundary)</strong>, และ <strong>โดเมน (Domain)</strong> เพื่อรองรับการหาอนุพันธ์และการอินทิเกรตเชิงซ้อน
+          </p>
+        </div>
+
+        <!-- Metric / Overview sidebar box -->
+        <div class="lg:col-span-4 p-5 rounded-2xl border space-y-3" style="background: var(--surface); border-color: var(--border-soft);">
+          <div class="text-xs font-mono font-bold uppercase tracking-wider" style="color: var(--text-muted);">
+            แก่นความคิดสำคัญ (Core Invariants)
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-start space-x-2">
+              <span class="font-mono font-bold text-blue-500">01</span>
+              <span><strong>ย่านใกล้เคียง $N(z_0, \rho)$</strong> คือพื้นที่วงกลมเปิดรอบจุดศูนย์กลาง</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="font-mono font-bold text-amber-500">02</span>
+              <span><strong>เซตไม่จำเป็นต้องเปิดหรือปิด</strong> มีเซตที่ไม่เป็นทั้งคู่ และเป็นทั้งคู่</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="font-mono font-bold text-emerald-500">03</span>
+              <span><strong>โดเมน (Domain)</strong> ต้องเป็นเซตเปิดที่เชื่อมต่อกันเป็นผืนเดียวเสมอ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Key Anchor Cards with Clean Academic Styling -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+        <div class="studio-card p-5 space-y-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-3.5 h-3.5 rounded-full" style="background: var(--accent-green);"></div>
+            <h3 class="font-heading font-bold text-base sm:text-lg">จุดภายใน (Interior Point)</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+            จุด $z_0$ ที่มีย่านใกล้เคียง $N(z_0, \rho)$ รัศมีอย่างน้อยหนึ่งค่า บรรจุอยู่ภายในเซต $S$ ทั้งหมดโดยไม่แตะเส้นขอบ
+          </p>
+        </div>
+
+        <div class="studio-card p-5 space-y-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-3.5 h-3.5 rounded-full" style="background: var(--accent-amber);"></div>
+            <h3 class="font-heading font-bold text-base sm:text-lg">จุดขอบ (Boundary Point)</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+            จุดที่ทุกๆ ย่านใกล้เคียงรอบตัว จะต้องมีทั้งจุดที่เป็นสมาชิกของ $S$ และจุดที่ไม่ใช่สมาชิกของ $S$ เสมอ
+          </p>
+        </div>
+
+        <div class="studio-card p-5 space-y-2">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-3.5 h-3.5 rounded-full" style="background: var(--accent-red);"></div>
+            <h3 class="font-heading font-bold text-base sm:text-lg">จุดภายนอก (Exterior Point)</h3>
+          </div>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+            จุดที่มีย่านใกล้เคียงซึ่งไม่มีจุดร่วมกับเซต $S$ เลยแม้แต่จุดเดียว (เป็นจุดภายในของส่วนเติมเต็ม $S^c$)
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Sandbox Section -->
+    <section id="sandbox" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b pb-4" style="border-color: var(--border-soft);">
+        <div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold flex items-center neon-text">
+            <i class="fa-solid fa-shapes mr-3.5" style="color: var(--accent);"></i>
+            Interactive Topology Sandbox
+          </h2>
+          <p class="text-base sm:text-lg mt-1" style="color: var(--text-muted);">
+            แตะหรือลากจุดตรวจสอบ $z$ เพื่อดูการจำแนกสถานะ และกดเลือกพรีเซตเซตรูปทรงต่างๆ เพื่อศึกษาคุณสมบัติ
+          </p>
+        </div>
+
+        <div class="text-xs sm:text-sm font-mono px-3.5 py-2 rounded-xl border shadow-sm self-start sm:self-auto flex items-center space-x-2" style="background: var(--surface-elevated); border-color: var(--border-soft); color: var(--text-secondary);">
+          <i class="fa-solid fa-hand-pointer text-blue-500"></i>
+          <span>Touch & Drag</span>
+        </div>
+      </div>
+
+      <!-- Preset Pills (Horizontally scrollable on phones/tablets) -->
+      <div class="flex items-center space-x-2.5 overflow-x-auto pb-2.5 pt-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+        <button onclick="setPreset('disk_closed')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="disk_closed">
+          ดิสก์ปิด $|z-z_0| \le r$
+        </button>
+        <button onclick="setPreset('disk_open')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="disk_open">
+          ย่านใกล้เคียง $|z-z_0| < r$
+        </button>
+        <button onclick="setPreset('punctured')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="punctured">
+          เจาะรู $0 < |z-z_0| < r$
+        </button>
+        <button onclick="setPreset('annulus')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="annulus">
+          วงแหวน $1 < |z| \le 2$
+        </button>
+        <button onclick="setPreset('half_plane')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="half_plane">
+          ครึ่งระนาบ $\text{Re}(z) > 1$
+        </button>
+        <button onclick="setPreset('vertical_strip')" class="preset-btn px-4 py-2.5 rounded-full text-sm font-heading font-semibold border transition-all whitespace-nowrap shadow-sm" data-preset="vertical_strip">
+          แถบแนวดิ่ง $-2 < \text{Re}(z) \le 3$
+        </button>
+      </div>
+
+      <!-- Main Workbench Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left / Top: Interactive Canvas Card -->
+        <div class="lg:col-span-8 studio-card p-4 sm:p-6 overflow-hidden flex flex-col items-center">
+          <!-- Canvas Toolbar with Zoom controls -->
+          <div class="w-full flex items-center justify-between pb-3 mb-2 border-b text-xs sm:text-sm" style="border-color: var(--border-soft);">
+            <div class="flex items-center space-x-2 font-heading font-semibold text-current">
+              <i class="fa-solid fa-expand text-blue-500"></i>
+              <span>พื้นที่แสดงภาพเรขาคณิต (Large Viewport)</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <button onclick="zoomCanvas(-1)" class="px-2.5 py-1 rounded-lg border text-xs font-mono font-bold hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style="border-color: var(--border-soft);" title="ซูมเข้า">
+                <i class="fa-solid fa-plus mr-1"></i>ขยายภาพ
+              </button>
+              <button onclick="zoomCanvas(1)" class="px-2.5 py-1 rounded-lg border text-xs font-mono font-bold hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style="border-color: var(--border-soft);" title="ซูมออก">
+                <i class="fa-solid fa-minus mr-1"></i>ย่อภาพ
+              </button>
+              <button onclick="resetZoom()" class="px-2.5 py-1 rounded-lg border text-xs font-mono hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style="border-color: var(--border-soft);" title="รีเซ็ตสเกล">
+                รีเซ็ต
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full relative rounded-2xl overflow-hidden border shadow-inner" style="background: var(--canvas-bg); border-color: var(--border-soft);">
+            <canvas id="topoCanvas" class="w-full h-[460px] sm:h-[580px] md:h-[680px] lg:h-[740px] cursor-grab active:cursor-grabbing"></canvas>
+
+            <!-- Floating Top Helper -->
+            <div class="absolute top-3.5 left-3.5 px-4 py-2 rounded-full border backdrop-blur-md text-xs sm:text-sm font-mono flex items-center space-x-2 shadow-md pointer-events-none" style="background: rgba(var(--surface), 0.88); border-color: var(--border-soft); color: var(--text);">
+              <i class="fa-solid fa-arrows-up-down-left-right text-amber-500"></i>
+              <span>ลากจุด $z$ ไปใน/นอกเซตเพื่อตรวจสถานะ</span>
+            </div>
+
+            <!-- Floating Bottom Legend -->
+            <div class="absolute bottom-3.5 right-3.5 px-4 py-2.5 rounded-2xl border backdrop-blur-md text-xs sm:text-sm font-heading font-medium flex flex-col gap-1.5 shadow-md pointer-events-none" style="background: rgba(var(--surface), 0.90); border-color: var(--border-soft); color: var(--text);">
+              <div class="flex items-center space-x-2">
+                <span class="w-3.5 h-3.5 rounded-full shadow-sm" style="background: var(--accent-green);"></span>
+                <span>จุดภายใน (Interior)</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-3.5 h-3.5 rounded-full shadow-sm" style="background: var(--accent-amber);"></span>
+                <span>จุดขอบ (Boundary)</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="w-3.5 h-3.5 rounded-full shadow-sm" style="background: var(--accent-red);"></span>
+                <span>จุดภายนอก (Exterior)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Touch Instructions for Phones -->
+          <div class="w-full mt-3.5 flex items-center justify-between text-xs sm:text-sm font-medium" style="color: var(--text-muted);">
+            <span><i class="fa-solid fa-mobile-screen mr-1 text-blue-500"></i> รองรับการแตะลากด้วยนิ้วบนจอสัมผัส</span>
+            <span class="font-mono">พิกัดสเกล 1:1 (ไม่บวมเป็นวงรี)</span>
+          </div>
+        </div>
+
+        <!-- Right / Bottom: Telemetry & Controls Card -->
+        <div class="lg:col-span-4 space-y-5">
+          
+          <!-- Real-time Status Card -->
+          <div class="studio-card p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">Point Status</span>
+              <span id="pointTypeBadge" class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold font-mono shadow-sm">
+                --
+              </span>
+            </div>
+
+            <div>
+              <div id="pointCoords" class="text-2xl sm:text-3xl font-mono font-bold tracking-tight">z = 0.00 + 0.00i</div>
+              <div id="mathDistanceInfo" class="text-sm font-mono mt-1" style="color: var(--text-muted);">ระยะทาง $|z - z_0| = 0.00$ หน่วย</div>
+            </div>
+
+            <p id="statusExplanation" class="text-sm sm:text-base leading-relaxed p-4 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft); color: var(--text-secondary);">
+              --
+            </p>
+          </div>
+
+          <!-- Set Characteristics Matrix -->
+          <div class="studio-card p-5 sm:p-6 space-y-3">
+            <div class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">คุณสมบัติของเซต (Set Properties)</div>
+            
+            <div class="grid grid-cols-2 gap-2.5 text-sm">
+              <div class="p-3.5 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+                <div class="text-xs font-semibold" style="color: var(--text-muted);">เซตเปิด / เซตปิด</div>
+                <div id="propOpenClosed" class="font-heading font-bold text-base mt-1">--</div>
+              </div>
+              <div class="p-3.5 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+                <div class="text-xs font-semibold" style="color: var(--text-muted);">ความเป็นโดเมน</div>
+                <div id="propDomain" class="font-heading font-bold text-base mt-1">--</div>
+              </div>
+              <div class="p-3.5 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+                <div class="text-xs font-semibold" style="color: var(--text-muted);">ความเชื่อมต่อ</div>
+                <div id="propConnected" class="font-heading font-bold text-base mt-1">--</div>
+              </div>
+              <div class="p-3.5 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+                <div class="text-xs font-semibold" style="color: var(--text-muted);">การมีขอบเขต</div>
+                <div id="propBounded" class="font-heading font-bold text-base mt-1">--</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parameter Sliders -->
+          <div class="studio-card p-5 sm:p-6 space-y-4">
+            <div class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">ปรับพารามิเตอร์ของเซต</div>
+
+            <div>
+              <div class="flex justify-between text-sm font-mono font-medium">
+                <span>จุดศูนย์กลาง $x_0$ (ส่วนจริง):</span>
+                <span id="valCenterX" class="font-bold text-blue-600 dark:text-cyan-400">0.0</span>
+              </div>
+              <input type="range" id="sliderCenterX" min="-2.5" max="2.5" step="0.1" value="0.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm font-mono font-medium">
+                <span>จุดศูนย์กลาง $y_0$ (ส่วนจินตภาพ):</span>
+                <span id="valCenterY" class="font-bold text-blue-600 dark:text-cyan-400">0.0</span>
+              </div>
+              <input type="range" id="sliderCenterY" min="-2.5" max="2.5" step="0.1" value="0.0">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm font-mono font-medium">
+                <span>รัศมี $r$ (Radius):</span>
+                <span id="valRadius" class="font-bold text-blue-600 dark:text-cyan-400">1.5</span>
+              </div>
+              <input type="range" id="sliderRadius" min="0.6" max="3.0" step="0.1" value="1.5">
+            </div>
+
+            <!-- Mathematical Definition Readout -->
+            <div class="p-4 rounded-xl border font-mono text-sm" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+              <span class="text-xs font-semibold block mb-1" style="color: var(--text-muted);">เงื่อนไขของเซต $S$:</span>
+              <div id="mathDefDisplay" class="font-bold text-base">--</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Pedagogical Concepts & Analogies -->
+    <section id="concepts" class="space-y-8 pt-4">
+      <div class="border-b pb-4" style="border-color: var(--border-soft);">
+        <h2 class="text-2xl sm:text-4xl font-extrabold flex items-center neon-text">
+          <i class="fa-solid fa-lightbulb mr-3.5 text-amber-500"></i>
+          มโนทัศน์สำคัญ & ภาพจำเปรียบเทียบ
+        </h2>
+        <p class="text-base sm:text-lg mt-1" style="color: var(--text-muted);">
+          เหตุผลทางคณิตศาสตร์ว่าทำไมเราต้องนิยามสิ่งเหล่านี้ และภาพจำที่ช่วยให้เข้าใจเนื้อหานามธรรม
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1. The Door Fallacy -->
+        <div class="studio-card p-6 sm:p-8 space-y-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm" style="background: var(--accent-amber-soft); color: var(--accent-amber);">
+            <i class="fa-solid fa-door-open"></i>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-bold">กับดักเปิด-ปิด: เซตไม่ใช่ประตูห้อง</h3>
+          <p class="text-base sm:text-lg leading-relaxed" style="color: var(--text-secondary);">
+            ในชีวิตประจำวัน ถ้าประตูห้อง <strong>"ไม่เปิด"</strong> แปลว่าประตูต้อง <strong>"ปิด"</strong> แต่นิยามทางคณิตศาสตร์ไม่ได้เป็นแบบนั้น:
+          </p>
+          <ul class="space-y-2.5 text-base sm:text-lg list-disc list-inside" style="color: var(--text-secondary);">
+            <li><strong>เซตเปิด:</strong> ไม่มีจุดขอบสักจุดเดียวอยู่ในเซต (ทุกจุดมีเบาะกันชนรอบตัว)</li>
+            <li><strong>เซตปิด:</strong> กวาดเอาจุดขอบทั้งหมดมารวมไว้ครบถ้วน ($\text{bdry}(S) \subseteq S$)</li>
+            <li><strong>ไม่เป็นทั้งเปิดและปิด:</strong> มีขอบบางส่วนอยู่ และบางส่วนไม่อยู่ เช่น วงแหวน $1 < |z| \le 2$</li>
+            <li><strong>เป็นทั้งเปิดและปิด (Clopen):</strong> ไม่มีจุดขอบเลย เช่น ระนาบทั้งหมด $\mathbb{C}$ และเซตว่าง $\emptyset$</li>
+          </ul>
+        </div>
+
+        <!-- 2. Why Domain Matters -->
+        <div class="studio-card p-6 sm:p-8 space-y-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm" style="background: var(--accent-soft); color: var(--accent);">
+            <i class="fa-solid fa-draw-polygon"></i>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-bold">ทำไมแคลคูลัสเชิงซ้อนจึงสร้างบน "โดเมน"?</h3>
+          <p class="text-base sm:text-lg leading-relaxed" style="color: var(--text-secondary);">
+            ในการหาลิมิตบนเส้นจำนวนจริง เราเข้าใกล้ได้แค่ 2 ทิศทาง (ซ้าย-ขวา) แต่บนระนาบเชิงซ้อน $z \to z_0$ สามารถพุ่งเข้าหาได้จาก <strong>360 องศาทุกทิศทาง</strong>:
+          </p>
+          <div class="space-y-3 text-base sm:text-lg">
+            <div class="p-4 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+              <strong>1. ต้องเปิด (Open):</strong> เพื่อให้มีจานกลมรอบจุด ให้สามารถคำนวณอัตราการเปลี่ยนแปลง $\frac{f(z_0+\Delta z)-f(z_0)}{\Delta z}$ ได้โดย $\Delta z$ ไม่หลุดออกนอกขอบ
+            </div>
+            <div class="p-4 rounded-xl border" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+              <strong>2. ต้องเชื่อมต่อ (Connected):</strong> เพื่อรับประกันว่าถ้า $f'(z) = 0$ บนเซตนี้แล้ว $f(z)$ ต้องเป็นค่าคงที่ค่าเดียวเสมอ (ถ้าแยกเป็น 2 เกาะ ค่าคงที่บนแต่ละเกาะอาจไม่เท่ากัน)
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Boundedness Dome -->
+        <div class="studio-card p-6 sm:p-8 space-y-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm" style="background: var(--accent-green-soft); color: var(--accent-green);">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-bold">เซตที่มีขอบเขต: การครอบโดมยักษ์</h3>
+          <p class="text-base sm:text-lg leading-relaxed" style="color: var(--text-secondary);">
+            ให้นึกถึงการ <strong>"เอาชามกลมขนาดยักษ์รัศมี $R$ มาครอบ"</strong>:
+          </p>
+          <p class="text-base sm:text-lg leading-relaxed" style="color: var(--text-secondary);">
+            เซตในระนาบจะมีขอบเขต ถ้าเราหาชามกลมรัศมี $R > 0$ ขนาดใหญ่พอ (เช่น $R = 100$ หรือ $1,000,000$) มาครอบจุดทุกจุดในเซตไว้ได้มิดชิด นั่นคือ $|z| < R$ สำหรับทุก $z \in S$
+          </p>
+          <div class="p-4 rounded-xl border text-sm sm:text-base font-mono" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="text-emerald-600 dark:text-emerald-400 font-bold">✓ มีขอบเขต: วงกลม, ดิสก์, วงแหวน $1 < |z| < 2$</div>
+            <div class="text-red-500 dark:text-red-400 font-bold mt-1.5">✗ ไม่มีขอบเขต: แถบแนวตั้ง $-2 < \text{Re}(z) \le 3$, ครึ่งระนาบ $\text{Re}(z) > 1$</div>
+          </div>
+        </div>
+
+        <!-- 4. Punctured Center Pitfall -->
+        <div class="studio-card p-6 sm:p-8 space-y-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm" style="background: var(--accent-red-soft); color: var(--accent-red);">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-heading font-bold">ข้อควรระวัง: จุดศูนย์กลางที่ถูกเจาะรู</h3>
+          <p class="text-base sm:text-lg leading-relaxed" style="color: var(--text-secondary);">
+            ในย่านใกล้เคียงเจาะรูศูนย์กลาง $0 < |z - z_0| < \rho$: แม้ว่าจุด $z_0$ จะไม่ได้เป็นสมาชิกของเซต แต่นักเรียนมักเข้าใจผิดว่าเป็นจุดภายนอก
+          </p>
+          <div class="p-4 rounded-xl border text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--accent-amber); color: var(--text);">
+            <strong>ความจริง:</strong> จุด $z_0$ เป็น <strong>จุดขอบ (Boundary point)</strong> ของเซต เพราะทุกย่านใกล้เคียงของ $z_0$ ย่อมมีจุดของเซตล้อมรอบอยู่เสมอ!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Diagnostic Quiz Section (Interactive Classroom Flashcards) -->
+    <section id="quiz" class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b pb-4" style="border-color: var(--border-soft);">
+        <div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold flex items-center neon-text">
+            <i class="fa-solid fa-circle-question mr-3.5 text-cyan-500"></i>
+            แบบทดสอบทบทวนเร็วในห้องเรียน (Interactive Flash-Check)
+          </h2>
+          <p class="text-base sm:text-lg mt-1" style="color: var(--text-muted);">
+            คำถามเช็กความเข้าใจมโนทัศน์ทันทีหลังเรียน หรือเปิดฉบับเต็ม 5 ข้อพร้อมเก็บบันทึกคะแนน
+          </p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="2.5-quiz-interactive.html" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-heading font-bold transition-all hover:scale-105 border shadow-sm" style="background: var(--accent); color: #ffffff; border-color: var(--accent); box-shadow: var(--neon-glow);">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>เปิดหน้าแบบทดสอบเต็ม (5 ข้อ)</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quiz Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Q1 -->
+        <div class="studio-card p-6 flex flex-col justify-between space-y-4" id="quiz-card-1">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono font-bold" style="color: var(--accent);">
+              <span>คำถามที่ 1</span>
+              <span id="quiz-badge-1" class="px-2 py-0.5 rounded border" style="border-color: var(--border-soft);">รอตอบ</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg leading-snug">
+              สำหรับเซตเปิดในระนาบเชิงซ้อน ข้อความใดต่อไปนี้เป็นจริงเสมอ?
+            </h3>
+            <div class="space-y-2 text-sm pt-1">
+              <button onclick="checkQuiz(1, 'A')" id="q1-opt-A" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>A.</strong> ทุกจุดในเซตเป็นจุดภายใน
+              </button>
+              <button onclick="checkQuiz(1, 'B')" id="q1-opt-B" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>B.</strong> ต้องบรรจุจุดขอบอย่างน้อยหนึ่งจุด
+              </button>
+              <button onclick="checkQuiz(1, 'C')" id="q1-opt-C" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>C.</strong> ถ้าไม่เป็นเซตปิดแล้วต้องเป็นเซตเปิดเสมอ
+              </button>
+            </div>
+          </div>
+          <div id="quiz-feedback-1" class="hidden p-3 rounded-xl border text-xs sm:text-sm font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="studio-card p-6 flex flex-col justify-between space-y-4" id="quiz-card-2">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono font-bold" style="color: var(--accent-amber);">
+              <span>คำถามที่ 2</span>
+              <span id="quiz-badge-2" class="px-2 py-0.5 rounded border" style="border-color: var(--border-soft);">รอตอบ</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg leading-snug">
+              พิจารณาเซต $S = \{z \in \mathbb{C} \mid 0 < |z - i| < 1\}$ จุด $z = i$ เป็นจุดประเภทใดของเซต $S$?
+            </h3>
+            <div class="space-y-2 text-sm pt-1">
+              <button onclick="checkQuiz(2, 'A')" id="q2-opt-A" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>A.</strong> จุดภายใน (Interior point)
+              </button>
+              <button onclick="checkQuiz(2, 'B')" id="q2-opt-B" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>B.</strong> จุดขอบ (Boundary point)
+              </button>
+              <button onclick="checkQuiz(2, 'C')" id="q2-opt-C" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>C.</strong> จุดภายนอก (Exterior point)
+              </button>
+            </div>
+          </div>
+          <div id="quiz-feedback-2" class="hidden p-3 rounded-xl border text-xs sm:text-sm font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="studio-card p-6 flex flex-col justify-between space-y-4" id="quiz-card-3">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono font-bold text-emerald-500">
+              <span>คำถามที่ 3</span>
+              <span id="quiz-badge-3" class="px-2 py-0.5 rounded border" style="border-color: var(--border-soft);">รอตอบ</span>
+            </div>
+            <h3 class="font-heading font-bold text-lg leading-snug">
+              เซต $S = \{z \in \mathbb{C} \mid |z| < 2 \text{ และ } \text{Re}(z) \neq 0\}$ จัดเป็นโดเมนหรือไม่?
+            </h3>
+            <div class="space-y-2 text-sm pt-1">
+              <button onclick="checkQuiz(3, 'A')" id="q3-opt-A" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>A.</strong> เป็นโดเมน เพราะเป็นเซตเปิด
+              </button>
+              <button onclick="checkQuiz(3, 'B')" id="q3-opt-B" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>B.</strong> ไม่เป็นโดเมน เพราะขาดสมบัติการเชื่อมต่อ (ถูกตัดเป็น 2 ซีก)
+              </button>
+              <button onclick="checkQuiz(3, 'C')" id="q3-opt-C" class="quiz-btn w-full p-3 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+                <strong>C.</strong> ไม่เป็นโดเมน เพราะเป็นเซตที่ไม่มีขอบเขต
+              </button>
+            </div>
+          </div>
+          <div id="quiz-feedback-3" class="hidden p-3 rounded-xl border text-xs sm:text-sm font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exercises Section -->
+    <section id="exercises" class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b pb-4" style="border-color: var(--border-soft);">
+        <div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold flex items-center neon-text">
+            <i class="fa-solid fa-pen-nib mr-3.5 text-blue-500"></i>
+            แบบฝึกหัดท้ายบท 2.5 พร้อมเฉลยละเอียด
+          </h2>
+          <p class="text-base sm:text-lg mt-1" style="color: var(--text-muted);">
+            คลิกที่โจทย์แต่ละข้อเพื่อเปิดดูแนวคิดและขั้นตอนการพิสูจน์อย่างละเอียด
+          </p>
+        </div>
+        <div class="text-xs sm:text-sm font-mono font-medium px-4 py-2 rounded-xl border shadow-sm self-start sm:self-auto" style="background: var(--surface-elevated); border-color: var(--border-soft); color: var(--text-secondary);">
+          5 ข้อมาตรฐาน (ตรงตามเอกสารคำสอน)
+        </div>
+      </div>
+
+      <!-- 5 Clean Accordion Items -->
+      <div class="space-y-4">
+        <!-- Item 1 -->
+        <div class="studio-card overflow-hidden">
+          <button onclick="toggleExercise(1)" class="w-full p-5 sm:p-6 flex items-center justify-between text-left transition-colors hover:bg-black/5 dark:hover:bg-white/5">
+            <div class="flex items-center space-x-3.5 sm:space-x-4">
+              <span class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">01</span>
+              <span class="font-heading font-semibold text-lg sm:text-xl">แบบฝึกหัด 2.1: ดิสก์ปิด $S = \{z \in \mathbb{C} \mid |z - (2 - 3i)| \le 4\}$</span>
+            </div>
+            <i id="exIcon1" class="fa-solid fa-chevron-down text-base transition-transform duration-200" style="color: var(--text-muted);"></i>
+          </button>
+          <div id="exContent1" class="hidden p-6 sm:p-8 border-t space-y-4 text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="p-4 rounded-xl border font-mono text-sm sm:text-base" style="background: var(--surface); border-color: var(--border-soft);">
+              <strong>โจทย์:</strong> (a) จงระบุจุดศูนย์กลางและรัศมีของวงกลมที่เป็นขอบเขต (b) พิจารณาการเป็นเซตเปิด เซตปิด และการมีขอบเขต
+            </div>
+            <div class="space-y-3">
+              <h4 class="font-heading font-bold text-lg text-blue-600 dark:text-cyan-400">เฉลยวิธีทำอย่างละเอียด:</h4>
+              <p>1. <strong>จุดศูนย์กลางและรัศมี:</strong> จัดรูปเทียบกับ $|z - z_0| \le \rho$ จะได้จุดศูนย์กลาง $z_0 = 2 - 3i$ (หรือคู่อันดับ $(2, -3)$) และรัศมี $\rho = 4$ หน่วย</p>
+              <p>2. <strong>การเป็นเซตปิด:</strong> เส้นขอบคือวงกลม $|z - (2 - 3i)| = 4$ เนื่องจากเป็นเครื่องหมาย $\le$ จุดบนขอบทั้งหมดจึงเป็นสมาชิกของเซต $S$ ทำให้ $\text{bdry}(S) \subseteq S$ ดังนั้น <strong>$S$ เป็นเซตปิด (Closed set)</strong></p>
+              <p>3. <strong>การมีขอบเขต:</strong> โดยอสมการสามเหลี่ยม $|z| \le |z - (2 - 3i)| + |2 - 3i| \le 4 + \sqrt{2^2 + (-3)^2} = 4 + \sqrt{13} \approx 7.61$ สามารถครอบด้วยดิสก์ $|z| < 8$ ได้มิดชิด ดังนั้น <strong>เซต $S$ มีขอบเขต (Bounded set)</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="studio-card overflow-hidden">
+          <button onclick="toggleExercise(2)" class="w-full p-5 sm:p-6 flex items-center justify-between text-left transition-colors hover:bg-black/5 dark:hover:bg-white/5">
+            <div class="flex items-center space-x-3.5 sm:space-x-4">
+              <span class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">02</span>
+              <span class="font-heading font-semibold text-lg sm:text-xl">แบบฝึกหัด 2.2: วงแหวนครึ่งเปิดครึ่งปิด $S = \{z \in \mathbb{C} \mid 1 < |z + 1 - 2i| \le 3\}$</span>
+            </div>
+            <i id="exIcon2" class="fa-solid fa-chevron-down text-base transition-transform duration-200" style="color: var(--text-muted);"></i>
+          </button>
+          <div id="exContent2" class="hidden p-6 sm:p-8 border-t space-y-4 text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="p-4 rounded-xl border font-mono text-sm sm:text-base" style="background: var(--surface); border-color: var(--border-soft);">
+              <strong>โจทย์:</strong> (a) อธิบายลักษณะเรขาคณิตและหา $\text{bdry}(S)$ (b) พิจารณาการเป็นเซตเปิด เซตปิด และการมีขอบเขต
+            </div>
+            <div class="space-y-3">
+              <h4 class="font-heading font-bold text-lg text-blue-600 dark:text-cyan-400">เฉลยวิธีทำอย่างละเอียด:</h4>
+              <p>1. <strong>ลักษณะเรขาคณิต:</strong> เป็นวงแหวนเชิงวงกลม (Annulus) จุดศูนย์กลางร่วมที่ $z_0 = -1 + 2i$ รัศมีวงใน 1 (เส้นประ) และรัศมีวงนอก 3 (เส้นทึบ)</p>
+              <p>2. <strong>จุดขอบ $\text{bdry}(S)$:</strong> ประกอบด้วยวงกลม 2 วง คือ $\{|z + 1 - 2i| = 1\} \cup \{|z + 1 - 2i| = 3\}$</p>
+              <p>3. <strong>ประเภทของเซต:</strong> ขอบในไม่อยู่ในเซต (ไม่ปิด) แต่ขอบนอกอยู่ในเซตทำให้จุดบนขอบนอกไม่ใช่จุดภายใน (ไม่เปิด) ดังนั้น <strong>ไม่เป็นทั้งเซตเปิดและไม่เป็นทั้งเซตปิด</strong> แต่ <strong>มีขอบเขต (Bounded)</strong> เพราะบรรจุอยู่ภายใน $|z| < 6$</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="studio-card overflow-hidden">
+          <button onclick="toggleExercise(3)" class="w-full p-5 sm:p-6 flex items-center justify-between text-left transition-colors hover:bg-black/5 dark:hover:bg-white/5">
+            <div class="flex items-center space-x-3.5 sm:space-x-4">
+              <span class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">03</span>
+              <span class="font-heading font-semibold text-lg sm:text-xl">แบบฝึกหัด 2.3: แถบแนวดิ่ง $S = \{z \in \mathbb{C} \mid -2 < \text{Re}(z) \le 3\}$</span>
+            </div>
+            <i id="exIcon3" class="fa-solid fa-chevron-down text-base transition-transform duration-200" style="color: var(--text-muted);"></i>
+          </button>
+          <div id="exContent3" class="hidden p-6 sm:p-8 border-t space-y-4 text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="p-4 rounded-xl border font-mono text-sm sm:text-base" style="background: var(--surface); border-color: var(--border-soft);">
+              <strong>โจทย์:</strong> (a) อธิบายเรขาคณิต (b) ระบุจุดขอบและพิจารณาเปิด/ปิด (c) พิจารณาการมีขอบเขต
+            </div>
+            <div class="space-y-3">
+              <h4 class="font-heading font-bold text-lg text-blue-600 dark:text-cyan-400">เฉลยวิธีทำอย่างละเอียด:</h4>
+              <p>1. <strong>ลักษณะเรขาคณิต:</strong> แถบแนวตั้งไม่สิ้นสุด (Vertical strip) ระหว่างเส้นตรง $x = -2$ (เส้นประ) และ $x = 3$ (เส้นทึบ)</p>
+              <p>2. <strong>จุดขอบและประเภท:</strong> จุดขอบคือเส้นตรงแนวดิ่ง $x = -2$ และ $x = 3$ เซตนี้ <strong>ไม่เป็นทั้งเซตเปิดและไม่เป็นทั้งเซตปิด</strong></p>
+              <p>3. <strong>การมีขอบเขต:</strong> ส่วนจินตภาพ $y$ วิ่งไปสู่อนันต์ได้ สำหรับ $R > 0$ ใดๆ สามารถเลือก $z = 0 + (R+1)i \in S$ ซึ่ง $|z| = R+1 > R$ เสมอ ดังนั้น <strong>เป็นเซตที่ไม่มีขอบเขต (Unbounded set)</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="studio-card overflow-hidden">
+          <button onclick="toggleExercise(4)" class="w-full p-5 sm:p-6 flex items-center justify-between text-left transition-colors hover:bg-black/5 dark:hover:bg-white/5">
+            <div class="flex items-center space-x-3.5 sm:space-x-4">
+              <span class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">04</span>
+              <span class="font-heading font-semibold text-lg sm:text-xl">แบบฝึกหัด 2.4: ตรวจสอบความเป็นโดเมน (Domain Verification)</span>
+            </div>
+            <i id="exIcon4" class="fa-solid fa-chevron-down text-base transition-transform duration-200" style="color: var(--text-muted);"></i>
+          </button>
+          <div id="exContent4" class="hidden p-6 sm:p-8 border-t space-y-4 text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="p-4 rounded-xl border font-mono text-sm sm:text-base" style="background: var(--surface); border-color: var(--border-soft);">
+              <strong>โจทย์:</strong> พิจารณาว่าเซตต่อไปนี้เป็นโดเมนหรือไม่: (a) $S_1 = \{0 < |z - 2i| < 2\}$ (b) $S_2 = \{|z| < 3 \text{ และ } \text{Im}(z) \neq 0\}$
+            </div>
+            <div class="space-y-3">
+              <h4 class="font-heading font-bold text-lg text-blue-600 dark:text-cyan-400">เฉลยวิธีทำอย่างละเอียด:</h4>
+              <p>1. <strong>เซต $S_1$ (ดิสก์เจาะรู):</strong> เป็นเซตเปิดเพราะไม่รวมจุดศูนย์กลางและขอบนอก และเชื่อมต่อกันได้เพราะลากเส้นอ้อมรูได้เสมอ ดังนั้น <strong>$S_1$ เป็นโดเมน (Domain)</strong></p>
+              <p>2. <strong>เซต $S_2$ (ดิสก์ตัดแกนจริง):</strong> แม้จะเป็นเซตเปิด แต่เซตแยกออกเป็น 2 ชิ้น (ครึ่งบนและครึ่งล่าง) ไม่สามารถลากเส้นทางจากจุดในครึ่งบนไปยังครึ่งล่างได้โดยไม่ตัดผ่านแกนจริง ดังนั้น <strong>$S_2$ ไม่เชื่อมต่อ จึงไม่เป็นโดเมน (Not a domain)</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="studio-card overflow-hidden">
+          <button onclick="toggleExercise(5)" class="w-full p-5 sm:p-6 flex items-center justify-between text-left transition-colors hover:bg-black/5 dark:hover:bg-white/5">
+            <div class="flex items-center space-x-3.5 sm:space-x-4">
+              <span class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">05</span>
+              <span class="font-heading font-semibold text-lg sm:text-xl">แบบฝึกหัด 2.5: การแปลงอสมการระยะทาง $S = \{z \in \mathbb{C} \mid |z - 2| < |z + 2|\}$</span>
+            </div>
+            <i id="exIcon5" class="fa-solid fa-chevron-down text-base transition-transform duration-200" style="color: var(--text-muted);"></i>
+          </button>
+          <div id="exContent5" class="hidden p-6 sm:p-8 border-t space-y-4 text-base sm:text-lg leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+            <div class="p-4 rounded-xl border font-mono text-sm sm:text-base" style="background: var(--surface); border-color: var(--border-soft);">
+              <strong>โจทย์:</strong> (a) แปลงเงื่อนไขในรูป $x, y$ (b) อธิบายเรขาคณิตและการเป็นโดเมน (c) จำแนกจุด $z_1 = 1$, $z_2 = -1$, $z_3 = 2i$
+            </div>
+            <div class="space-y-3">
+              <h4 class="font-heading font-bold text-lg text-blue-600 dark:text-cyan-400">เฉลยวิธีทำอย่างละเอียด:</h4>
+              <p>1. <strong>แปลงอสมการ:</strong> ยกกำลังสอง $|(x-2)+iy|^2 < |(x+2)+iy|^2 \implies (x-2)^2+y^2 < (x+2)^2+y^2 \implies -4x < 4x \implies \mathbf{x > 0}$</p>
+              <p>2. <strong>ลักษณะเรขาคณิตและโดเมน:</strong> คือครึ่งระนาบขวาเปิด (Open right half-plane) เป็นเซตเปิดและเชื่อมต่อกันได้ ดังนั้น <strong>เป็นโดเมน (Domain)</strong></p>
+              <p>3. <strong>จำแนกประเภทของจุด:</strong></p>
+              <ul class="list-disc list-inside space-y-1.5 pl-2">
+                <li>$z_1 = 1 \implies \text{Re}(z_1) = 1 > 0$ เป็น <strong>จุดภายใน (Interior point)</strong></li>
+                <li>$z_2 = -1 \implies \text{Re}(z_2) = -1 < 0$ เป็น <strong>จุดภายนอก (Exterior point)</strong></li>
+                <li>$z_3 = 2i \implies \text{Re}(z_3) = 0$ อยู่บนแกนจินตภาพ เป็น <strong>จุดขอบ (Boundary point)</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t py-10 mt-16 text-center text-sm font-medium" style="background: var(--surface); border-color: var(--border-soft); color: var(--text-muted);">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-heading font-semibold text-current text-base">ค 30203 คณิตศาสตร์เพิ่มเติม 3 — โรงเรียนสาธิตแห่งมหาวิทยาลัยเกษตรศาสตร์ / ภาควิชาคณิตศาสตร์ มก.</p>
+      <p class="text-xs font-mono">Designed with Bai Jamjuree & Pridi Looped Typography Engine + Cyber Neon Matrix Canvas</p>
+    </div>
+  </footer>
+
+  <!-- Interactive Topology Canvas & Control Engine -->
+  <script>
+    // State variables
+    let currentTheme = 'light';
+    let currentPreset = 'disk_closed';
+    let centerX = 0.0;
+    let centerY = 0.0;
+    let radius = 1.5;
+    let radiusInner = 1.0;
+    let radiusOuter = 2.0;
+
+    // Test Point z
+    let pointZ = { x: 0.8, y: 0.6 };
+    let isDragging = false;
+
+    // Canvas setup
+    const canvas = document.getElementById('topoCanvas');
+    const ctx = canvas.getContext('2d');
+    let canvasWidth = 800;
+    let canvasHeight = 580;
+    let mathSpan = 6.0; // Zoomed in: show from -3 to +3 (larger, clearer shapes)
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvasWidth = rect.width;
+      canvasHeight = rect.height;
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+
+    // Coordinate Mappers (Strict Isometric 1:1)
+    function mathToPx(x, y) {
+      const scale = Math.min(canvasWidth, canvasHeight) / mathSpan;
+      const cx = canvasWidth / 2;
+      const cy = canvasHeight / 2;
+      return [cx + x * scale, cy - y * scale];
+    }
+
+    function pxToMath(px, py) {
+      const scale = Math.min(canvasWidth, canvasHeight) / mathSpan;
+      const cx = canvasWidth / 2;
+      const cy = canvasHeight / 2;
+      return [(px - cx) / scale, -(py - cy) / scale];
+    }
+
+    // Evaluate point status based on current preset
+    function evaluatePoint(x, y) {
+      const distFromCenter = Math.hypot(x - centerX, y - centerY);
+      const eps = 0.09; // boundary detection threshold
+
+      switch (currentPreset) {
+        case 'disk_closed':
+          if (Math.abs(distFromCenter - radius) <= eps) return 'boundary';
+          return distFromCenter < radius ? 'interior' : 'exterior';
+
+        case 'disk_open':
+          if (Math.abs(distFromCenter - radius) <= eps) return 'boundary';
+          return distFromCenter < radius ? 'interior' : 'exterior';
+
+        case 'punctured':
+          if (distFromCenter <= eps || Math.abs(distFromCenter - radius) <= eps) return 'boundary';
+          return distFromCenter < radius ? 'interior' : 'exterior';
+
+        case 'annulus':
+          const distOrigin = Math.hypot(x, y);
+          if (Math.abs(distOrigin - radiusInner) <= eps || Math.abs(distOrigin - radiusOuter) <= eps) return 'boundary';
+          return (distOrigin > radiusInner && distOrigin < radiusOuter) ? 'interior' : 'exterior';
+
+        case 'half_plane':
+          if (Math.abs(x - 1.0) <= eps) return 'boundary';
+          return x > 1.0 ? 'interior' : 'exterior';
+
+        case 'vertical_strip':
+          if (Math.abs(x - (-2.0)) <= eps || Math.abs(x - 3.0) <= eps) return 'boundary';
+          return (x > -2.0 && x < 3.0) ? 'interior' : 'exterior';
+
+        default:
+          return 'interior';
+      }
+    }
+
+    // Render Canvas Frame with Neon Glow and High-Precision Rendering
+    function draw() {
+      const scale = Math.min(canvasWidth, canvasHeight) / mathSpan;
+      const cx = canvasWidth / 2;
+      const cy = canvasHeight / 2;
+
+      // Clear Canvas
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      // Read CSS Variables from Theme
+      const style = getComputedStyle(document.documentElement);
+      const canvasBg = style.getPropertyValue('--canvas-bg').trim() || '#ffffff';
+      const gridAxisColor = style.getPropertyValue('--canvas-axis').trim() || '#94a3b8';
+      const gridLineColor = style.getPropertyValue('--canvas-grid').trim() || '#f1f5f9';
+      const textColor = style.getPropertyValue('--canvas-text').trim() || '#0f172a';
+      const setFillColor = style.getPropertyValue('--set-fill').trim() || 'rgba(37,99,235,0.16)';
+      const setBorderColor = style.getPropertyValue('--set-stroke').trim() || '#2563eb';
+      const ptInterior = style.getPropertyValue('--accent-green').trim() || '#10b981';
+      const ptBoundary = style.getPropertyValue('--accent-amber').trim() || '#f59e0b';
+      const ptExterior = style.getPropertyValue('--accent-red').trim() || '#ef4444';
+      const isNeon = (currentTheme === 'neon');
+
+      // 1. Draw Grid Lines & Numbers
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = gridLineColor;
+      ctx.font = '500 13px "JetBrains Mono", monospace';
+      ctx.fillStyle = gridAxisColor;
+
+      for (let i = -4; i <= 4; i++) {
+        if (i === 0) continue;
+        const [gx] = mathToPx(i, 0);
+        ctx.beginPath();
+        ctx.moveTo(gx, 0); ctx.lineTo(gx, canvasHeight);
+        ctx.stroke();
+
+        // X-axis tick numbers
+        ctx.fillText(i.toString(), gx - 5, cy + 20);
+
+        const [, gy] = mathToPx(0, i);
+        ctx.beginPath();
+        ctx.moveTo(0, gy); ctx.lineTo(canvasWidth, gy);
+        ctx.stroke();
+
+        // Y-axis tick numbers
+        ctx.fillText(i.toString(), cx - 20, gy + 5);
+      }
+
+      // 2. Draw Main Axes with optional Neon Glow
+      ctx.save();
+      if (isNeon) {
+        ctx.shadowColor = '#00f0ff';
+        ctx.shadowBlur = 10;
+      }
+      ctx.lineWidth = isNeon ? 2.5 : 2;
+      ctx.strokeStyle = gridAxisColor;
+      ctx.beginPath();
+      ctx.moveTo(0, cy); ctx.lineTo(canvasWidth, cy); // Re
+      ctx.moveTo(cx, 0); ctx.lineTo(cx, canvasHeight); // Im
+      ctx.stroke();
+      ctx.restore();
+
+      // Axis Ticks and Prominent Labels (Large & Bold)
+      ctx.font = 'bold 18px "JetBrains Mono", monospace';
+      ctx.fillStyle = isNeon ? '#00f0ff' : textColor;
+      ctx.fillText('Re(z)', canvasWidth - 75, cy - 14);
+      ctx.fillText('Im(z)', cx + 16, 28);
+      ctx.font = 'bold 16px "JetBrains Mono", monospace';
+      ctx.fillText('O', cx - 22, cy + 22);
+
+      // 3. Render Mathematical Set Region
+      ctx.save();
+      if (isNeon) {
+        ctx.shadowColor = setBorderColor;
+        ctx.shadowBlur = 14;
+      }
+      const [cPx, cPy] = mathToPx(centerX, centerY);
+      const rPx = radius * scale;
+
+      switch (currentPreset) {
+        case 'disk_closed':
+          ctx.fillStyle = setFillColor;
+          ctx.beginPath();
+          ctx.arc(cPx, cPy, rPx, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = isNeon ? 3.5 : 3;
+          ctx.strokeStyle = setBorderColor;
+          ctx.stroke(); // Solid line for <=
+          break;
+
+        case 'disk_open':
+          ctx.fillStyle = setFillColor;
+          ctx.beginPath();
+          ctx.arc(cPx, cPy, rPx, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = isNeon ? 3 : 2.5;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeStyle = setBorderColor;
+          ctx.stroke(); // Dashed line for <
+          break;
+
+        case 'punctured':
+          ctx.fillStyle = setFillColor;
+          ctx.beginPath();
+          ctx.arc(cPx, cPy, rPx, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = isNeon ? 3 : 2.5;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeStyle = setBorderColor;
+          ctx.stroke();
+          // Draw hollow hole at center
+          ctx.setLineDash([]);
+          ctx.fillStyle = canvasBg;
+          ctx.beginPath();
+          ctx.arc(cPx, cPy, 6.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = 2.5;
+          ctx.strokeStyle = setBorderColor;
+          ctx.stroke();
+          break;
+
+        case 'annulus':
+          const [oPx, oPy] = mathToPx(0, 0);
+          const rInPx = radiusInner * scale;
+          const rOutPx = radiusOuter * scale;
+          ctx.fillStyle = setFillColor;
+          ctx.beginPath();
+          ctx.arc(oPx, oPy, rOutPx, 0, Math.PI * 2, false);
+          ctx.arc(oPx, oPy, rInPx, 0, Math.PI * 2, true); // Even-odd hole
+          ctx.fill();
+          // Inner dashed
+          ctx.lineWidth = 2.5;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeStyle = setBorderColor;
+          ctx.beginPath();
+          ctx.arc(oPx, oPy, rInPx, 0, Math.PI * 2);
+          ctx.stroke();
+          // Outer solid
+          ctx.setLineDash([]);
+          ctx.lineWidth = isNeon ? 3.5 : 3;
+          ctx.beginPath();
+          ctx.arc(oPx, oPy, rOutPx, 0, Math.PI * 2);
+          ctx.stroke();
+          break;
+
+        case 'half_plane':
+          const [x1Px] = mathToPx(1.0, 0);
+          ctx.fillStyle = setFillColor;
+          ctx.fillRect(x1Px, 0, canvasWidth - x1Px, canvasHeight);
+          // Dashed border at x = 1
+          ctx.lineWidth = 3;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeStyle = setBorderColor;
+          ctx.beginPath();
+          ctx.moveTo(x1Px, 0); ctx.lineTo(x1Px, canvasHeight);
+          ctx.stroke();
+          break;
+
+        case 'vertical_strip':
+          const [xLeftPx] = mathToPx(-2.0, 0);
+          const [xRightPx] = mathToPx(3.0, 0);
+          ctx.fillStyle = setFillColor;
+          ctx.fillRect(xLeftPx, 0, xRightPx - xLeftPx, canvasHeight);
+          // Left dashed
+          ctx.lineWidth = 2.5;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeStyle = setBorderColor;
+          ctx.beginPath();
+          ctx.moveTo(xLeftPx, 0); ctx.lineTo(xLeftPx, canvasHeight);
+          ctx.stroke();
+          // Right solid
+          ctx.setLineDash([]);
+          ctx.lineWidth = isNeon ? 3.5 : 3;
+          ctx.beginPath();
+          ctx.moveTo(xRightPx, 0); ctx.lineTo(xRightPx, canvasHeight);
+          ctx.stroke();
+          break;
+      }
+      ctx.restore();
+
+      // 4. Draw Center Marker & Large Label (for disks)
+      if (['disk_closed', 'disk_open', 'punctured'].includes(currentPreset)) {
+        ctx.fillStyle = setBorderColor;
+        ctx.beginPath();
+        ctx.arc(cPx, cPy, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // High contrast background badge for Center Label
+        const centerText = `z₀ = ${centerX.toFixed(1)} + ${centerY.toFixed(1)}i`;
+        ctx.font = 'bold 15px "JetBrains Mono", monospace';
+        const cWidth = ctx.measureText(centerText).width;
+
+        ctx.fillStyle = isNeon ? 'rgba(0, 240, 255, 0.15)' : 'rgba(37, 99, 235, 0.12)';
+        ctx.beginPath();
+        ctx.roundRect(cPx + 10, cPy + 8, cWidth + 14, 26, 6);
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = setBorderColor;
+        ctx.stroke();
+
+        ctx.fillStyle = isNeon ? '#00f0ff' : '#2563eb';
+        ctx.fillText(centerText, cPx + 17, cPy + 26);
+      }
+
+      // 5. Draw Test Point z with Large Clear Label Badge
+      const [zPx, zPy] = mathToPx(pointZ.x, pointZ.y);
+      const pointStatus = evaluatePoint(pointZ.x, pointZ.y);
+
+      let pColor = ptInterior;
+      if (pointStatus === 'boundary') pColor = ptBoundary;
+      if (pointStatus === 'exterior') pColor = ptExterior;
+
+      // Glow halo ring
+      ctx.save();
+      ctx.fillStyle = pColor;
+      ctx.beginPath();
+      ctx.arc(zPx, zPy, 22, 0, Math.PI * 2);
+      ctx.globalAlpha = isNeon ? 0.45 : 0.28;
+      ctx.fill();
+
+      // Solid bead with white/neon core
+      ctx.globalAlpha = 1.0;
+      if (isNeon) {
+        ctx.shadowColor = pColor;
+        ctx.shadowBlur = 20;
+      }
+      ctx.beginPath();
+      ctx.arc(zPx, zPy, 9.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+      ctx.restore();
+
+      // Point Tag Label: Prominent, Big, and Crisp Font Badge
+      const labelText = `z = ${pointZ.x.toFixed(2)} + ${pointZ.y.toFixed(2)}i`;
+      ctx.font = 'bold 16px "JetBrains Mono", monospace';
+      const textWidth = ctx.measureText(labelText).width;
+      
+      ctx.save();
+      ctx.fillStyle = isNeon ? 'rgba(3, 7, 18, 0.92)' : 'rgba(15, 23, 42, 0.88)';
+      ctx.beginPath();
+      ctx.roundRect(zPx + 14, zPy - 34, textWidth + 18, 30, 8);
+      ctx.fill();
+      
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = pColor;
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(labelText, zPx + 23, zPy - 14);
+      ctx.restore();
+
+      // Update UI Telemetry Box
+      updateTelemetry(pointStatus);
+    }
+
+    // Telemetry text updater
+    function updateTelemetry(status) {
+      const badge = document.getElementById('pointTypeBadge');
+      const explanation = document.getElementById('statusExplanation');
+      const coords = document.getElementById('pointCoords');
+      const distInfo = document.getElementById('mathDistanceInfo');
+
+      coords.textContent = `z = ${pointZ.x.toFixed(2)} + ${pointZ.y.toFixed(2)}i`;
+
+      const dist = Math.hypot(pointZ.x - centerX, pointZ.y - centerY);
+      distInfo.textContent = 'ระยะทาง $|z - z_0| = ' + dist.toFixed(2) + '$ หน่วย';
+
+      if (status === 'interior') {
+        badge.style.backgroundColor = 'var(--accent-green-soft)';
+        badge.style.color = 'var(--accent-green)';
+        badge.style.border = '1px solid var(--accent-green)';
+        badge.textContent = 'จุดภายใน (INTERIOR)';
+        explanation.innerHTML = '<strong>อยู่ในอาณาเขต:</strong> จุดนี้มี "เบาะกันชนรอบตัว" $\\epsilon > 0$ ไม่ว่าจะขยับเก้าอี้ไปทางไหนนิดหน่อยก็ยังอยู่ในเซต 100%';
+      } else if (status === 'boundary') {
+        badge.style.backgroundColor = 'var(--accent-amber-soft)';
+        badge.style.color = 'var(--accent-amber)';
+        badge.style.border = '1px solid var(--accent-amber)';
+        badge.textContent = 'จุดขอบ (BOUNDARY)';
+        explanation.innerHTML = '<strong>ยืนบนเส้นแบ่งแดน:</strong> ทุกๆ ย่านใกล้เคียงรอบตัวจุดนี้ (ไม่ว่าจะเล็กเพียงใด) จะมีทั้งจุดที่อยู่ในเซตและจุดที่อยู่นอกเซตปนกันเสมอ';
+      } else {
+        badge.style.backgroundColor = 'var(--accent-red-soft)';
+        badge.style.color = 'var(--accent-red)';
+        badge.style.border = '1px solid var(--accent-red)';
+        badge.textContent = 'จุดภายนอก (EXTERIOR)';
+        explanation.innerHTML = '<strong>อยู่นอกเขตโดยสมบูรณ์:</strong> มีย่านใกล้เคียงที่ไม่แตะต้องหรือมีสมาชิกร่วมกับเซตเลยแม้แต่จุดเดียว';
+      }
+
+      if (window.renderMathInElement) {
+        renderMathInElement(explanation, { delimiters: [{ left: "$", right: "$", display: false }] });
+        renderMathInElement(distInfo, { delimiters: [{ left: "$", right: "$", display: false }] });
+      }
+    }
+
+    // Set Presets Configuration
+    function setPreset(presetKey) {
+      currentPreset = presetKey;
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        if (btn.dataset.preset === presetKey) {
+          btn.style.borderColor = 'var(--accent)';
+          btn.style.backgroundColor = 'var(--accent)';
+          btn.style.color = (currentTheme === 'neon') ? '#000000' : '#ffffff';
+          btn.style.boxShadow = 'var(--neon-glow)';
+        } else {
+          btn.style.borderColor = 'var(--border-soft)';
+          btn.style.backgroundColor = 'var(--surface)';
+          btn.style.color = 'var(--text-secondary)';
+          btn.style.boxShadow = 'none';
+        }
+      });
+
+      const mathDef = document.getElementById('mathDefDisplay');
+      const pOpen = document.getElementById('propOpenClosed');
+      const pDom = document.getElementById('propDomain');
+      const pConn = document.getElementById('propConnected');
+      const pBound = document.getElementById('propBounded');
+
+      switch (presetKey) {
+        case 'disk_closed':
+          mathDef.textContent = '$|z - z_0| \\le ' + radius.toFixed(1) + '$';
+          pOpen.textContent = 'เซตปิด (Closed)';
+          pOpen.style.color = 'var(--accent-amber)';
+          pDom.textContent = 'ไม่เป็นโดเมน';
+          pDom.style.color = 'var(--accent-red)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'มีขอบเขต (Bounded)';
+          pBound.style.color = 'var(--accent-green)';
+          break;
+
+        case 'disk_open':
+          mathDef.textContent = '$|z - z_0| < ' + radius.toFixed(1) + '$';
+          pOpen.textContent = 'เซตเปิด (Open)';
+          pOpen.style.color = 'var(--accent-green)';
+          pDom.textContent = 'เป็นโดเมน (Domain)';
+          pDom.style.color = 'var(--accent-green)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'มีขอบเขต (Bounded)';
+          pBound.style.color = 'var(--accent-green)';
+          break;
+
+        case 'punctured':
+          mathDef.textContent = '$0 < |z - z_0| < ' + radius.toFixed(1) + '$';
+          pOpen.textContent = 'เซตเปิด (Open)';
+          pOpen.style.color = 'var(--accent-green)';
+          pDom.textContent = 'เป็นโดเมน (Domain)';
+          pDom.style.color = 'var(--accent-green)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'มีขอบเขต (Bounded)';
+          pBound.style.color = 'var(--accent-green)';
+          break;
+
+        case 'annulus':
+          mathDef.textContent = '$1 < |z| \\le 2$';
+          pOpen.textContent = 'ไม่เปิดและไม่ปิด';
+          pOpen.style.color = 'var(--accent-amber)';
+          pDom.textContent = 'ไม่เป็นโดเมน';
+          pDom.style.color = 'var(--accent-red)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'มีขอบเขต (Bounded)';
+          pBound.style.color = 'var(--accent-green)';
+          break;
+
+        case 'half_plane':
+          mathDef.textContent = '$\\text{Re}(z) > 1$';
+          pOpen.textContent = 'เซตเปิด (Open)';
+          pOpen.style.color = 'var(--accent-green)';
+          pDom.textContent = 'เป็นโดเมน (Domain)';
+          pDom.style.color = 'var(--accent-green)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'ไม่มีขอบเขต (Unbounded)';
+          pBound.style.color = 'var(--accent-red)';
+          break;
+
+        case 'vertical_strip':
+          mathDef.textContent = '$-2 < \\text{Re}(z) \\le 3$';
+          pOpen.textContent = 'ไม่เปิดและไม่ปิด';
+          pOpen.style.color = 'var(--accent-amber)';
+          pDom.textContent = 'ไม่เป็นโดเมน';
+          pDom.style.color = 'var(--accent-red)';
+          pConn.textContent = 'เชื่อมต่อ (Connected)';
+          pConn.style.color = 'var(--accent-green)';
+          pBound.textContent = 'ไม่มีขอบเขต (Unbounded)';
+          pBound.style.color = 'var(--accent-red)';
+          break;
+      }
+
+      if (window.renderMathInElement) {
+        renderMathInElement(mathDef, { delimiters: [{ left: "$", right: "$", display: false }] });
+      }
+      draw();
+    }
+
+    // Zooming handlers
+    function zoomCanvas(delta) {
+      mathSpan = Math.max(3.5, Math.min(10.0, mathSpan + delta * 1.0));
+      draw();
+    }
+
+    function resetZoom() {
+      mathSpan = 6.0;
+      draw();
+    }
+
+    // Sliders Event Handlers
+    document.getElementById('sliderCenterX').addEventListener('input', (e) => {
+      centerX = parseFloat(e.target.value);
+      document.getElementById('valCenterX').textContent = centerX.toFixed(1);
+      setPreset(currentPreset);
+    });
+
+    document.getElementById('sliderCenterY').addEventListener('input', (e) => {
+      centerY = parseFloat(e.target.value);
+      document.getElementById('valCenterY').textContent = centerY.toFixed(1);
+      setPreset(currentPreset);
+    });
+
+    document.getElementById('sliderRadius').addEventListener('input', (e) => {
+      radius = parseFloat(e.target.value);
+      document.getElementById('valRadius').textContent = radius.toFixed(1);
+      setPreset(currentPreset);
+    });
+
+    // Touch & Mouse Pointer Engine (Mobile-First)
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return [clientX - rect.left, clientY - rect.top];
+    }
+
+    function handlePointerDown(e) {
+      const [px, py] = getPointerPos(e);
+      const [mx, my] = pxToMath(px, py);
+
+      const scale = Math.min(canvasWidth, canvasHeight) / mathSpan;
+      const touchThreshold = 45 / scale; // Generous 45px radius for mobile finger tap
+
+      if (Math.hypot(mx - pointZ.x, my - pointZ.y) < touchThreshold) {
+        isDragging = true;
+        if (e.cancelable && e.type.startsWith('touch')) {
+          e.preventDefault();
+        }
+      }
+    }
+
+    function handlePointerMove(e) {
+      if (!isDragging) return;
+      if (e.cancelable && e.type.startsWith('touch')) {
+        e.preventDefault(); // Prevent page scrolling during drag
+      }
+      const [px, py] = getPointerPos(e);
+      const [mx, my] = pxToMath(px, py);
+
+      pointZ.x = Math.max(-3.8, Math.min(3.8, mx));
+      pointZ.y = Math.max(-3.8, Math.min(3.8, my));
+      draw();
+    }
+
+    function handlePointerUp() {
+      isDragging = false;
+    }
+
+    canvas.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('mouseup', handlePointerUp);
+
+    canvas.addEventListener('touchstart', handlePointerDown, { passive: false });
+    window.addEventListener('touchmove', handlePointerMove, { passive: false });
+    window.addEventListener('touchend', handlePointerUp);
+
+    // Accordion Toggle
+    function toggleExercise(idx) {
+      const content = document.getElementById('exContent' + idx);
+      const icon = document.getElementById('exIcon' + idx);
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Classroom Quiz Checker Engine
+    const quizData = {
+      1: {
+        correct: 'A',
+        explanation: '<strong>ถูกต้อง!</strong> ตามบทนิยาม 2.8 เซต $S$ เป็นเซตเปิด ก็ต่อเมื่อทุกๆ จุดในเซตเป็นจุดภายใน (ไม่บรรจุจุดขอบใดๆ เลย)'
+      },
+      2: {
+        correct: 'B',
+        explanation: '<strong>ถูกต้อง!</strong> ในย่านใกล้เคียงเจาะรู $0 < |z - i| < 1$ จุด $z = i$ ถูกเจาะรูออกไป จึงไม่ได้อยู่ในเซต แต่ทุกย่านใกล้เคียงรอบตัว $i$ จะมีจุดของเซตล้อมรอบเสมอ ดังนั้น $z = i$ เป็น "จุดขอบ (Boundary point)"'
+      },
+      3: {
+        correct: 'B',
+        explanation: '<strong>ถูกต้อง!</strong> เงื่อนไข $\\text{Re}(z) \\neq 0$ ตัดแกนจินตภาพออกไป ทำให้เซตกลายเป็น 2 ชิ้นแยกขาดจากกัน (ซีกซ้ายและซีกขวา) จุดในซีกซ้ายไม่สามารถลากเส้นทางเชื่อมไปยังซีกขวาได้โดยไม่ตัดผ่านแกน จึงขาดสมบัติความเชื่อมต่อ ส่งผลให้ไม่เป็นโดเมน'
+      }
+    };
+
+    function checkQuiz(qNum, choice) {
+      const q = quizData[qNum];
+      const isCorrect = (choice === q.correct);
+      const feedback = document.getElementById('quiz-feedback-' + qNum);
+      const badge = document.getElementById('quiz-badge-' + qNum);
+
+      // Reset options styling
+      ['A', 'B', 'C'].forEach(opt => {
+        const btn = document.getElementById('q' + qNum + '-opt-' + opt);
+        btn.style.borderColor = 'var(--border-soft)';
+        btn.style.backgroundColor = 'var(--surface-elevated)';
+        btn.style.color = 'inherit';
+      });
+
+      const selectedBtn = document.getElementById('q' + qNum + '-opt-' + choice);
+      const correctBtn = document.getElementById('q' + qNum + '-opt-' + q.correct);
+
+      if (isCorrect) {
+        selectedBtn.style.borderColor = 'var(--accent-green)';
+        selectedBtn.style.backgroundColor = 'var(--accent-green-soft)';
+        badge.textContent = '✓ ถูกต้อง';
+        badge.style.color = 'var(--accent-green)';
+        badge.style.borderColor = 'var(--accent-green)';
+      } else {
+        selectedBtn.style.borderColor = 'var(--accent-red)';
+        selectedBtn.style.backgroundColor = 'var(--accent-red-soft)';
+        correctBtn.style.borderColor = 'var(--accent-green)';
+        badge.textContent = '✗ ไม่ถูกต้อง';
+        badge.style.color = 'var(--accent-red)';
+        badge.style.borderColor = 'var(--accent-red)';
+      }
+
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = (isCorrect ? '<span class="text-emerald-500 font-bold">ยอดเยี่ยม! </span>' : '<span class="text-rose-500 font-bold">ยังไม่ถูกต้อง: </span>') + q.explanation;
+
+      if (window.renderMathInElement) {
+        renderMathInElement(feedback, { delimiters: [{ left: "$", right: "$", display: false }] });
+      }
+    }
+
+    // 3-Way Theme Switcher (Light / Dark / Neon)
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+
+      const btnLight = document.getElementById('btn-theme-light');
+      const btnDark = document.getElementById('btn-theme-dark');
+      const btnNeon = document.getElementById('btn-theme-neon');
+
+      [btnLight, btnDark, btnNeon].forEach(btn => btn.classList.remove('active'));
+
+      if (theme === 'light') btnLight.classList.add('active');
+      else if (theme === 'dark') btnDark.classList.add('active');
+      else if (theme === 'neon') btnNeon.classList.add('active');
+
+      setPreset(currentPreset);
+      setTimeout(draw, 50);
+    }
+
+    // Reading Progress Listener
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('reading-progress').style.width = scrolled + '%';
+    });
+
+    // Bootstrapping
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Set Initial Theme (Light by default, can toggle to Dark or Neon anytime)
+      setTheme('light');
+
+      // 2. Initial Preset
+      setPreset('disk_closed');
+
+      // 3. Setup Canvas
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // 4. Run KaTeX auto-render on entire document
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

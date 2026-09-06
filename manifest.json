@@ -367,8 +367,8 @@
       "id": "m5-complex-numbers",
       "level": "m5",
       "levelLabel": "มัธยมศึกษาตอนปลาย (ม.5)",
-      "title": "ม.5: จำนวนเชิงซ้อน (รูปเชิงขั้ว)",
-      "description": "แบบจำลองเรขาคณิตโต้ตอบและคู่มือเชิงลึก: การแปลงพิกัดเชิงขั้ว z = r(cos θ + i sin θ), การวิเคราะห์จัตุภาค Arg(z), แล็บการคูณ-หาร Phasors และทฤษฎีบท de Moivre",
+      "title": "ม.5: จำนวนเชิงซ้อน (Complex Numbers)",
+      "description": "แบบจำลองเรขาคณิตโต้ตอบและคู่มือเชิงลึก: การแปลงพิกัดเชิงขั้ว z = r(cos θ + i sin θ), การวิเคราะห์จัตุภาค Arg(z), แล็บ Phasors, de Moivre และเซตของจุดในระนาบเชิงซ้อน",
       "theme": "teal",
       "order": 6,
       "topics": [
@@ -395,6 +395,32 @@
               "type": "guide",
               "typeLabel": "คู่มือเชิงลึก",
               "tech": "katex-canvas"
+            }
+          ]
+        },
+        {
+          "id": "m5-complex-plane-sets-topic",
+          "title": "บทที่ 2.5: เซตของจุดในระนาบเชิงซ้อน (Sets of Points)",
+          "order": 2,
+          "prerequisites": ["m5-polar-form-topic"],
+          "items": [
+            {
+              "id": "m5-complex-plane-workbench",
+              "filename": "interactive/m5-complex-plane/index.html",
+              "title": "Interactive Topology & Geometry Workbench (บทที่ 2.5)",
+              "description": "แบบจำลองเรขาคณิตและโทโพโลยีระนาบเชิงซ้อน: ดิสก์เปิด/ปิด, ย่านใกล้เคียงเจาะรู, วงแหวน, ครึ่งระนาบ, จุดภายใน-จุดขอบ พร้อมเฉลยแบบฝึกหัด 5 ข้อ",
+              "type": "interactive",
+              "typeLabel": "ทดลองได้",
+              "tech": "katex-canvas"
+            },
+            {
+              "id": "m5-complex-plane-quiz",
+              "filename": "interactive/m5-complex-plane/quiz.html",
+              "title": "แบบทดสอบทบทวนเร็วในห้องเรียน 5 ข้อ (Classroom Flash-Check)",
+              "description": "ควิซเช็กความเข้าใจมโนทัศน์ทันทีหลังเรียน พร้อมระบบตรวจคะแนนสด เฉลยละเอียด และข้อควรระวังสำคัญ",
+              "type": "interactive",
+              "typeLabel": "คลังข้อสอบ",
+              "tech": "html-js"
             }
           ]
         }

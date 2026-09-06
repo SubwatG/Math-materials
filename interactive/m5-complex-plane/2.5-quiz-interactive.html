@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>แบบทดสอบทบทวน 2.5 เซตของจุดในระนาบเชิงซ้อน — Classroom Quick Quiz (5 ข้อ)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]', '[data-theme="neon"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['"Bai Jamjuree"', '"Pridi"', 'sans-serif'],
+            body: ['"IBM Plex Sans Thai Looped"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- KaTeX for pristine LaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Google Fonts: Bai Jamjuree (Looped display), Pridi, IBM Plex Sans Thai Looped, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Pridi:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM TOKENS (LIGHT STUDIO / DARK OBSIDIAN / CYBER NEON)
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-elevated: #f1f5f9;
+      --surface-muted: #e2e8f0;
+      --text: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --border-soft: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --accent-green: #10b981;
+      --accent-green-soft: rgba(16, 185, 129, 0.15);
+      --accent-amber: #f59e0b;
+      --accent-amber-soft: rgba(245, 158, 11, 0.15);
+      --accent-red: #ef4444;
+      --accent-red-soft: rgba(239, 68, 68, 0.15);
+      --neon-glow: 0 0 16px rgba(37, 99, 235, 0.25);
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.10);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0f19;
+      --surface: #111827;
+      --surface-elevated: #1e293b;
+      --surface-muted: #334155;
+      --text: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-soft: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #60a5fa;
+      --accent-soft: rgba(56, 189, 248, 0.18);
+      --accent-green: #34d399;
+      --accent-green-soft: rgba(52, 211, 153, 0.20);
+      --accent-amber: #fbbf24;
+      --accent-amber-soft: rgba(251, 191, 36, 0.20);
+      --accent-red: #f87171;
+      --accent-red-soft: rgba(248, 113, 113, 0.20);
+      --neon-glow: 0 0 20px rgba(56, 189, 248, 0.35);
+      --shadow-card: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 12px 32px -3px rgba(0, 0, 0, 0.60);
+    }
+
+    [data-theme="neon"] {
+      --bg: #030712;
+      --surface: #0a0f1d;
+      --surface-elevated: #11182c;
+      --surface-muted: #1e294b;
+      --text: #f0fdf4;
+      --text-secondary: #99f6e4;
+      --text-muted: #5eead4;
+      --border: #14b8a6;
+      --border-soft: rgba(20, 184, 166, 0.35);
+      --accent: #00f0ff;
+      --accent-hover: #38bdf8;
+      --accent-soft: rgba(0, 240, 255, 0.22);
+      --accent-green: #39ff14;
+      --accent-green-soft: rgba(57, 255, 20, 0.25);
+      --accent-amber: #ffea00;
+      --accent-amber-soft: rgba(255, 234, 0, 0.25);
+      --accent-red: #ff007f;
+      --accent-red-soft: rgba(255, 0, 127, 0.25);
+      --neon-glow: 0 0 25px rgba(0, 240, 255, 0.60);
+      --shadow-card: 0 0 30px rgba(0, 240, 255, 0.18);
+      --shadow-hover: 0 0 45px rgba(0, 240, 255, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 19px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+      margin: 0;
+      line-height: 1.68;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6, .font-heading {
+      font-family: 'Bai Jamjuree', 'Pridi', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="neon"] .neon-text {
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.75), 0 0 24px rgba(0, 240, 255, 0.4);
+    }
+
+    /* Segmented pill control */
+    .segmented-control {
+      display: inline-flex;
+      background: var(--surface-muted);
+      border-radius: 9999px;
+      padding: 3px;
+      border: 1px solid var(--border-soft);
+    }
+    .segmented-button {
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .segmented-button.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-weight: 700;
+    }
+    [data-theme="neon"] .segmented-button.active {
+      background: var(--accent);
+      color: #000000;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.7);
+    }
+
+    /* Studio Card */
+    .studio-card {
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 22px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .studio-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* KaTeX clear styling */
+    .katex {
+      font-size: 1.15em;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen relative flex flex-col">
+  <!-- Header Nav -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl border-b transition-colors duration-300" style="background-color: rgba(var(--surface), 0.85); border-color: var(--border-soft);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 py-3 flex items-center justify-between">
+      <!-- Back to Main Lesson Link -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <a href="2.5-เซตของจุดในระนาบเชิงซ้อน-interactive.html" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl border text-sm font-heading font-semibold transition-all hover:bg-black/5 dark:hover:bg-white/5" style="border-color: var(--border-soft); background: var(--surface-elevated); color: var(--text);">
+          <i class="fa-solid fa-arrow-left text-blue-500"></i>
+          <span>กลับสู่บทเรียน 2.5</span>
+        </a>
+
+        <div class="hidden sm:block h-6 w-px" style="background: var(--border-soft);"></div>
+
+        <div class="hidden sm:block">
+          <span class="font-heading font-bold text-lg block leading-tight text-current">
+            แบบทดสอบทบทวนเร็ว (Classroom Flash-Check)
+          </span>
+          <span class="text-xs font-mono" style="color: var(--text-muted);">
+            บทที่ 2.5 เซตของจุดในระนาบเชิงซ้อน
+          </span>
+        </div>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="flex items-center space-x-3">
+        <div class="segmented-control">
+          <button onclick="setTheme('light')" class="segmented-button" id="btn-theme-light" title="Light Studio">
+            <i class="fa-solid fa-sun mr-1 text-amber-500"></i> สว่าง
+          </button>
+          <button onclick="setTheme('dark')" class="segmented-button" id="btn-theme-dark" title="Dark Obsidian">
+            <i class="fa-solid fa-moon mr-1 text-blue-400"></i> มืด
+          </button>
+          <button onclick="setTheme('neon')" class="segmented-button" id="btn-theme-neon" title="Cyber Neon">
+            <i class="fa-solid fa-bolt mr-1 text-cyan-400"></i> นีออน
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow w-full max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-12 py-8 sm:py-12 space-y-8">
+    
+    <!-- Hero Header / Score Banner -->
+    <div class="studio-card p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="space-y-2">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono font-bold" style="background: var(--accent-soft); color: var(--accent);">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>5-Question Conceptual Diagnostic</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight neon-text">
+          เช็กความเข้าใจมโนทัศน์ บทที่ 2.5
+        </h1>
+        <p class="text-base text-balance" style="color: var(--text-secondary);">
+          เลือกคำตอบที่ถูกต้องที่สุดเพื่อตรวจสอบมโนทัศน์เรื่องจุดภายใน จุดขอบ เซตเปิด-ปิด และความเป็นโดเมน
+        </p>
+      </div>
+
+      <!-- Score Card -->
+      <div class="p-4 rounded-2xl border flex items-center space-x-4 min-w-[170px] self-stretch sm:self-auto justify-center" style="background: var(--surface-elevated); border-color: var(--border-soft);">
+        <div class="text-center">
+          <div class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">คะแนนสะสม</div>
+          <div class="text-3xl font-mono font-extrabold mt-0.5" id="totalScore">0 / 5</div>
+        </div>
+        <button onclick="resetQuiz()" class="p-2.5 rounded-xl border hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-xs font-mono" style="border-color: var(--border-soft); color: var(--text-muted);" title="ทำใหม่ทั้งหมด">
+          <i class="fa-solid fa-rotate-right block text-sm mb-0.5"></i>รีเซ็ต
+        </button>
+      </div>
+    </div>
+
+    <!-- 5 Quiz Questions Stack -->
+    <div class="space-y-6">
+
+      <!-- Question 1: Open Sets Definition -->
+      <div class="studio-card p-6 sm:p-8 space-y-5" id="quiz-card-1">
+        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-soft);">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">01</span>
+            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">บทนิยาม 2.8: เซตเปิด</span>
+          </div>
+          <span id="quiz-badge-1" class="px-3 py-1 rounded-full text-xs font-mono font-bold border" style="border-color: var(--border-soft); background: var(--surface-elevated);">ยังไม่ได้ตอบ</span>
+        </div>
+
+        <h3 class="text-xl sm:text-2xl font-heading font-bold leading-snug">
+          สำหรับเซตเปิดในระนาบเชิงซ้อน ข้อความใดต่อไปนี้เป็นจริงเสมอ?
+        </h3>
+
+        <div class="space-y-2.5 pt-1 text-base">
+          <button onclick="checkQuiz(1, 'A')" id="q1-opt-A" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">A.</strong> ทุกจุดในเซตเป็นจุดภายใน (Interior point)
+          </button>
+          <button onclick="checkQuiz(1, 'B')" id="q1-opt-B" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">B.</strong> เซตต้องบรรจุจุดขอบทั้งหมดของมัน
+          </button>
+          <button onclick="checkQuiz(1, 'C')" id="q1-opt-C" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">C.</strong> ถ้าเซตไม่เป็นเซตปิดแล้ว จะต้องเป็นเซตเปิดเสมอ
+          </button>
+        </div>
+
+        <div id="quiz-feedback-1" class="hidden p-4 rounded-xl border text-sm sm:text-base font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);"></div>
+      </div>
+
+      <!-- Question 2: Punctured Neighborhood Center Point -->
+      <div class="studio-card p-6 sm:p-8 space-y-5" id="quiz-card-2">
+        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-soft);">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">02</span>
+            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">ย่านใกล้เคียงเจาะรูศูนย์กลาง</span>
+          </div>
+          <span id="quiz-badge-2" class="px-3 py-1 rounded-full text-xs font-mono font-bold border" style="border-color: var(--border-soft); background: var(--surface-elevated);">ยังไม่ได้ตอบ</span>
+        </div>
+
+        <h3 class="text-xl sm:text-2xl font-heading font-bold leading-snug">
+          กำหนดเซต $S = \{z \in \mathbb{C} \mid 0 < |z - i| < 1\}$ จุดศูนย์กลาง $z_0 = i$ จัดเป็นจุดประเภทใดของเซต $S$?
+        </h3>
+
+        <div class="space-y-2.5 pt-1 text-base">
+          <button onclick="checkQuiz(2, 'A')" id="q2-opt-A" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">A.</strong> จุดภายใน (Interior point)
+          </button>
+          <button onclick="checkQuiz(2, 'B')" id="q2-opt-B" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">B.</strong> จุดขอบ (Boundary point)
+          </button>
+          <button onclick="checkQuiz(2, 'C')" id="q2-opt-C" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">C.</strong> จุดภายนอก (Exterior point)
+          </button>
+        </div>
+
+        <div id="quiz-feedback-2" class="hidden p-4 rounded-xl border text-sm sm:text-base font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);"></div>
+      </div>
+
+      <!-- Question 3: Domain vs Connectedness -->
+      <div class="studio-card p-6 sm:p-8 space-y-5" id="quiz-card-3">
+        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-soft);">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">03</span>
+            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">บทนิยาม 2.11: โดเมนและความเชื่อมต่อ</span>
+          </div>
+          <span id="quiz-badge-3" class="px-3 py-1 rounded-full text-xs font-mono font-bold border" style="border-color: var(--border-soft); background: var(--surface-elevated);">ยังไม่ได้ตอบ</span>
+        </div>
+
+        <h3 class="text-xl sm:text-2xl font-heading font-bold leading-snug">
+          เซต $S = \{z \in \mathbb{C} \mid |z| < 2 \text{ และ } \text{Re}(z) \neq 0\}$ จัดเป็นโดเมนหรือไม่ เพราะเหตุใด?
+        </h3>
+
+        <div class="space-y-2.5 pt-1 text-base">
+          <button onclick="checkQuiz(3, 'A')" id="q3-opt-A" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">A.</strong> เป็นโดเมน เพราะเป็นเซตเปิด
+          </button>
+          <button onclick="checkQuiz(3, 'B')" id="q3-opt-B" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">B.</strong> ไม่เป็นโดเมน เพราะขาดสมบัติการเชื่อมต่อ (ถูกตัดเป็น 2 ซีก)
+          </button>
+          <button onclick="checkQuiz(3, 'C')" id="q3-opt-C" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">C.</strong> ไม่เป็นโดเมน เพราะเป็นเซตที่ไม่มีขอบเขต
+          </button>
+        </div>
+
+        <div id="quiz-feedback-3" class="hidden p-4 rounded-xl border text-sm sm:text-base font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);"></div>
+      </div>
+
+      <!-- Question 4: Bounded vs Unbounded -->
+      <div class="studio-card p-6 sm:p-8 space-y-5" id="quiz-card-4">
+        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-soft);">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">04</span>
+            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">บทนิยาม 2.12: เซตที่มีขอบเขต</span>
+          </div>
+          <span id="quiz-badge-4" class="px-3 py-1 rounded-full text-xs font-mono font-bold border" style="border-color: var(--border-soft); background: var(--surface-elevated);">ยังไม่ได้ตอบ</span>
+        </div>
+
+        <h3 class="text-xl sm:text-2xl font-heading font-bold leading-snug">
+          เซตในระนาบเชิงซ้อนข้อใดต่อไปนี้เป็น <strong>เซตที่มีขอบเขต (Bounded set)</strong>?
+        </h3>
+
+        <div class="space-y-2.5 pt-1 text-base">
+          <button onclick="checkQuiz(4, 'A')" id="q4-opt-A" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">A.</strong> แถบแนวตั้ง $S_1 = \{z \in \mathbb{C} \mid -1 < \text{Re}(z) < 1\}$
+          </button>
+          <button onclick="checkQuiz(4, 'B')" id="q4-opt-B" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">B.</strong> ครึ่งระนาบบน $S_2 = \{z \in \mathbb{C} \mid \text{Im}(z) \ge 0\}$
+          </button>
+          <button onclick="checkQuiz(4, 'C')" id="q4-opt-C" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">C.</strong> วงแหวนเชิงวงกลม $S_3 = \{z \in \mathbb{C} \mid 1 < |z - 1 + 2i| \le 3\}$
+          </button>
+        </div>
+
+        <div id="quiz-feedback-4" class="hidden p-4 rounded-xl border text-sm sm:text-base font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);"></div>
+      </div>
+
+      <!-- Question 5: Annulus / Neither Open Nor Closed -->
+      <div class="studio-card p-6 sm:p-8 space-y-5" id="quiz-card-5">
+        <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-soft);">
+          <div class="flex items-center space-x-2.5">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-sm" style="background: var(--surface-muted); color: var(--accent);">05</span>
+            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color: var(--text-muted);">วงแหวนและเซตไม่เปิดไม่ปิด</span>
+          </div>
+          <span id="quiz-badge-5" class="px-3 py-1 rounded-full text-xs font-mono font-bold border" style="border-color: var(--border-soft); background: var(--surface-elevated);">ยังไม่ได้ตอบ</span>
+        </div>
+
+        <h3 class="text-xl sm:text-2xl font-heading font-bold leading-snug">
+          พิจารณาเซต $S = \{z \in \mathbb{C} \mid 1 \le |z| < 2\}$ ข้อใดสรุปเกี่ยวกับประเภทของเซต $S$ ได้ถูกต้อง?
+        </h3>
+
+        <div class="space-y-2.5 pt-1 text-base">
+          <button onclick="checkQuiz(5, 'A')" id="q5-opt-A" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">A.</strong> เป็นทั้งเซตเปิดและเซตปิดพร้อมกัน (Clopen set)
+          </button>
+          <button onclick="checkQuiz(5, 'B')" id="q5-opt-B" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">B.</strong> ไม่เป็นทั้งเซตเปิดและไม่เป็นทั้งเซตปิด
+          </button>
+          <button onclick="checkQuiz(5, 'C')" id="q5-opt-C" class="quiz-btn w-full p-4 rounded-xl border text-left transition-all hover:bg-black/5 dark:hover:bg-white/5 font-medium" style="border-color: var(--border-soft); background: var(--surface-elevated);">
+            <strong class="font-mono text-blue-500 mr-2">C.</strong> เป็นเซตปิด เพราะมีเครื่องหมาย $\le$ ที่ขอบวงใน
+          </button>
+        </div>
+
+        <div id="quiz-feedback-5" class="hidden p-4 rounded-xl border text-sm sm:text-base font-medium leading-relaxed" style="background: var(--surface-elevated); border-color: var(--border-soft);"></div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Return Link -->
+    <div class="text-center pt-6">
+      <a href="2.5-เซตของจุดในระนาบเชิงซ้อน-interactive.html" class="inline-flex items-center space-x-2 px-6 py-3.5 rounded-2xl border text-base font-heading font-semibold transition-all hover:scale-105 shadow-sm" style="border-color: var(--border-soft); background: var(--surface); color: var(--text);">
+        <i class="fa-solid fa-book-open text-blue-500"></i>
+        <span>กลับไปทบทวนบทเรียนและ Interactive Sandbox บทที่ 2.5</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t py-10 mt-16 text-center text-sm font-medium" style="background: var(--surface); border-color: var(--border-soft); color: var(--text-muted);">
+    <div class="max-w-4xl mx-auto px-4 space-y-2">
+      <p class="font-heading font-semibold text-current text-base">ค 30203 คณิตศาสตร์เพิ่มเติม 3 — โรงเรียนสาธิตแห่งมหาวิทยาลัยเกษตรศาสตร์ / ภาควิชาคณิตศาสตร์ มก.</p>
+      <p class="text-xs font-mono">Classroom Diagnostic Flash-Check • 5 Conceptual Invariants</p>
+    </div>
+  </footer>
+
+  <!-- Quiz Engine Script -->
+  <script>
+    let currentTheme = 'light';
+    const userAnswers = { 1: null, 2: null, 3: null, 4: null, 5: null };
+
+    const quizData = {
+      1: {
+        correct: 'A',
+        explanation: '<strong>ถูกต้อง!</strong> ตามบทนิยาม 2.8 เซต $S$ เป็นเซตเปิด ก็ต่อเมื่อทุกๆ จุดในเซตเป็นจุดภายใน (นั่นคือ ไม่บรรจุจุดขอบใดๆ เลยแม้แต่จุดเดียว)'
+      },
+      2: {
+        correct: 'B',
+        explanation: '<strong>ถูกต้อง!</strong> ในย่านใกล้เคียงเจาะรู $0 < |z - i| < 1$ จุด $z = i$ ถูกเจาะรูออกไป จึงไม่ได้อยู่ในเซต แต่ทุกย่านใกล้เคียงรอบตัว $i$ จะมีจุดของเซตล้อมรอบเสมอ ดังนั้น $z = i$ เป็น "จุดขอบ (Boundary point)"'
+      },
+      3: {
+        correct: 'B',
+        explanation: '<strong>ถูกต้อง!</strong> เงื่อนไข $\\text{Re}(z) \\neq 0$ ตัดแกนจินตภาพออกไป ทำให้เซตกลายเป็น 2 ชิ้นแยกขาดจากกัน (ซีกซ้ายและซีกขวา) จุดในซีกซ้ายไม่สามารถลากเส้นทางเชื่อมไปยังซีกขวาได้โดยไม่ตัดผ่านแกน จึงขาดสมบัติความเชื่อมต่อ ส่งผลให้ไม่เป็นโดเมน'
+      },
+      4: {
+        correct: 'C',
+        explanation: '<strong>ถูกต้อง!</strong> เซต $S_3$ เป็นวงแหวนที่มีจุดศูนย์กลางที่ $1 - 2i$ และรัศมีวงนอก 3 โดยอสมการสามเหลี่ยม จุดทั้งหมดจะอยู่ภายใน $|z| < |1 - 2i| + 3 = \\sqrt{5} + 3 \\approx 5.24$ สามารถหาดิสก์ $|z| < 6$ มาครอบไว้ได้ จึงเป็นเซตที่มีขอบเขต ส่วน $S_1$ และ $S_2$ วิ่งยาวไปสู่อนันต์ในแนวดิ่ง จึงไม่มีขอบเขต'
+      },
+      5: {
+        correct: 'B',
+        explanation: '<strong>ถูกต้อง!</strong> จุดขอบด้านใน $\{|z| = 1\}$ อยู่ในเซต (ทำให้จุดบนขอบนี้ไม่ใช่จุดภายใน จึงไม่เป็นเซตเปิด) ขณะที่จุดขอบด้านนอก $\{|z| = 2\}$ ไม่อยู่ในเซต (ทำให้เซตไม่ได้บรรจุจุดขอบทั้งหมด จึงไม่เป็นเซตปิด) ดังนั้นจึงไม่เป็นทั้งเซตเปิดและไม่เป็นทั้งเซตปิด'
+      }
+    };
+
+    function checkQuiz(qNum, choice) {
+      const q = quizData[qNum];
+      const isCorrect = (choice === q.correct);
+      userAnswers[qNum] = isCorrect;
+
+      const feedback = document.getElementById('quiz-feedback-' + qNum);
+      const badge = document.getElementById('quiz-badge-' + qNum);
+
+      // Reset options styling for this question
+      ['A', 'B', 'C'].forEach(opt => {
+        const btn = document.getElementById('q' + qNum + '-opt-' + opt);
+        btn.style.borderColor = 'var(--border-soft)';
+        btn.style.backgroundColor = 'var(--surface-elevated)';
+        btn.style.color = 'inherit';
+      });
+
+      const selectedBtn = document.getElementById('q' + qNum + '-opt-' + choice);
+      const correctBtn = document.getElementById('q' + qNum + '-opt-' + q.correct);
+
+      if (isCorrect) {
+        selectedBtn.style.borderColor = 'var(--accent-green)';
+        selectedBtn.style.backgroundColor = 'var(--accent-green-soft)';
+        badge.textContent = '✓ ถูกต้อง';
+        badge.style.color = 'var(--accent-green)';
+        badge.style.borderColor = 'var(--accent-green)';
+      } else {
+        selectedBtn.style.borderColor = 'var(--accent-red)';
+        selectedBtn.style.backgroundColor = 'var(--accent-red-soft)';
+        correctBtn.style.borderColor = 'var(--accent-green)';
+        badge.textContent = '✗ ไม่ถูกต้อง';
+        badge.style.color = 'var(--accent-red)';
+        badge.style.borderColor = 'var(--accent-red)';
+      }
+
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = (isCorrect ? '<span class="text-emerald-500 font-bold">ยอดเยี่ยม! </span>' : '<span class="text-rose-500 font-bold">ยังไม่ถูกต้อง: </span>') + q.explanation;
+
+      if (window.renderMathInElement) {
+        renderMathInElement(feedback, { delimiters: [{ left: "$", right: "$", display: false }] });
+      }
+
+      updateTotalScore();
+    }
+
+    function updateTotalScore() {
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        if (userAnswers[i] === true) score++;
+      }
+      document.getElementById('totalScore').textContent = score + ' / 5';
+    }
+
+    function resetQuiz() {
+      for (let i = 1; i <= 5; i++) {
+        userAnswers[i] = null;
+        const feedback = document.getElementById('quiz-feedback-' + i);
+        const badge = document.getElementById('quiz-badge-' + i);
+        feedback.classList.add('hidden');
+        feedback.innerHTML = '';
+        badge.textContent = 'ยังไม่ได้ตอบ';
+        badge.style.color = 'inherit';
+        badge.style.borderColor = 'var(--border-soft)';
+
+        ['A', 'B', 'C'].forEach(opt => {
+          const btn = document.getElementById('q' + i + '-opt-' + opt);
+          btn.style.borderColor = 'var(--border-soft)';
+          btn.style.backgroundColor = 'var(--surface-elevated)';
+          btn.style.color = 'inherit';
+        });
+      }
+      updateTotalScore();
+    }
+
+    // Theme Switcher
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+
+      const btnLight = document.getElementById('btn-theme-light');
+      const btnDark = document.getElementById('btn-theme-dark');
+      const btnNeon = document.getElementById('btn-theme-neon');
+
+      [btnLight, btnDark, btnNeon].forEach(btn => btn.classList.remove('active'));
+
+      if (theme === 'light') btnLight.classList.add('active');
+      else if (theme === 'dark') btnDark.classList.add('active');
+      else if (theme === 'neon') btnNeon.classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTheme('light');
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>
