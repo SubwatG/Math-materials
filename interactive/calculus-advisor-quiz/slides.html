@@ -3,22 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สไลด์นำเสนอ 5 หน้า Calculus App</title>
+<title>สไลด์นำเสนอฉบับละเอียด Calculus App</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:"Chakra Petch","Sarabun",Tahoma,sans-serif;background:#0f172a;color:#fff}
-.top{position:fixed;top:0;left:0;right:0;background:#111827cc;padding:10px;display:flex;gap:8px;align-items:center;z-index:10}
+.top{position:fixed;top:0;left:0;right:0;background:#111827ee;padding:10px;display:flex;gap:8px;align-items:center;z-index:10;flex-wrap:wrap}
 button{padding:8px 14px;border-radius:8px;border:1px solid #334155;background:#fff;font-weight:700;cursor:pointer}
 button.go{background:#22c55e;border:none}
-.slide{display:none;min-height:100vh;padding:80px 24px 24px;max-width:900px;margin:0 auto}
+.slide{display:none;min-height:100vh;padding:84px 24px 30px;max-width:980px;margin:0 auto}
 .slide.on{display:block}
-.card{background:#fff;color:#1f2937;border-radius:16px;padding:22px;margin-top:12px}
-h1{font-size:34px;margin:0}
-h2{font-size:26px;margin:0}
+.card{background:#fff;color:#1f2937;border-radius:16px;padding:20px;margin-top:12px}
+h1{font-size:32px;margin:0}
+h2{font-size:24px;margin:0}
 .note{background:#fefce8;color:#713f12;border:1px solid #fde68a;border-radius:10px;padding:12px;margin-top:12px}
-.big{font-size:20px}
-svg{width:100%;height:auto;background:#f8fafc;border-radius:10px}
-.kbd{background:#f1f5f9;padding:2px 8px;border-radius:6px}
+pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
+code{background:#f1f5f9;padding:1px 6px;border-radius:6px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+th,td{border:1px solid #e5e7eb;padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9}
+.big{font-size:18px}
 </style>
 </head>
 <body>
@@ -27,60 +30,164 @@ svg{width:100%;height:auto;background:#f8fafc;border-radius:10px}
 <button onclick="go(1)">ถัดไป</button>
 <span id="pg"></span>
 <button class="go" onclick="window.print()">พิมพ์</button>
-<span style="opacity:.7">กดลูกศรซ้ายขวาได้</span>
+<span style="opacity:.7">ลูกศรซ้ายขวาได้ มี 10 สไลด์ฉบับละเอียด</span>
 </div>
 
 <div class="slide on">
-<p>สไลด์ 1/5 เวลา 0 ถึง 1 นาที</p>
-<h1>เว็บช่วยเรียนอินทิเกรต</h1>
-<p class="big">เปิดด้วย <span class="kbd">streamlit run app.py</span> มี 4 กลุ่มคือ หน้าหลัก เรียน ฝึก อื่น ๆ</p>
-<div class="card">งานผมคือทำให้บทเรียนลองเล่นได้ ไม่ใช่แค่อ่าน<br>1 บท = ทฤษฎี + ตัวคิดเลข + กราฟ + หน้าเว็บ + ข้อสอบ</div>
-<div class="note">พูดว่า เหมือนโรงเรียนที่มีอาคารเรียน อาคารฝึก ห้องสมุด อย่าเปิดโค้ดหน้านี้</div>
+<p>สไลด์ 1/10 ปัญหาและสิ่งที่สร้าง</p>
+<h1>เว็บช่วยเรียนอินทิเกรตแบบลองเล่นได้</h1>
+<p class="big">ปัญหาคือนักศึกษาอ่านสูตรแล้วนึกภาพไม่ออก วิธีแก้คือให้ปรับค่าเองแล้วเห็นกราฟกับขั้นตอนทันที</p>
+<div class="card">
+<b>รันอย่างไร:</b> <code>python3 -m venv .venv</code> แล้ว <code>pip install -r requirements.txt</code> แล้ว <code>streamlit run app.py</code> เปิด <code>http://localhost:8501</code><br><br>
+<b>ของที่ต้องมี:</b> Python 3.11 ขึ้นไป Streamlit SymPy matplotlib numpy pytest<br><br>
+<b>โครง repo:</b> <code>app.py</code> เป็นประตู <code>pages/</code> 14 หน้า <code>utils/</code> ตัวคิดเลข <code>data/lessons</code> บทเรียนไทย <code>data/quizzes</code> ข้อสอบ JSON <code>tests/</code> ตรวจ logic
+</div>
+<div class="note">พูดเปิดว่า เดิมอ่านอย่างเดียว ตอนนี้ขยับ slider แล้วเห็นพื้นที่เปลี่ยน งานของผมคือบท ___ หน้าที่ทำคือ ___</div>
 </div>
 
 <div class="slide">
-<p>สไลด์ 2/5 เวลา 1 ถึง 2 นาที</p>
-<h2>แอปมี 5 ชั้น จำว่า แอป หน้า เครื่องมือ ข้อมูล ทดสอบ</h2>
+<p>สไลด์ 2/10 สถาปัตยกรรม 5 ชั้นและกฎเหล็ก</p>
+<h2>แยกหน้าที่ชัด คนทำเนื้อหาไม่ต้องแก้ Python มาก</h2>
 <div class="card">
-app.py แผนที่ + state &gt; pages หน้าจอ &gt; utils คิดเลข &gt; data บทเรียน+ข้อสอบ &gt; tests ตรวจ<br><br>
-state ที่ต้องจำมี 3 ตัวคือ <span class="kbd">quiz_scores quiz_answers quiz_submitted</span><br>
-ขยับ widget หนึ่งครั้งคือสั่งใหม่ทั้งโต๊ะ ลืมเก็บ state แล้วคะแนนหาย
+<table><tr><th>ชั้น</th><th>ไฟล์</th><th>หน้าที่</th></tr>
+<tr><td>1 router</td><td><code>app.py</code></td><td>ตั้งหน้า ตั้ง state ประกาศแผนที่เว็บด้วย <code>st.navigation</code></td></tr>
+<tr><td>2 UI</td><td><code>pages/*.py</code></td><td>แสดงผลกับรับค่า ห้ามเขียนคำนวณยาว ทุกหน้าเริ่ม <code>render_hero</code></td></tr>
+<tr><td>3 logic</td><td><code>utils/*.py</code></td><td>คิดเลขด้วย SymPy คืน dict รูปเดียว ตรวจด้วย pytest</td></tr>
+<tr><td>4 content</td><td><code>data/</code></td><td>lessons เป็น Markdown ไทย quizzes เป็น JSON ต้องมี explanation</td></tr>
+<tr><td>5 test</td><td><code>tests/</code></td><td>ตรวจ utils ไม่ต้องเปิดเว็บ รัน <code>pytest tests/ -v</code></td></tr></table>
+<br><b>กฎ AGENTS.md:</b> UI ภาษาไทย โค้ดกับ comment ภาษาอังกฤษ logic อยู่ utils state อยู่ใน session_state ห้ามแก้ theme เพื่อเปลี่ยนเฉพาะหน้า ห้าม commit .venv __pycache__ ไฟล์ render
 </div>
-<div class="note">พูดว่า หน้าโชว์ เครื่องมือคิด ถ้าถาม rerun ตอบว่า สั่งใหม่ทั้งโต๊ะ</div>
+<div class="note">ถ้ากรรมการถามว่าทำไมแยก ตอบว่า แยกแล้วตรวจง่าย คนเนื้อหากับคนโค้ดทำงานพร้อมกันได้</div>
 </div>
 
 <div class="slide">
-<p>สไลด์ 3/5 เวลา 2 ถึง 3 นาที</p>
-<h2>สั่งหนึ่งครั้งเหมือนสั่งอาหาร</h2>
+<p>สไลด์ 3/10 เจาะ app.py และ session_state</p>
+<h2>router มี 4 กลุ่ม state มี 3 ตัวหลัก</h2>
 <div class="card">
-ผู้ใช้ขยับ &gt; pages รับออเดอร์ &gt; utils solver เข้าครัว &gt; กลับมาโชว์ LaTeX + กราฟ<br><br>
-demo ดีคือ <span class="kbd">x**2</span> ช่วง 0 ถึง 2<br>
-demo พังคือ สตริงว่าง ขอบ b น้อยกว่า a n = 0 แอปขึ้นข้อความไทย แอปไม่ค้าง
+<pre>home_page = st.Page("pages/home.py", title="หน้าหลัก")
+pg = st.navigation({
+ "หน้าหลัก": [home_page],
+ "เรียน": [lessons, topics, riemann, tangent, limit,
+   substitution, volume, area_between, improper],
+ "ฝึก": [solver, quiz],
+ "อื่น ๆ": [history, help]}, position="sidebar")
+inject_css()
+pg.run()</pre>
+<table><tr><th>state</th><th>เก็บอะไร</th><th>ลืมแล้วเป็นอย่างไร</th></tr>
+<tr><td><code>quiz_scores</code></td><td>คะแนนรวมต่อหัวข้อ</td><td>กลับหน้าหลักแล้วคะแนนหาย</td></tr>
+<tr><td><code>quiz_answers</code></td><td>คำตอบที่เลือก</td><td>สรุปท้ายไม่มีให้ดู</td></tr>
+<tr><td><code>quiz_submitted</code></td><td>ส่งหรือยัง</td><td>วนลูปไม่จบ</td></tr></table>
+หน้า quiz มีเพิ่มคือ <code>quiz_q_index quiz_score quiz_done quiz_revealed</code> เพื่อเดินทีละข้อ
 </div>
-<div class="note">กด demo สดแค่ 2 ปุ่มนี้ อย่าพิมพ์สดโดยไม่ซ้อม</div>
+<div class="note">อธิบาย rerun ว่า ขยับหนึ่งครั้งคือรันใหม่ทั้งหน้า ของที่จำข้ามรอบต้องอยู่ใน session_state และ init ก่อนใช้เสมอ</div>
 </div>
 
 <div class="slide">
-<p>สไลด์ 4/5 เวลา 3 ถึง 4 นาที</p>
-<h2>Riemann เหมือนปูกระเบื้อง จำ 1 5 2.5</h2>
+<p>สไลด์ 4/10 เจาะ pages ตัวอย่าง riemann</p>
+<h2>หน้าเดียวมี 4 ท่อน theory widget solver plot</h2>
 <div class="card">
-f(x) = x² บน [0,2] n = 2 dx = 1<br>
-ซ้ายจุด 0,1 ได้ 1 ขวาจุด 1,2 ได้ 5 กลางจุด 0.5,1.5 ได้ 2.5 ค่าจริง 8/3<br><br>
-n = 50 วิธีกึ่งกลางใกล้ค่าจริงสุด ถ้า f เพิ่ม L น้อยกว่า A น้อยกว่า R
+<pre>render_hero("พื้นที่ใต้กราฟ", "...Riemann Sum...")
+with st.expander("ทฤษฎี..."):
+  st.markdown(conditions/formulas/properties)
+expr = st.text_input("ฟังก์ชัน f(x)", value="x**2")
+method = st.selectbox("วิธี", ["left","right","midpoint"])
+a = st.number_input("ขอบล่าง a", value=0.0)
+b = st.number_input("ขอบบน b", value=2.0)
+n = st.slider("จำนวนช่วง n", 1, 50, value=8)
+res = compute_riemann(expr, a, b, n, method)
+render_latex(res["latex"]); render_steps(res["steps"])
+fig, ax = plot_riemann(expr_obj, a, b, n, method)
+st.pyplot(fig)</pre>
+หน้าที่เสร็จแล้วคือ <code>riemann.py</code> ที่เหลือคือ skeleton รอเติมคือ tangent limit substitution volume area_between improper
 </div>
-<div class="note">พูดว่า กระเบื้องเล็กวัดที่นาได้ตรงกว่า อย่าลืมคูณ dx ทุกแท่ง</div>
+<div class="note">ชี้ว่า theory มาจาก THEORY_CONTENT ไม่ได้เขียนสดในหน้า widget เปลี่ยนแล้ว solver รันใหม่ทันที</div>
 </div>
 
 <div class="slide">
-<p>สไลด์ 5/5 เวลา 4 ถึง 5 นาที</p>
-<h2>เครื่องคิดเลข เกม และงานของผม</h2>
+<p>สไลด์ 5/10 เจาะ SymPy solver</p>
+<h2>3 ฟังก์ชันซองเดียว รับพิมพ์แบบคนได้</h2>
 <div class="card">
-solver รับ <span class="kbd">x**2 sin(x) 2x</span> คืนผลพร้อมขั้นตอน<br>
-quiz ทำทีละข้อ มีคำอธิบายทุกข้อ ดูย้อนหลังที่หน้าประวัติ<br><br>
-งานของผมคือ ___ test ที่เพิ่มคือ ___<br>
-แผน 6 บทคือ limit tangent area substitution volume improper เริ่ม limit เพราะง่ายสุด
+<pre>integrate("x**2") -&gt; {ok, result, latex, steps, error}
+differentiate("sin(x)") -&gt; {ok, result, latex, steps, error}
+compute_limit("(x**2-4)/(x-2)", 2)</pre>
+รับ <code>2x sin x x**2 sin(x)</code> ได้เพราะ <code>implicit_multiplication_application</code><br>
+ห้ามใส่ <code>auto_symbol</code> เพราะพังบน SymPy 1.14.0 มี comment เตือนไว้ทั้งสองไฟล์<br><br>
+<b>steps:</b> ถ้าเป็น x หรือ x ยกกำลังตัวเลข ใช้กฎกำลัง ถ้า n = -1 ใช้ ln|x|+C นอกนั้นบอกว่าคำนวณด้วย SymPy<br>
+<b>พังอย่างสุภาพ:</b> สตริงว่าง b น้อยกว่า a n = 0 method ผิด คืน ok False พร้อมข้อความไทย ไม่ให้แอปค้าง
 </div>
-<div class="note">จบว่า 1 บท = theory solver plotter page test เติมช่องว่างก่อนขึ้นเวที</div>
+<div class="note">demo พิมพ์ว่างกับพิมพ์ 2x ให้ดูว่าผ่านทั้งคู่ แล้วอธิบายว่าหน้า solver มีปุ่มลัด sqrt pi sin cos เติม token ให้</div>
+</div>
+
+<div class="slide">
+<p>สไลด์ 6/10 เจาะ Riemann พร้อมเลข</p>
+<h2>สูตรเดียว จุดสามแบบ เลขจำ 1 5 2.5</h2>
+<div class="card">
+dx = (b-a)/n ซ้ายใช้ a+i dx ขวาใช้ a+(i+1) dx กลางใช้ a+(i+0.5) dx<br>
+<table><tr><th>กรณี x² บน [0,2] n=2</th><th>จุด</th><th>ผล</th></tr>
+<tr><td>left</td><td>0, 1</td><td>1</td></tr>
+<tr><td>right</td><td>1, 2</td><td>5</td></tr>
+<tr><td>midpoint</td><td>0.5, 1.5</td><td>2.5</td></tr>
+<tr><td>ค่าจริง</td><td>อินทิกรัล</td><td>8/3 ประมาณ 2.6667</td></tr></table>
+ทฤษฎีที่ต้องพูดคือ f ต่อเนื่องบน [a,b] เมื่อ n โตค่าประมาณลู่เข้าอินทิกรัล ถ้า f เพิ่มแล้ว L น้อยกว่า A น้อยกว่า R midpoint มักตรงสุด
+</div>
+<div class="note">เทียบกระเบื้องปูที่นา ยิ่ง n มากยิ่งตรง อย่าลืมคูณ dx ทุกแท่ง กราฟใต้แกนต้องใช้ค่าสัมบูรณ์</div>
+</div>
+
+<div class="slide">
+<p>สไลด์ 7/10 กราฟกับ LaTeX กันพังอย่างไร</p>
+<h2>plotter วาดแท่ง math_render กัน KaTeX แตก</h2>
+<div class="card">
+<b>plotter:</b> ใช้ matplotlib Agg คืน fig ax แปลงนิพจน์ด้วย lambdify วาดเส้นสี <code>#105D38</code> แท่งสี <code>#3D7A56</code> แรเงาสี <code>#B9D4C4</code> label อังกฤษทั้งหมด ใช้ Rectangle กับ fill_between<br><br>
+<b>math_render:</b> st.latex ต้องเป็น pure LaTeX ไม่มี $ ไม่มีไทย ถ้ามีให้ fallback เป็น markdown มี has_thai strip_math_delimiters render_latex render_steps ขั้นที่ 1 2 3<br>
+widget label ไม่รองรับ KaTeX ให้ใช้ Unicode แทน
+</div>
+<div class="note">ถ้ากรรมการถามว่าทำไม label อังกฤษ ตอบว่า matplotlib กับ KaTeX ใน widget เสถียรกว่า</div>
+</div>
+
+<div class="slide">
+<p>สไลด์ 8/10 quiz ข้อมูล test</p>
+<h2>ข้อสอบ JSON ตรวจตรงตัว test ตรวจ logic</h2>
+<div class="card">
+<pre>{"question": "∫3x²dx", "choices": [...],
+ "answer": "$x^3+C$", "explanation": "power rule..."}</pre>
+<b>grade:</b> เทียบ <code>answers.get(i)==question["answer"]</code> ถูกได้ 1 จุดอ่อนคือช่องว่างก็ผิด ควร normalize<br>
+<b>load:</b> มี <code>@st.cache_data</code> ไม่ให้อ่านไฟล์ซ้ำทุก rerun<br>
+<b>lessons:</b> ข้าม _archive ข้าม NON_LESSONS เรียง cal2 ก่อน cal1<br>
+<b>tests:</b> แยกคลาส Left Right Midpoint Errors MethodsCatalog รัน <code>pytest tests/ -v</code> ไม่ต้องเปิดเว็บ
+</div>
+<div class="note">demo ทำ 2 ข้อให้ถูก 1 ผิด 1 แล้วเปิดหน้าประวัติให้ดูตารางคะแนน</div>
+</div>
+
+<div class="slide">
+<p>สไลด์ 9/10 แผน 6 บทอนาคต</p>
+<h2>เริ่ม limit ก่อน 1 บทเท่ากับ 5 ชิ้น</h2>
+<div class="card">
+<table><tr><th>บท</th><th>สูตรแกน</th><th>ยาก</th></tr>
+<tr><td>limit</td><td>lim x-&gt;a f(x) รูปไม่กำหนด 0/0 inf/inf</td><td>ง่าย</td></tr>
+<tr><td>tangent</td><td>m=f'(a) เส้น y-f(a)=f'(a)(x-a)</td><td>กลาง</td></tr>
+<tr><td>area_between</td><td>A=∫(f-g)dx ต้องหาจุดตัด</td><td>กลาง</td></tr>
+<tr><td>substitution</td><td>u=g(x) ∫u^n du</td><td>กลางยาก</td></tr>
+<tr><td>volume</td><td>V=∫A(x)dx disk washer</td><td>ยาก</td></tr>
+<tr><td>improper</td><td>∫=lim∫ ตรวจลู่เข้าออก</td><td>ยาก</td></tr></table>
+definition of done ต่อบทคือ theory ครบ solver คืนครบ plot ไม่มีไทย หน้าครบ hero panel widget plot ลงทะเบียน app.py test ผ่าน รันจริงดูกราฟ
+</div>
+<div class="note">ตอบว่าเริ่ม limit เพราะเห็นกราฟชัด ใช้ pattern riemann ได้เลย</div>
+</div>
+
+<div class="slide">
+<p>สไลด์ 10/10 demo และคำถามที่เจอบ่อย</p>
+<h2>ซ้อม 3 ชุด ตอบ 5 คำถามได้ก็รอด</h2>
+<div class="card">
+<b>ชุดดี:</b> x**2 ช่วง 0-2 n=8 วิธีกลาง กราฟสวย<br>
+<b>ชุดพัง:</b> ว่าง b น้อยกว่า a n=0 method ผิด ขึ้นไทยไม่ค้าง<br>
+<b>ชุด quiz:</b> ถูก 1 ผิด 1 เปิด history ดู %<br><br>
+<b>Q:</b> rerun คืออะไร A: ขยับคือรันใหม่ จำด้วย state<br>
+<b>Q:</b> ทำไมแยก utils A: ตรวจง่าย ทำพร้อมกันได้<br>
+<b>Q:</b> midpoint ดีกว่าอย่างไร A: ที่ n เท่ากันใกล้จริงสุด<br>
+<b>Q:</b> auto_symbol ห้ามทำไม A: พังบน 1.14.0<br>
+<b>Q:</b> งานผมคืออะไร A: บท ___ เพิ่ม test ___ (เติมก่อนขึ้นเวที)
+</div>
+<div class="note">จบว่า เว็บนี้ไม่ใช่เครื่องคิดเลข แต่คือที่ให้ลองแล้วเห็นภาพก่อนจำสูตร</div>
 </div>
 
 <script>
