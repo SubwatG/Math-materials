@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advisor Quiz: Calculus Integration App</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#1f2937;--mut:#6b7280;--line:#e5e7eb;--green:#105D38;--green2:#3D7A56;--pale:#B9D4C4}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Chakra Petch","Sarabun",Tahoma,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--green);color:#fff;padding:18px 16px;text-align:center}
+header p{margin:6px 0 0;opacity:.9}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600}
+button.primary{background:#111827;color:#fff;border:none}
+button.green{background:var(--green);color:#fff;border:none}
+button:disabled{opacity:.5;cursor:not-allowed}
+select,input[type=number]{padding:8px;border:1px solid var(--line);border-radius:8px}
+.q{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}
+.q h3{margin:0 0 8px;font-size:16px}
+.tag{display:inline-block;font-size:12px;background:#eef2f7;border:1px solid var(--line);border-radius:20px;padding:2px 10px;margin-right:6px;color:#334155}
+.choice{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.choice.correct{border-color:var(--green);background:#ecfdf5}
+.choice.wrong{border-color:#dc2626;background:#fef2f2}
+.exp{display:none;background:#f8fafc;border:1px dashed var(--line);border-radius:8px;padding:10px;margin-top:8px}
+.exp.show{display:block}
+.memo{display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px;margin-top:8px}
+.memo.show{display:block}
+.progress{height:10px;background:#e5e7eb;border-radius:20px;overflow:hidden}
+.progress>div{height:100%;background:var(--green2);width:0%}
+.small{color:var(--mut);font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+code{background:#f1f5f9;padding:1px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<header>
+<h1 style="margin:0">Calculus Integration App: แบบทดสอบอาจารย์ที่ปรึกษา</h1>
+<p>32 ข้อ ครอบคลุมทั้งโปรเจกต์และแผนอนาคต ทำซ้ำได้ มีโหมดจำและโหมดสอบ</p>
+</header>
+<div class="wrap">
+
+<div class="card">
+<h2 style="margin-top:0">1. ตัวช่วยจำก่อนเริ่ม</h2>
+<div class="grid2">
+<div><b>จำ 5 ชั้น:</b> <code>app.py</code> &gt; <code>pages</code> &gt; <code>utils</code> &gt; <code>data</code> &gt; <code>tests</code><br><span class="small">ท่องว่า แอป หน้า เครื่องมือ ข้อมูล ทดสอบ</span></div>
+<div><b>จำ 3 state:</b> <code>quiz_scores</code> <code>quiz_answers</code> <code>quiz_submitted</code><br><span class="small">ท่องว่า คะแนน คำตอบ ส่งแล้ว</span></div>
+<div><b>จำ 3 solver:</b> <code>integrate</code> <code>differentiate</code> <code>compute_limit</code><br><span class="small">คืนรูปเดียวคือ ok result latex steps error</span></div>
+<div><b>จำ 3 วิธี Riemann:</b> <code>left</code> <code>right</code> <code>midpoint</code><br><span class="small">จุดคือ 0..n-1 / 1..n / +0.5</span></div>
+</div>
+<p class="small">แผนภาพ: app.py (router) เรียก pages (UI) เรียก utils (logic) อ่าน data (lessons+quizzes) ตรวจด้วย tests (pytest)</p>
+</div>
+
+<div class="card">
+<h2 style="margin-top:0">2. ตั้งค่าโหมด</h2>
+<div class="row">
+<label>โหมด <select id="mode"><option value="practice">ฝึกทีละข้อ ดูเฉลยได้</option><option value="exam">สอบ 25 นาที ไม่ดูเฉลยก่อนส่ง</option><option value="flash">แฟลชการ์ด ทายก่อนเปิด</option></select></label>
+<label>หมวด <select id="cat"><option value="all">ทุกหมวด</option><option value="A">A โครงสร้าง</option><option value="B">B Streamlit</option><option value="C">C SymPy</option><option value="D">D Riemann กราฟ LaTeX</option><option value="E">E Quiz ข้อมูล Test</option><option value="F">F อนาคต 6 บท</option></select></label>
+<label><input type="checkbox" id="shuffle" checked> สลับข้อและตัวเลือก</label>
+<button class="primary" onclick="startQuiz()">เริ่มใหม่</button>
+<button onclick="toggleAllMemo()">เปิดตัวช่วยจำทั้งหมด</button>
+</div>
+<div class="row" style="margin-top:10px">
+<div style="flex:1;min-width:200px"><div class="progress"><div id="bar"></div></div></div>
+<div id="stat" class="small">ยังไม่เริ่ม</div>
+<div id="timer" class="small"></div>
+</div>
+<p class="small" id="best"></p>
+</div>
+
+<div id="list"></div>
+
+<div class="card">
+<div class="row">
+<button class="green" onclick="submitAll()">ส่งคำตอบทั้งหมด</button>
+<button onclick="resetAll()">ล้างคำตอบ</button>
+<span id="final" class="small"></span>
+</div>
+</div>
+
+<div class="card">
+<h2>3. เช็กลิสต์ถามเด็กหลังทำได้แล้ว</h2>
+<p>หน้าใหม่เรียก solver ตัวไหน test อยู่ไหน / state ตัวไหนอยู่ใน session_state / input ผิดแล้วแอปแสดงอะไร / Riemann n เพิ่มแล้วค่าลู่เข้าอย่างไร / quiz ใช้ == มีจุดอ่อนอะไร / 6 บทอนาคตจะเริ่มจาก limit เพราะเหตุใด</p>
+</div>
+
+</div>
+<script>
+const Q=[
+{c:"A",q:"1. app.py ทำหน้าที่ใด",a:["คำนวณอินทิเกรตด้วย SymPy","เป็น router ด้วย st.navigation ตั้ง state เริ่มต้น","เก็บเนื้อหาบทเรียน Markdown","รัน pytest"],ans:1,exp:"app.py มี initialize_session_state แล้วประกาศ st.Page 14 หน้า แบ่ง 4 กลุ่ม แล้วเรียก inject_css กับ pg.run",memo:"จำว่า app = แผนที่ + สวิตช์ไฟ ไม่มีเลข ไม่มีกราฟ"},
+{c:"A",q:"2. กลุ่มเมนูใน st.navigation มีอะไรบ้าง",a:["หน้าหลัก เรียน ฝึก อื่น ๆ","train test valid","admin user guest","cal1 cal2 quiz test"],ans:0,exp:"กลุ่มเรียนมี 9 หน้า กลุ่มฝึกมี solver กับ quiz กลุ่มอื่น ๆ มี history กับ help",memo:"ท่องว่า หลัก เรียน ฝึก อื่น 1 9 2 2"},
+{c:"A",q:"3. โฟลเดอร์ pages กับ utils แบ่งงานกันอย่างไร",a:["pages คำนวณ utils แสดงผล","pages เป็น UI อย่างเดียว utils เป็น logic แล้ว import มาใช้","ไม่แยกกัน เขียนรวมได้","utils เป็น UI pages เป็น test"],ans:1,exp:"กฎ AGENTS.md ห้ามเขียน logic ยาวใน pages ทุกหน้าเริ่มด้วย render_hero",memo:"จำว่า หน้าโชว์ เครื่องมือคิด"},
+{c:"A",q:"4. data/lessons กับ data/quizzes ต่างกันอย่างไร",a:["lessons เก็บ JSON quizzes เก็บ Python","lessons เก็บ Markdown ภาษาไทย quizzes เก็บ JSON ต้องมี explanation","เหมือนกันทั้งคู่","lessons เก็บคะแนน quizzes เก็บ theme"],ans:1,exp:"แยกเนื้อหาออกจากโค้ด คนทำเนื้อหาไม่ต้องแก้ Python มาก",memo:"จำว่า บทเรียนอ่าน คนตรวจต้องอธิบาย"},
+{c:"A",q:"5. definition of done ก่อนส่งงานคืออะไร",a:["รันแอปได้ ฟีเจอร์ทำงาน มี test pytest ผ่าน ภาษาไทยถูก branch ตัวเอง","แค่รันได้ก็พอ","แค่มี test ก็พอ","commit .venv ด้วย"],ans:0,exp:"ต้อง streamlit run app.py ได้ pytest tests -v ผ่าน ไม่มี em dash ไม่มีลูกศร Unicode ไม่มี emoji",memo:"จำว่า รัน งาน เทสต์ ภาษา บรานช์"},
+{c:"A",q:"6. decision.md เก็บที่ไหนและทำไมไม่ push",a:["อยู่ใน repo หลักเพื่อโชว์","เป็นบันทึกส่วนตัวอาจารย์ อยู่ใน .gitignore ไม่ push เข้า repo นักศึกษา","อยู่ใน data/lessons","ไม่มีไฟล์นี้"],ans:1,exp:"decision.md บันทึกการเลือก Streamlit st.navigation แยก content ไม่ใช้ Wolfram API",memo:"จำว่า สมุดอาจารย์ ไม่ให้เด็กเห็น"},
+{c:"B",q:"7. ทำไมต้องใช้ st.session_state",a:["ทำให้เว็บสวยขึ้น","Streamlit rerun ทุกครั้งที่ขยับ widget ถ้าไม่เก็บ คะแนนจะหาย","ทำให้คำนวณเร็วขึ้น","ใช้แทน pytest"],ans:1,exp:"state หลักคือ quiz_scores quiz_answers quiz_submitted ส่วนหน้า quiz มี quiz_q_index quiz_score quiz_done ด้วย",memo:"จำว่า รีรันแล้วจำ ต้องใส่กล่อง state"},
+{c:"B",q:"8. render_hero มาจากไหน ทำอะไร",a:["มาจาก utils.theme แสดงหัวหน้ากลางหน้าทุกหน้า","มาจาก SymPy ใช้คำนวณ","มาจาก matplotlib ใช้วาดกราฟ","มาจาก pytest"],ans:0,exp:"render_hero รับ title กับ subtitle แสดงกล่องขาวขอบเทา inject_css ตั้งฟอนต์ Chakra Petch พื้นขาว",memo:"จำว่า ฮีโร่ขึ้นก่อนเสมอ"},
+{c:"B",q:"9. widget ในหน้า riemann มีอะไรบ้าง",a:["text_input selectbox number_input slider","มีแต่ปุ่มคำนวณปุ่มเดียว","มีแต่กราฟไม่มี input","มีแต่ file upload"],ans:0,exp:"f(x) ใช้ text_input วิธีใช้ selectbox a b ใช้ number_input n ใช้ slider 1 ถึง 50",memo:"จำว่า พิมพ์ เลือก กรอก เลื่อน"},
+{c:"B",q:"10. Theory panel ในหน้า riemann แสดงอะไร",a:["แสดงแค่คะแนน","แสดง conditions formulas properties cautions applications จาก THEORY_CONTENT แบบ expander","แสดงโค้ดทั้งหมด","แสดง test"],ans:1,exp:"กดขยายได้ ไม่บังส่วนทดลอง หัวข้อมาจาก theory.py key riemann_sum",memo:"จำว่า ทฤษฎี 5 ช่อง ซ่อนได้"},
+{c:"B",q:"11. หน้า solver มีปุ่มลัดอะไร และกดแล้วเกิดอะไร",a:["ไม่มีปุ่มลัด","มี ∫ d/dx lim √ π sin cos tan e x^n กดแล้วต่อ token เข้า solver_expr แล้ว rerun","มีแต่ปุ่มลบ","มีแต่ปุ่ม home"],ans:1,exp:"token เช่น sqrt(x) pi sin(x) x**2 ถ้า solver_expr ว่างให้ใส่เลย ถ้ามีให้ต่อท้าย",memo:"จำว่า ปุ่มเติมสูตร ไม่ต้องพิมพ์เอง"},
+{c:"B",q:"12. หน้า quiz จัดการทีละข้ออย่างไร",a:["แสดงทุกข้อพร้อมกัน","ใช้ quiz_q_index เดินทีละข้อ quiz_revealed ดูเฉลย quiz_done สรุปท้าย แล้วบันทึก quiz_scores","สุ่มคะแนนมั่ว","ไม่มีการเก็บคะแนน"],ans:1,exp:"จบแล้วมี metric progress expander สรุปคำตอบพร้อม explanation มีปุ่มเล่นใหม่กับกลับหน้าหลัก",memo:"จำว่า ดัชนี เผย จบ เก็บ"},
+{c:"C",q:"13. sympy_solver มีฟังก์ชันหลักอะไร",a:["มีแต่ plot","integrate differentiate compute_limit คืน dict รูปเดียว","มีแต่ load_quiz","มีแต่ list_lessons"],ans:1,exp:"dict คือ ok result latex steps error ถ้าอ่านไม่ออกให้ ok False พร้อมข้อความตัวอย่าง x**2 sin(x)",memo:"จำว่า อินทิเกรต ดิฟ ลิมิต ซองเดียว"},
+{c:"C",q:"14. นิพจน์แบบใดรับได้เพราะ implicit_multiplication",a:["2x sin x x**2 sin(x)","เฉพาะ x^2 แบบยก","เฉพาะตัวเลข","เฉพาะสมการมี = "],ans:0,exp:"ใช้ parse_expr กับ implicit_multiplication_application ห้ามใส่ auto_symbol เพราะพังบน SymPy 1.14.0",memo:"จำว่า คูณเงียบ ไม่ต้องมีดอกจัน"},
+{c:"C",q:"15. integrate แยก steps อย่างไร",a:["สุ่ม steps","ถ้าเป็น x หรือ x**n แบบตัวเลข ใช้กฎกำลัง ถ้า n=-1 ใช้ ln|x| นอกนั้นบอกว่าคำนวณด้วย SymPy","ทุกกรณีเหมือนกันหมด","ไม่มี steps"],ans:1,exp:"เช่น ∫x dx ใช้กฎกำลัง ∫1/x dx ใช้ ln|x|+C ผลคืน latex แบบ sp.latex(result)+C",memo:"จำว่า กำลังก่อน ยกเว้นลบหนึ่ง"},
+{c:"C",q:"16. ถ้าผู้ใช้ส่งสตริงว่างให้ solver จะเกิดอะไร",a:["แอปค้าง","_parse_input ตรวจ strip แล้ว raise ValueError แล้วคืน ok False พร้อม error ภาษาไทย","ได้ผลเป็น 0","ลบไฟล์ทิ้ง"],ans:1,exp:"หน้า solver ตรวจ expr_input.strip ก่อน ถ้าว่างให้ st.error กรุณาใส่โจทย์ก่อน",memo:"จำว่า ว่างคือผิด ไม่ใช่ศูนย์"},
+{c:"C",q:"17. compute_limit รับค่าอะไรเพิ่มจาก integrate",a:["รับสีกราฟ","รับ point ว่าจุดที่ x เข้าใกล้ ค่าเริ่มต้น 0.0","รับชื่อไฟล์","รับรหัสผ่าน"],ans:1,exp:"หน้า solver ถ้าเลือก ลิมิต จะมี number_input limit_point แล้วเรียก compute_limit(expr,point)",memo:"จำว่า ลิมิตต้องมีจุด"},
+{c:"C",q:"18. ทำไม comment ห้าม auto_symbol จึงสำคัญ",a:["แค่ความสวยงาม","เพราะบน SymPy 1.14.0 ทำให้ TypeError โค้ดจึงใช้ implicit_multiplication ตัวเดียว","เพราะทำให้ช้า","เพราะใช้ไม่ได้บน Windows"],ans:1,exp:"comment นี้มีทั้ง sympy_solver.py และ riemann_solver.py ถ้าใส่กลับ test จะพัง",memo:"จำว่า auto พัง เงียบรอด"},
+{c:"D",q:"19. Riemann 3 วิธีใช้จุดต่างกันอย่างไร",a:["เหมือนกันหมด","left ใช้ a+i dx 0..n-1 right ใช้ a+(i+1) dx 1..n midpoint ใช้ a+(i+0.5) dx","สุ่มจุด","ใช้จุดเดียว"],ans:1,exp:"dx=(b-a)/n จำคู่ L_n R_n M_n กับช่วงดัชนีให้แม่น",memo:"จำว่า ซ้ายเริ่มศูนย์ ขวาเริ่มหนึ่ง กลางบวกครึ่ง"},
+{c:"D",q:"20. ตัวอย่าง x**2 บน [0,2] n=2 ได้อะไร",a:["left=1 right=5 midpoint=2.5 ค่าจริง 8/3","ทุกวิธีได้ 0","ทุกวิธีได้ 8/3 เป๊ะ","left=5 right=1"],ans:0,exp:"left จุด 0 1 ได้ 1 right จุด 1 2 ได้ 5 midpoint จุด 0.5 1.5 ได้ 2.5 ตรงกับ test ทั้ง 3 คลาส",memo:"จำเลข 1 5 2.5 จริง 2.666"},
+{c:"D",q:"21. compute_riemann ตรวจ input ผิดอย่างไร",a:["ไม่ตรวจเลย","n<1 b<=a method ไม่อยู่ใน METHODS expr ว่าง ให้ ok False","ตรวจแค่สี","ตรวจแค่ชื่อไฟล์"],ans:1,exp:"ตรงกับ test_invalid_expr invalid_method bad_bounds n_zero",memo:"จำว่า n บวก b มาก a วิธีต้องมี"},
+{c:"D",q:"22. THEORY_CONTENT ของ riemann_sum มีอะไรที่ต้องจำ",a:["มีแค่ title","มี conditions formulas properties cautions applications decision_guide ครบ","มีแต่กราฟ","ไม่มีอะไรเลย"],ans:1,exp:"เช่น f ต่อเนื่องบน [a,b] สูตร A=∫f dx เมื่อ n→∞ ลู่เข้าอินทิกรัล ถ้า f เพิ่ม L≤A≤R",memo:"จำว่า เงื่อนไข สูตร สมบัติ ระวัง ใช้"},
+{c:"D",q:"23. math_render.py กันพังอย่างไร",a:["ไม่มีกันพัง","st.latex ต้องเป็น pure LaTeX ไม่มี $ ไม่มีไทย ถ้ามีไทยหรือ $ ให้ fallback เป็น markdown มี strip_math_delimiters กับ has_thai","ใช้แต่ HTML","ปิด KaTeX ทิ้ง"],ans:1,exp:"widget label ไม่รองรับ KaTeX ให้ใช้ Unicode แทน unsafe HTML แล้ว KaTeX ไม่ทำงาน",memo:"จำว่า บริสุทธิ์จึง latex ผสมจึง markdown"},
+{c:"D",q:"24. plotter.py วาด Riemann อย่างไร",a:["วาดด้วยมือ","ใช้ matplotlib Agg คืน fig ax ใช้ lambdify แปลง expr วาดเส้นบวกสี่เหลี่ยม Rectangle แรเงา fill_between label อังกฤษทั้งหมด","วาดด้วย CSS","ไม่วาดเลย"],ans:1,exp:"สี CURVE #105D38 FILL #B9D4C4 RECT #3D7A56 label อังกฤษเพื่อความเสถียร ใช้ np.errstate กันหารด้วยศูนย์",memo:"จำว่า เส้นบวกแท่ง แรเงาเทียบ exact"},
+{c:"E",q:"25. ข้อสอบ basic_rules.json มีโครงอย่างไร",a:["มีแต่คำถามไม่มีเฉลย","ทุกข้อมี topic question choices answer explanation เช่น ∫3x²dx=x³+C ∫1/xdx=ln|x|+C","มีแต่คะแนน","เป็นไฟล์ Python"],ans:1,exp:"กฎคือทุกข้อต้องมี explanation ไม่งั้นหน้า quiz สรุปไม่ได้",memo:"จำว่า ถาม เลือก ตอบ อธิบาย ครบสี่"},
+{c:"E",q:"26. grade_quiz คิดคะแนนอย่างไร จุดอ่อนคืออะไร",a:["ปัดเศษ","เทียบตรง == ได้ 1 เสีย 0 จุดอ่อนคือช่องว่างตัวพิมพ์ถือว่าผิด ควร normalize","ใช้ AI ตรวจ","สุ่มคะแนน"],ans:1,exp:"ควรเพิ่ม test ช่องว่าง None key เกิน",memo:"จำว่า ตรงเป๊ะ เป๊ะเกินไปก็ผิดได้"},
+{c:"E",q:"27. content_loader list_lessons จำอย่างไร",a:["อ่านทุกไฟล์รวม archive","ข้าม _archive ข้าม NON_LESSONS (SPEC MAPPING overview basic_rules) เรียง cal2 ก่อน cal1","เรียงตามขนาดไฟล์","ลบไฟล์หลังอ่าน"],ans:1,exp:"ชื่อแสดงผลอ่านจาก frontmatter title ก่อน ถ้าไม่มีใช้ heading ถ้าไม่มีใช้ชื่อไฟล์",memo:"จำว่า ข้ามเก่า ข้ามโครง cal2 ก่อน"},
+{c:"E",q:"28. test_riemann_solver จำค่าอ้างอิงอย่างไร",a:["ไม่มีค่าอ้างอิง","left x² 0-2 n2=1 right=5 midpoint=2.5 คงที่ 5 บน 0-4 n4=20 midpoint n50 ใกล้ 8/3","สุ่มทุกครั้ง","ตรวจแต่ UI"],ans:1,exp:"test แยกคลาส Left Right Midpoint Errors MethodsCatalog ไม่ต้องเปิด Streamlit",memo:"จำว่า ห้องซ้ายขวากลาง ผิด วิธี"},
+{c:"F",q:"29. บทอนาคต 6 บทคืออะไร เริ่มจากอะไรก่อน",a:["มีแต่ riemann","tangent limit substitution volume area_between improper แนะนำเริ่ม limit ง่ายสุด ต่อ tangent area_between substitution volume improper","มีแต่ quiz","ไม่มีแผน"],ans:1,exp:"limit เห็นกราฟชัดใช้ pattern riemann ได้เลย tangent เพิ่มเส้นสัมผัส area ต่อยอดแรเงา substitution เน้นขั้น volume ยาก improper ต้องลิมิต+อินทิกรัล",memo:"จำว่า ลิมิต สัมผัส แทน แทรกระหว่าง ปริมาตร ไม่แท้"},
+{c:"F",q:"30. สูตรแกนของ 6 บทอนาคตคืออะไร",a:["สูตรเดียวทั้งหมด","tangent m=f'(a) limit รูปไม่กำหนด substitution u=g(x) volume V=∫A dx area A=∫(f-g) dx improper ∫=lim∫","ไม่มีสูตร","ใช้แต่คะแนน"],ans:1,exp:"เช่น เส้นสัมผัส y-f(a)=f'(a)(x-a) แทน ∫u^n du=u^{n+1}/(n+1) ปริมาตร slicing disk washer",memo:"จำว่า ชัน ไม่กำหนด แทน ตัดขวาง ลบกัน ลิมิตขอบ"},
+{c:"F",q:"31. definition of done ต่อบทอนาคตคืออะไร",a:["แค่เขียนหน้าเว็บ","theory ครบ solver คืน ok result latex steps expr error plotter ไม่มี label ไทย หน้าใช้ hero+panel+widget+solver+plot ลงทะเบียน app.py test ผ่าน รันจริงดูกราฟ","แค่มี title","แค่ commit"],ans:1,exp:"โครงเดียวกับ riemann 1 บท = theory+solver+plotter+page+test",memo:"จำว่า ทฤษฎี คำนวณ กราฟ หน้า ทดสอบ"},
+{c:"F",q:"32. ถามเด็กเรื่องอนาคตอย่างไรโดยไม่ต้องอ่านโค้ด",a:["ถามแต่ชื่อ","ให้เล่า request หนึ่งครั้งไหลจาก widget ไป solver ไป plotter อย่างไร test ครอบเส้นไหน สาธิต input ผิด อธิบายว่าจะเริ่ม limit เพราะเหตุใด","ไม่ต้องถาม","ถามแต่สี"],ans:1,exp:"ใช้หลักฐาน pytest -v ผ่านกับรันแอปจริงกราฟขึ้นขั้นตอนขึ้น",memo:"จำว่า ไหล ครอบ พัง แผน"}
+];
+let cur=[],userAns={},startT=null,timerI=null;
+function $(id){return document.getElementById(id)}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startQuiz(){
+const cat=$("cat").value,sh=$("shuffle").checked;
+let pool=Q.map((v,i)=>({...v,oi:i})).filter(v=>cat==="all"||v.c===cat);
+if(sh)pool=shuffle(pool);
+pool.forEach(v=>{if(sh)v.disp=shuffle(v.a.map((t,idx)=>({t,idx})));else v.disp=v.a.map((t,idx)=>({t,idx}))});
+cur=pool;userAns={};$("final").textContent="";
+if($("mode").value==="exam"){startT=Date.now();clearInterval(timerI);timerI=setInterval(tick,1000)}else{clearInterval(timerI);$("timer").textContent=""}
+render();showBest();
+}
+function tick(){
+const el=25*60-Math.floor((Date.now()-startT)/1000);
+if(el<=0){$("timer").textContent="หมดเวลา ส่งอัตโนมัติ";clearInterval(timerI);submitAll();return}
+$("timer").textContent="เหลือ "+Math.floor(el/60)+" นาที "+(el%60)+" วินาที";
+}
+function render(){
+const box=$("list");box.innerHTML="";const mode=$("mode").value;
+cur.forEach((v,i)=>{
+const d=document.createElement("div");d.className="q";
+let h="<span class='tag'>หมวด "+v.c+"</span><span class='tag'>ข้อ "+(i+1)+"/"+cur.length+"</span><h3>"+v.q+"</h3>";
+v.disp.forEach((c,j)=>{
+const sel=userAns[i]===c.idx?" style='border-width:2px'":"";
+h+="<button class='choice' data-i='"+i+"' data-v='"+c.idx+"'"+sel+">"+String.fromCharCode(65+j)+". "+c.t+"</button>";
+});
+h+="<div class='row'><button onclick='checkOne("+i+")'>ตรวจข้อนี้</button><button onclick='toggleMemo("+i+")'>ตัวช่วยจำ</button>";
+if(mode==="flash")h+="<button onclick='hideChoices("+i+")'>ซ่อนตัวเลือกเพื่อทาย</button>";
+h+="</div><div class='exp' id='exp"+i+"'></div><div class='memo' id='memo"+i+"'>จำ: "+v.memo+"<br>เฉลยย่อ: "+v.exp+"</div>";
+d.innerHTML=h;box.appendChild(d);
+});
+box.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{userAns[parseInt(b.dataset.i)]=parseInt(b.dataset.v);render();updateBar()});
+updateBar();
+}
+function hideChoices(i){const q=cur[i];alert("ทายในใจก่อน: "+q.q+" | ช่วยจำ: "+q.memo)}
+function toggleMemo(i){$("memo"+i).classList.toggle("show")}
+function toggleAllMemo(){document.querySelectorAll(".memo").forEach(m=>m.classList.add("show"))}
+function checkOne(i){
+const v=cur[i],e=$("exp"+i);const u=userAns[i];
+if(u===undefined){e.innerHTML="ยังไม่เลือกคำตอบ";e.classList.add("show");return}
+const ok=u===v.ans;
+e.innerHTML=(ok?"ถูก":"ยังไม่ถูก")+" | "+v.exp;e.classList.add("show");
+document.querySelectorAll("button.choice[data-i='"+i+"']").forEach(b=>{
+const val=parseInt(b.dataset.v);
+b.classList.remove("correct","wrong");
+if(val===v.ans)b.classList.add("correct");
+else if(val===u)b.classList.add("wrong");
+});
+updateBar();
+}
+function updateBar(){
+const done=Object.keys(userAns).length;
+$("bar").style.width=(cur.length?done/cur.length*100:0)+"%";
+let s=0;cur.forEach((v,i)=>{if(userAns[i]===v.ans)s++});
+$("stat").textContent="ตอบแล้ว "+done+"/"+cur.length+" ถูก "+s+" ข้อ";
+}
+function submitAll(){
+let s=0;cur.forEach((v,i)=>{if(userAns[i]===v.ans)s++});
+$("final").textContent="ได้ "+s+"/"+cur.length+" คิดเป็น "+(cur.length?Math.round(s/cur.length*100):0)+"%";
+cur.forEach((v,i)=>checkOne(i));
+try{
+const k="adv-quiz-best";const prev=JSON.parse(localStorage.getItem(k)||"{}");
+const pct=cur.length?Math.round(s/cur.length*100):0;
+if(!prev.best||pct>prev.best){prev.best=pct;prev.when=new Date().toLocaleString();localStorage.setItem(k,JSON.stringify(prev))}
+showBest();
+}catch(e){}
+window.scrollTo({top:0,behavior:"smooth"});
+}
+function resetAll(){userAns={};document.querySelectorAll(".exp").forEach(e=>e.classList.remove("show"));render()}
+function showBest(){try{const p=JSON.parse(localStorage.getItem("adv-quiz-best")||"null");$("best").textContent=p?"คะแนนดีที่สุดในเครื่องนี้ "+p.best+"% เมื่อ "+p.when:"ยังไม่มีสถิติในเครื่องนี้ ทำครบแล้วกดส่งเพื่อบันทึก"}catch(e){}}
+startQuiz();
+</script>
+</body>
+</html>
