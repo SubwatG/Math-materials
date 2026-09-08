@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculus Integration App: Interactive Advisor & Defense Sandbox</title>
+  <title>เว็บแอปช่วยสอนแคลคูลัส: ห้องทดลองสถาปัตยกรรมและซ้อมสอบโครงงาน</title>
   
-  <!-- Fonts -->
+  <!-- ชุดฟอนต์ภาษาไทยและโค้ดมาตรฐาน -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Pridi:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Pridi:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- KaTeX -->
+  <!-- KaTeX สำหรับเรนเดอร์สมการคณิตศาสตร์ -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
@@ -45,12 +45,12 @@
       background-color: var(--bg);
       color: var(--text);
       font-family: 'IBM Plex Sans Thai Looped', 'Pridi', sans-serif;
-      line-height: 1.65;
+      line-height: 1.7;
       padding-bottom: 80px;
     }
 
     h1, h2, h3, h4, .font-heading {
-      font-family: 'Chakra Petch', sans-serif;
+      font-family: 'Bai Jamjuree', 'Chakra Petch', sans-serif;
       font-weight: 600;
       letter-spacing: -0.01em;
     }
@@ -59,7 +59,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Top Header */
+    /* แถบหัวเรื่องด้านบน */
     header {
       background: linear-gradient(180deg, #131d31 0%, #0f172a 100%);
       border-bottom: 1px solid var(--border);
@@ -89,18 +89,19 @@
       background: rgba(16, 185, 129, 0.15);
       color: var(--primary);
       border: 1px solid rgba(16, 185, 129, 0.35);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       padding: 3px 8px;
       border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Bai Jamjuree', sans-serif;
+      font-weight: 600;
     }
     .brand-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
-    /* Score summary chips */
+    /* กล่องสรุปคะแนน */
     .score-chips {
       display: flex;
       gap: 10px;
@@ -112,7 +113,7 @@
       border: 1px solid var(--border);
       padding: 6px 12px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -123,7 +124,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Navigation Tabs */
+    /* แถบสลับหมวดหมู่การเรียนรู้ */
     .nav-tabs {
       max-width: 1100px;
       margin: 20px auto 0;
@@ -139,7 +140,7 @@
       color: var(--text-muted);
       padding: 10px 18px;
       font-size: 0.95rem;
-      font-family: 'Chakra Petch', sans-serif;
+      font-family: 'Bai Jamjuree', sans-serif;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -157,14 +158,13 @@
       font-weight: 600;
     }
 
-    /* Main Container */
+    /* พื้นที่เนื้อหาหลัก */
     .main-container {
       max-width: 1100px;
       margin: 24px auto;
       padding: 0 20px;
     }
 
-    /* Tab Panes */
     .tab-pane {
       display: none;
     }
@@ -177,13 +177,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cards */
+    /* การ์ดข้อสอบและเนื้อหา */
     .card {
       background: var(--surface-card);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       transition: border-color 0.15s ease;
     }
     .card:hover {
@@ -197,22 +197,24 @@
       margin-bottom: 14px;
     }
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       color: #fff;
-      line-height: 1.5;
+      line-height: 1.6;
+      font-family: 'Bai Jamjuree', sans-serif;
+      font-weight: 600;
     }
     .card-tag {
       background: var(--surface);
       border: 1px solid var(--border);
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: 4px;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
       color: var(--sky);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Bai Jamjuree', sans-serif;
       white-space: nowrap;
     }
 
-    /* MCQ Options */
+    /* รายการตัวเลือกคำตอบ */
     .choice-list {
       display: grid;
       gap: 10px;
@@ -228,7 +230,7 @@
       align-items: flex-start;
       gap: 12px;
       transition: all 0.15s ease;
-      font-size: 0.93rem;
+      font-size: 0.94rem;
     }
     .choice-item:hover {
       border-color: var(--sky);
@@ -253,25 +255,26 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.06);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-family: 'Bai Jamjuree', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
       flex-shrink: 0;
     }
 
-    /* Buttons */
+    /* ปุ่มกด */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 8px;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 500;
-      font-family: 'Chakra Petch', sans-serif;
+      font-family: 'Bai Jamjuree', sans-serif;
       cursor: pointer;
       border: 1px solid transparent;
       transition: all 0.15s ease;
@@ -302,18 +305,18 @@
       background: rgba(245, 158, 11, 0.2);
     }
     .btn-sm {
-      padding: 5px 10px;
-      font-size: 0.78rem;
+      padding: 6px 12px;
+      font-size: 0.82rem;
     }
 
-    /* Feedback / Explanation Box */
+    /* กล่องเฉลยและอธิบายบริบท */
     .feedback-box {
       display: none;
       border-radius: 8px;
-      padding: 16px;
+      padding: 16px 18px;
       margin-top: 16px;
-      font-size: 0.9rem;
-      line-height: 1.6;
+      font-size: 0.92rem;
+      line-height: 1.7;
     }
     .feedback-box.show {
       display: block;
@@ -335,21 +338,21 @@
       color: #e0f2fe;
     }
 
-    /* Key Insight (Memo) Pill */
+    /* กล่องมโนทัศน์สำคัญ */
     .insight-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.25);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
       color: #fde68a;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       margin-top: 10px;
     }
 
-    /* Code Editor Container */
+    /* กล่องแก้ไขโค้ด */
     .code-editor-box {
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -364,13 +367,13 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #1f293d;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       font-family: 'JetBrains Mono', monospace;
     }
     .code-textarea {
       width: 100%;
-      min-height: 190px;
+      min-height: 200px;
       background: transparent;
       color: #e2e8f0;
       border: none;
@@ -378,7 +381,7 @@
       padding: 14px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.88rem;
-      line-height: 1.5;
+      line-height: 1.6;
       resize: vertical;
       white-space: pre;
       tab-size: 4;
@@ -387,14 +390,15 @@
       background: rgba(255, 255, 255, 0.015);
     }
 
-    /* Validation Result Box */
+    /* ผลการตรวจสอบโค้ด */
     .test-output {
       display: none;
       border-radius: 8px;
-      padding: 14px;
+      padding: 14px 16px;
       margin-top: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.84rem;
+      font-family: 'JetBrains Mono', 'IBM Plex Sans Thai Looped', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.6;
     }
     .test-output.show {
       display: block;
@@ -410,18 +414,18 @@
       color: #f87171;
     }
 
-    /* Socratic QA text area */
+    /* กล่องตอบข้อเขียนซ้อมสอบ */
     .defense-textarea {
       width: 100%;
-      min-height: 120px;
+      min-height: 130px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      padding: 12px 14px;
-      font-size: 0.92rem;
+      padding: 14px;
+      font-size: 0.94rem;
       font-family: inherit;
-      line-height: 1.6;
+      line-height: 1.7;
       margin: 12px 0;
       resize: vertical;
       outline: none;
@@ -430,21 +434,21 @@
       border-color: var(--border-focus);
     }
 
-    /* Keyword Tags */
+    /* ป้ายคีย์เวิร์ดสำคัญ */
     .keyword-cloud {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
       margin: 10px 0;
     }
     .kw-tag {
-      font-size: 0.76rem;
-      padding: 3px 8px;
-      border-radius: 4px;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Bai Jamjuree', sans-serif;
       transition: all 0.15s ease;
     }
     .kw-tag.hit {
@@ -454,23 +458,19 @@
       font-weight: 600;
     }
 
-    /* Diff View */
+    /* กล่องแสดงโค้ดตัวอย่างที่ถูกต้อง */
     .diff-view {
       background: #090d16;
       border: 1px solid #1e293b;
       border-radius: 8px;
-      padding: 14px;
+      padding: 16px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.5;
+      font-size: 0.85rem;
+      line-height: 1.6;
       margin-top: 12px;
       overflow-x: auto;
     }
-    .diff-add { color: #34d399; background: rgba(16, 185, 129, 0.08); display: block; }
-    .diff-del { color: #f87171; background: rgba(239, 68, 68, 0.08); display: block; }
-    .diff-ctx { color: #94a3b8; display: block; }
 
-    /* Footer Controls */
     .action-row {
       display: flex;
       gap: 10px;
@@ -482,86 +482,86 @@
 </head>
 <body>
 
-  <!-- Sticky Header -->
+  <!-- แถบด้านบนของหน้าเว็บ -->
   <header>
     <div class="header-container">
       <div>
         <div class="brand-title">
-          <span>∫ Calculus Integration App</span>
-          <span class="brand-badge">ADVISOR & DEFENSE SANDBOX</span>
+          <span>∫ โครงงานเว็บแอปพลิเคชันช่วยสอนแคลคูลัส</span>
+          <span class="brand-badge">คู่มืออาจารย์ที่ปรึกษา & ซ้อมสอบโครงร่าง</span>
         </div>
         <div class="brand-subtitle">
-          ระบบทบทวนสถาปัตยกรรมซอฟต์แวร์ มโนทัศน์คณิตศาสตร์ และห้องซ้อมป้องกันโครงงาน
+          ระบบทบทวนสถาปัตยกรรมซอฟต์แวร์ การคำนวณคณิตศาสตร์เชิงสัญลักษณ์ และแนวทางโค้ชนิสิต
         </div>
       </div>
       <div class="score-chips">
         <div class="chip">
-          <span>MCQ:</span>
+          <span>มโนทัศน์:</span>
           <span class="chip-val" id="chip-mcq">0/15</span>
         </div>
         <div class="chip">
-          <span>Code Challenges:</span>
+          <span>แก้โค้ดจริง:</span>
           <span class="chip-val" id="chip-code">0/5</span>
         </div>
         <div class="chip">
-          <span>Defense Q&A:</span>
+          <span>ซักซ้อมสอบ:</span>
           <span class="chip-val" id="chip-defense">0/5</span>
         </div>
-        <button class="btn btn-outline btn-sm" onclick="resetAllProgress()">↺ รีเซ็ต</button>
+        <button class="btn btn-outline btn-sm" onclick="resetAllProgress()">↺ ล้างประวัติคะแนน</button>
       </div>
     </div>
   </header>
 
-  <!-- Navigation Tabs -->
+  <!-- แถบเลือกโหมดการทำงาน -->
   <nav class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('tab-mcq')">
-      <span>🎯 1. แบบทดสอบปรนัย (MCQs)</span>
+      <span>🎯 1. แบบทดสอบเลือกตอบเพื่อทบทวนมโนทัศน์ (15 ข้อ)</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-code')">
-      <span>💻 2. ข้อเขียนแก้โค้ดจริง (Code Sandbox)</span>
+      <span>💻 2. ข้อเขียนฝึกแก้โค้ดจริงในระบบ (5 สถานการณ์)</span>
     </button>
     <button class="tab-btn" onclick="switchTab('tab-defense')">
-      <span>🛡️ 3. ซ้อมตอบคำถามกรรมการ (Defense Q&A)</span>
+      <span>🛡️ 3. ซักซ้อมตอบคำถามกรรมการสอบหัวข้อ (5 ข้อเขียน)</span>
     </button>
   </nav>
 
-  <!-- Main Content Panes -->
+  <!-- เนื้อหาของแต่ละหมวด -->
   <main class="main-container">
 
     <!-- ======================================================== -->
-    <!-- TAB 1: MCQs                                              -->
+    <!-- หมวดที่ 1: แบบทดสอบปรนัย (MCQs)                             -->
     <!-- ======================================================== -->
     <section id="tab-mcq" class="tab-pane active">
-      <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-          ทดสอบความเข้าใจเชิงมโนทัศน์ 15 ข้อหลัก (คลิกเลือกตัวเลือกและกดตรวจเพื่อดูบทวิเคราะห์สถาปัตยกรรม)
+      <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <p style="color: var(--text-muted); font-size: 0.92rem;">
+          แบบทดสอบคัดสรร 15 ข้อหลักเพื่อทบทวนสถาปัตยกรรมและตรรกะคณิตศาสตร์ (คลิกตัวเลือกเพื่อดูบทวิเคราะห์และมโนทัศน์เบื้องหลัง)
         </p>
-        <button class="btn btn-accent btn-sm" onclick="showAllMCQExplanations()">คลี่เฉลยทั้งหมด</button>
+        <button class="btn btn-accent btn-sm" onclick="showAllMCQExplanations()">เปิดดูเฉลยและคำอธิบายทั้งหมด</button>
       </div>
       <div id="mcq-list"></div>
     </section>
 
     <!-- ======================================================== -->
-    <!-- TAB 2: Interactive Code Challenges (ข้อเขียนแก้โค้ด)       -->
+    <!-- หมวดที่ 2: ข้อเขียนแก้โค้ดจริง (Code Challenges)            -->
     <!-- ======================================================== -->
     <section id="tab-code" class="tab-pane">
-      <div style="margin-bottom: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 14px 18px;">
-        <h4 style="color: var(--sky); margin-bottom: 4px;">🛠️ วิธีทำข้อเขียนแบบแก้โค้ด (Interactive Code Challenges)</h4>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          ในแต่ละข้อจะจำลองโค้ดที่มีบั๊กหรือขัดต่อหลักการออกแบบ (Anti-pattern) ที่พบบ่อยในโปรเจกต์ ให้นิสิตหรืออาจารย์แก้ไขโค้ดในกล่องข้อความ จากนั้นกดปุ่ม <strong>"⚡ ตรวจสอบโค้ด"</strong> เพื่อรันชุดทดสอบอัตโนมัติ และกด <strong>"💡 ดูเฉลยสถาปัตยกรรม"</strong> เพื่อเปรียบเทียบกับโค้ดต้นแบบ
+      <div style="margin-bottom: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 16px 20px;">
+        <h4 style="color: var(--sky); margin-bottom: 6px; font-size: 1.05rem;">🛠️ วิธีทำข้อเขียนแบบแก้โค้ดในระบบ</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+          ในแต่ละข้อจะยกตัวอย่างโค้ดจริงที่มีข้อบกพร่องหรือขัดต่อหลักการออกแบบซอฟต์แวร์ที่ดี ให้นิสิตหรืออาจารย์พิมพ์แก้ไขโค้ดลงในช่องข้อความ จากนั้นกดปุ่ม <strong>"⚡ ตรวจสอบโค้ด"</strong> เพื่อให้ระบบตรวจความถูกต้องทางตรรกะ และสามารถกด <strong>"💡 ดูโค้ดตัวอย่างและคำอธิบาย"</strong> เพื่อศึกษาแนวคิดเชิงสถาปัตยกรรมที่ถูกต้องครับ
         </p>
       </div>
       <div id="code-list"></div>
     </section>
 
     <!-- ======================================================== -->
-    <!-- TAB 3: Defense Socratic Q&A (ซ้อมตอบคำถามกรรมการ)       -->
+    <!-- หมวดที่ 3: ซักซ้อมตอบคำถามกรรมการ (Defense Simulator)     -->
     <!-- ======================================================== -->
     <section id="tab-defense" class="tab-pane">
-      <div style="margin-bottom: 20px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 8px; padding: 14px 18px;">
-        <h4 style="color: var(--accent); margin-bottom: 4px;">🛡️ ห้องซักซ้อมสอบนำเสนอหัวข้อโครงงาน (Proposal Defense Simulator)</h4>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          รวบรวม 5 คำถามด่านหินที่คณะกรรมการมักจะใช้ทดสอบวุฒิภาวะทางวิศวกรรมและคณิตศาสตร์ ลองพิมพ์ร่างคำตอบของคุณลงในกล่องข้อความ แล้วกด <strong>"🔍 ตรวจจับคีย์เวิร์ดสำคัญ"</strong> เพื่อดูว่าคุณสื่อสารประเด็นที่กรรมการต้องการได้ยินครบถ้วนหรือไม่!
+      <div style="margin-bottom: 20px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 8px; padding: 16px 20px;">
+        <h4 style="color: var(--accent); margin-bottom: 6px; font-size: 1.05rem;">🛡️ ห้องจำลองการซ้อมสอบโครงร่างโครงงาน (Proposal Defense)</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+          รวบรวม 5 คำถามสำคัญที่คณะกรรมการมักจะหยิบยกขึ้นมาซักถามเพื่อทดสอบความลึกซึ้งทางคณิตศาสตร์และวิศวกรรมซอฟต์แวร์ ลองพิมพ์แนวทางการตอบของท่านลงในช่องข้อความ แล้วกดปุ่ม <strong>"🔍 ตรวจจับประเด็นสำคัญ"</strong> เพื่อตรวจเช็คว่าท่านได้อธิบายประเด็นที่กรรมการคาดหวังครบถ้วนแล้วหรือไม่
         </p>
       </div>
       <div id="defense-list"></div>
@@ -569,240 +569,240 @@
 
   </main>
 
-  <!-- Application Logic & Data -->
+  <!-- ข้อมูลและตรรกะการทำงานของระบบ -->
   <script>
     // ==========================================
-    // 1. DATA: 15 Conceptual MCQs
+    // 1. ฐานข้อมูล: ข้อสอบปรนัย 15 ข้อเชิงมโนทัศน์
     // ==========================================
     const MCQS = [
       {
         id: 1,
-        cat: "Architecture",
-        q: "1. ไฟล์ app.py ทำหน้าที่หลักใดในสถาปัตยกรรมของโปรเจกต์นี้ และเหตุใดจึงไม่ควรมีโค้ดคำนวณปนอยู่?",
+        cat: "สถาปัตยกรรมระบบ",
+        q: "1. ไฟล์ app.py ทำหน้าที่หลักใดในสถาปัตยกรรมของโปรเจกต์นี้ และเหตุใดตามหลักการวิศวกรรมจึงไม่ควรใส่โค้ดคำนวณคณิตศาสตร์ลงในไฟล์นี้?",
         a: [
-          "ทำหน้าที่เป็น Presentation Layer โดยแสดงผลหน้าแรกและดึงฟังก์ชันคำนวณมาแสดงผลทันที",
-          "ทำหน้าที่เป็น Routing Controller ผ่าน st.navigation จัดการ 14 หน้าใน 4 กลุ่ม และกำหนดค่าเริ่มต้นของ Session State",
-          "ทำหน้าที่เชื่อมต่อฐานข้อมูล SQLite และตรวจสอบสิทธิ์การเข้าใช้งานของผู้เรียน",
-          "ทำหน้าที่เรียกชุดคำสั่ง Pytest ทั้งหมดก่อนเริ่มรันหน้าเว็บแอปพลิเคชัน"
+          "ทำหน้าที่เป็นหน้าแสดงผลแรกของเว็บ จึงควรใส่โค้ดคำนวณไว้เพื่อให้โหลดข้อมูลได้ทันที",
+          "ทำหน้าที่เป็นตัวควบคุมเส้นทาง (Routing Controller) ผ่าน st.navigation จัดการ 14 หน้าใน 4 กลุ่ม และเตรียมค่าเริ่มต้นของตัวแปรระบบ (Session State)",
+          "ทำหน้าที่เชื่อมต่อกับฐานข้อมูล SQLite เพื่อบันทึกประวัตินิสิตที่เข้ามาใช้งาน",
+          "ทำหน้าที่เป็นตัวรันคำสั่ง Pytest เพื่อตรวจสอบข้อผิดพลาดก่อนเปิดหน้าเว็บ"
         ],
         ans: 1,
-        exp: "app.py ถูกออกแบบเป็น Router และ State Initializer กลาง การแยก Business Logic ออกช่วยลดภาระการโหลดสคริปต์ (Decoupling) และทำให้ Entry Point สะอาด",
-        memo: "app.py = สวิตช์บอร์ดเส้นทางและดูแล State ข้าม Rerun ห้ามมีตรรกะคำนวณปน"
+        exp: "app.py ถูกกำหนดให้เป็นทางเข้าหลัก (Entry Point) และตัวกระจายเส้นทางเท่านั้น การนำตรรกะคำนวณคณิตศาสตร์หรือการวาดกราฟมาเขียนปนในไฟล์นี้ จะทำให้โปรแกรมโหลดช้าในทุกหน้าโดยไม่จำเป็น และทำให้โครงสร้างโค้ดพันกันจนยากต่อการตรวจสอบ",
+        memo: "app.py ทำหน้าที่เป็นสวิตช์บอร์ดควบคุมเส้นทางและดูแลสถานะระบบ ห้ามใส่ตรรกะคำนวณปนลงไป"
       },
       {
         id: 2,
-        cat: "Lifecycle",
-        q: "2. เพราะเหตุใดเมื่อผู้ใช้คลิกเลือกคำตอบในหน้า Quiz แล้วหน้าเว็บจึงเกิด Rerun ทั้งสคริปต์ และหากไม่เก็บไว้ใน st.session_state จะเกิดผลอย่างไร?",
+        cat: "วงจรชีวิต Streamlit",
+        q: "2. เพราะเหตุใดเมื่อผู้ใช้กดปุ่มเลือกคำตอบในหน้าแบบทดสอบ หน้าเว็บจึงต้องประมวลผลใหม่ตั้งแต่ต้น และหากไม่มีการจองตัวแปรไว้ใน st.session_state จะเกิดผลอย่างไร?",
         a: [
-          "เกิด RecursionError เนื่องจากฟังก์ชันเรียกตัวเองไม่สิ้นสุด",
-          "ตัวแปรคะแนนและประวัติการตอบจะถูกล้างค่ากลับเป็นค่าว่างใหม่ในทุกวงรอบ ทำให้คะแนนหายและเกิด KeyError",
-          "ระบบจะไม่สามารถประมวลผลสมการ SymPy ได้เนื่องจากหน่วยความจำแคชถูกตัดขาด",
-          "ฟอนต์ภาษาไทยและ CSS จะไม่เรนเดอร์บนเบราว์เซอร์"
+          "เกิดข้อผิดพลาดฟังก์ชันเรียกตัวเองซ้ำไม่สิ้นสุด (RecursionError) จนเบราว์เซอร์ค้าง",
+          "ตัวแปรคะแนนและประวัติการทำข้อสอบจะถูกล้างค่าคืนสู่ค่าเริ่มต้นในทุกวงรอบ ทำให้คะแนนสะสมหายไปและเกิดข้อผิดพลาด KeyError",
+          "ระบบจะไม่สามารถส่งสมการไปคำนวณใน SymPy ได้เนื่องจากหน่วยความจำถูกตัดขาด",
+          "ฟอนต์ภาษาไทยและรูปแบบหน้าเว็บที่ตั้งค่าไว้จะหายไป"
         ],
         ans: 1,
-        exp: "Streamlit รันสคริปต์แบบ Top-to-bottom ทุกครั้งที่เกิด Event ตัวแปรทั่วไปในหน่วยความจำจึงถูกรีเซ็ตใหม่เสมอ จึงต้องเก็บคะแนนไว้ใน st.session_state",
-        memo: "Reactive Execution Model: ตัวแปรธรรมดาหายเมื่อ Rerun ต้องจำข้ามวงรอบผ่าน session_state"
+        exp: "Streamlit ใช้รูปแบบการทำงานแบบ Reactive Rerun กล่าวคือ ทุกครั้งที่ผู้ใช้ขยับวิดเจ็ตหรือกดปุ่ม สคริปต์ของหน้านั้นจะถูกรันใหม่ตั้งแต่บรรทัดแรกจนถึงบรรทัดสุดท้าย ตัวแปรทั่วไปในหน่วยความจำจึงหายไปทั้งหมด หากต้องการให้ระบบจำคะแนนข้ามการกดปุ่ม ต้องฝากค่าไว้ใน st.session_state เสมอ",
+        memo: "Streamlit รันสคริปต์ใหม่ตั้งแต่บรรทัดแรกเสมอเมื่อเกิดเหตุการณ์บนหน้าจอ ข้อมูลที่ต้องจำข้ามวงรอบต้องเก็บใน session_state"
       },
       {
         id: 3,
-        cat: "SoC & Testing",
-        q: "3. ข้อใดอธิบายประโยชน์ของการแยกโฟลเดอร์ pages/ (UI) ออกจาก utils/ (Logic) ต่อการทำ Automated Testing ได้ถูกต้องที่สุด?",
+        cat: "การแยกส่วนตรรกะและการทดสอบ",
+        q: "3. ข้อใดอธิบายประโยชน์ของการแยกโฟลเดอร์ pages/ (ส่วนแสดงผล) ออกจาก utils/ (ส่วนตรรกะคำนวณ) ต่อการทดสอบอัตโนมัติ (Automated Testing) ได้ถูกต้องที่สุด?",
         a: [
-          "ช่วยให้ Pytest สามารถทดสอบปุ่มกดและสไลเดอร์บนหน้าจอได้โดยไม่ต้องเปิดเบราว์เซอร์",
-          "utils/ เป็น Pure Python Functions ที่ไม่ผูกติดกับ Streamlit ทำให้เขียน Unit Test ตรวจสอบสูตรคณิตศาสตร์นับร้อยกรณีได้ในเวลาเสี้ยววินาที",
-          "ช่วยให้สามารถรัน Streamlit ข้ามแพลตฟอร์มบนโทรศัพท์มือถือได้เร็วขึ้น",
-          "ป้องกันไม่ให้นิสิตในทีมเข้าถึงซอร์สโค้ดใน utils/ ได้"
+          "ช่วยให้โปรแกรม Pytest สามารถสั่งคลิกปุ่มบนหน้าจอเว็บได้โดยไม่ต้องเปิดเบราว์เซอร์จริง",
+          "ฟังก์ชันใน utils/ เป็นฟังก์ชันคำนวณอิสระที่ไม่ผูกติดกับ Streamlit ทำให้สามารถเขียนคำสั่งทดสอบ (Unit Test) ตรวจสอบความถูกต้องของสูตรคณิตศาสตร์นับร้อยกรณีได้ในเสี้ยววินาที",
+          "ช่วยให้หน้าเว็บแอปพลิเคชันสามารถเปิดใช้งานบนโทรศัพท์มือถือได้รวดเร็วขึ้น",
+          "ช่วยป้องกันไม่ให้นิสิตในทีมสามารถเข้าไปดูหรือแก้ไขโค้ดการคำนวณได้"
         ],
         ans: 1,
-        exp: "Separation of Concerns (SoC) ทำให้ Domain Logic แยกอิสระจาก UI เฟรมเวิร์ก ส่งผลให้สามารถเขียน Pytest ครอบคลุมฟังก์ชันคำนวณได้ 100% โดยไม่ต้องพึ่ง Browser Automation",
-        memo: "SoC: แยกสมองคำนวณ (utils) ออกจากหน้ากาก UI (pages) เพื่อให้รัน Automated Test ได้รวดเร็วและแม่นยำ"
+        exp: "หลักการแบ่งแยกความรับผิดชอบ (Separation of Concerns) ช่วยให้ฟังก์ชันคำนวณกลายเป็น Pure Python ที่ไม่มีคำสั่งหน้าเว็บ (st.*) ปะปน จึงสามารถส่งโจทย์เข้าไปทดสอบความถูกต้องผ่าน Pytest ได้โดยตรงโดยไม่ต้องอาศัยการจำลองหน้าเว็บ",
+        memo: "แยกสมองคำนวณ (utils) ออกจากหน้ากากแสดงผล (pages) เพื่อให้สามารถเขียนชุดทดสอบอัตโนมัติได้อย่างรวดเร็วและแม่นยำ"
       },
       {
         id: 4,
-        cat: "Data Decoupling",
-        q: "4. การแยกเนื้อหาไว้ใน data/lessons (*.md) และ data/quizzes (*.json) มีประโยชน์เชิงการบำรุงรักษาระบบอย่างไร?",
+        cat: "การแยกเนื้อหาออกจากโค้ด",
+        q: "4. การจัดเก็บเนื้อหาบทเรียนไว้ใน data/lessons (*.md) และข้อสอบไว้ใน data/quizzes (*.json) มีประโยชน์สำคัญอย่างไรในการดูแลระยะยาว?",
         a: [
-          "ช่วยแปลงสมการคณิตศาสตร์ให้กลายเป็นภาษาไบนารีเพื่อเพิ่มความเร็วในการวาดกราฟิก",
-          "ช่วยให้ผู้จัดทำเนื้อหาสามารถแก้ไขบทเรียนหรือเพิ่มข้อสอบได้ทันที โดยไม่ต้องมีความรู้การเขียนโค้ด Python และไม่กระทบต่อตรรกะของแอปพลิเคชัน",
-          "ป้องกันไม่ให้ผู้เรียนสามารถเปิดดูคำตอบข้อสอบผ่าน Inspect Element",
-          "ช่วยบีบอัดขนาดไฟล์ของแอปพลิเคชันให้เล็กลงครึ่งหนึ่ง"
+          "ช่วยแปลงสมการคณิตศาสตร์ให้กลายเป็นภาษาเครื่องเพื่อเพิ่มความเร็วในการคำนวณ",
+          "ช่วยแยกเนื้อหาภาษาไทยออกจากโค้ดโปรแกรม ทำให้อาจารย์หรือผู้จัดทำสามารถแก้ไขบทความ ปรับปรุงโจทย์ หรือเพิ่มข้อสอบได้โดยตรง โดยไม่ต้องมีความรู้ด้านการเขียนโค้ด Python และไม่เสี่ยงต่อการทำระบบพัง",
+          "ช่วยป้องกันไม่ให้นิสิตสามารถเปิดดูคำตอบเฉลยผ่านการตรวจสอบโค้ดหน้าเว็บ",
+          "ช่วยลดขนาดไฟล์ของเว็บแอปพลิเคชันลงได้อย่างมาก"
         ],
         ans: 1,
-        exp: "Content & Code Decoupling ช่วยให้การดูแลเนื้อหาภาษาไทยและชุดโจทย์ทำได้ง่าย มีความปลอดภัยต่อระบบ และรองรับการขยายคลังข้อสอบในอนาคต",
-        memo: "Content Decoupling: แก้ไขเนื้อหาและข้อสอบได้อิสระโดยไม่ต้องแตะต้องโค้ดตรรกะของระบบ"
+        exp: "การแยกเนื้อหาและการประเมินผลออกจากโค้ดคำนวณ (Content Decoupling) เป็นมาตรฐานสากล ทำให้การปรับปรุงคำอธิบายบทเรียนภาษาไทยหรือการเพิ่มคลังข้อสอบทำได้สะดวกรวดเร็ว โดยไม่มีผลกระทบต่อตรรกะการประมวลผลของระบบ",
+        memo: "การแยกเนื้อหาออกจากโค้ด ช่วยให้แก้ไขบทเรียนและข้อสอบได้อย่างอิสระโดยไม่ต้องแตะต้องโค้ดตรรกะของระบบ"
       },
       {
         id: 5,
-        cat: "Quality Gates",
-        q: "5. ข้อกำหนด Definition of Done (DoD) ของโปรเจกต์นี้มีเกณฑ์บังคับสำคัญอะไรบ้างก่อนส่งมอบโค้ด?",
+        cat: "เกณฑ์มาตรฐานก่อนส่งมอบงาน",
+        q: "5. ตามข้อกำหนดความสมบูรณ์ของงาน (Definition of Done) สิ่งใดถือเป็นเกณฑ์บังคับก่อนที่นิสิตจะส่งมอบงานเข้าสู่ระบบหลัก?",
         a: [
-          "เพียงแค่รัน streamlit run app.py แล้วเปิดหน้าเว็บติดถือว่าผ่านเกณฑ์",
-          "ต้องรันแอปได้, ฟีเจอร์ทำงานจริง, มี Unit Test ครอบคลุมใน tests/ และ pytest tests/ -v ผ่านทั้งหมด, ภาษาไทย/LaTeX ถูกต้อง, และส่งมอบผ่าน Branch ตัวเอง",
-          "ต้องมีผลการทดสอบผ่าน Pytest ครบทุกข้อ แต่ไม่จำเป็นต้องเปิดทดสอบบนเบราว์เซอร์จริง",
-          "ต้อง Commit สภาพแวดล้อมเสมือน (.venv) และแคช (__pycache__) เข้าสู่ Git Repository"
+          "เพียงแค่รันคำสั่ง streamlit run app.py แล้วเปิดหน้าจอติด ถือว่าผ่านเกณฑ์ส่งงานได้",
+          "แอปพลิเคชันต้องรันได้, ฟังก์ชันทำงานจริงบนหน้าจอ, มีชุดทดสอบครอบคลุมตรรกะใหม่ใน tests/ และผ่าน pytest ทั้งหมด, ภาษาไทยและสมการ LaTeX แสดงผลถูกต้อง, และส่งมอบผ่าน Git Branch ของตนเอง",
+          "ต้องมีชุดทดสอบผ่าน 100% แต่ไม่จำเป็นต้องเปิดตรวจสอบบนเบราว์เซอร์จริง",
+          "ต้องนำไฟล์สภาพแวดล้อมเสมือน (.venv) และไฟล์แคช (__pycache__) บันทึกเข้า Git ด้วยเสมอ"
         ],
         ans: 1,
-        exp: "DoD รัดกุมทั้งด้าน Runtime, ฟังก์ชันการทำงาน, Automated Unit Testing, ความเรียบร้อยของภาษา และ Git Hygiene",
-        memo: "Quality Gates: โค้ดต้องรันได้ มี Unit Test รองรับ และผ่านเกณฑ์ความเรียบร้อยทางภาษาและ Git สะอาด"
+        exp: "เกณฑ์ Definition of Done ครอบคลุมทั้งความเสถียรของโปรแกรม, ความถูกต้องของฟังก์ชัน, การมีชุดทดสอบรองรับ (Test Coverage), ความถูกต้องของภาษาและสมการ, และระเบียบวินัยในการใช้ Git",
+        memo: "มาตรฐานงานที่ดี: โค้ดต้องรันได้ มีชุดทดสอบอัตโนมัติรับรองความถูกต้อง และผ่านเกณฑ์ความเรียบร้อยทางภาษา"
       },
       {
         id: 6,
-        cat: "SymPy AST",
-        q: "6. ใน utils/sympy_solver.py บทบาทของ implicit_multiplication_application และเหตุผลที่ต้องงดใช้ auto_symbol คือข้อใด?",
+        cat: "การอ่านสมการด้วย SymPy",
+        q: "6. ใน utils/sympy_solver.py การเปิดใช้ implicit_multiplication_application มีบทบาทอย่างไร และทำไมจึงต้องยกเลิกการใช้ auto_symbol ใน SymPy 1.14+?",
         a: [
-          "อนุญาตให้เขียนเครื่องหมาย = สองตัวในสมการ และห้าม auto_symbol เพราะจะทำให้สูตรอินทิเกรตกลายเป็นอนุพันธ์",
-          "ช่วยแปลงนิพจน์ตามธรรมชาติ เช่น 2x หรือ sin x ให้เป็น 2*x อัตโนมัติ และงดใช้ auto_symbol เนื่องจากเกิด TypeError บน SymPy 1.14+",
-          "แปลงสมการ LaTeX ให้กลายเป็นโค้ด Python และงดใช้ auto_symbol เพื่อป้องกันไม่ให้ผู้ใช้ป้อนตัวแปรภาษาไทย",
-          "บังคับให้พิมพ์เครื่องหมายดอกจัน (*) ในทุกตำแหน่ง และงดใช้ auto_symbol เพื่อประหยัดหน่วยความจำ"
+          "ช่วยให้ผู้เรียนเขียนเครื่องหมายเท่ากับสองตัวในสมการได้ และยกเลิก auto_symbol เพราะทำให้สูตรอินทิเกรตกลายเป็นอนุพันธ์",
+          "ช่วยแปลงข้อความที่พิมพ์ตามธรรมชาติ เช่น 2x หรือ sin x ให้กลายเป็น 2*x ในโครงสร้างข้อมูลต้นไม้ (AST) โดยอัตโนมัติ และยกเลิก auto_symbol เพราะก่อให้เกิดข้อผิดพลาด TypeError ภายในไลบรารีรุ่นใหม่",
+          "ช่วยแปลงสมการ LaTeX ให้กลายเป็นโค้ดภาษา Python และยกเลิก auto_symbol เพื่อป้องกันไม่ให้พิมพ์ภาษาไทย",
+          "บังคับให้ผู้เรียนต้องพิมพ์เครื่องหมายดอกจัน (*) ในทุกตำแหน่งเสมอ"
         ],
         ans: 1,
-        exp: "implicit_multiplication ช่วยสแกนและแทรกเครื่องหมายคูณในระดับ AST ช่วยให้พิมพ์สมการง่าย ส่วน auto_symbol ถูกถอดออกเพื่อแก้ปัญหา Breaking Change ใน SymPy 1.14+",
-        memo: "Natural Parsing: แปลง 2x -> 2*x อัตโนมัติในระดับ AST และเลี่ยง auto_symbol เพื่อความเข้ากันได้ของไลบรารี"
+        exp: "กลไก implicit_multiplication ช่วยแปลงการเขียนสมการตามธรรมชาติของมนุษย์ให้คอมพิวเตอร์เข้าใจได้โดยไม่ต้องพิมพ์ * ทุกจุด ส่วน auto_symbol ถูกถอดออกเนื่องจากเกิดปัญหาความเข้ากันไม่ได้กับ SymPy เวอร์ชัน 1.14 ขึ้นไป โดยเปลี่ยนมาประกาศตัวแปร x ชัดเจนแทน",
+        memo: "การอ่านสมการตามธรรมชาติ: แปลง 2x เป็น 2*x อัตโนมัติในระดับโครงสร้างต้นไม้ และหลีกเลี่ยงคำสั่งที่มีปัญหากับไลบรารีรุ่นใหม่"
       },
       {
         id: 7,
-        cat: "Numerical Analysis",
-        q: "7. สำหรับ f(x) = x^2 บน [0, 2] เมื่อแบ่งช่วงย่อย n = 2 (dx = 1) ข้อใดเปรียบเทียบค่า L_2, R_2, M_2 กับค่าจริงได้ถูกต้อง?",
+        cat: "การวิเคราะห์เชิงตัวเลข",
+        q: "7. สำหรับฟังก์ชัน f(x) = x^2 บนช่วง [0, 2] เมื่อแบ่งช่วงย่อย n = 2 ส่วน (dx = 1) ข้อใดเปรียบเทียบผลลัพธ์ของผลบวกรีมันน์ทั้ง 3 วิธีกับค่าจริงได้ถูกต้อง?",
         a: [
-          "L_2 = 5.0, R_2 = 1.0, M_2 = 2.5 โดยค่าจริงคือ 2.6667 ซึ่ง R_2 แม่นยำที่สุด",
-          "L_2 = 1.0, R_2 = 5.0, M_2 = 2.5 โดยค่าจริงคือ 8/3 ≈ 2.6667 และ M_2 แม่นยำใกล้เคียงค่าจริงมากกว่า L_2 และ R_2 อย่างมาก",
-          "L_2 = 2.5, R_2 = 2.5, M_2 = 2.5 โดยทั้งสามวิธีให้ค่าเท่ากันเสมอสำหรับพหุนามกำลังสอง",
-          "L_2 = 0.0, R_2 = 4.0, M_2 = 2.0 โดยค่าจริงคือ 3.0000"
+          "ผลรวมซ้าย (L_2) = 5.0, ผลรวมขวา (R_2) = 1.0, ผลรวมกึ่งกลาง (M_2) = 2.5 โดยค่าจริงคือ 2.6667",
+          "ผลรวมซ้าย (L_2) = 1.0, ผลรวมขวา (R_2) = 5.0, ผลรวมกึ่งกลาง (M_2) = 2.5 โดยค่าจริงจากการอินทิเกรตคือ 8/3 ≈ 2.6667 ซึ่งผลรวมกึ่งกลางมีความแม่นยำใกล้เคียงค่าจริงมากกว่าวิธีซ้ายและขวาอย่างมาก",
+          "ทั้งสามวิธีคำนวณได้ 2.5 เท่ากันทั้งหมด เพราะฟังก์ชันเป็นพหุนามกำลังสอง",
+          "ผลรวมซ้ายคำนวณได้ 0.0, ผลรวมขวาคำนวณได้ 4.0, และผลรวมกึ่งกลางคำนวณได้ 2.0"
         ],
         ans: 1,
-        exp: "L_2 = (0^2+1^2)*1 = 1.0, R_2 = (1^2+2^2)*1 = 5.0, M_2 = (0.5^2+1.5^2)*1 = 2.5 ซึ่ง M_2 มี Error เพียง 0.1667 เทียบกับ 1.6667 ของ L_2",
-        memo: "Numerical Benchmark: L_2 (1.0) < M_2 (2.5) < Exact (2.6667) < R_2 (5.0) ชี้ชัดว่า Midpoint แม่นยำกว่าอย่างมีนัยสำคัญ"
+        exp: "L_2 ใช้จุด x = 0, 1 ได้ผลรวม 1.0, R_2 ใช้จุด x = 1, 2 ได้ผลรวม 5.0, ส่วน M_2 ใช้จุดกึ่งกลาง x = 0.5, 1.5 ได้ผลรวม 2.5 เมื่อเทียบกับค่าจริง 2.6667 จะเห็นได้ชัดว่า M_2 มีค่าความผิดพลาดเพียง 0.1667 ขณะที่ L_2 และ R_2 ผิดพลาดสูงถึง 1.6667 และ 2.3333",
+        memo: "กรณีศึกษามาตรฐาน: L_2 (1.0) < M_2 (2.5) < ค่าจริง (2.6667) < R_2 (5.0) แสดงให้เห็นว่าจุดกึ่งกลางให้ผลลัพธ์ที่แม่นยำกว่าอย่างเห็นได้ชัด"
       },
       {
         id: 8,
-        cat: "Convergence & Error",
-        q: "8. สำหรับฟังก์ชันเพิ่มอย่างเข้มงวด (f'(x) > 0) เหตุใด Midpoint (M_n) จึงมีอัตราการลู่เข้า O(1/n^2) ซึ่งเร็วกว่า Left/Right ที่เป็น O(1/n)?",
+        cat: "การลู่เข้าและค่าความคลาดเคลื่อน",
+        q: "8. สำหรับฟังก์ชันที่มีอนุพันธ์เป็นบวกอย่างต่อเนื่อง (f'(x) > 0) เหตุใดผลรวมกึ่งกลาง (M_n) จึงมีอัตราความคลาดเคลื่อนลดลงในระดับ O(1/n^2) ซึ่งเร็วกว่าวิธีซ้ายและขวาที่เป็น O(1/n)?",
         a: [
-          "เพราะ Midpoint ใช้จำนวนแท่งสี่เหลี่ยมมากกว่าสองเท่า",
-          "เพราะเมื่อกระจายอนุกรมเทย์เลอร์รอบจุดกึ่งกลาง พจน์ความคลาดเคลื่อนเชิงเส้นจะหักล้างกันเองโดยสมบูรณ์ ทำให้ความคลาดเคลื่อนตกไปอยู่ที่พจน์อนุพันธ์อันดับสอง",
-          "เพราะ Midpoint ปรับค่าความกว้าง dx ให้เล็กลงแบบเอกซ์โพเนนเชียล",
-          "เพราะ Left และ Right ไม่สามารถใช้กับฟังก์ชันเพิ่มได้"
+          "เพราะวิธีผลรวมกึ่งกลางใช้จำนวนแท่งสี่เหลี่ยมในการคำนวณมากกว่าสองเท่า",
+          "เพราะเมื่อกระจายอนุกรมเทย์เลอร์รอบจุดกึ่งกลางของแต่ละช่วงย่อย พจน์ความคลาดเคลื่อนเชิงเส้นจะหักล้างกันเองโดยสมบูรณ์ ทำให้ความคลาดเคลื่อนที่เหลือตกไปอยู่ที่พจน์อนุพันธ์อันดับสอง ซึ่งแปรผันตาม (dx)^2",
+          "เพราะวิธีผลรวมกึ่งกลางปรับลดความกว้างของแต่ละแท่งสี่เหลี่ยมลงอย่างรวดเร็ว",
+          "เพราะวิธีผลรวมซ้ายและขวาไม่สามารถใช้คำนวณฟังก์ชันเพิ่มได้"
         ],
         ans: 1,
-        exp: "Linear Error Cancellation: การกระจายเทย์เลอร์รอบจุดกึ่งกลางทำให้พจน์อันดับหนึ่ง f'(m_i)(x-m_i) อินทิเกรตแล้วได้ 0 ความคลาดเคลื่อนจึงเป็นสัดส่วนกับ (dx)^2 ~ 1/n^2",
-        memo: "Taylor Error Cancellation: ความคลาดเคลื่อนเชิงเส้นหักล้างกันรอบจุดกึ่งกลาง ส่งผลให้อัตราความผิดพลาดลดลงเป็น O(1/n^2)"
+        exp: "การหักล้างของความคลาดเคลื่อนเชิงเส้น (Linear Error Cancellation) เกิดขึ้นจากการที่จุดกึ่งกลางมีพื้นที่ส่วนที่ขาดและส่วนที่เกินสมมาตรกันรอบเส้นสัมผัส ส่งผลให้อัตราความผิดพลาดลดลงอย่างรวดเร็วเป็นสัดส่วนกับ 1/n^2 เมื่อเพิ่มจำนวนช่วงย่อย",
+        memo: "ความคลาดเคลื่อนเชิงเส้นหักล้างกันเองรอบจุดกึ่งกลาง ส่งผลให้อัตราความผิดพลาดของวิธี Midpoint ลดลงอย่างรวดเร็วที่ระดับ O(1/n^2)"
       },
       {
         id: 9,
-        cat: "Evaluation Logic",
-        q: "9. การตรวจข้อสอบด้วย answers.get(i) == question['answer'] ในปัจจุบัน มีจุดบกพร่องสำคัญในข้อใด?",
+        cat: "ตรรกะการตรวจข้อสอบ",
+        q: "9. การตรวจคำตอบข้อสอบด้วยเงื่อนไข answers.get(i) == question['answer'] ในปัจจุบัน มีข้อบกพร่องสำคัญอย่างไร?",
         a: [
-          "ทำให้โปรแกรมค้างเมื่อมีผู้เรียนทำข้อสอบพร้อมกันหลายคน",
-          "เปราะบางต่อช่องว่างส่วนเกิน (Whitespace) และไม่สามารถตรวจจับนิพจน์คณิตศาสตร์ที่มีรูปสมมูลกันได้ (เช่น 1/x กับ x^-1)",
-          "ทำให้คะแนนของผู้เรียนถูกส่งต่อไปยังเว็บไซต์ภายนอกโดยไม่ได้รับอนุญาต",
-          "ทำให้ระบบหักคะแนนผู้เรียนเป็นค่าติดลบ"
+          "ทำให้โปรแกรมประมวลผลช้าลงเมื่อมีผู้เรียนเข้ามาทำข้อสอบพร้อมกันจำนวนมาก",
+          "เป็นการตรวจสอบตัวอักษรแบบตรงเป๊ะทุกจุด ทำให้หากผู้เรียนเผลอเว้นวรรคส่วนเกิน (Whitespace) หรือตอบในรูปสมมูลทางคณิตศาสตร์ที่จัดรูปต่างไป (เช่น 1/x กับ x^-1) ระบบจะตัดสินว่าตอบผิดทันที",
+          "ทำให้ระบบคำนวณคะแนนรวมของผู้เรียนออกมาเป็นค่าติดลบ",
+          "ทำให้ข้อมูลเฉลยข้อสอบรั่วไหลไปยังอุปกรณ์ของผู้เรียน"
         ],
         ans: 1,
-        exp: "Exact String Equality ไม่ยืดหยุ่นต่อ Whitespace หรือรูปสมมูลทางพีชคณิต ทางแก้คือต้องทำ .strip() และควรยกระดับสู่การตรวจสอบสมมูลด้วย SymPy sp.simplify",
-        memo: "Evaluation Robustness: การเปรียบเทียบสตริงดิบต้องระวังเรื่อง Formatting และควรพัฒนาสู่การตรวจความสมมูลทางพีชคณิต"
+        exp: "การเปรียบเทียบข้อความแบบตรงตัว (Exact String Matching) ขาดความยืดหยุ่นต่อการจัดรูปแบบของผู้เรียน ทางแก้ระยะสั้นคือการตัดช่องว่างหน้าหลัง (.strip()) และในระยะยาวควรใช้ SymPy ตรวจสอบความสมมูลทางพีชคณิต",
+        memo: "การตรวจคำตอบแบบเปรียบเทียบข้อความต้องระวังเรื่องการเว้นวรรค และควรพัฒนาไปสู่การตรวจสอบความเท่ากันทางคณิตศาสตร์"
       },
       {
         id: 10,
-        cat: "Caching",
-        q: "10. การประดับเดเคอเรเตอร์ @st.cache_data บนฟังก์ชัน load_quiz() ช่วยปรับปรุงระบบอย่างไร?",
+        cat: "การจัดการหน่วยความจำแคช",
+        q: "10. การใส่คำสั่ง @st.cache_data เหนือฟังก์ชันโหลดข้อสอบ load_quiz() ช่วยเพิ่มประสิทธิภาพของระบบอย่างไร?",
         a: [
-          "ช่วยเข้ารหัสไฟล์ JSON ป้องกันไม่ให้ถูกเปิดอ่านจากภายนอก",
-          "ช่วยจำผลลัพธ์ของไฟล์ JSON ใน RAM ทำให้ไม่ต้องทำ Disk I/O ซ้ำซากในทุกวงรอบที่เกิด Streamlit Rerun หน้าเว็บจึงตอบสนองลื่นไหล",
-          "ช่วยคำนวณคะแนนเฉลี่ยของผู้เรียนทุกคนในระบบ",
-          "ช่วยลบไฟล์ข้อสอบที่ผู้เรียนทำเสร็จแล้วออกจากดิสก์"
+          "ช่วยเข้ารหัสไฟล์ข้อสอบ JSON เพื่อป้องกันไม่ให้นิสิตเปิดอ่านได้",
+          "ช่วยจดจำผลลัพธ์ของไฟล์ข้อสอบไว้ในหน่วยความจำ RAM ทำให้ระบบไม่ต้องเสียเวลาอ่านไฟล์จากดิสก์ซ้ำ ๆ ทุกครั้งที่มีการกดปุ่มบนหน้าเว็บ ช่วยให้แอปพลิเคชันตอบสนองได้อย่างรวดเร็ว",
+          "ช่วยส่งคะแนนของผู้เรียนไปเก็บไว้บนคลาวด์เซิร์ฟเวอร์อัตโนมัติ",
+          "ช่วยลบประวัติการทำข้อสอบเก่าออกจากระบบเพื่อคืนพื้นที่ความจำ"
         ],
         ans: 1,
-        exp: "@st.cache_data ป้องกัน Overhead ของ Disk I/O โดยแคชข้อมูลไว้ในหน่วยความจำตามพารามิเตอร์ topic ช่วยลด Latency ของแอปพลิเคชัน",
-        memo: "Memory Caching: @st.cache_data ตัด Disk I/O ซ้ำซาก ช่วยให้แอปพลิเคชันตอบสนองได้อย่างรวดเร็วในทุก Event"
+        exp: "การอ่านไฟล์จากดิสก์ (Disk I/O) มีความหน่วงสูง การนำ @st.cache_data มาใช้จะช่วยจำข้อมูลของข้อสอบไว้ใน RAM เมื่อผู้เรียนกดเลือกคำตอบแล้วหน้าเว็บ Rerun ระบบจะดึงข้อมูลจากแคชมาใช้ได้ทันทีในเวลาเกือบศูนย์วินาที",
+        memo: "การใช้แคชในหน่วยความจำช่วยตัดกระบวนการอ่านดิสก์ซ้ำซ้อน ทำให้เว็บแอปพลิเคชันตอบสนองได้อย่างลื่นไหลในทุกวงรอบ"
       },
       {
         id: 11,
-        cat: "UI Scaffolding",
-        q: "11. โครงสร้างหน้ามาตรฐาน (เช่น pages/riemann.py) ที่แบ่งเป็น Header -> Theory Accordion -> Widgets -> Result & Plot สะท้อนแนวคิดการสอนใด?",
+        cat: "การจัดนั่งร้านความรู้บนหน้าจอ",
+        q: "11. โครงสร้างหน้าบทเรียนมาตรฐาน (เช่น pages/riemann.py) ที่แบ่งเป็น ส่วนหัว -> กล่องทฤษฎีพับเก็บได้ -> วิดเจ็ตทดลอง -> ผลลัพธ์และกราฟิก สะท้อนแนวคิดการสอนอย่างไร?",
         a: [
-          "แนวคิดการท่องจำสูตรก่อนทำโจทย์ (Rote Learning)",
-          "แนวคิดการจัดนั่งร้านทางปัญญา (Instructional Scaffolding) ที่ช่วยลดภาระทางปัญญาและกระตุ้นให้เกิด Active Learning เชิงสำรวจ",
-          "แนวคิดการทดสอบวัดผลแบบจับเวลาเข้มงวด",
-          "แนวคิดการเขียนเว็บแบบหน้าเดียวโดยไม่มีการแบ่งโมดูล"
+          "สะท้อนแนวคิดการให้ผู้เรียนท่องจำสูตรก่อนทำโจทย์",
+          "สะท้อนแนวคิดการจัดนั่งร้านทางปัญญา (Instructional Scaffolding) ที่ช่วยลดภาระการรับรู้ของผู้เรียน โดยเปิดพื้นที่ให้ทดลองปรับค่าผ่านกราฟิก และเปิดทบทวนสูตรทฤษฎีเมื่อเกิดข้อสงสัย",
+          "สะท้อนแนวคิดการจับเวลาทำข้อสอบอย่างเข้มงวด",
+          "สะท้อนแนวคิดการเขียนโปรแกรมหน้าเดียวโดยไม่แบ่งแยกองค์ประกอบ"
         ],
         ans: 1,
-        exp: "การจัดวางเลย์เอาต์ที่เป็นลำดับช่วยคุม Cognitive Load โดยผู้เรียนสามารถสำรวจการเปลี่ยนแปลงผ่านกราฟิกและเปิดดูทฤษฎีเมื่อสงสัย",
-        memo: "Instructional Scaffolding: ลดภาระทางปัญญาด้วยการแยกส่วนการทดลองและการสืบค้นทฤษฎีอย่างเป็นขั้นตอน"
+        exp: "การจัดวางหน้าจอที่เรียบง่ายช่วยลด Cognitive Load โดยผู้เรียนสามารถมองเห็นความสัมพันธ์ของการเปลี่ยนแปลงบนกราฟิกได้ทันที และสามารถคลิกเปิดกล่องทฤษฎี (Accordion) เพื่อตรวจสอบนิยามได้ตลอดเวลา",
+        memo: "การจัดนั่งร้านทางปัญญา: ลดความสับสนของผู้เรียนด้วยการแยกพื้นที่การทดลองเชิงรูปธรรมออกจากทฤษฎีที่เป็นนามธรรม"
       },
       {
         id: 12,
-        cat: "Input Sanitization",
-        q: "12. เงื่อนไขขอบเขต (Boundary Validation) ใดที่ฟังก์ชัน compute_riemann() ต้องตรวจสอบเพื่อป้องกันการ Crash?",
+        cat: "การตรวจข้อมูลนำเข้า",
+        q: "12. เงื่อนไขขอบเขตใดที่ฟังก์ชันคำนวณผลบวกรีมันน์ compute_riemann() ต้องตรวจสอบก่อนเริ่มคำนวณเพื่อป้องกันไม่ให้โปรแกรมล่ม?",
         a: [
           "ตรวจสอบว่าผู้ใช้ป้อนสมการเส้นตรงเท่านั้น",
-          "ตรวจสอบว่า n >= 1 (จำนวนเต็มบวก), b > a (ขอบเขตบนมากกว่าขอบเขตล่าง), และ method ต้องอยู่ในรายการที่รองรับ",
-          "ตรวจสอบว่าคอมพิวเตอร์เชื่อมต่อเครือข่ายอินเทอร์เน็ตหรือไม่",
-          "ตรวจสอบว่าสีของกราฟิกตรงตามธีมของมหาวิทยาลัยหรือไม่"
+          "ตรวจสอบว่าจำนวนช่วงย่อยต้องเป็นจำนวนเต็มบวก (n >= 1), ขอบเขตบนต้องมากกว่าขอบเขตล่าง (b > a), และวิธีคำนวณต้องอยู่ในรายการที่รองรับ",
+          "ตรวจสอบว่าอุปกรณ์ของผู้เรียนเชื่อมต่อสัญญาณอินเทอร์เน็ตหรือไม่",
+          "ตรวจสอบว่าสีของเส้นกราฟตรงตามมาตรฐานที่กำหนดไว้หรือไม่"
         ],
         ans: 1,
-        exp: "Input Validation ป้องกันข้อผิดพลาดทางคณิตศาสตร์และการหารด้วยศูนย์ (เช่น เมื่อ a=b หรือ n=0) โดยส่งคืน {ok: False, error: '...'} อย่างสุภาพ",
-        memo: "Defensive Programming: ตรวจสอบความถูกต้องของขอบเขตทางคณิตศาสตร์ล่วงหน้าเพื่อป้องกันระบบล่ม"
+        exp: "การตรวจสอบข้อมูลนำเข้าตั้งแต่ต้นทาง (Input Sanitization) ช่วยป้องกันปัญหาทางคณิตศาสตร์ เช่น การหารด้วยศูนย์เมื่อ n=0 หรือการคำนวณพื้นที่กลับทิศเมื่อ b <= a โดยระบบจะส่งข้อความแจ้งเตือนที่เข้าใจง่ายแทนการปล่อยให้โปรแกรมหยุดทำงาน",
+        memo: "การตรวจสอบข้อมูลนำเข้าตั้งแต่ต้นทางช่วยป้องกันข้อผิดพลาดทางคณิตศาสตร์และป้องกันไม่ให้ระบบหยุดทำงานกะทันหัน"
       },
       {
         id: 13,
-        cat: "KaTeX vs Thai",
-        q: "13. โมดูล utils/math_render.py แก้ปัญหาการเรนเดอร์สมการ LaTeX ร่วมกับภาษาไทยของ Streamlit อย่างไร?",
+        cat: "การแสดงผลสมการปนภาษาไทย",
+        q: "13. โมดูล utils/math_render.py แก้ปัญหาการแสดงผลสมการคณิตศาสตร์ร่วมกับข้อความภาษาไทยของ Streamlit อย่างไร?",
         a: [
-          "ปิดการทำงานของ KaTeX แล้วใช้รูปภาพแทนทั้งหมด",
-          "ตรวจสอบและตัดเครื่องหมาย $ ออก และหากพบว่ามีข้อความภาษาไทยปะปนจะ Fallback ไปใช้ st.markdown() แทน st.latex()",
-          "แปลภาษาไทยเป็นภาษาอังกฤษก่อนส่งให้ KaTeX",
-          "บังคับให้ผู้ใช้เปลี่ยนภาษาของระบบเป็นภาษาอังกฤษ"
+          "ปิดระบบเรนเดอร์สมการแล้วใช้ภาพถ่ายแทนทั้งหมด",
+          "ตรวจสอบและตัดเครื่องหมายดอลลาร์ ($) ออก และหากตรวจพบว่ามีข้อความภาษาไทยปะปนในสมการ จะสลับไปแสดงผลผ่าน st.markdown() แทน st.latex() เพื่อป้องกันไม่ให้สมการแสดงผลผิดพลาด",
+          "แปลข้อความภาษาไทยทั้งหมดให้กลายเป็นภาษาอังกฤษก่อนส่งให้ระบบเรนเดอร์",
+          "บังคับให้ผู้เรียนเปลี่ยนภาษาของระบบปฏิบัติการเป็นภาษาอังกฤษ"
         ],
         ans: 1,
-        exp: "st.latex() ของ Streamlit พึ่งพา KaTeX ซึ่งไม่รองรับอักขระภาษาไทย math_render จึงตรวจจับภาษาไทยและสลับไปใช้ st.markdown() เพื่อความปลอดภัย",
-        memo: "Rendering Fallback: ดักจับข้อความภาษาไทยในสมการและ Fallback สู่ Markdown เพื่อป้องกันสมการพัง"
+        exp: "ระบบ KaTeX ใน Streamlit ไม่รองรับอักขระภาษาไทยและจะแสดงผลลัพธ์พังทันทีหากมีภาษาไทยปนอยู่ในคำสั่ง st.latex() โมดูล math_render จึงทำหน้าที่ตรวจจับภาษาไทยและเลือกวิธีการแสดงผลสำรองที่ปลอดภัยให้โดยอัตโนมัติ",
+        memo: "การเตรียมระบบแสดงผลสำรอง: ตรวจจับภาษาไทยในสมการและสลับไปใช้ Markdown เพื่อป้องกันการแสดงผลสมการพัง"
       },
       {
         id: 14,
-        cat: "Matplotlib Agg",
-        q: "14. เหตุใด utils/plotter.py จึงต้องใช้ Matplotlib Backend 'Agg' และใช้ Label ภาษาอังกฤษบนแกนกราฟิก?",
+        cat: "การวาดกราฟิกบนเซิร์ฟเวอร์",
+        q: "14. เหตุใด utils/plotter.py จึงต้องกำหนดให้ Matplotlib ทำงานผ่านโหมด 'Agg' และใช้ข้อความภาษาอังกฤษบนแกนกราฟิก?",
         a: [
-          "เพื่อให้กราฟิกสามารถเคลื่อนไหวแบบ 3 มิติได้",
-          "เพื่อเรนเดอร์ภาพลงหน่วยความจำแบบ Non-interactive โดยไม่ต้องเปิดหน้าต่าง GUI บนเซิร์ฟเวอร์ และป้องกันปัญหาฟอนต์ไทยไม่รองรับใน Matplotlib",
-          "เพราะภาษาไทยทำให้การคำนวณของ NumPy ช้าลง",
-          "เป็นข้อกำหนดของระบบปฏิบัติการ Linux"
+          "เพื่อให้กราฟิกสามารถหมุนแบบ 3 มิติได้อย่างอิสระ",
+          "เพื่อให้โปรแกรมวาดภาพลงในหน่วยความจำได้โดยตรงโดยไม่ต้องพึ่งพาหน้าต่างแสดงผลบนระบบเซิร์ฟเวอร์ และป้องกันปัญหาฟอนต์ภาษาไทยไม่รองรับในระบบกราฟิก",
+          "เพราะข้อความภาษาไทยทำให้การประมวลผลตัวเลขของ NumPy ช้าลง",
+          "เป็นข้อบังคับของภาษาโปรแกรม Python"
         ],
         ans: 1,
-        exp: "Backend 'Agg' ทำงานในโหมด Headless ได้อย่างเสถียรบนคลาวด์/เซิร์ฟเวอร์ และการใช้ Label ภาษาอังกฤษมาตรฐานช่วยตัดปัญหา Font Glyph Missing",
-        memo: "Headless Plotting: ใช้ Matplotlib Agg เพื่อความเสถียรบนเซิร์ฟเวอร์ และคุมฟอนต์ด้วยภาษาอังกฤษมาตรฐาน"
+        exp: "โหมด Agg (Anti-Grain Geometry) ทำงานแบบไม่ต้องเปิดหน้าต่าง GUI (Headless Mode) ซึ่งเหมาะสำหรับการรันบนคลาวด์และเซิร์ฟเวอร์ ส่วนการใช้ข้อความภาษาอังกฤษบนแกนกราฟิกช่วยตัดปัญหาตัวอักษรภาษาไทยกลายเป็นรูปสี่เหลี่ยมหรือฟอนต์พัง",
+        memo: "การวาดภาพบนเซิร์ฟเวอร์แบบไร้หน้าต่างแสดงผล ช่วยให้ระบบมีความเสถียรและป้องกันปัญหาข้อความบนกราฟิกแสดงผลผิดพลาด"
       },
       {
         id: 15,
-        cat: "Defense Strategy",
-        q: "15. อะไรคือจุดขายหลัก (Value Proposition) ของโครงงานนี้เมื่อต้องตอบกรรมการสอบที่เปรียบเทียบกับ WolframAlpha?",
+        cat: "ยุทธศาสตร์การตอบกรรมการสอบ",
+        q: "15. อะไรคือจุดยืนสำคัญที่นิสิตควรใช้ตอบคณะกรรมการ เมื่อถูกถามเปรียบเทียบโครงงานกับโปรแกรมคำนวณสำเร็จรูปอย่าง WolframAlpha?",
         a: [
-          "แอปนี้สามารถคำนวณอินทิกรัลที่ซับซ้อนได้เร็วกว่า WolframAlpha ในทุกกรณี",
-          "โครงงานนี้ไม่ได้เน้นแข่งหาคำตอบสุดท้ายแบบ Black-Box แต่เป็น Pedagogical Scaffolding Sandbox ที่ช่วยพัฒนาสัญชาตญาณทางคณิตศาสตร์และเปิดเผยวิธีทำทีละขั้น",
-          "แอปนี้มีโมเดล AI ขนาดใหญ่กว่า WolframAlpha",
-          "แอปนี้สามารถใช้งานได้โดยไม่ต้องมีคอมพิวเตอร์"
+          "ตอบว่าระบบของเราสามารถคิดคำนวณโจทย์ยาก ๆ ได้เร็วกว่า WolframAlpha ในทุกกรณี",
+          "ตอบว่าโครงงานของเราไม่ได้มุ่งเน้นการแข่งขันด้านการหาคำตอบสุดท้ายแบบกล่องดำ แต่ถูกออกแบบมาให้เป็น 'ห้องทดลองทางมโนทัศน์' ที่ช่วยจัดลำดับความคิดและเปิดเผยวิธีทำทีละขั้นเพื่อส่งเสริมความเข้าใจของผู้เรียน",
+          "ตอบว่าระบบของเราใช้บริการเบื้องหลังของ WolframAlpha จึงมีประสิทธิภาพเทียบเท่ากัน",
+          "ตอบว่าโครงงานนี้พัฒนาขึ้นมาเพื่อใช้ทดแทนเครื่องคิดเลขวิทยาศาสตร์ทั้งหมด"
         ],
         ans: 1,
-        exp: "จุดขายไม่ใช่การแข่งขันพลังการคำนวณ (Computational Solver) แต่คือการเป็นเครื่องมือสอน (Learning Sandbox) ที่เปิดโอกาสให้ผู้เรียนได้ทดลองและเห็นจุดเข้าใจผิดของตนเอง",
-        memo: "Value Proposition: วางจุดยืนเป็น 'นั่งร้านทางปัญญา' ไม่ใช่แข่งเป็นเครื่องคิดเลขสำเร็จรูป"
+        exp: "จุดขายที่แท้จริงของโครงงานไม่ใช่การเป็นเครื่องคิดเลขสำเร็จรูป แต่คือการสร้างเครื่องมือช่วยสอนที่เปิดโอกาสให้ผู้เรียนได้ทดลอง ปรับเปลี่ยนตัวแปร และเห็นกระบวนการคิดทางคณิตศาสตร์อย่างเป็นขั้นตอน",
+        memo: "จุดยืนของโครงงานคือการเป็น 'ห้องทดลองส่งเสริมกระบวนการเรียนรู้' ไม่ใช่การแข่งขันเป็นเครื่องคำนวณหาคำตอบสำเร็จรูป"
       }
     ];
 
     // ==========================================
-    // 2. DATA: 5 Interactive Code Challenges
+    // 2. ฐานข้อมูล: ข้อเขียนฝึกแก้โค้ดจริง 5 ข้อ
     // ==========================================
     const CODE_CHALLENGES = [
       {
         id: 1,
-        title: "Challenge 1: แก้ปัญหา State Loss & KeyError ใน app.py",
+        title: "ข้อเขียนที่ 1: แก้ไขปัญหาข้อมูลคะแนนสูญหายและข้อผิดพลาด KeyError ใน app.py",
         file: "app.py",
-        desc: "ผู้เรียนรายงานว่า เมื่อกดปุ่มตอบคำถามในหน้า Quiz แล้วหน้าเว็บ Rerun แอปพลิเคชันเกิดข้อผิดพลาด <code>KeyError: 'quiz_scores'</code> จงเขียนฟังก์ชัน <code>initialize_session_state()</code> ที่ตรวจเช็คและสร้างคีย์ <code>quiz_scores</code>, <code>quiz_answers</code>, และ <code>quiz_submitted</code> ใน <code>st.session_state</code> พร้อมเรียกใช้งานฟังก์ชันนี้ก่อนเริ่ม <code>pg.run()</code>",
+        desc: "<strong>บริบทปัญหา:</strong> ในการทดสอบระบบ เมื่อผู้เรียนกดส่งคำตอบในหน้าแบบทดสอบ หน้าเว็บจะทำการประมวลผลใหม่ (Rerun) และโปรแกรมหยุดทำงานทันทีพร้อมข้อผิดพลาด <code>KeyError: 'quiz_scores'</code> เนื่องจากยังไม่มีการจองตัวแปรในระบบ<br><br><strong>ภารกิจ:</strong> จงเขียนฟังก์ชัน <code>initialize_session_state()</code> ที่ทำการตรวจสอบและสร้างตัวแปร <code>quiz_scores</code>, <code>quiz_answers</code>, และ <code>quiz_submitted</code> ใน <code>st.session_state</code> หากยังไม่มีตัวแปรดังกล่าว พร้อมทั้งเรียกใช้งานฟังก์ชันนี้ก่อนเริ่มรันหน้าเว็บ",
         starter: `import streamlit as st
 
-# TODO: เขียนฟังก์ชัน initialize_session_state() เพื่อป้องกัน KeyError
+# TODO: เขียนฟังก์ชัน initialize_session_state() เพื่อจองตัวแปรระบบ
 def initialize_session_state() -> None:
     pass
 
-# เรียกใช้งานฟังก์ชันเริ่มต้น state
+# เรียกใช้งานฟังก์ชันก่อนเริ่มระบบ
 # initialize_session_state()
 
 home_page = st.Page("pages/home.py", title="หน้าหลัก")
@@ -821,9 +821,9 @@ pg.run()`,
           if (!hasScores) return { ok: false, msg: "❌ ยังขาดการตรวจสอบหรือกำหนดค่า 'quiz_scores' ใน st.session_state" };
           if (!hasAnswers) return { ok: false, msg: "❌ ยังขาดการตรวจสอบหรือกำหนดค่า 'quiz_answers' ใน st.session_state" };
           if (!hasSubmitted) return { ok: false, msg: "❌ ยังขาดการตรวจสอบหรือกำหนดค่า 'quiz_submitted' ใน st.session_state" };
-          if (!hasCall) return { ok: false, msg: "❌ ยังไม่ได้เรียกใช้งานฟังก์ชัน 'initialize_session_state()' ก่อน pg.run()" };
+          if (!hasCall) return { ok: false, msg: "❌ ยังไม่ได้เรียกใช้งานฟังก์ชัน 'initialize_session_state()' ก่อนที่ pg.run() จะทำงาน" };
 
-          return { ok: true, msg: "✅ ผ่านการทดสอบ! ฟังก์ชันครอบคลุม State เริ่มต้นครบทั้ง 3 ตัว และเรียกใช้งานถูกตำแหน่งก่อน Page Navigation รัน" };
+          return { ok: true, msg: "✅ ตรวจสอบผ่านสมบูรณ์! มีการจองตัวแปรระบบครบทั้ง 3 ตัว และเรียกใช้งานถูกตำแหน่งก่อนเริ่มเปิดหน้าเว็บ ป้องกันข้อผิดพลาด KeyError ได้อย่างถูกต้อง" };
         },
         modelSolution: `import streamlit as st
 
@@ -835,22 +835,23 @@ def initialize_session_state() -> None:
     if "quiz_submitted" not in st.session_state:
         st.session_state.quiz_submitted = False
 
+# เรียกใช้งานตั้งแต่เปิดแอปพลิเคชัน
 initialize_session_state()
 
 home_page = st.Page("pages/home.py", title="หน้าหลัก")
 quiz_page = st.Page("pages/quiz.py", title="เกมทบทวน")
 pg = st.navigation([home_page, quiz_page])
 pg.run()`,
-        rationale: "การเรียก initialize_session_state() ที่ระดับ Entry Point ของแอปพลิเคชัน เป็นการรับประกันว่าตัวแปร State ระดับ Global จะมีอยู่เสมอ ไม่ว่าผู้ใช้จะเริ่มโหลดแอปจากหน้าใด ป้องกัน KeyError ข้ามวงรอบ Rerun ได้ 100%"
+        rationale: "การจองตัวแปรใน st.session_state ที่จุดเริ่มต้นของระบบ เป็นการรับประกันว่าตัวแปรที่จำเป็นจะมีอยู่เสมอ ไม่ว่าผู้เรียนจะเปิดเข้ามาจากหน้าใด ช่วยให้ข้อมูลคะแนนและประวัติการตอบไม่สูญหายเมื่อเกิดการประมวลผลซ้ำ"
       },
       {
         id: 2,
-        title: "Challenge 2: Refactoring SoC — สกัดตรรกะ SymPy ออกจาก UI สู่ Data Contract",
+        title: "ข้อเขียนที่ 2: ปรับปรุงโครงสร้างโค้ด — สกัดตรรกะคำนวณออกจากหน้าเว็บสู่ฟังก์ชันอิสระ",
         file: "utils/sympy_solver.py",
-        desc: "ใน <code>pages/solver.py</code> มีการเขียนคำนวณ SymPy สดปนอยู่กับ UI ซึ่งผิดกฎ <code>AGENTS.md</code> จงสกัดตรรกะนั้นออกมาเป็นฟังก์ชัน <code>solve_integral(expr_str: str) -> dict</code> ที่ทำงานแบบ Pure Python (ห้ามมีคำสั่ง <code>st.*</code>) โดยครอบ <code>try...except</code> และส่งคืน Data Contract ที่มีคีย์ <code>ok, result, latex, error</code>",
+        desc: "<strong>บริบทปัญหา:</strong> ในไฟล์ <code>pages/solver.py</code> เดิม มีการเขียนคำสั่งคำนวณคณิตศาสตร์ของ SymPy ปนอยู่กับคำสั่งแสดงผลหน้าเว็บ ซึ่งทำให้ไม่สามารถเขียนโปรแกรมทดสอบอัตโนมัติได้<br><br><strong>ภารกิจ:</strong> จงสกัดตรรกะคำนวณออกมาเป็นฟังก์ชันอิสระ <code>solve_integral(expr_str: str) -> dict</code> โดยต้องไม่มีคำสั่งหน้าเว็บ (<code>st.*</code>) ปะปน มีการดักจับข้อผิดพลาดผ่าน <code>try...except</code> และส่งคืนผลลัพธ์เป็นพจนานุกรมที่มีคีย์ <code>ok, result, latex, error</code>",
         starter: `import sympy as sp
 
-# TODO: เขียนฟังก์ชัน solve_integral ที่ไม่มี Streamlit คำนวณแบบสัญลักษณ์ และดักจับ Exception
+# TODO: เขียนฟังก์ชันคำนวณอินทิเกรตแบบสัญลักษณ์ที่เป็นอิสระจากหน้าเว็บ และดักจับข้อผิดพลาด
 def solve_integral(expr_str: str) -> dict:
     pass`,
         validate: function(code) {
@@ -861,24 +862,26 @@ def solve_integral(expr_str: str) -> dict:
           const hasStreamlit = /st\.[a-zA-Z_]+/.test(code);
 
           if (!hasDef) return { ok: false, msg: "❌ ยังไม่พบการประกาศฟังก์ชัน 'def solve_integral(...):'" };
-          if (hasStreamlit) return { ok: false, msg: "❌ พบคำสั่ง Streamlit (st.*) ภายในโมดูลนี้! กฎ SoC บังคับให้ utils/ เป็น Pure Python ปราศจาก UI" };
-          if (!hasTry) return { ok: false, msg: "❌ ยังไม่ได้ครอบบล็อก 'try...except' เพื่อดักจับกรณีที่ผู้ใช้ป้อนสมการผิดรูปแบบ" };
+          if (hasStreamlit) return { ok: false, msg: "❌ ตรวจพบคำสั่งหน้าเว็บ (st.*) ภายในฟังก์ชันนี้! ตามหลักการออกแบบ โมดูลใน utils/ ต้องเป็นฟังก์ชันคำนวณล้วน ๆ ปราศจากส่วนติดต่อผู้ใช้" };
+          if (!hasTry) return { ok: false, msg: "❌ ยังไม่ได้ใส่บล็อก 'try...except' เพื่อป้องกันกรณีที่ผู้ใช้ป้อนสมการผิดรูปแบบ" };
           if (!hasSympy) return { ok: false, msg: "❌ ยังไม่พบการเรียกใช้คำสั่งคำนวณอินทิเกรตของ SymPy" };
-          if (!hasContract) return { ok: false, msg: "❌ ฟังก์ชันต้องส่งคืน Dictionary ที่มีคีย์ Data Contract เช่น 'ok', 'latex', 'result', 'error'" };
+          if (!hasContract) return { ok: false, msg: "❌ ฟังก์ชันต้องส่งคืนพจนานุกรมที่มีโครงสร้างมาตรฐาน เช่น 'ok', 'latex', 'result', 'error'" };
 
-          return { ok: true, msg: "✅ ผ่านการทดสอบ! ฟังก์ชันแยกตัวเป็นอิสระจาก UI ครอบคลุมการดักจับข้อผิดพลาด และส่งคืน Data Contract ตามมาตรฐานวิศวกรรม" };
+          return { ok: true, msg: "✅ ตรวจสอบผ่านสมบูรณ์! แยกตรรกะคำนวณออกจากส่วนแสดงผลอย่างเด็ดขาด มีการดักจับข้อผิดพลาด และส่งคืนข้อมูลตามโครงสร้างมาตรฐานที่กำหนดไว้" };
         },
         modelSolution: `import sympy as sp
 
 def solve_integral(expr_str: str) -> dict:
     try:
+        # ตรวจสอบกรณีข้อความว่างเปล่า
         if not expr_str or not expr_str.strip():
-            return {"ok": False, "error": "กรุณาป้อนนิพจน์คณิตศาสตร์"}
+            return {"ok": False, "result": None, "latex": None, "error": "กรุณาป้อนนิพจน์คณิตศาสตร์"}
             
         x = sp.Symbol('x')
         expr = sp.sympify(expr_str)
         result = sp.integrate(expr, x)
         
+        # ส่งคืนโครงสร้างข้อมูลมาตรฐาน
         return {
             "ok": True,
             "result": result,
@@ -892,18 +895,17 @@ def solve_integral(expr_str: str) -> dict:
             "latex": None,
             "error": f"ไม่สามารถคำนวณได้: {str(e)}"
         }`,
-        rationale: "Pure Python Solver ทำให้โมดูลนี้สามารถเขียน Unit Test ใน tests/test_sympy_solver.py ได้โดยตรง รันได้รวดเร็ว และสามารถนำไปต่อยอดเป็น API หรือบอตได้ในอนาคตโดยไม่ต้องแก้ไขโค้ดใหม่"
+        rationale: "การแยกตรรกะออกมาเป็นฟังก์ชันอิสระ ทำให้สามารถนำไปเขียนชุดทดสอบใน tests/ ได้โดยตรง ตรวจสอบความถูกต้องได้อย่างรวดเร็ว และสามารถนำโมดูลนี้ไปต่อยอดใช้งานกับระบบอื่นในอนาคตได้ทันที"
       },
       {
         id: 3,
-        title: "Challenge 3: ป้องกัน Boundary Violations และการหารด้วยศูนย์ใน Riemann Solver",
+        title: "ข้อเขียนที่ 3: การตรวจเช็คเงื่อนไขขอบเขตเพื่อป้องกันปัญหาหารด้วยศูนย์ใน Riemann Solver",
         file: "utils/riemann_solver.py",
-        desc: "ฟังก์ชันคำนวณผลบวกรีมันน์จะเกิดปัญหาหารด้วยศูนย์ทันทีหากผู้ใช้ใส่ $n \\le 0$ หรือใส่ $b \\le a$ จงเขียนเงื่อนไขตรวจสอบอินพุต (Input Sanitization) ในฟังก์ชัน <code>validate_riemann_inputs(a, b, n, method)</code> เพื่อตรวจเช็ค 3 เงื่อนไข: (1) $n \\ge 1$, (2) $b > a$, และ (3) method ต้องอยู่ใน <code>['left', 'right', 'midpoint']</code>",
+        desc: "<strong>บริบทปัญหา:</strong> ฟังก์ชันคำนวณผลบวกรีมันน์จะเกิดข้อผิดพลาดรุนแรงระดับการหารด้วยศูนย์ (ZeroDivisionError) หากผู้ใช้ป้อนจำนวนช่วงย่อย $n \\le 0$ หรือป้อนช่วง $[a, b]$ ที่ขอบเขตบนน้อยกว่าหรือเท่ากับขอบเขตล่าง<br><br><strong>ภารกิจ:</strong> จงเขียนฟังก์ชันตรวจสอบข้อมูลนำเข้า <code>validate_riemann_inputs(a, b, n, method)</code> ให้ตรวจเช็ค 3 เงื่อนไข: (1) $n \\ge 1$, (2) $b > a$, และ (3) วิธีคำนวณต้องอยู่ใน <code>['left', 'right', 'midpoint']</code>",
         starter: `ALLOWED_METHODS = ["left", "right", "midpoint"]
 
 def validate_riemann_inputs(a: float, b: float, n: int, method: str) -> tuple[bool, str]:
-    # TODO: ตรวจสอบ n >= 1, b > a, และ method อยู่ใน ALLOWED_METHODS
-    # คืนค่า (True, "") เมื่อถูกต้อง หรือ (False, "ข้อความเตือน") เมื่อผิดพลาด
+    # TODO: ตรวจสอบเงื่อนไขความถูกต้อง 3 ข้อ และส่งคืน (True, "") หรือ (False, "ข้อความเตือน")
     pass`,
         validate: function(code) {
           const hasNCheck = /n\s*<\s*1|n\s*<=\s*0/.test(code);
@@ -911,12 +913,12 @@ def validate_riemann_inputs(a: float, b: float, n: int, method: str) -> tuple[bo
           const hasMethodCheck = code.includes("ALLOWED_METHODS") || (code.includes("left") && code.includes("right") && code.includes("midpoint"));
           const hasTupleReturn = code.includes("True") && code.includes("False");
 
-          if (!hasNCheck) return { ok: false, msg: "❌ ยังขาดการตรวจสอบเงื่อนไข n < 1 (จำนวนช่วงย่อยต้องเป็นจำนวนเต็มบวก)" };
+          if (!hasNCheck) return { ok: false, msg: "❌ ยังขาดการตรวจสอบเงื่อนไข n < 1 (จำนวนช่วงย่อยต้องเป็นจำนวนเต็มบวกตั้งแต่ 1 ขึ้นไป)" };
           if (!hasBoundsCheck) return { ok: false, msg: "❌ ยังขาดการตรวจสอบเงื่อนไข b <= a (ขอบเขตบนต้องมากกว่าขอบเขตล่าง)" };
-          if (!hasMethodCheck) return { ok: false, msg: "❌ ยังขาดการตรวจสอบว่า method ต้องเป็นหนึ่งใน ['left', 'right', 'midpoint']" };
-          if (!hasTupleReturn) return { ok: false, msg: "❌ ฟังก์ชันต้องส่งคืน tuple (bool, str)" };
+          if (!hasMethodCheck) return { ok: false, msg: "❌ ยังขาดการตรวจสอบว่าวิธีคำนวณต้องอยู่ในรายการที่ระบบรองรับ" };
+          if (!hasTupleReturn) return { ok: false, msg: "❌ ฟังก์ชันต้องส่งคืนค่าเป็นคู่ลำดับ (bool, str)" };
 
-          return { ok: true, msg: "✅ ผ่านการทดสอบ! ตรวจสอบเงื่อนไขขอบเขตครบทั้ง 3 ข้อ ช่วยป้องกันปัญหา ZeroDivisionError และการคำนวณขอบเขตกลับทิศได้สมบูรณ์" };
+          return { ok: true, msg: "✅ ตรวจสอบผ่านสมบูรณ์! ตรวจสอบเงื่อนไขทางคณิตศาสตร์ครบถ้วน ช่วยป้องกันปัญหาการหารด้วยศูนย์และการคำนวณขอบเขตสลับทิศได้อย่างรัดกุม" };
         },
         modelSolution: `ALLOWED_METHODS = ["left", "right", "midpoint"]
 
@@ -924,17 +926,17 @@ def validate_riemann_inputs(a: float, b: float, n: int, method: str) -> tuple[bo
     if n < 1:
         return False, "จำนวนช่วงย่อย (n) ต้องมากกว่าหรือเท่ากับ 1"
     if b <= a:
-        return False, "ขอบเขตบน (b) ต้องมากกว่าขอบเขตล่าง (a)"
+        return False, "ขอบเขตบน (b) ต้องมีค่ามากกว่าขอบเขตล่าง (a)"
     if method not in ALLOWED_METHODS:
         return False, f"วิธีคำนวณต้องเป็นหนึ่งใน {ALLOWED_METHODS}"
     return True, ""`,
-        rationale: "Defensive Programming: การสกัดความผิดพลาดที่ต้นทาง (Fail-fast) ช่วยให้โปรแกรมไม่เสียเวลาไปคำนวณลูปตัวเลขที่ไม่สมเหตุสมผล และแสดงข้อความเตือนที่เป็นมิตรต่อผู้เรียน"
+        rationale: "การตรวจสอบเงื่อนไขตั้งแต่ก่อนเริ่มคำนวณ (Defensive Programming) ช่วยให้ระบบไม่เสียเวลาประมวลผลข้อมูลที่ผิดพลาด และสามารถแจ้งเตือนผู้เรียนด้วยข้อความภาษาไทยที่เข้าใจง่าย"
       },
       {
         id: 4,
-        title: "Challenge 4: ปรับปรุง SymPy AST Parser ปลด auto_symbol เพื่อรองรับ SymPy 1.14+",
+        title: "ข้อเขียนที่ 4: ปรับปรุงการแปลงสมการให้รองรับการละเครื่องหมายคูณและเข้ากันได้กับ SymPy 1.14+",
         file: "utils/sympy_parser_fix.py",
-        desc: "ใน SymPy 1.14.0 การเปิดใช้ <code>auto_symbol</code> ก่อให้เกิดข้อผิดพลาด <code>TypeError</code> จงแก้ไขการกำหนดค่า <code>transformations</code> ในฟังก์ชัน <code>parse_math_expr(expr_str: str)</code> ให้คงไว้เฉพาะ <code>standard_transformations</code> และ <code>implicit_multiplication_application</code> พร้อมทั้งประกาศ Symbol 'x' อย่างชัดเจน",
+        desc: "<strong>บริบทปัญหา:</strong> ใน SymPy รุ่น 1.14 ขึ้นไป การเปิดใช้งานคำสั่ง <code>auto_symbol</code> ก่อให้เกิดข้อผิดพลาดระบบ <code>TypeError</code> ทำให้ผู้เรียนใช้งานไม่ได้<br><br><strong>ภารกิจ:</strong> จงแก้ไขฟังก์ชัน <code>parse_math_expr(expr_str: str)</code> ให้ตั้งค่าการแปลงสมการโดยคงไว้เฉพาะ <code>standard_transformations</code> และ <code>implicit_multiplication_application</code> (เพื่อให้อ่านค่า 2x หรือ sin x ได้) โดยตัด <code>auto_symbol</code> ออก และประกาศตัวแปร 'x' อย่างชัดเจน",
         starter: `from sympy.parsing.sympy_parser import (
     parse_expr,
     standard_transformations,
@@ -943,7 +945,7 @@ def validate_riemann_inputs(a: float, b: float, n: int, method: str) -> tuple[bo
 import sympy as sp
 
 def parse_math_expr(expr_str: str):
-    # TODO: กำหนด transformations ให้ปลอดภัย และแปลง expr_str เป็น SymPy Expression ของตัวแปร x
+    # TODO: ตั้งค่าการแปลงสมการให้ปลอดภัย และแปลง expr_str เป็นนิพจน์ SymPy ของตัวแปร x
     pass`,
         validate: function(code) {
           const hasImplicit = code.includes("implicit_multiplication_application");
@@ -951,11 +953,11 @@ def parse_math_expr(expr_str: str):
           const hasParseExpr = code.includes("parse_expr");
           const hasSymbol = code.includes("sp.Symbol('x')") || code.includes('sp.Symbol("x")') || code.includes("Symbol('x')");
 
-          if (hasAutoSymbol) return { ok: false, msg: "❌ พบคำว่า 'auto_symbol'! บน SymPy 1.14+ จะเกิด TypeError ต้องปลดออก" };
-          if (!hasImplicit) return { ok: false, msg: "❌ ยังไม่ได้ใส่ 'implicit_multiplication_application' เพื่อรองรับการพิมพ์ 2x หรือ sin x" };
+          if (hasAutoSymbol) return { ok: false, msg: "❌ ตรวจพบคำว่า 'auto_symbol'! บน SymPy รุ่น 1.14+ จะทำให้เกิดข้อผิดพลาด ต้องถอดคำสั่งนี้ออก" };
+          if (!hasImplicit) return { ok: false, msg: "❌ ยังไม่ได้ใส่ 'implicit_multiplication_application' เพื่อให้อ่านนิพจน์เช่น 2x หรือ sin x ได้" };
           if (!hasParseExpr) return { ok: false, msg: "❌ ยังไม่ได้เรียกใช้ฟังก์ชัน 'parse_expr(...)'" };
 
-          return { ok: true, msg: "✅ ผ่านการทดสอบ! โครงสร้าง Transformations มีความเข้ากันได้กับ SymPy 1.14+ และรองรับการละเครื่องหมายคูณอย่างเป็นธรรมชาติ" };
+          return { ok: true, msg: "✅ ตรวจสอบผ่านสมบูรณ์! ตั้งค่าการแปลงสมการได้อย่างถูกต้อง รองรับการพิมพ์สมการตามธรรมชาติ และปลอดภัยต่อไลบรารีรุ่นใหม่" };
         },
         modelSolution: `from sympy.parsing.sympy_parser import (
     parse_expr,
@@ -965,22 +967,24 @@ def parse_math_expr(expr_str: str):
 import sympy as sp
 
 def parse_math_expr(expr_str: str):
+    # กำหนดตัวแปร x ชัดเจนเพื่อความปลอดภัย
     x = sp.Symbol('x')
+    # ใช้เฉพาะชุดคำสั่งแปลงสมการที่เสถียร
     transformations = standard_transformations + (implicit_multiplication_application,)
     return parse_expr(expr_str, local_dict={'x': x}, transformations=transformations)`,
-        rationale: "การใช้ local_dict={'x': x} ร่วมกับ implicit_multiplication_application เป็นแนวทางปฏิบัติที่ดีที่สุด (Best Practice) เพราะควบคุมตัวแปรได้อย่างชัดเจน และหลีกเลี่ยงบั๊กภายในของ auto_symbol"
+        rationale: "การระบุตัวแปรผ่าน local_dict ร่วมกับ implicit_multiplication_application เป็นแนวทางที่ปลอดภัยที่สุด ช่วยให้นิสิตพิมพ์สมการได้ง่ายตามธรรมชาติ และหมดปัญหาความเข้ากันไม่ได้ของไลบรารีภายนอก"
       },
       {
         id: 5,
-        title: "Challenge 5: ปรับปรุง grade_quiz() ให้ทนต่อ Whitespace และ None Input",
+        title: "ข้อเขียนที่ 5: พัฒนาระบบตรวจข้อสอบให้ยืดหยุ่นต่อการเว้นวรรคและกรณีคำตอบว่างเปล่า",
         file: "utils/quiz_engine.py",
-        desc: "ฟังก์ชัน <code>grade_quiz(questions, answers)</code> เดิมใช้การเทียบแบบ <code>answers.get(i) == q['answer']</code> ตรง ๆ ทำให้เกิดบั๊กเมื่อผู้เรียนพิมพ์ช่องว่างหน้าหลัง หรือเว้นว่างข้อสอบ จงปรับปรุงฟังก์ชันนี้ให้ทำการ <code>.strip()</code> ตัดช่องว่าง และรองรับกรณีที่คำตอบเป็น <code>None</code> หรือไม่ใช่ String",
+        desc: "<strong>บริบทปัญหา:</strong> ฟังก์ชันตรวจข้อสอบเดิมใช้การเปรียบเทียบข้อความแบบตรงตัว ทำให้ผู้เรียนที่เผลอเว้นวรรคหน้าหลังถูกตัดสินว่าตอบผิด ทั้งที่คำตอบถูกต้อง<br><br><strong>ภารกิจ:</strong> จงปรับปรุงฟังก์ชัน <code>grade_quiz(questions, answers)</code> ให้ทำการตัดช่องว่างส่วนเกินด้วยคำสั่ง <code>.strip()</code> และรองรับกรณีที่คำตอบเป็นค่าว่างเปล่า (<code>None</code>) โดยไม่เกิดข้อผิดพลาด",
         starter: `def grade_quiz(questions: list[dict], answers: dict) -> dict:
     score = 0
-    # TODO: ปรับปรุงการตรวจสอบคำตอบให้ทนต่อช่องว่าง (whitespace) และ None
+    # TODO: ปรับปรุงการตรวจสอบคำตอบให้ทนต่อช่องว่างส่วนเกินและค่าว่างเปล่า
     for idx, q in enumerate(questions):
         user_ans = answers.get(idx)
-        # ตรวจสอบความถูกต้องที่นี่
+        # เขียนตรรกะตรวจสอบที่นี่
         pass
         
     return {"score": score, "total": len(questions)}`,
@@ -989,119 +993,119 @@ def parse_math_expr(expr_str: str):
           const hasScoreInc = /score\s*\+=\s*1/.test(code);
           const hasReturn = code.includes('"score"') && code.includes('"total"');
 
-          if (!hasStrip) return { ok: false, msg: "❌ ยังไม่พบการใช้คำสั่ง '.strip()' เพื่อตัดช่องว่างส่วนเกินหน้าหลัง" };
-          if (!hasScoreInc) return { ok: false, msg: "❌ ยังไม่พบลูปการเพิ่มคะแนน 'score += 1' เมื่อคำตอบถูกต้อง" };
-          if (!hasReturn) return { ok: false, msg: "❌ ต้องส่งคืน Dictionary ที่มีคีย์ 'score' และ 'total'" };
+          if (!hasStrip) return { ok: false, msg: "❌ ยังไม่พบการใช้คำสั่ง '.strip()' เพื่อตัดช่องว่างส่วนเกินหน้าหลังของข้อความ" };
+          if (!hasScoreInc) return { ok: false, msg: "❌ ยังไม่พบการเพิ่มคะแนน 'score += 1' เมื่อคำตอบถูกต้อง" };
+          if (!hasReturn) return { ok: false, msg: "❌ ต้องส่งคืนพจนานุกรมที่มีคีย์ 'score' และ 'total'" };
 
-          return { ok: true, msg: "✅ ผ่านการทดสอบ! ฟังก์ชันตรวจข้อสอบมีความยืดหยุ่น ทนต่อช่องว่าง และป้องกันข้อผิดพลาดกรณีคำตอบว่างเปล่าได้สมบูรณ์" };
+          return { ok: true, msg: "✅ ตรวจสอบผ่านสมบูรณ์! ระบบตรวจข้อสอบมีความยืดหยุ่น ตัดช่องว่างส่วนเกินได้อย่างถูกต้อง และป้องกันปัญหาข้อสอบเว้นว่างได้เป็นอย่างดี" };
         },
         modelSolution: `def grade_quiz(questions: list[dict], answers: dict) -> dict:
     score = 0
     for idx, q in enumerate(questions):
         user_ans = answers.get(idx)
+        # ตรวจสอบว่าผู้เรียนได้ตอบข้อนี้หรือไม่
         if user_ans is not None:
-            # ตัดช่องว่างหน้าหลังของทั้งคำตอบผู้เรียนและเฉลย
             clean_user = str(user_ans).strip()
             clean_ans = str(q.get("answer", "")).strip()
             if clean_user == clean_ans:
                 score += 1
     return {"score": score, "total": len(questions)}`,
-        rationale: "การทำ Data Sanitization ก่อนการประเมินผล ช่วยลด False Negative (การตรวจผิดทั้งที่ผู้เรียนตอบถูก) ซึ่งเป็นจุดตายสำคัญของระบบประเมินผลการเรียนรู้"
+        rationale: "การทำความสะอาดข้อมูลก่อนการตรวจวัดผล ช่วยป้องกันความผิดพลาดที่ผู้เรียนตอบถูกแต่ระบบตรวจว่าผิด ช่วยเพิ่มความน่าเชื่อถือและความยุติธรรมให้กับระบบประเมินผลการเรียนรู้"
       }
     ];
 
     // ==========================================
-    // 3. DATA: 5 Defense Socratic Questions
+    // 3. ฐานข้อมูล: ข้อเขียนซักซ้อมสอบหัวข้อ 5 ข้อ
     // ==========================================
     const DEFENSE_QS = [
       {
         id: 1,
-        title: "Q1: จุดยืนและการเปรียบเทียบกับคู่แข่งในท้องตลาด (Competitive Differentiation)",
-        prompt: "กรรมการถาม: 'ทำไมเด็กต้องมาใช้เว็บแอปของคุณ ในเมื่อเขาสามารถพิมพ์โจทย์เข้า WolframAlpha หรือ Symbolab เพื่อดูวิธีทำได้ทันที หรือไปเปิด GeoGebra เพื่อดูกราฟสดก็ได้ โครงงานนี้มีจุดต่างที่มีคุณค่าอย่างไร?'",
+        title: "ข้อที่ 1: การตอบข้อโต้แย้งเรื่องความแตกต่างจากโปรแกรมสำเร็จรูปในท้องตลาด",
+        prompt: "กรรมการสอบถาม: 'ทำไมผู้เรียนต้องมาใช้เว็บแอปของคุณ ในเมื่อเขาสามารถพิมพ์โจทย์ถาม WolframAlpha หรือ Symbolab แล้วได้วิธีทำทันที หรือไปเปิดดูกราฟสดใน GeoGebra ก็ได้ โครงงานนี้มีคุณค่าและความแตกต่างอย่างไร?'",
         keywords: [
-          { tag: "Scaffolding", label: "Scaffolding (นั่งร้านทางปัญญา)" },
-          { tag: "Black-Box", label: "Black-Box Solver" },
-          { tag: "Guided", label: "Guided Two-way Interaction" },
-          { tag: "Misconception", label: "Misconception Detection" },
-          { tag: "Open-source", label: "Open-source / Zero Cost" }
+          { tag: "นั่งร้าน", label: "การจัดนั่งร้านทางปัญญา (Scaffolding)" },
+          { tag: "กล่องดำ", label: "แก้สมการแบบกล่องดำ (Black-Box)" },
+          { tag: "สองทาง", label: "การโต้ตอบสองทาง (Two-way)" },
+          { tag: "เข้าใจผิด", label: "ตรวจจับจุดเข้าใจผิด (Misconceptions)" },
+          { tag: "ฟรี", label: "ใช้งานฟรีไม่มีค่าใช้จ่าย (Open-source)" }
         ],
-        modelAnswer: `กราบเรียนท่านคณะกรรมการครับ โครงงานของเราไม่ได้สร้างขึ้นมาเพื่อแข่งขันพลังการคำนวณกับ WolframAlpha และไม่ได้สร้างมาเพื่อแข่งวาดกราฟอิสระกับ GeoGebra แต่สร้างขึ้นมาเพื่ออุดช่องว่างทางการเรียนรู้ 3 มิติหลัก:
+        modelAnswer: `กราบเรียนท่านคณะกรรมการครับ โครงงานของเราไม่ได้พัฒนาขึ้นเพื่อแข่งขันความเร็วในการคำนวณกับ WolframAlpha และไม่ได้สร้างมาเพื่อแข่งวาดกราฟอิสระกับ GeoGebra แต่เรามุ่งแก้ปัญหาการเรียนรู้ 3 ประการหลักครับ:
 
-1. Scaffolding vs. Black-Box: WolframAlpha เป็นเครื่องคิดเลขสำเร็จรูปที่บอกคำตอบสุดท้ายทันที และขั้นตอนวิธีทำละเอียดติด Paywall ทำให้ผู้เรียนกลายเป็น Passive Learner ขณะที่แอปของเราเป็น 'นั่งร้านทางปัญญา' ซ่อนขั้นตอนทีละขั้นเพื่อกระตุ้นให้ผู้เรียนคิดและตัดสินใจก่อนเฉลย
-2. Guided Sandbox vs. Blank Canvas: GeoGebra เป็นผืนผ้าใบเรขาคณิตว่างเปล่าที่ไม่มีตรรกะการสอนและไม่สามารถเตือนจุดเข้าใจผิด (Misconceptions) ได้ ขณะที่ระบบของเราผสานการแสดงผลเรขาคณิตเข้ากับการตรวจสอบตรรกะคณิตศาสตร์โดยตรง
-3. Curriculum Alignment & Free Access: สอดรับกับหลักสูตรแคลคูลัสไทย ภาษาเข้าใจง่าย โอเพนซอร์ส 100% ใช้งานผ่านเบราว์เซอร์ได้ทันทีโดยไม่มีค่าใช้จ่ายรายเดือนครับ`
+1. นั่งร้านทางปัญญา vs. กล่องดำคำตอบสำเร็จรูป: WolframAlpha เน้นบอกคำตอบสุดท้ายทันที และซ่อนวิธีทำละเอียดไว้หลังระบบสมาชิกรายเดือน ทำให้ผู้เรียนกลายเป็นผู้รับข้อมูลเฉย ๆ แต่ระบบของเราทำหน้าที่เป็น 'นั่งร้านทางปัญญา' ซ่อนขั้นตอนวิธีทำทีละขั้นเพื่อกระตุ้นให้ผู้เรียนได้คิดวิเคราะห์และตัดสินใจด้วยตนเองก่อนเปิดดูเฉลย
+2. ห้องทดลองที่มีการนำทาง vs. ผืนผ้าใบเรขาคณิตว่างเปล่า: GeoGebra เป็นเครื่องมือวาดกราฟที่ยอดเยี่ยม แต่ไม่มีกระบวนการสอนคณิตศาสตร์และไม่สามารถเตือนจุดเข้าใจผิดของผู้เรียนได้ ขณะที่ระบบของเราผสานภาพเรขาคณิตเข้ากับการตรวจสอบตรรกะคณิตศาสตร์โดยตรง
+3. สอดคล้องกับหลักสูตรไทยและใช้งานฟรี 100%: ออกแบบตามหลักสูตรแคลคูลัสระดับมหาวิทยาลัย อธิบายด้วยภาษาไทยที่เข้าใจง่าย เป็นโอเพนซอร์สที่ใช้งานผ่านเบราว์เซอร์ได้ทันทีโดยไม่มีข้อจำกัดเรื่องค่าใช้จ่ายครับ`
       },
       {
         id: 2,
-        title: "Q2: การพิสูจน์ทางคณิตศาสตร์เรื่องความแม่นยำของ Midpoint Riemann Sum",
-        prompt: "กรรมการถาม: 'ในหน้าสาธิต Riemann Sum คุณแสดงตัวเลขว่า Midpoint แม่นยำกว่า Left และ Right อย่างมาก คุณสามารถอธิบายเหตุผลทางคณิตศาสตร์และอันดับความคลาดเคลื่อน (Error Order) ได้อย่างไร?'",
+        title: "ข้อที่ 2: การพิสูจน์ทางคณิตศาสตร์เรื่องความแม่นยำของผลรวมกึ่งกลาง (Midpoint Sum)",
+        prompt: "กรรมการสอบถาม: 'ในหน้าสาธิตผลบวกรีมันน์ คุณแสดงให้เห็นว่าผลรวมกึ่งกลางแม่นยำกว่าผลรวมซ้ายและขวาอย่างมาก คุณสามารถอธิบายเหตุผลทางคณิตศาสตร์และอันดับความคลาดเคลื่อนได้อย่างไร?'",
         keywords: [
-          { tag: "Taylor", label: "Taylor Series Expansion" },
-          { tag: "Cancellation", label: "Linear Error Cancellation (การหักล้างเชิงเส้น)" },
-          { tag: "O(1/n^2)", label: "O(1/n^2) Midpoint Order" },
-          { tag: "O(1/n)", label: "O(1/n) Left/Right Order" },
-          { tag: "Concavity", label: "Concavity / ความเว้า" }
+          { tag: "เทย์เลอร์", label: "อนุกรมเทย์เลอร์ (Taylor Series)" },
+          { tag: "หักล้าง", label: "การหักล้างเชิงเส้น (Error Cancellation)" },
+          { tag: "1/n^2", label: "อันดับความผิดพลาด O(1/n^2)" },
+          { tag: "1/n", label: "อันดับความผิดพลาด O(1/n)" },
+          { tag: "กึ่งกลาง", label: "จุดกึ่งกลาง (Midpoint)" }
         ],
-        modelAnswer: `ความแม่นยำที่เหนือกว่าของ Midpoint Sum สามารถพิสูจน์ได้ด้วยการกระจายอนุกรมเทย์เลอร์ (Taylor Expansion) รอบจุดกึ่งกลางช่วง m_i:
+        modelAnswer: `ความแม่นยำที่เหนือกว่าของผลรวมกึ่งกลาง สามารถพิสูจน์ได้จากการกระจายอนุกรมเทย์เลอร์รอบจุดกึ่งกลางของแต่ละช่วงย่อยครับ:
 f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
 
-เมื่ออินทิเกรตบนช่วงย่อย [x_{i-1}, x_i] พจน์ความคลาดเคลื่อนอันดับหนึ่ง f'(m_i)(x - m_i) จะเป็นฟังก์ชันคี่สมมาตรรอบจุดกึ่งกลาง จึงอินทิเกรตได้ศูนย์พอดี เกิดปรากฏการณ์ 'Linear Error Cancellation'
-ส่งผลให้พจน์ความผิดพลาดแรกเริ่มตกไปอยู่ที่อนุพันธ์อันดับสอง ซึ่งมีขนาดแปรผันตาม (dx)^2 ทำให้ Midpoint มีความคลาดเคลื่อนระดับ O(1/n^2) ในขณะที่ Left และ Right พจน์เชิงเส้นไม่หักล้างกัน จึงมีความคลาดเคลื่อนระดับ O(1/n) ครับ`
+เมื่อเราทำการอินทิเกรตบนช่วงย่อย พจน์ความคลาดเคลื่อนเชิงเส้นอันดับหนึ่ง f'(m_i)(x - m_i) จะมีค่าเป็นศูนย์พอดี เนื่องจากมีความสมมาตรและเกิดการหักล้างกันเองรอบจุดกึ่งกลาง
+ผลลัพธ์คือ ความคลาดเคลื่อนหลักจึงตกไปอยู่ที่พจน์อนุพันธ์อันดับสอง ซึ่งมีขนาดแปรผันตาม (dx)^2 ทำให้วิธีผลรวมกึ่งกลางมีอัตราความผิดพลาดลดลงอย่างรวดเร็วที่ระดับ O(1/n^2) ในขณะที่วิธีผลรวมซ้ายและขวา พจน์เชิงเส้นไม่หักล้างกัน จึงมีความคลาดเคลื่อนอยู่ที่ระดับ O(1/n) ครับ`
       },
       {
         id: 3,
-        title: "Q3: การจัดการกรณีขอบเขตและข้อผิดพลาด (Graceful Exception Handling)",
-        prompt: "กรรมการถาม: 'ถ้ามีผู้เรียนแกล้งป้อนโจทย์แปลก ๆ เช่น 2x++3, sin( หรือกรอกช่วง [2, 0] หรือ n = 0 แอปของคุณจะค้างหรือพังหรือไม่? วางกลไกรับมือไว้อย่างไร?'",
+        title: "ข้อที่ 3: การวางระบบจัดการข้อผิดพลาดเมื่อผู้ใช้ป้อนโจทย์ผิดรูปแบบ",
+        prompt: "กรรมการสอบถาม: 'หากมีผู้เรียนแกล้งป้อนโจทย์ผิดรูปแบบ เช่น พิมพ์ 2x++3, ใส่วงเล็บไม่ครบ หรือกรอกช่วง [2, 0] หรือใส่ n = 0 แอปพลิเคชันของคุณจะค้างหรือล่มหรือไม่? มีกลไกรับมืออย่างไร?'",
         keywords: [
-          { tag: "try-except", label: "try...except Block" },
-          { tag: "Data Contract", label: "Data Contract {ok: False}" },
-          { tag: "Sanitization", label: "Input Sanitization" },
-          { tag: "st.error", label: "Graceful UI Alert (st.error)" },
-          { tag: "ZeroDivision", label: "ZeroDivisionError Prevention" }
+          { tag: "try-except", label: "การดักจับข้อผิดพลาด (try-except)" },
+          { tag: "โครงสร้างข้อมูล", label: "ข้อตกลงโครงสร้างข้อมูล (Data Contract)" },
+          { tag: "ตรวจข้อมูล", label: "การตรวจข้อมูลนำเข้า (Sanitization)" },
+          { tag: "แจ้งเตือน", label: "การแจ้งเตือนอย่างสุภาพ (st.error)" },
+          { tag: "หารด้วยศูนย์", label: "การป้องกันหารด้วยศูนย์ (Zero Division)" }
         ],
-        modelAnswer: `ระบบของเรามีกลไกป้องกัน 2 ชั้นอย่างรัดกุมครับ:
+        modelAnswer: `ระบบของเรามีการวางแนวป้องกันข้อผิดพลาดอย่างรัดกุม 2 ระดับครับ:
 
-ชั้นที่ 1 (Input Boundary Sanitization): ใน riemann_solver.py มีการตรวจเช็ค n >= 1 และ b > a ล่วงหน้า หากพบว่าขอบเขตผิดปกติ ระบบจะคืนค่า {'ok': False, 'error': 'ข้อความภาษาไทยเตือนผู้ใช้'} ทันทีเพื่อป้องกันปัญหา ZeroDivisionError
-ชั้นที่ 2 (Symbolic Engine Exception Handling): ใน sympy_solver.py มีการครอบ try...except ดักจับทั้ง SyntaxError, TypeError, และ ValueError จาก SymPy Parser แล้วส่งต่อให้ UI นำไปแสดงผลผ่านกล่อง st.error() อย่างสุภาพ ทำให้เว็บแอปพลิเคชันไม่มีวัน Crash หรือเกิดหน้าต่าง Traceback สีแดงให้ผู้เรียนเห็นครับ`
+ระดับที่ 1 (การตรวจสอบขอบเขตข้อมูลนำเข้า): ในโมดูล riemann_solver.py มีการตรวจสอบค่า n >= 1 และ b > a ล่วงหน้าเสมอ หากพบว่าขอบเขตไม่สมเหตุสมผล ระบบจะปฏิเสธการคำนวณทันทีเพื่อป้องกันปัญหาการหารด้วยศูนย์
+ระดับที่ 2 (การดักจับข้อผิดพลาดในระบบคำนวณ): ในโมดูล sympy_solver.py มีการครอบบล็อก try...except เพื่อดักจับทั้งข้อผิดพลาดทางไวยากรณ์ (SyntaxError) และค่าที่ไม่ถูกต้อง แล้วส่งข้อมูลคืนกลับมาในโครงสร้างมาตรฐาน {'ok': False, 'error': 'ข้อความภาษาไทยอธิบายปัญหา'} ส่งต่อให้หน้าเว็บแสดงกล่องข้อความแจ้งเตือนอย่างสุภาพ ทำให้แอปพลิเคชันไม่มีวันหยุดทำงานกะทันหันแน่นอนครับ`
       },
       {
         id: 4,
-        title: "Q4: คุณค่าทางวิศวกรรมซอฟต์แวร์ของ Separation of Concerns (SoC)",
-        prompt: "กรรมการถาม: 'ทำไมคุณต้องแยก utils/ ออกจาก pages/ ให้ยุ่งยาก ในเมื่อเขียนโค้ด SymPy ปนลงไปในหน้า Streamlit ก็รันได้เหมือนกัน? การแยกแบบนี้มีประโยชน์คุ้มค่าอย่างไร?'",
+        title: "ข้อที่ 4: คุณค่าทางวิศวกรรมของการแยกส่วนตรรกะคำนวณออกจากส่วนแสดงผล (SoC)",
+        prompt: "กรรมการสอบถาม: 'ทำไมคุณต้องแยกโค้ดใน utils/ ออกจาก pages/ ให้ซับซ้อนหลายไฟล์ ในเมื่อเขียนคำนวณลงในหน้าเว็บไปเลยก็ทำงานได้เหมือนกัน? การแยกเช่นนี้คุ้มค่าอย่างไร?'",
         keywords: [
-          { tag: "SoC", label: "Separation of Concerns" },
-          { tag: "Unit Test", label: "Automated Unit Testing (Pytest)" },
-          { tag: "Decouple", label: "Decoupling Presentation & Logic" },
-          { tag: "Collaboration", label: "Team Collaboration / No Git Conflict" },
-          { tag: "Reusability", label: "Code Reusability / API Ready" }
+          { tag: "แยกความรับผิดชอบ", label: "การแยกความรับผิดชอบ (Separation of Concerns)" },
+          { tag: "ทดสอบอัตโนมัติ", label: "การทดสอบอัตโนมัติ (Pytest Unit Test)" },
+          { tag: "ไม่ชนกัน", label: "การทำงานร่วมกันในทีมไม่ชนกัน" },
+          { tag: "นำกลับมาใช้", label: "การนำโมดูลกลับมาใช้ซ้ำ (Reusability)" },
+          { tag: "อิสระ", label: "โค้ดเป็นอิสระต่อกัน (Decoupling)" }
         ],
-        modelAnswer: `การแยก Presentation Layer (pages/) ออกจาก Computation Layer (utils/) เป็นไปตามหลักการ Separation of Concerns ซึ่งให้ประโยชน์มหาศาล 3 ประการครับ:
+        modelAnswer: `การแบ่งแยกความรับผิดชอบระหว่างส่วนแสดงผล (pages/) และส่วนคำนวณ (utils/) ให้ประโยชน์สำคัญต่อโครงงาน 3 ด้านครับ:
 
-1. Automated Unit Testing: ทำให้เราสามารถเขียนชุดทดสอบด้วย Pytest รันตรวจสอบความถูกต้องของสูตรคณิตศาสตร์นับร้อยกรณีได้ในเวลาเสี้ยววินาที โดยไม่ต้องเปิดเบราว์เซอร์คลิกทีละปุ่ม
-2. Team Collaboration: สมาชิกในทีมที่ถนัดคณิตศาสตร์สามารถพัฒนาและเทสต์ Engine ใน utils/ ส่วนคนที่ถนัด UI ก็จัดหน้าตาเว็บใน pages/ ได้พร้อมกันโดยไม่เกิดปัญหา Git Merge Conflict
-3. Reusability: ในอนาคตหากต้องการเปลี่ยนหน้าเว็บเป็น Mobile App หรือ REST API เราสามารถยกโฟลเดอร์ utils/ ไปใช้ต่อได้ทันที 100% โดยไม่ต้องเขียนตรรกะใหม่ครับ`
+1. การทดสอบอัตโนมัติ: ทำให้เราสามารถเขียนชุดทดสอบด้วย Pytest เพื่อสั่งคำนวณและตรวจสอบสูตรคณิตศาสตร์นับร้อยกรณีได้ในเวลาไม่ถึงวินาที โดยไม่ต้องเปิดเบราว์เซอร์คลิกทีละปุ่ม
+2. การทำงานร่วมกันในทีม: นิสิตที่รับผิดชอบด้านคณิตศาสตร์สามารถพัฒนาและทดสอบสูตรใน utils/ ส่วนคนที่รับผิดชอบหน้าตาสามารถออกแบบ UI ใน pages/ ได้พร้อมกันโดยไม่เกิดปัญหาโค้ดชนกันใน Git
+3. การนำกลับมาใช้ซ้ำในอนาคต: หากในอนาคตต้องการนำระบบคำนวณนี้ไปต่อยอดทำเป็นแอปพลิเคชันบนมือถือ หรือทำเป็น LINE Bot เราสามารถยกโฟลเดอร์ utils/ ไปใช้ต่อได้ทันทีโดยไม่ต้องเขียนตรรกะคณิตศาสตร์ใหม่ครับ`
       },
       {
         id: 5,
-        title: "Q5: การออกแบบสถาปัตยกรรมสำหรับเทคนิคขั้นสูง (By Parts & LIATE Rule)",
-        prompt: "กรรมการถาม: 'ถ้าจะขยายระบบไปสู่การสอนเทคนิคการอินทิเกรตขั้นสูง เช่น Integration by Parts ซึ่งผู้เรียนมักเลือกตัวแปร u และ dv สลับกัน ระบบของคุณจะออกแบบการสอนและเตือนความเข้าใจผิดอย่างไร?'",
+        title: "ข้อที่ 5: การออกแบบสถาปัตยกรรมสำหรับเทคนิคขั้นสูง (By Parts และกฎ LIATE)",
+        prompt: "กรรมการสอบถาม: 'หากต้องการขยายระบบไปสู่การสอนเทคนิคการอินทิเกรตทีละส่วน (Integration by Parts) ซึ่งผู้เรียนมักเลือกตัวแปร u และ dv ผิดพลาด ระบบของคุณจะออกแบบการสอนและเตือนจุดเข้าใจผิดอย่างไร?'",
         keywords: [
-          { tag: "LIATE", label: "LIATE Decision Rule" },
-          { tag: "Misconception", label: "Misconception Alert" },
-          { tag: "Complexity", label: "Complexity Reduction Verification" },
-          { tag: "Scaffolding", label: "Decision Scaffolding" },
-          { tag: "SymPy Verification", label: "SymPy Verification Derivative" }
+          { tag: "LIATE", label: "กฎการเลือกตัวแปร (LIATE Rule)" },
+          { tag: "เข้าใจผิด", label: "การเตือนจุดเข้าใจผิด (Misconception Alert)" },
+          { tag: "ความซับซ้อน", label: "การตรวจเช็คการลดรูปความซับซ้อน" },
+          { tag: "นั่งร้าน", label: "การจัดนั่งร้านช่วยตัดสินใจ" },
+          { tag: "อนุพันธ์ย้อนกลับ", label: "การตรวจอนุพันธ์ย้อนกลับ (SymPy)" }
         ],
-        modelAnswer: `สำหรับเทคนิค By Parts (∫u dv = uv - ∫v du) ระบบจะใช้สถาปัตยกรรม 'Pedagogical Decision Guide' โดยนำกฎ LIATE (Logarithmic, Inverse trig, Algebraic, Trig, Exponential) มาสร้างเป็นตัวช่วยตัดสินใจ:
+        modelAnswer: `สำหรับการอินทิเกรตทีละส่วน (∫u dv = uv - ∫v du) ปัญหาสำคัญที่สุดคือผู้เรียนไม่ทราบว่าจะเลือกใครเป็น u และ dv ระบบของเราจึงออกแบบโดยนำกฎ LIATE มาสร้างเป็นตัวช่วยตัดสินใจครับ:
 
-1. Decision Scaffolding: เมื่อผู้เรียนป้อนโจทย์ เช่น ∫x e^x dx ระบบจะให้ผู้เรียนทดลองเลือกว่าใครควรเป็น u และใครควรเป็น dv
-2. Misconception Alert: หากผู้เรียนเลือกสลับคู่ (เช่น ให้ u = e^x, dv = x dx) ซึ่งทำให้พจน์ใหม่ ∫v du = ∫(x^2/2) e^x dx ซับซ้อนขึ้น ระบบจะคำนวณสดและแสดงแถบเตือนสีส้มทันทีว่า 'ความซับซ้อนเพิ่มขึ้น ดีกรีสูงขึ้น ลองพิจารณากฎ LIATE ใหม่อีกครั้ง'
-3. SymPy Verification: เมื่อผู้เรียนเลือกถูกต้องและคำนวณจนจบ ระบบจะหา Derivative ย้อนกลับด้วย SymPy เพื่อพิสูจน์ความถูกต้อง 100% ให้ผู้เรียนเห็นเชิงประจักษ์ครับ`
+1. การจัดนั่งร้านช่วยตัดสินใจ: เมื่อผู้เรียนป้อนโจทย์ เช่น ∫x e^x dx ระบบจะมีตัวเลือกให้ทดลองกำหนดว่าฟังก์ชันใดควรเป็น u และฟังก์ชันใดควรเป็น dv
+2. การแจ้งเตือนจุดเข้าใจผิด: หากผู้เรียนเลือกสลับคู่ (เช่น ให้ u = e^x, dv = x dx) ซึ่งทำให้พจน์อินทิกรัลใหม่กลายเป็นดีกรีสองที่ยากกว่าเดิม ระบบจะคำนวณสดและแสดงแถบเตือนสีส้มทันทีว่า 'ความซับซ้อนเพิ่มขึ้น ลองพิจารณาเลือกตัวแปรตามลำดับ LIATE ใหม่อีกครั้ง'
+3. การตรวจสอบความถูกต้องสมบูรณ์: เมื่อผู้เรียนเลือกถูกต้องและทำจนจบ ระบบจะใช้อนุพันธ์ย้อนกลับด้วย SymPy เพื่อพิสูจน์ว่าผลลัพธ์ที่ได้ถูกต้องตรงกับโจทย์ตั้งต้น 100% ครับ`
       }
     ];
 
     // ==========================================
-    // 4. UI Rendering & Interactions
+    // 4. ระบบการแสดงผลและโต้ตอบ (UI Controller)
     // ==========================================
     let userMcqAnswers = {};
     let codeSolutions = {};
@@ -1120,17 +1124,18 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
       }
     }
 
-    // Render MCQs
+    // แสดงผลข้อสอบปรนัย
     function renderMCQs() {
       const container = $("mcq-list");
       container.innerHTML = "";
-      MCQS.forEach((item, idx) => {
+      const prefixes = ["ก", "ข", "ค", "ง"];
+
+      MCQS.forEach((item) => {
         const card = document.createElement("div");
         card.className = "card";
         card.id = `mcq-card-${item.id}`;
         
         const selected = userMcqAnswers[item.id];
-        const prefixes = ["A", "B", "C", "D"];
         
         let choicesHtml = "";
         item.a.forEach((choice, cIdx) => {
@@ -1138,7 +1143,6 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
           if (selected !== undefined) {
             if (cIdx === item.ans) extraClass = "correct";
             else if (cIdx === selected) extraClass = "wrong";
-            else if (cIdx === selected) extraClass = "selected";
           }
           choicesHtml += `
             <div class="choice-item ${extraClass}" onclick="selectMCQ(${item.id}, ${cIdx})">
@@ -1160,7 +1164,7 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
           </div>
           <div class="choice-list">${choicesHtml}</div>
           <div class="feedback-box ${feedbackClass} ${feedbackShow}" id="mcq-fb-${item.id}">
-            <div style="font-weight: 600; margin-bottom: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; font-size: 1rem;">
               ${isCorrect ? "✓ ถูกต้องแม่นยำ!" : "✗ ยังไม่ถูกต้อง (คำตอบที่ถูกต้องคือข้อ " + prefixes[item.ans] + ")"}
             </div>
             <div>${item.exp}</div>
@@ -1188,7 +1192,7 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
       renderMCQs();
     }
 
-    // Render Code Challenges
+    // แสดงผลข้อเขียนแก้โค้ดจริง
     function renderCodeChallenges() {
       const container = $("code-list");
       container.innerHTML = "";
@@ -1204,26 +1208,26 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
             <div class="card-title">${ch.title}</div>
             <span class="card-tag">${ch.file}</span>
           </div>
-          <div style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 12px;">
+          <div style="font-size: 0.94rem; color: #cbd5e1; margin-bottom: 14px; line-height: 1.7;">
             ${ch.desc}
           </div>
           <div class="code-editor-box">
             <div class="editor-topbar">
-              <span>Python 3.12 | ${ch.file}</span>
-              <span>Monospace Editor</span>
+              <span>ตำแหน่งไฟล์: ${ch.file}</span>
+              <span>กล่องพิมพ์แก้ไขโค้ด</span>
             </div>
             <textarea class="code-textarea" id="code-input-${ch.id}" oninput="onCodeInput(${ch.id})">${currentVal}</textarea>
           </div>
           <div class="action-row">
             <button class="btn btn-primary" onclick="runCodeCheck(${ch.id})">⚡ ตรวจสอบโค้ด (Run Checks)</button>
-            <button class="btn btn-outline" onclick="toggleModelDiff(${ch.id})">💡 ดูเฉลยสถาปัตยกรรม (Model Solution)</button>
+            <button class="btn btn-outline" onclick="toggleModelDiff(${ch.id})">💡 ดูโค้ดตัวอย่างและคำอธิบาย (Model Solution)</button>
             <button class="btn btn-outline btn-sm" onclick="resetCodeChallenge(${ch.id})">↺ คืนค่าเดิม</button>
           </div>
           <div class="test-output" id="test-output-${ch.id}"></div>
           <div class="diff-view" id="diff-view-${ch.id}" style="display: none;">
-            <div style="font-weight: 600; color: var(--sky); margin-bottom: 8px;">✨ โค้ดต้นแบบที่ถูกต้องตามหลักสถาปัตยกรรม:</div>
+            <div style="font-weight: 600; color: var(--sky); margin-bottom: 8px;">✨ โค้ดตัวอย่างที่ถูกต้องตามหลักสถาปัตยกรรม:</div>
             <pre style="color: #cbd5e1; margin-bottom: 12px;"><code>${escapeHtml(ch.modelSolution)}</code></pre>
-            <div style="color: #94a3b8; font-size: 0.82rem; border-top: 1px solid #1e293b; padding-top: 8px;">
+            <div style="color: #94a3b8; font-size: 0.88rem; border-top: 1px solid #1e293b; padding-top: 8px; line-height: 1.6;">
               <strong>หลักคิดเชิงวิศวกรรม:</strong> ${ch.rationale}
             </div>
           </div>
@@ -1266,7 +1270,7 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
       diff.style.display = diff.style.display === "none" ? "block" : "none";
     }
 
-    // Render Defense Socratic Q&A
+    // แสดงผลห้องซ้อมตอบคำถามกรรมการ
     function renderDefenseQA() {
       const container = $("defense-list");
       container.innerHTML = "";
@@ -1279,36 +1283,36 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
 
         let kwHtml = "";
         dq.keywords.forEach(kw => {
-          const hit = savedText.toLowerCase().includes(kw.tag.toLowerCase());
+          const hit = savedText.includes(kw.tag);
           kwHtml += `<span class="kw-tag ${hit ? 'hit' : ''}" id="kw-${dq.id}-${kw.tag}">${kw.label}</span>`;
         });
 
         card.innerHTML = `
           <div class="card-header">
             <div class="card-title">${dq.title}</div>
-            <span class="card-tag">Defense Mock</span>
+            <span class="card-tag">คำถามซักซ้อม</span>
           </div>
-          <div style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 4px; font-size: 0.93rem; color: #fef08a; margin-bottom: 12px;">
+          <div style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 4px; font-size: 0.95rem; color: #fef08a; margin-bottom: 12px; line-height: 1.6;">
             ${dq.prompt}
           </div>
-          <div style="font-size: 0.85rem; color: var(--text-muted);">
-            พิมพ์ร่างประเด็นตอบคำถามของคุณ:
+          <div style="font-size: 0.88rem; color: var(--text-muted);">
+            พิมพ์ร่างประเด็นคำตอบของคุณ:
           </div>
           <textarea class="defense-textarea" id="defense-text-${dq.id}" placeholder="พิมพ์ประเด็นสำคัญที่ต้องการชี้แจงต่อคณะกรรมการ..." oninput="onDefenseInput(${dq.id})">${savedText}</textarea>
           
-          <div style="font-size: 0.82rem; color: var(--text-dim); margin-top: 4px;">
-            คีย์เวิร์ดสำคัญที่กรรมการคาดหวัง:
+          <div style="font-size: 0.84rem; color: var(--text-dim); margin-top: 4px;">
+            ประเด็นสำคัญที่คณะกรรมการคาดหวัง:
           </div>
           <div class="keyword-cloud" id="kw-cloud-${dq.id}">${kwHtml}</div>
 
           <div class="action-row">
-            <button class="btn btn-primary btn-sm" onclick="analyzeDefenseKeywords(${dq.id})">🔍 ตรวจจับคีย์เวิร์ดสำคัญ</button>
+            <button class="btn btn-primary btn-sm" onclick="analyzeDefenseKeywords(${dq.id})">🔍 ตรวจจับประเด็นสำคัญ</button>
             <button class="btn btn-outline btn-sm" onclick="toggleDefenseModel(${dq.id})">💡 ดูแนวทางคำตอบฉบับสมบูรณ์ (Model Defense Script)</button>
           </div>
 
           <div class="feedback-box info" id="defense-model-${dq.id}" style="display: none; margin-top: 14px;">
-            <div style="font-weight: 600; color: var(--sky); margin-bottom: 6px;">🎙️ สคริปต์แนวทางการตอบแบบมืออาชีพ (Model Answer):</div>
-            <p style="white-space: pre-line; line-height: 1.7; font-size: 0.88rem; color: #e2e8f0;">${dq.modelAnswer}</p>
+            <div style="font-weight: 600; color: var(--sky); margin-bottom: 8px; font-size: 0.98rem;">🎙️ บทพูดตัวอย่างสำหรับตอบกรรมการอย่างมั่นใจ:</div>
+            <p style="white-space: pre-line; line-height: 1.75; font-size: 0.92rem; color: #e2e8f0;">${dq.modelAnswer}</p>
           </div>
         `;
         container.appendChild(card);
@@ -1324,12 +1328,12 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
 
     function analyzeDefenseKeywords(dqId, showAlert = true) {
       const dq = DEFENSE_QS.find(d => d.id === dqId);
-      const text = $(`defense-text-${dqId}`).value.toLowerCase();
+      const text = $(`defense-text-${dqId}`).value;
       let matchedCount = 0;
 
       dq.keywords.forEach(kw => {
         const el = $(`kw-${dqId}-${kw.tag}`);
-        if (text.includes(kw.tag.toLowerCase())) {
+        if (text.includes(kw.tag)) {
           el.classList.add("hit");
           matchedCount++;
         } else {
@@ -1342,11 +1346,11 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
 
       if (showAlert) {
         if (matchedCount === dq.keywords.length) {
-          alert(" ยอดเยี่ยมมาก! คุณระบุคีย์เวิร์ดสำคัญได้ครบถ้วน 100%");
+          alert(" ยอดเยี่ยมมาก! ท่านอธิบายประเด็นสำคัญได้ครบถ้วนสมบูรณ์ 100%");
         } else if (matchedCount >= 2) {
-          alert(` ดีมาก! ตรวจพบคีย์เวิร์ดสำคัญ ${matchedCount}/${dq.keywords.length} คำ ลองกดดูสคริปต์ตัวอย่างเพื่อเสริมจุดที่ขาดครับ`);
+          alert(` ดีมาก! ตรวจพบประเด็นสำคัญ ${matchedCount}/${dq.keywords.length} หัวข้อ ลองกดดูบทพูดตัวอย่างเพื่อเสริมจุดที่ขาดให้แน่นขึ้นครับ`);
         } else {
-          alert(`⚠️ ยังขาดคีย์เวิร์ดสำคัญบางประเด็น (พบ ${matchedCount}/${dq.keywords.length} คำ) แนะนำให้ลองกล่าวถึงคีย์เวิร์ดที่แสดงอยู่ด้านล่าง`);
+          alert(`⚠️ ยังขาดประเด็นสำคัญบางส่วน (พบ ${matchedCount}/${dq.keywords.length} หัวข้อ) แนะนำให้ลองตรวจสอบคำสำคัญที่มีแถบด้านล่างครับ`);
         }
       }
     }
@@ -1356,7 +1360,7 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
       box.style.display = box.style.display === "none" ? "block" : "none";
     }
 
-    // Helpers & State Persistence
+    // ฟังก์ชันเสริมและระบบจำสถานะ
     function escapeHtml(str) {
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
@@ -1381,7 +1385,7 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
     }
 
     function resetAllProgress() {
-      if (confirm("คุณต้องการรีเซ็ตประวัติคะแนนและการแก้ไขทั้งหมดในแอปนี้ใช่หรือไม่?")) {
+      if (confirm("ท่านต้องการล้างประวัติคะแนนและการแก้ไขทั้งหมดในระบบนี้ใช่หรือไม่?")) {
         userMcqAnswers = {};
         codeSolutions = {};
         defenseDrafts = {};
@@ -1395,14 +1399,12 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
     }
 
     function updateScoreSummary() {
-      // MCQ count
       let mcqCorrect = 0;
       MCQS.forEach(m => {
         if (userMcqAnswers[m.id] === m.ans) mcqCorrect++;
       });
       $("chip-mcq").textContent = `${mcqCorrect}/${MCQS.length}`;
 
-      // Code challenges count
       let codePassed = 0;
       CODE_CHALLENGES.forEach(c => {
         const val = codeSolutions[c.id] || c.starter;
@@ -1410,18 +1412,16 @@ f(x) = f(m_i) + f'(m_i)(x - m_i) + (f''(m_i)/2)(x - m_i)^2 + ...
       });
       $("chip-code").textContent = `${codePassed}/${CODE_CHALLENGES.length}`;
 
-      // Defense count
       let defensePassed = 0;
       DEFENSE_QS.forEach(d => {
-        const txt = (defenseDrafts[d.id] || "").toLowerCase();
+        const txt = defenseDrafts[d.id] || "";
         let hits = 0;
-        d.keywords.forEach(kw => { if (txt.includes(kw.tag.toLowerCase())) hits++; });
+        d.keywords.forEach(kw => { if (txt.includes(kw.tag)) hits++; });
         if (hits >= 2) defensePassed++;
       });
       $("chip-defense").textContent = `${defensePassed}/${DEFENSE_QS.length}`;
     }
 
-    // Initialize on load
     window.addEventListener("DOMContentLoaded", () => {
       loadStorage();
       renderMCQs();
