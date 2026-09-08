@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เห็นภาพ Project: 4 Process หลัก</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Chakra Petch","Sarabun",Tahoma,sans-serif;background:#f8fafc;color:#1f2937}
+header{background:#105D38;color:#fff;padding:20px;text-align:center}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px;margin:14px 0}
+h2{margin:0 0 8px}
+.small{color:#6b7280;font-size:14px}
+svg{width:100%;height:auto;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px}
+.box{fill:#fff;stroke:#105D38;stroke-width:2;rx:10}
+.arrow{stroke:#111827;stroke-width:2;marker-end:url(#ah)}
+.txt{font-size:14px;fill:#111827;text-anchor:middle}
+.cap{font-size:13px;fill:#6b7280;text-anchor:middle}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button{padding:8px 14px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;font-weight:700;cursor:pointer}
+button.go{background:#111827;color:#fff;border:none}
+@media print{.btns,header p{display:none}}
+</style>
+</head>
+<body>
+<header>
+<h1 style="margin:0">เห็นภาพ Project ใน 4 ภาพ</h1>
+<p>สำหรับเด็กนำเสนอ ไม่ต้องจำโค้ด จำทางเดินของข้อมูลก็พอ</p>
+</header>
+<div class="wrap">
+
+<div class="card">
+<h2>ภาพ 1 แอปมี 5 ชั้น</h2>
+<p class="small">ท่องว่า แอป หน้า เครื่องมือ ข้อมูล ทดสอบ เปิดด้วย streamlit run app.py</p>
+<svg viewBox="0 0 900 170">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#111827"/></marker></defs>
+<rect class="box" x="10" y="40" width="150" height="80"/><text class="txt" x="85" y="70">app.py</text><text class="cap" x="85" y="90">แผนที่ + state</text>
+<rect class="box" x="190" y="40" width="150" height="80"/><text class="txt" x="265" y="70">pages</text><text class="cap" x="265" y="90">หน้าจอ widget</text>
+<rect class="box" x="370" y="40" width="150" height="80"/><text class="txt" x="445" y="70">utils</text><text class="cap" x="445" y="90">คิดเลข SymPy</text>
+<rect class="box" x="550" y="40" width="150" height="80"/><text class="txt" x="625" y="70">data</text><text class="cap" x="625" y="90">บทเรียน+ข้อสอบ</text>
+<rect class="box" x="730" y="40" width="150" height="80"/><text class="txt" x="805" y="70">tests</text><text class="cap" x="805" y="90">pytest</text>
+<line class="arrow" x1="160" y1="80" x2="188" y2="80"/><line class="arrow" x1="340" y1="80" x2="368" y2="80"/><line class="arrow" x1="520" y1="80" x2="548" y2="80"/><line class="arrow" x1="700" y1="80" x2="728" y2="80"/>
+</svg>
+<p class="small">พูดว่า เหมือนโรงเรียน มีอาคารเรียน อาคารฝึก ห้องสมุด ห้องสอบ</p>
+</div>
+
+<div class="card">
+<h2>ภาพ 2 สั่งหนึ่งครั้งเหมือนสั่งอาหาร</h2>
+<p class="small">ขยับ widget = สั่งใหม่ทั้งโต๊ะ ของที่ต้องจำเก็บใน session_state</p>
+<svg viewBox="0 0 900 200">
+<rect class="box" x="10" y="60" width="160" height="70"/><text class="txt" x="90" y="88">ผู้ใช้ขยับ</text><text class="cap" x="90" y="108">slider text</text>
+<rect class="box" x="200" y="60" width="160" height="70"/><text class="txt" x="280" y="88">pages</text><text class="cap" x="280" y="108">รับออเดอร์</text>
+<rect class="box" x="390" y="60" width="160" height="70"/><text class="txt" x="470" y="88">utils solver</text><text class="cap" x="470" y="108">ห้องครัวคิดเลข</text>
+<rect class="box" x="580" y="20" width="140" height="60"/><text class="txt" x="650" y="46">โชว์ LaTeX</text>
+<rect class="box" x="580" y="100" width="140" height="60"/><text class="txt" x="650" y="126">วาดกราฟ</text>
+<line class="arrow" x1="170" y1="95" x2="198" y2="95"/><line class="arrow" x1="360" y1="95" x2="388" y2="95"/><line class="arrow" x1="550" y1="85" x2="578" y2="55"/><line class="arrow" x1="550" y1="105" x2="578" y2="130"/>
+<text class="cap" x="810" y="70">ถ้าพิมพ์ผิด</text><text class="cap" x="810" y="90">ขึ้นข้อความไทย</text><text class="cap" x="810" y="110">แอปไม่ค้าง</text>
+</svg>
+<div class="btns"><button class="go" onclick="window.print()">พิมพ์ภาพนี้ไปซ้อม</button></div>
+</div>
+
+<div class="card">
+<h2>ภาพ 3 Riemann เหมือนปูกระเบื้อง</h2>
+<p class="small">จำเลข 1 5 2.5 ค่าจริง 2.666 ยิ่ง n มากยิ่งตรง midpoint ตรงสุด</p>
+<svg viewBox="0 0 900 230">
+<text class="txt" x="150" y="25">left จุด 0,1 ได้ 1</text>
+<rect x="60" y="40" width="80" height="20" fill="#B9D4C4" stroke="#105D38"/><rect x="140" y="40" width="80" height="60" fill="#B9D4C4" stroke="#105D38"/>
+<text class="txt" x="450" y="25">right จุด 1,2 ได้ 5</text>
+<rect x="360" y="40" width="80" height="60" fill="#B9D4C4" stroke="#105D38"/><rect x="440" y="40" width="80" height="120" fill="#B9D4C4" stroke="#105D38"/>
+<text class="txt" x="750" y="25">mid จุด 0.5,1.5 ได้ 2.5</text>
+<rect x="660" y="40" width="80" height="35" fill="#B9D4C4" stroke="#105D38"/><rect x="740" y="40" width="80" height="90" fill="#B9D4C4" stroke="#105D38"/>
+<text class="cap" x="450" y="190">f(x)=x² บน [0,2] n=2 dx=1 เส้นโค้งจริงอยู่ระหว่างแท่ง</text>
+<text class="cap" x="450" y="210">n=50 midpoint ใกล้ 8/3 มาก ถ้า f เพิ่ม L น้อยกว่า A น้อยกว่า R</text>
+</svg>
+<p class="small">พูดว่า กระเบื้องเล็กวัดที่นาได้ตรงกว่า อย่าลืมคูณ dx ทุกแท่ง</p>
+</div>
+
+<div class="card">
+<h2>ภาพ 4 Quiz เหมือนเกมเก็บดาว</h2>
+<p class="small">ทุกข้อต้องมี explanation ทำจบดูประวัติได้ใน session นี้</p>
+<svg viewBox="0 0 900 170">
+<rect class="box" x="10" y="50" width="160" height="70"/><text class="txt" x="90" y="78">ทำทีละข้อ</text><text class="cap" x="90" y="98">index เดินหน้า</text>
+<rect class="box" x="200" y="50" width="160" height="70"/><text class="txt" x="280" y="78">ตรวจ ==</text><text class="cap" x="280" y="98">ตรงเป๊ะได้ดาว</text>
+<rect class="box" x="390" y="50" width="160" height="70"/><text class="txt" x="470" y="78">ดูเฉลย</text><text class="cap" x="470" y="98">explanation</text>
+<rect class="box" x="580" y="50" width="160" height="70"/><text class="txt" x="660" y="78">ประวัติ</text><text class="cap" x="660" y="98">history table</text>
+<line class="arrow" x1="170" y1="85" x2="198" y2="85"/><line class="arrow" x1="360" y1="85" x2="388" y2="85"/><line class="arrow" x1="550" y1="85" x2="578" y2="85"/>
+</svg>
+<p class="small">จุดอ่อนที่ตอบกรรมการได้คือ ช่องว่างก็ถือว่าผิด ควร normalize ก่อนตรวจ</p>
+</div>
+
+</div>
+</body>
+</html>
