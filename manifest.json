@@ -98,6 +98,15 @@
               "type": "interactive",
               "typeLabel": "คลังข้อสอบ",
               "tech": "html-js"
+            },
+            {
+              "id": "m3-solar-system-quiz-advanced-35q",
+              "filename": "interactive/middle-science-solar-system/quiz-interactive-35q.html",
+              "title": "คลังข้อสอบดาราศาสตร์และปรากฏการณ์โลก (35 ข้อ)",
+              "description": "ข้อสอบมาตรฐาน TruePlookpanya (20 ข้อ) ผสานข้อสอบท้าทายแข่งขัน น้ำเกิด-น้ำตาย คาบไทดัล ฤดูกาล และคราส (15 ข้อ) พร้อม KaTeX และระบบ 3 ธีม",
+              "type": "interactive",
+              "typeLabel": "คลังข้อสอบเสริม",
+              "tech": "html-katex"
             }
           ]
         }

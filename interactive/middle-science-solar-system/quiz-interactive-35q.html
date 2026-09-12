@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบ โลก ดาราศาสตร์และอวกาศ (Earth & Space Sciences Interactive Quiz)</title>
+    
+    <!-- Google Fonts: Bai Jamjuree (Headings) & Pridi / IBM Plex Sans Thai Looped (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600&family=Pridi:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- KaTeX CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['"Bai Jamjuree"', 'sans-serif'],
+                        body: ['"IBM Plex Sans Thai Looped"', '"Pridi"', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            rose: '#f43f5e',
+                            amber: '#f59e0b',
+                            indigo: '#6366f1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-page: #0b0f19;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --code-bg: #1e293b;
+            --code-fg: #38bdf8;
+            --choice-bg: #1f2937;
+            --choice-border: #374151;
+            --choice-hover: #273549;
+            --badge-bg: #1e293b;
+            --badge-fg: #38bdf8;
+            --glow: rgba(56, 189, 248, 0.15);
+        }
+
+        /* Light Studio Theme */
+        html.theme-light {
+            --bg-page: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --code-bg: #f1f5f9;
+            --code-fg: #0284c7;
+            --choice-bg: #f8fafc;
+            --choice-border: #cbd5e1;
+            --choice-hover: #f1f5f9;
+            --badge-bg: #e0f2fe;
+            --badge-fg: #0369a1;
+            --glow: rgba(2, 132, 199, 0.1);
+        }
+
+        /* Dark Obsidian Theme */
+        html.theme-dark {
+            --bg-page: #090d16;
+            --card-bg: #111827;
+            --card-border: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --code-bg: #1e293b;
+            --code-fg: #38bdf8;
+            --choice-bg: #162032;
+            --choice-border: #27354a;
+            --choice-hover: #1e2c44;
+            --badge-bg: #1e293b;
+            --badge-fg: #38bdf8;
+            --glow: rgba(56, 189, 248, 0.15);
+        }
+
+        /* Cyber Cosmos Theme */
+        html.theme-neon {
+            --bg-page: #030712;
+            --card-bg: #090e24;
+            --card-border: #1e295d;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --code-bg: #0f1738;
+            --code-fg: #22d3ee;
+            --choice-bg: #0d1538;
+            --choice-border: #1e2f69;
+            --choice-hover: #162252;
+            --badge-bg: #132354;
+            --badge-fg: #22d3ee;
+            --glow: rgba(34, 211, 238, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: 'IBM Plex Sans Thai Looped', 'Pridi', serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Bai Jamjuree', sans-serif;
+        }
+
+        .card-surface {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 25px -5px var(--glow), 0 8px 10px -6px var(--glow);
+        }
+
+        .choice-btn {
+            background-color: var(--choice-bg);
+            border: 1px solid var(--choice-border);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            background-color: var(--choice-hover);
+            border-color: #38bdf8;
+            transform: translateY(-1px);
+        }
+
+        .choice-btn.selected {
+            border-color: #0284c7;
+            background-color: rgba(2, 132, 199, 0.15);
+        }
+
+        .choice-btn.correct {
+            background-color: rgba(16, 185, 129, 0.15) !important;
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+        }
+
+        .choice-btn.incorrect {
+            background-color: rgba(244, 63, 94, 0.15) !important;
+            border-color: #f43f5e !important;
+            color: #f43f5e !important;
+        }
+
+        .explanation-box {
+            background-color: var(--code-bg);
+            border-left: 4px solid var(--code-fg);
+            color: var(--text-main);
+        }
+
+        .katex {
+            font-size: 1.05em;
+        }
+
+        /* Gauge styles */
+        .gauge-circle-bg {
+            fill: none;
+            stroke: var(--card-border);
+            stroke-width: 8;
+        }
+        .gauge-circle-val {
+            fill: none;
+            stroke: #10b981;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="py-6 px-4 md:px-8">
+
+    <!-- Top Navigation & Controls Bar -->
+    <header class="max-w-4xl mx-auto mb-8 flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--card-border)]">
+        <div>
+            <div class="flex items-center gap-2 text-xs font-semibold tracking-wider text-[var(--badge-fg)] uppercase">
+                <span class="inline-block w-2 h-2 rounded-full bg-[var(--badge-fg)]"></span>
+                สาระโลก ดาราศาสตร์ และอวกาศ
+            </div>
+            <h1 class="text-xl md:text-2xl font-bold font-heading mt-1">แบบทดสอบปฏิสัมพันธ์: โลก ดาราศาสตร์และอวกาศ</h1>
+        </div>
+
+        <!-- Controls: Mode Selector & Theme Switcher -->
+        <div class="flex items-center gap-2">
+            <a href="index.html" class="px-3 py-1.5 text-xs rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-sub)] hover:text-cyan-400 font-heading transition-colors" title="กลับสู่หน้าหนังสือเรียน">
+                ← กลับสู่บทเรียน
+            </a>
+            <a href="quiz.html" class="px-3 py-1.5 text-xs rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-sub)] hover:text-cyan-400 font-heading transition-colors" title="คลังข้อสอบดั้งเดิม 30 ข้อ">
+                ชุดข้อสอบ ม.ต้น 30 ข้อ
+            </a>
+        </div>
+        <div class="flex items-center gap-3">
+            <!-- Theme Buttons -->
+            <div class="inline-flex rounded-lg p-1 bg-[var(--card-bg)] border border-[var(--card-border)]">
+                <button onclick="setTheme('light')" id="btn-theme-light" class="px-2.5 py-1 text-xs rounded-md font-heading transition-colors hover:text-cyan-500" title="Light Studio">
+                    สว่าง
+                </button>
+                <button onclick="setTheme('dark')" id="btn-theme-dark" class="px-2.5 py-1 text-xs rounded-md font-heading transition-colors hover:text-cyan-500" title="Dark Obsidian">
+                    มืด
+                </button>
+                <button onclick="setTheme('neon')" id="btn-theme-neon" class="px-2.5 py-1 text-xs rounded-md font-heading transition-colors hover:text-cyan-500" title="Cyber Cosmos">
+                    นีออน
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+        
+        <!-- Setup & Config Section (Initial View) -->
+        <div id="setup-view" class="card-surface rounded-2xl p-6 md:p-8">
+            <h2 class="text-lg md:text-xl font-bold font-heading mb-3 text-[var(--text-main)]">ตั้งค่าชุดข้อสอบ</h2>
+            <p class="text-sm text-[var(--text-sub)] mb-6">
+                ชุดข้อสอบนี้รวบรวมข้อสอบมาตรฐาน 20 ข้อจาก TruePlookpanya (สาระ ม.5) ผสานกับข้อสอบท้าทายระดับแข่งขันอีก 15 ข้อ (น้ำเกิด-น้ำตาย, คาบไทดัล, ฤดูกาล, ครีษมายัน, วิษุวัต, คราส, คอริออลิส) รวมทั้งสิ้น 35 ข้อ
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <!-- Select Question Set -->
+                <div class="p-4 rounded-xl border border-[var(--card-border)] bg-[var(--choice-bg)]">
+                    <label class="block text-sm font-semibold font-heading mb-2">เลือกชุดข้อสอบ</label>
+                    <select id="select-set" class="w-full p-2.5 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-main)] text-sm focus:outline-none focus:border-cyan-500 font-heading">
+                        <option value="all">ทั้งหมด 35 ข้อ (ชุดสมบูรณ์: มาตรฐาน + ท้าทายแข่งขัน)</option>
+                        <option value="standard">เฉพาะชุดมาตรฐาน 20 ข้อ (TruePlookpanya ม.5)</option>
+                        <option value="advanced">เฉพาะชุดท้าทายแข่งขัน 15 ข้อ (น้ำขึ้นน้ำลง ฤดูกาล คราส สอวน./สอบเข้า)</option>
+                    </select>
+                </div>
+
+                <!-- Select Feedback Mode -->
+                <div class="p-4 rounded-xl border border-[var(--card-border)] bg-[var(--choice-bg)]">
+                    <label class="block text-sm font-semibold font-heading mb-2">รูปแบบการตรวจคำตอบ</label>
+                    <select id="select-mode" class="w-full p-2.5 rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-main)] text-sm focus:outline-none focus:border-cyan-500 font-heading">
+                        <option value="practice">โหมดฝึกฝน (เฉลยพร้อมเหตุผลทันทีที่ตอบ)</option>
+                        <option value="exam">โหมดจำลองการสอบ (ทำต่อเนื่อง แล้วสรุปคะแนนตอนจบ)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Additional options -->
+            <div class="flex flex-wrap items-center justify-between gap-4 py-3 px-4 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] mb-8">
+                <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-heading">
+                    <input type="checkbox" id="check-shuffle" class="rounded border-gray-600 text-cyan-600 focus:ring-cyan-500 w-4 h-4">
+                    <span>สลับลำดับข้อสอบแบบสุ่ม (Shuffle Questions)</span>
+                </label>
+                <div class="text-xs text-[var(--text-sub)]">
+                    จำนวนข้อในชุด: <span id="label-q-count" class="font-bold text-cyan-400">35</span> ข้อ
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full py-3.5 px-6 rounded-xl font-heading font-semibold text-white bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-500 hover:to-sky-500 shadow-lg shadow-cyan-600/25 transition-all text-base flex items-center justify-center gap-2">
+                เริ่มทำแบบทดสอบ
+            </button>
+        </div>
+
+        <!-- Active Quiz View -->
+        <div id="quiz-view" class="hidden">
+            <!-- Progress & Meta Indicator -->
+            <div class="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm">
+                <div class="flex items-center gap-2">
+                    <span id="badge-section" class="px-2.5 py-0.5 rounded-full text-xs font-semibold font-heading bg-[var(--badge-bg)] text-[var(--badge-fg)]">
+                        ข้อสอบมาตรฐาน
+                    </span>
+                    <span id="badge-difficulty" class="px-2 py-0.5 rounded-full text-xs font-heading bg-zinc-800 text-zinc-300">
+                        พื้นฐาน
+                    </span>
+                </div>
+                <div class="font-heading font-medium text-sm text-[var(--text-sub)]">
+                    ข้อที่ <span id="current-q-index" class="text-cyan-400 font-bold text-base">1</span> / <span id="total-q-index">35</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-2 rounded-full bg-[var(--card-border)] mb-6 overflow-hidden">
+                <div id="progress-fill" class="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 transition-all duration-300" style="width: 0%;"></div>
+            </div>
+
+            <!-- Quiz Card -->
+            <div id="quizCard" class="card-surface rounded-2xl p-6 md:p-8 mb-6">
+                <!-- Topics list -->
+                <div id="topics-container" class="flex flex-wrap gap-1.5 mb-3"></div>
+
+                <!-- Question Text -->
+                <h2 id="question-text" class="text-base md:text-lg font-medium leading-relaxed mb-6 text-[var(--text-main)] font-body"></h2>
+
+                <!-- Choices Container -->
+                <div id="choices-container" class="space-y-3 mb-6"></div>
+
+                <!-- Feedback & Explanation Drawer -->
+                <div id="explanation-drawer" class="hidden mt-6 pt-6 border-t border-[var(--card-border)]">
+                    <div id="status-indicator" class="flex items-center gap-2 font-heading font-bold text-base mb-3"></div>
+                    <div class="explanation-box p-4 md:p-5 rounded-xl text-sm md:text-base leading-relaxed">
+                        <div class="font-heading font-semibold text-xs tracking-wider uppercase mb-1.5 text-cyan-400">
+                            เหตุผลและคำอธิบายทางวิทยาศาสตร์
+                        </div>
+                        <div id="explanation-text" class="font-body"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex items-center justify-between gap-4">
+                <button id="btn-prev" onclick="navigatePrev()" class="py-2.5 px-5 rounded-xl font-heading text-sm border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-sub)] hover:text-[var(--text-main)] transition-colors disabled:opacity-30 disabled:pointer-events-none">
+                    ← ข้อก่อนหน้า
+                </button>
+                <div class="flex items-center gap-3">
+                    <button id="btn-action" onclick="handleActionButton()" class="py-2.5 px-6 rounded-xl font-heading font-semibold text-sm text-white bg-cyan-600 hover:bg-cyan-500 transition-colors shadow-md shadow-cyan-600/20">
+                        ตรวจคำตอบ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result / Score Summary View -->
+        <div id="result-view" class="hidden card-surface rounded-2xl p-6 md:p-8 text-center">
+            <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold font-heading bg-[var(--badge-bg)] text-[var(--badge-fg)] uppercase mb-3">
+                ผลการประเมินการทดสอบ
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold font-heading mb-6">บทสรุปคะแนนความรู้ดาราศาสตร์</h2>
+
+            <!-- SVG Circular Gauge -->
+            <div class="relative w-44 h-44 mx-auto mb-6 flex items-center justify-center">
+                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="42" class="gauge-circle-bg"></circle>
+                    <circle id="gauge-val" cx="50" cy="50" r="42" class="gauge-circle-val" stroke-dasharray="263.89" stroke-dashoffset="263.89"></circle>
+                </svg>
+                <div class="absolute flex flex-col items-center">
+                    <span id="score-percent" class="text-3xl font-bold font-heading text-cyan-400">0%</span>
+                    <span id="score-fraction" class="text-xs text-[var(--text-sub)] font-body">0 / 0 ข้อ</span>
+                </div>
+            </div>
+
+            <!-- Performance Remarks -->
+            <div id="performance-remark" class="text-base font-semibold font-heading mb-6 text-[var(--text-main)]"></div>
+
+            <!-- Breakdown by Category / Difficulty -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto mb-8 text-left">
+                <div class="p-4 rounded-xl border border-[var(--card-border)] bg-[var(--choice-bg)]">
+                    <div class="text-xs text-[var(--text-sub)] font-heading mb-1">ชุดมาตรฐาน (TruePlookpanya)</div>
+                    <div id="score-standard" class="text-lg font-bold font-heading text-emerald-400">-</div>
+                </div>
+                <div class="p-4 rounded-xl border border-[var(--card-border)] bg-[var(--choice-bg)]">
+                    <div class="text-xs text-[var(--text-sub)] font-heading mb-1">ชุดท้าทายแข่งขัน (สอวน. / สอบเข้า)</div>
+                    <div id="score-advanced" class="text-lg font-bold font-heading text-cyan-400">-</div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button onclick="reviewAnswers()" class="py-2.5 px-6 rounded-xl font-heading text-sm border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--text-main)] hover:border-cyan-500 transition-colors">
+                    ทบทวนเฉลยทุกข้อ
+                </button>
+                <button onclick="resetToSetup()" class="py-2.5 px-6 rounded-xl font-heading font-semibold text-sm text-white bg-cyan-600 hover:bg-cyan-500 transition-colors">
+                    ทำแบบทดสอบใหม่
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Embedded Exam JSON Database -->
+    <script id="exam-data-json" type="application/json">
+{
+  "exam_metadata": {
+    "id": 11049,
+    "title": "คลังข้อสอบ โลก ดาราศาสตร์และอวกาศ (ฉบับขยายความเข้มข้น + เฉลยละเอียด)",
+    "subject": "วิทยาศาสตร์และเทคโนโลยี (โลก ดาราศาสตร์ และอวกาศ)",
+    "level": "มัธยมศึกษาตอนต้น - มัธยมศึกษาตอนปลาย / เตรียมสอบแข่งขัน (MWIT, KVIS, TU, สอวน.)",
+    "total_questions": 35,
+    "sections": [
+      {
+        "name": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)",
+        "range": "ข้อ 1 - 20",
+        "description": "แนวข้อสอบพื้นฐานสาระโลก ดาราศาสตร์ และอวกาศ"
+      },
+      {
+        "name": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+        "range": "ข้อ 21 - 35",
+        "description": "ข้อสอบวิเคราะห์เชิงลึกและจุดลวงยอดนิยม (น้ำเกิด-น้ำตาย, คาบไทดัล, ปัจจัยฤดูกาล, ครีษมายัน, วิษุวัต, สุริยุปราคาวงแหวน, พระจันทร์สีเลือด, คอริออลิส, ทไวไลท์)"
+      }
+    ],
+    "source_url": "https://www.trueplookpanya.com/examination2/doExam?id=11049"
+  },
+  "questions": [
+    {
+      "question_no": 1,
+      "question_id": 136212,
+      "question": "ดาราศาสตร์คือวิชาที่ศึกษาเกี่ยวกับอะไร",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475506,
+          "text": "ดวงดาว",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475507,
+          "text": "ดวงดาวต่างๆ และโลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475508,
+          "text": "ระบบสุริยะ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475509,
+          "text": "ดวงดาว เนบิวลา และกาแล็กซี",
+          "is_correct": true
+        }
+      ],
+      "correct_choice": 4,
+      "correct_answer_text": "ดวงดาว เนบิวลา และกาแล็กซี",
+      "explanation": "ดาราศาสตร์ (Astronomy) คือการศึกษาวิทยาศาสตร์เกี่ยวกับวัตถุท้องฟ้าและปรากฏการณ์นอกชั้นบรรยากาศของโลกอย่างครอบคลุม ทั้งดวงดาว (ดาวฤกษ์ ดาวเคราะห์ ดาวหาง) เนบิวลา (กลุ่มก๊าซและฝุ่นในอวกาศ) กาแล็กซี และวิวัฒนาการของเอกภพ ตัวเลือกที่ 4 จึงครอบคลุมขอบเขตทางดาราศาสตร์ได้กว้างขวางและสมบูรณ์ที่สุด",
+      "difficulty": "foundation",
+      "topics": [
+        "นิยามดาราศาสตร์",
+        "วัตถุท้องฟ้า"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 2,
+      "question_id": 136213,
+      "question": "ข้อใดเรียงลำดับขนาดของดาวเคราะห์จากใหญ่ไปหาเล็กได้ถูกต้อง",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475510,
+          "text": "ดาวศุกร์ > ดาวอังคาร > ดาวพุธ",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475511,
+          "text": "ดาวเนปจูน > ดาวยูเรนัส > ดาวเสาร์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475512,
+          "text": "โลก > ดาวเนปจูน > ดาวพลูโต",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475513,
+          "text": "ดาวพฤหัสบดี > ดาวอังคาร > ดาวศุกร์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "ดาวศุกร์ > ดาวอังคาร > ดาวพุธ",
+      "explanation": "ขนาดเส้นผ่านศูนย์กลางเฉลี่ยของดาวเคราะห์เรียงจากใหญ่ไปเล็ก ได้แก่ ดาวพฤหัสบดี (142,984 กม.) > ดาวเสาร์ (120,536 กม.) > ดาวยูเรนัส (51,118 กม.) > ดาวเนปจูน (49,528 กม.) > โลก (12,742 กม.) > ดาวศุกร์ (12,104 กม.) > ดาวอังคาร (6,779 กม.) > ดาวพุธ (4,879 กม.) ดังนั้น ตัวเลือกที่ 1 (ดาวศุกร์ > ดาวอังคาร > ดาวพุธ) จึงเรียงลำดับจากใหญ่ไปเล็กได้ถูกต้อง",
+      "difficulty": "foundation",
+      "topics": [
+        "ขนาดดาวเคราะห์",
+        "ระบบสุริยะ"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 3,
+      "question_id": 136214,
+      "question": "ข้อใดส่งผลต่อการเกิดปรากฏการณ์กลางวันและกลางคืน",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475514,
+          "text": "ดวงจันทร์โคจรรอบโลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475515,
+          "text": "การหมุนรอบตัวเองของโลก",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475516,
+          "text": "โลกโคจรรอบดวงอาทิตย์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475517,
+          "text": "การหมุนรอบตัวเองของดวงจันทร์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "การหมุนรอบตัวเองของโลก",
+      "explanation": "โลกมีสัณฐานเป็นทรงกลมและหมุนรอบตัวเองจากทิศตะวันตกไปทิศตะวันออกครบ 1 รอบใช้เวลาประมาณ 24 ชั่วโมง ด้านที่หันเข้าหาดวงอาทิตย์จะสว่างเป็นเวลากลางวัน ส่วนด้านตรงข้ามที่อยู่ในเงามืดจะเป็นเวลากลางคืน การหมุนรอบตัวเองจึงทำให้เกิดการสลับระหว่างกลางวันและกลางคืน",
+      "difficulty": "foundation",
+      "topics": [
+        "กลางวันกลางคืน",
+        "การหมุนของโลก"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 4,
+      "question_id": 136215,
+      "question": "ข้อใดกล่าวถึงดวงจันทร์",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475518,
+          "text": "ดวงจันทร์ไม่มีบรรยากาศห่อหุ้ม ไม่มีแสงสว่างในตัวเอง",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475519,
+          "text": "ดวงจันทร์ไม่มีบรรยากาศห่อหุ้ม มีแสงสว่างในตัวเอง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475520,
+          "text": "ดวงจันทร์มีบรรยากาศห่อหุ้ม ไม่มีแสงสว่างในตัวเอง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475521,
+          "text": "ดวงจันทร์มีบรรยากาศห่อหุ้ม มีแสงสว่างในตัวเอง",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "ดวงจันทร์ไม่มีบรรยากาศห่อหุ้ม ไม่มีแสงสว่างในตัวเอง",
+      "explanation": "ดวงจันทร์เป็นดาวบริวารของโลก ไม่มีแสงสว่างในตัวเอง (แสงจันทร์ที่เราเห็นเกิดจากแสงอาทิตย์ตกกระทบแล้วสะท้อนมายังโลก) และเนื่องจากมีมวลและแรงโน้มถ่วงต่ำมาก (ประมาณ 1 ใน 6 ของโลก) จึงไม่สามารถยึดเหนี่ยวโมเลกุลแก๊สไว้ได้ ทำให้ดวงจันทร์ไม่มีชั้นบรรยากาศห่อหุ้ม",
+      "difficulty": "foundation",
+      "topics": [
+        "ลักษณะดวงจันทร์",
+        "บรรยากาศ"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 5,
+      "question_id": 136216,
+      "question": "ปรากฏการณ์น้ำขึ้นน้ำลง  เกิดจากอิทธิพลในข้อใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475522,
+          "text": "แรงดึงดูดระหว่างโลก  ดวงจันทร์  ดวงอาทิตย์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475523,
+          "text": "แรงดึงดูดระหว่างดวงจันทร์  ดวงอาทิตย์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475524,
+          "text": "แรงดึงดูดระหว่างโลก  ดวงอาทิตย์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475525,
+          "text": "แรงดึงดูดระหว่างดวงจันทร์  โลก",
+          "is_correct": true
+        }
+      ],
+      "correct_choice": 4,
+      "correct_answer_text": "แรงดึงดูดระหว่างดวงจันทร์  โลก",
+      "explanation": "ปรากฏการณ์น้ำขึ้นน้ำลงเกิดจากแรงดึงดูดทางโน้มถ่วงที่แตกต่างกัน (แรงไทดัล - Tidal force) โดยแรงดึงดูดระหว่างดวงจันทร์กับโลกมีอิทธิพลสูงสุดเนื่องจากดวงจันทร์อยู่ใกล้โลกมากที่สุด แม้ดวงอาทิตย์จะมีมวลมากกว่ามากแต่อยู่ไกลกว่ามาก",
+      "difficulty": "foundation",
+      "topics": [
+        "น้ำขึ้นน้ำลง",
+        "แรงโน้มถ่วง"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 6,
+      "question_id": 136217,
+      "question": "การโคจรระหว่าง  ดวงอาทิตย์  โลก  ดวงจันทร์  ในลักษณะใดที่ส่งผลต่อปรากฏการณ์สุริยุปราคา",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475526,
+          "text": "โลก  ดวงอาทิตย์  ดวงจันทร์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475527,
+          "text": "โลก  ดวงจันทร์  ดวงอาทิตย์",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475528,
+          "text": "ดวงอาทิตย์  โลก  ดวงจันทร์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475529,
+          "text": "ดวงจันทร์  ดวงอาทิตย์  โลก",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "โลก  ดวงจันทร์  ดวงอาทิตย์",
+      "explanation": "สุริยุปราคา (Solar Eclipse) เกิดขึ้นเมื่อดวงอาทิตย์ ดวงจันทร์ และโลก เรียงตัวอยู่ในแนวเส้นตรงเดียวกันในวันแรม 15 ค่ำ โดยมี 'ดวงจันทร์' อยู่ตรงกลางระหว่างโลกกับดวงอาทิตย์ (เรียงลำดับเป็น โลก - ดวงจันทร์ - ดวงอาทิตย์) เงาของดวงจันทร์จึงทอดลงมาบดบังดวงอาทิตย์เมื่อมองจากพื้นโลก",
+      "difficulty": "foundation",
+      "topics": [
+        "สุริยุปราคา",
+        "การเรียงตัวของดาว"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 7,
+      "question_id": 136218,
+      "question": "การหมุนรอบตัวเองของโลกไม่ทำให้เกิดปรากฏการณ์ในข้อใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475530,
+          "text": "ทิศ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475531,
+          "text": "ประเทศญี่ปุ่นสว่างเร็วกว่าประเทศไทย",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475532,
+          "text": "น้ำขึ้น - น้ำลง",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475533,
+          "text": "การขึ้น - ตกของดวงดาว",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "น้ำขึ้น - น้ำลง",
+      "explanation": "การหมุนรอบตัวเองของโลกทำให้เกิดการกำหนดทิศ การขึ้น-ตกของดวงอาทิตย์และดวงดาว และความต่างของเวลาในแต่ละเขตเวลา (เช่น ญี่ปุ่นอยู่ทางทิศตะวันออกจึงเห็นแสงสว่างก่อนไทย) ส่วนปรากฏการณ์น้ำขึ้น-น้ำลง มีสาเหตุหลักมาจากแรงดึงดูดโน้มถ่วง (แรงไทดัล) ของดวงจันทร์และดวงอาทิตย์กระทำต่อน้ำบนโลก",
+      "difficulty": "foundation",
+      "topics": [
+        "ผลจากการหมุนของโลก",
+        "ปรากฏการณ์บนโลก"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 8,
+      "question_id": 136219,
+      "question": "ถ้าเปรียบเทียบความแตกต่างระหว่างดาวฤกษ์ และดาวเคราะห์ข้อใดกล่าวไม่ถูกต้อง",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475534,
+          "text": "ดาวฤกษ์ เห็นแสงกระพริบ\nดาวเคราะห์ เห็นแสงนิ่งไม่กระพริบ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475535,
+          "text": "ดาวฤกษ์ มีจำนวนมาก\nดาวเคราะห์ มีจำนวนน้อย",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475536,
+          "text": "ดาวฤกษ์ มีขนาดใหญ่\nดาวเคราะห์ มีขนาดเล็ก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475537,
+          "text": "ดาวฤกษ์ อยู่โดดๆ\nดาวเคราะห์ อยู่เป็นกลุ่ม",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "ดาวฤกษ์ มีจำนวนมาก\nดาวเคราะห์ มีจำนวนน้อย",
+      "explanation": "ดาวฤกษ์ (Star) เป็นดาวที่มีแสงสว่างในตัวเอง จึงมองเห็นแสงกะพริบระยิบระยับเนื่องจากการหักเหผ่านชั้นบรรยากาศโลก ส่วนดาวเคราะห์ (Planet) ไม่มีแสงในตัวเอง สะท้อนแสงจากดาวฤกษ์และอยู่ใกล้โลกมากกว่าจึงเห็นแสงนิ่งไม่กะพริบ ในเอกภพมีดาวฤกษ์และดาวเคราะห์จำนวนมหาศาลนับไม่ถ้วน การระบุว่าดาวเคราะห์มีจำนวนน้อยจึงเป็นข้อความที่ไม่ถูกต้อง",
+      "difficulty": "foundation",
+      "topics": [
+        "เปรียบเทียบดาวฤกษ์และดาวเคราะห์"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 9,
+      "question_id": 136220,
+      "question": "วัตถุต่างๆ โคจรรอบดวงอาทิตย์ได้เพราะมีแรงโน้มถ่วง ขนาดของแรงโน้มถ่วงขึ้นอยู่กับสิ่งใด \n   1. มวลของวัตถุ\n   2. ระยะห่างระหว่างมวล\n   3. ขนาดเส้นผ่านศูนย์กลางของดวงอาทิตย์",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475538,
+          "text": "ข้อ 1 และข้อ 2",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475539,
+          "text": "ข้อ 1 และข้อ 3",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475540,
+          "text": "ข้อ 2 และข้อ 3",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475541,
+          "text": "ข้อ 1 ข้อ 2 และข้อ 3",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "ข้อ 1 และข้อ 2",
+      "explanation": "ตามกฎแรงดึงดูดระหว่างมวลของนิวตัน F = G(m1*m2)/r^2 ขนาดของแรงโน้มถ่วงจะขึ้นอยู่กับ 'มวลของวัตถุทั้งสอง' (ข้อ 1) และ 'ระยะห่างระหว่างจุดศูนย์กลางมวล' (ข้อ 2) เท่านั้น ไม่ได้ขึ้นกับขนาดเส้นผ่านศูนย์กลางของทรงกลมโดยตรง",
+      "difficulty": "foundation",
+      "topics": [
+        "กฎแรงโน้มถ่วงของนิวตัน",
+        "วงโคจร"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 10,
+      "question_id": 136221,
+      "question": "กาแล็กซีเพื่อนบ้านที่มองเห็นได้ด้วยตาเปล่า ได้แก่",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475542,
+          "text": "กาแล็กซีแอนโดรเมดา",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475543,
+          "text": "แมกเจลแลนใหญ่",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475544,
+          "text": "แมกเจลแลนเล็ก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475545,
+          "text": "ถูกทุกข้อ",
+          "is_correct": true
+        }
+      ],
+      "correct_choice": 4,
+      "correct_answer_text": "ถูกทุกข้อ",
+      "explanation": "กาแล็กซีเพื่อนบ้านในกลุ่มท้องถิ่น (Local Group) ที่มองเห็นได้ด้วยตาเปล่าในคืนมืดสนิทมี 3 กาแล็กซี ได้แก่ กาแล็กซีแอนโดรเมดา (Andromeda / M31) ทางซีกฟ้าเหนือ กาแล็กซีแมกเจลแลนใหญ่ (LMC) และกาแล็กซีแมกเจลแลนเล็ก (SMC) ทางซีกฟ้าใต้",
+      "difficulty": "foundation",
+      "topics": [
+        "กาแล็กซีเพื่อนบ้าน",
+        "กลุ่มท้องถิ่น"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 11,
+      "question_id": 136222,
+      "question": "พิจารณาข้อมูลต่อไปนี้\n   1. ดวงอาทิตย์ไม่มีการหมุนรอบตัวเอง\n   2. พลังงานดวงอาทิตย์มาถึงโลกได้โดยการแผ่รังสี\n   3. พลังงานจากดวงอาทิตย์เกิดปฏิกิริยาที่เรียกว่าเทอร์โมนิวเคลียร์ฟิวชัน\nข้อใดกล่าวถูกต้อง",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475546,
+          "text": "ข้อ 1 และข้อ 2",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475547,
+          "text": "ข้อ 1 และข้อ 3",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475548,
+          "text": "ข้อ 2 และข้อ 3",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475549,
+          "text": "ข้อ 1, 2 และข้อ 3",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "ข้อ 2 และข้อ 3",
+      "explanation": "ดวงอาทิตย์มีการหมุนรอบตัวเอง (บริเวณศูนย์สูตรหมุน 1 รอบประมาณ 25 วัน บริเวณขั้วประมาณ 35 วัน) ข้อ 1 จึงผิด ส่วนข้อ 2 ถูกต้องเพราะพลังงานเดินทางผ่านอวกาศอันเป็นสุญญากาศมายังโลกโดยการแผ่รังสี (Radiation) และข้อ 3 ถูกต้องเพราะพลังงานผลิตจากปฏิกิริยานิวเคลียร์ฟิวชัน (Thermonuclear fusion) ที่แก่นกลางของดวงอาทิตย์",
+      "difficulty": "foundation",
+      "topics": [
+        "ดวงอาทิตย์",
+        "ปฏิกิริยานิวเคลียร์ฟิวชัน",
+        "การแผ่รังสี"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 12,
+      "question_id": 136223,
+      "question": "นักวิทยาศาสตร์คนหนึ่งชั่งน้ำหนักบนโลกหนัก 60 กิโลกรัม ถ้าไปชั่งน้ำหนักบนดวงจันทร์เขาจะมีน้ำหนักเท่าใด  เพราะเหตุใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475550,
+          "text": "60 กิโลกรัม  เพราะดวงจันทร์มีแรงโน้มถ่วงเท่ากับโลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475551,
+          "text": "10 กิโลกรัม  เพราะดวงจันทร์มีแรงโน้มถ่วงน้อยกว่าโลก 6 เท่า",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475552,
+          "text": "630 กิโลกรัม  เพราะดวงจันทร์มีแรงโน้มถ่วงมากกว่าโลก 6 เท่า",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475553,
+          "text": "60  กิโลกรัมเพราะดวงจันทร์เป็นบริวารของโลกและโคจรรอบโลก",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "10 กิโลกรัม  เพราะดวงจันทร์มีแรงโน้มถ่วงน้อยกว่าโลก 6 เท่า",
+      "explanation": "แรงโน้มถ่วงบนพื้นผิวดวงจันทร์มีค่าประมาณ 1/6 ของแรงโน้มถ่วงบนโลก (g_moon ≈ g_earth / 6) เครื่องชั่งสปริงที่ปรับเทียบตามแรงโน้มถ่วงบนโลกเมื่อนำไปชั่งบนดวงจันทร์จะวัดแรงกดได้ลดลง 6 เท่า คือ 60 / 6 = 10 กิโลกรัม",
+      "difficulty": "foundation",
+      "topics": [
+        "แรงโน้มถ่วงบนดวงจันทร์",
+        "การคำนวณน้ำหนัก"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 13,
+      "question_id": 136224,
+      "question": "ดาวเคราะห์ในระบบสุริยะ ถ้าแบ่งโดยใช้ระยะห่างจากดวงอาทิตย์และแถบดาวเคราะห์น้อยเป็นเกณฑ์ ดาวเคราะห์ในข้อใดจัดเป็นดาวเคราะห์ชั้นใน",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475554,
+          "text": "ดาวพุธ  ดาวพฤหัสบดี  ดาวศุกร์  โลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475555,
+          "text": "ดาวพุธ  ดาวพฤหัสบดี  ดาวอังคาร  โลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475556,
+          "text": "ดาวอังคาร  ดาวพุธ  ดาวเสาร์  โลก",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475557,
+          "text": "ดาวพุธ  ดาวศุกร์  โลก  ดาวอังคาร",
+          "is_correct": true
+        }
+      ],
+      "correct_choice": 4,
+      "correct_answer_text": "ดาวพุธ  ดาวศุกร์  โลก  ดาวอังคาร",
+      "explanation": "การแบ่งดาวเคราะห์โดยใช้แถบดาวเคราะห์น้อยเป็นเกณฑ์ จะแบ่งออกเป็น: 1) ดาวเคราะห์ชั้นใน (Inner planets) คือดาวเคราะห์หินที่อยู่ระหว่างดวงอาทิตย์กับแถบดาวเคราะห์น้อย ได้แก่ ดาวพุธ ดาวศุกร์ โลก และดาวอังคาร 2) ดาวเคราะห์ชั้นนอก (Outer planets) คือดาวเคราะห์แก๊สที่อยู่นอกแถบดาวเคราะห์น้อย ได้แก่ ดาวพฤหัสบดี ดาวเสาร์ ดาวยูเรนัส และดาวเนปจูน",
+      "difficulty": "foundation",
+      "topics": [
+        "ดาวเคราะห์ชั้นใน",
+        "แถบดาวเคราะห์น้อย"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 14,
+      "question_id": 136225,
+      "question": "ดาวเคราะห์ในข้อใดเห็นได้ด้วยตาเปล่าทั้งหมด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475558,
+          "text": "ดาวศุกร์ ดาวพฤหัสบดี ดาวเสาร์ ดาวอังคาร และดาวพุธ",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475559,
+          "text": "ดาวศุกร์ ดาวยูเรนัส ดาวเนปจูน ดาวอังคาร และดาวพุธ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475560,
+          "text": "ดาวยูเรนัส ดาวพฤหัสบดี ดาวเสาร์ ดาวอังคาร และดาวเนปจูน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475561,
+          "text": "ดาวศุกร์ ดาวพฤหัสบดี ดาวยูเรนัส ดาวอังคาร และดาวเนปจูน",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "ดาวศุกร์ ดาวพฤหัสบดี ดาวเสาร์ ดาวอังคาร และดาวพุธ",
+      "explanation": "ดาวเคราะห์ในระบบสุริยะที่สามารถมองเห็นได้ด้วยตาเปล่าจากโลก (ดาวเคราะห์โบราณทั้ง 5) ได้แก่ ดาวพุธ ดาวศุกร์ ดาวอังคาร ดาวพฤหัสบดี และดาวเสาร์ ส่วนดาวยูเรนัสและดาวเนปจูนมีความสว่างน้อย ต้องใช้กล้องโทรทรรศน์ช่วยในการสังเกต",
+      "difficulty": "foundation",
+      "topics": [
+        "ดาวเคราะห์ที่มองเห็นด้วยตาเปล่า"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 15,
+      "question_id": 136226,
+      "question": "ดาวเคราะห์ทุกดวงในระบบสุริยะจะโคจรรอบดวงอาทิตย์เป็นวงรี และอยู่ในระนาบเดียวกันทั้งหมด ยกเว้นดาวเคราะห์ดวงใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475562,
+          "text": "ดาวเสาร์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475563,
+          "text": "ดาวยูเรนัส",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475564,
+          "text": "ดาวเนปจูน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475565,
+          "text": "ดาวพลูโต",
+          "is_correct": true
+        }
+      ],
+      "correct_choice": 4,
+      "correct_answer_text": "ดาวพลูโต",
+      "explanation": "ดาวเคราะห์บริวารหลักทั้ง 8 ดวงจะโคจรรอบดวงอาทิตย์เกือบอยู่ในระนาบสุริยวิถีเดียวกัน (เอียงไม่เกิน 7 องศา) แต่ดาวพลูโตมีระนาบวงโคจรที่เอียงทำมุมกับระนาบสุริยวิถีมากถึงประมาณ 17 องศา และมีความรีสูงมาก (ปัจจุบันดาวพลูโตถูกจัดเป็นดาวเคราะห์แคระตามมติ IAU ปี 2006)",
+      "difficulty": "foundation",
+      "topics": [
+        "ความเอียงของวงโคจร",
+        "ดาวพลูโต"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 16,
+      "question_id": 136227,
+      "question": "ปัจจุบันนี้เอกภพ มีการเคลื่อนที่อย่างไร",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475566,
+          "text": "อยู่นิ่ง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475567,
+          "text": "เคลื่อนที่เข้ามารวมกัน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475568,
+          "text": "ขยายตัวออกจากกัน",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475569,
+          "text": "ยังไม่มีข้อมูล",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "ขยายตัวออกจากกัน",
+      "explanation": "จากการค้นพบของเอ็ดวิน ฮับเบิล (Hubble's Law) ร่วมกับการสังเกตปรากฏการณ์การเลื่อนทางแดง (Redshift) ของกาแล็กซีระยะไกล แสดงให้เห็นว่าระยะห่างระหว่างกาแล็กซีส่วนใหญ่กำลังเพิ่มขึ้น ซึ่งพิสูจน์ว่าเอกภพกำลังขยายตัวออกจากกันอย่างต่อเนื่อง",
+      "difficulty": "foundation",
+      "topics": [
+        "การขยายตัวของเอกภพ",
+        "กฎของฮับเบิล"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 17,
+      "question_id": 136228,
+      "question": "การระเบิดจ้าบนดวงอาทิตย์ หรือพายุสุริยะ มีผลกระทบต่อโลกด้านใดมากที่สุด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475570,
+          "text": "ด้านการเมืองด้านการเมือง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475571,
+          "text": "ด้านการสื่อสาร",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475572,
+          "text": "การอุตสาหกรรม",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475573,
+          "text": "ด้านการคมนาคม",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "ด้านการสื่อสาร",
+      "explanation": "การลุกจ้า (Solar flare) และพายุสุริยะ ปลดปล่อยอนุภาคมีประจุพลังงานสูงและคลื่นแม่เหล็กไฟฟ้ามากระทบกับชั้นบรรยากาศไอโอโนสเฟียร์และสนามแม่เหล็กโลก ก่อให้เกิดพายุสนามแม่เหล็กโลก (Geomagnetic storm) ซึ่งรบกวนคลื่นวิทยุ การสื่อสารผ่านดาวเทียม สัญญาณ GPS และระบบโทรคมนาคมมากที่สุด",
+      "difficulty": "foundation",
+      "topics": [
+        "พายุสุริยะ",
+        "ผลกระทบต่อโลก",
+        "การสื่อสาร"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 18,
+      "question_id": 136229,
+      "question": "ข้อใดกล่าวไม่ถูกต้อง",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475574,
+          "text": "ดาวศุกร์เป็นดาวเคราะห์ที่มีขนาดใกล้เคียงกับโลกมากที่สุด",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475575,
+          "text": "ดาวพุธอยู่ใกล้ดวงอาทิตย์มากที่สุดและเป็นดาวเคราะห์ที่มีขนาดเล็กที่สุดในระบบสุริยะ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475576,
+          "text": "ดาวเคราะห์ที่มีส่วนประกอบเป็นหินและโลหะ ได้แก่ ดาวพุธ ดาวอังคาร ดาวศุกร์ และดาวพฤหัส",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475577,
+          "text": "ดาวยูเรนัสมีแกนหมุนรอบตัวเองแตกต่างจากดาวเคราะห์ดวงอื่นๆ ในระบบสุริยะ",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "ดาวเคราะห์ที่มีส่วนประกอบเป็นหินและโลหะ ได้แก่ ดาวพุธ ดาวอังคาร ดาวศุกร์ และดาวพฤหัส",
+      "explanation": "ตัวเลือกที่ 3 ผิด เนื่องจาก 'ดาวพฤหัสบดี' เป็นดาวเคราะห์แก๊สยักษ์ (Gas giant) มีองค์ประกอบหลักเป็นไฮโดรเจนและฮีเลียม ไม่ใช่ดาวเคราะห์หินและโลหะ (ดาวเคราะห์หินมีเพียง 4 ดวงคือ พุธ ศุกร์ โลก อังคาร) ส่วนตัวเลือก 1, 2, 4 ถูกต้องทั้งหมด",
+      "difficulty": "foundation",
+      "topics": [
+        "สมบัติของดาวเคราะห์",
+        "ดาวเคราะห์หินและแก๊ส"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 19,
+      "question_id": 136230,
+      "question": "ดาวเคราะห์น้อยอยู่ที่บริเวณใดในระบบสุริยะ",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475578,
+          "text": "อยู่นอกวงโคจรของดาวพลูโต",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475579,
+          "text": "อยู่ระหว่างวงโคจรของดาวพฤหัสบดี  และดาวเสาร์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475580,
+          "text": "อยู่ระหว่างวงโคจรของดาวอังคาร  และดาวพฤหัสบดี",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475581,
+          "text": "อยู่ระหว่างวงโคจรของดาวเสาร์  และดาวยูเรนัส",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "อยู่ระหว่างวงโคจรของดาวอังคาร  และดาวพฤหัสบดี",
+      "explanation": "แถบดาวเคราะห์น้อยหลัก (Main Asteroid Belt) ตั้งอยู่บริเวณช่องว่างระหว่างวงโคจรของ 'ดาวอังคารและดาวพฤหัสบดี' ประกอบด้วยหินและโลหะที่ไม่สามารถรวมตัวกันเป็นดาวเคราะห์ได้เนื่องจากแรงรบกวนทางโน้มถ่วงมหาศาลของดาวพฤหัสบดี",
+      "difficulty": "foundation",
+      "topics": [
+        "ตำแหน่งแถบดาวเคราะห์น้อย"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 20,
+      "question_id": 136231,
+      "question": "เนบิวลา มีลักษณะอย่างไร",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 475582,
+          "text": "กลุ่มของดาวฤกษ์",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 475583,
+          "text": "กลุ่มของดาวหาง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 475584,
+          "text": "กลุ่มของฝุ่นและแก๊ส",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 475585,
+          "text": "กลุ่มของดาวเคราะห์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "กลุ่มของฝุ่นและแก๊ส",
+      "explanation": "เนบิวลา (Nebula) คือกลุ่มเมฆหมอกขนาดยักษ์ในอวกาศที่ประกอบไปด้วย 'ฝุ่นระหว่างดวงดาว (Interstellar dust) และแก๊ส' (ส่วนใหญ่เป็นไฮโดรเจนและฮีเลียม) ซึ่งทำหน้าที่เป็นแหล่งกำเนิดดาวฤกษ์ดวงใหม่ (Stellar nursery) หรือเป็นซากแก๊สที่หลงเหลือจากการระเบิดสิ้นอายุขัยของดาวฤกษ์",
+      "difficulty": "foundation",
+      "topics": [
+        "เนบิวลา",
+        "องค์ประกอบในอวกาศ"
+      ],
+      "section": "ข้อสอบมาตรฐาน (TruePlookpanya ชุดที่ 1)"
+    },
+    {
+      "question_no": 21,
+      "question_id": 200001,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "น้ำเกิดน้ำตาย",
+        "แรงไทดัล",
+        "ดิถีดวงจันทร์"
+      ],
+      "question": "ในวันขึ้น 15 ค่ำ และวันแรม 15 ค่ำ จะเกิดปรากฏการณ์น้ำขึ้น-น้ำลงในลักษณะใด และมีสาเหตุทางดาราศาสตร์มาจากสิ่งใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900001,
+          "text": "เกิดน้ำตาย (Neap Tides) เพราะดวงอาทิตย์ โลก และดวงจันทร์ ตั้งฉากซึ่งกันและกัน ทำให้แรงดึงดูดหักล้างกัน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900002,
+          "text": "เกิดน้ำตาย (Neap Tides) เพราะดวงจันทร์อยู่ใกล้โลกมากที่สุด ทำให้ระดับน้ำทะเลคงที่สม่ำเสมอตลอดวัน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900003,
+          "text": "เกิดน้ำเกิด (Spring Tides) เพราะดวงอาทิตย์ โลก และดวงจันทร์ เรียงตัวอยู่ในแนวเส้นตรงเดียวกัน ทำให้แรงไทดัลเสริมกัน",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900004,
+          "text": "เกิดน้ำเกิด (Spring Tides) เพราะโลกหมุนรอบตัวเองเร็วขึ้นผิดปกติตามแรงดึงดูดของดวงอาทิตย์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "เกิดน้ำเกิด (Spring Tides) เพราะดวงอาทิตย์ โลก และดวงจันทร์ เรียงตัวอยู่ในแนวเส้นตรงเดียวกัน ทำให้แรงไทดัลเสริมกัน",
+      "explanation": "ในวันเพ็ญ (ขึ้น 15 ค่ำ) และวันเดือนดับ (แรม 15 ค่ำ) ดวงอาทิตย์ โลก และดวงจันทร์ จะโคจรมาเรียงตัวอยู่ในแนวเส้นตรงเดียวกัน เรียกว่า สภาวะซิซีจี (Syzygy) ทำให้แรงไทดัลจากดวงจันทร์และดวงอาทิตย์เสริมแรงซึ่งกันและกัน ส่งผลให้เกิด 'น้ำเกิด' (Spring Tides) คือ เวลาน้ำขึ้นจะขึ้นสูงที่สุด และเวลาน้ำลงจะลงต่ำที่สุด (พิสัยของระดับน้ำหรือ Tidal Range มีค่ากว้างที่สุดในรอบเดือน)"
+    },
+    {
+      "question_no": 22,
+      "question_id": 200002,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "คาบเวลาน้ำขึ้นน้ำลง",
+        "วันไทดัล",
+        "การโคจรของดวงจันทร์"
+      ],
+      "question": "หากวันนี้ ณ ชายหาดแห่งหนึ่ง น้ำทะเลขึ้นสูงสุดเวลา 08:00 น. ในวันพรุ่งนี้ น้ำทะเลในรอบเวลาเดียวกัน (Corresponding High Tide) จะขึ้นสูงสุดในเวลาประมาณเท่าใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900005,
+          "text": "08:00 น. พอดี เพราะโลกหมุนรอบตัวเองครบหนึ่งรอบใช้เวลา 24 ชั่วโมงตรง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900006,
+          "text": "08:25 น. เพราะการขึ้นของน้ำทะเลขึ้นอยู่กับแรงดึงดูดของดวงอาทิตย์ครึ่งหนึ่ง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900007,
+          "text": "08:50 น. เพราะขณะที่โลกหมุนรอบตัวเอง ดวงจันทร์ก็โคจรไปข้างหน้ารอบโลก ทำให้ตำแหน่งเดิมต้องหมุนตามไปอีกประมาณ 50 นาที",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900008,
+          "text": "09:15 น. เพราะความหน่วงของแรงเสียดทานระหว่างมวลน้ำกับพื้นมหาสมุทร",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "08:50 น. เพราะขณะที่โลกหมุนรอบตัวเอง ดวงจันทร์ก็โคจรไปข้างหน้ารอบโลก ทำให้ตำแหน่งเดิมต้องหมุนตามไปอีกประมาณ 50 นาที",
+      "explanation": "ดวงจันทร์โคจรรอบโลกไปในทิศทางเดียวกับการหมุนของโลกวันละประมาณ 13.2 องศา ดังนั้นเมื่อโลกหมุนรอบตัวเองครบ 24 ชั่วโมง จุดเดิมบนโลกยังไม่ตรงกับตำแหน่งดวงจันทร์ โลกต้องหมุนต่อไปอีกประมาณ 50 นาทีจึงจะกลับมาอยู่ตรงแนวเดียวกับดวงจันทร์อีกครั้ง เรียกว่า คาบวันทางจันทรคติหรือวันไทดัล (Tidal Day ยาวประมาณ 24 ชม. 50 นาที) ทำให้น้ำขึ้นในรอบเวลาเดิมของวันถัดไปจะมาช้ากว่าเดิมประมาณ 50 นาที (08:50 น.)"
+    },
+    {
+      "question_no": 23,
+      "question_id": 200003,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "ฤดูกาล",
+        "แกนโลกเอียง",
+        "มุมตกกระทบของแสง"
+      ],
+      "question": "ข้อใดอธิบายสาเหตุหลักที่แท้จริงของการเกิด 'ฤดูกาล' (Seasons) บนโลกได้ถูกต้องตามหลักฟิสิกส์ดาราศาสตร์",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900009,
+          "text": "วงโคจรของโลกเป็นวงรี ทำให้ช่วงฤดูร้อนโลกอยู่ใกล้ดวงอาทิตย์มากที่สุด และฤดูหนาวโลกอยู่ไกลดวงอาทิตย์มากที่สุด",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900010,
+          "text": "แกนหมุนของโลกเอียง 23.5 องศาจากแนวตั้งฉากระนาบทางโคจร ทำให้มุมตกกระทบของรังสีอาทิตย์และความยาวนานของกลางวันเปลี่ยนไปตลอดปี",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900011,
+          "text": "การเปลี่ยนแปลงของจำนวนจุดดับบนดวงอาทิตย์และการปะทุของพายุสุริยะที่แผ่รังสีมายังโลกไม่เท่ากันในแต่ละเดือน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900012,
+          "text": "ความเร็วในการหมุนรอบตัวเองของโลกชะลอตัวลงในฤดูหนาวและหมุนเร็วขึ้นในฤดูร้อน",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "แกนหมุนของโลกเอียง 23.5 องศาจากแนวตั้งฉากระนาบทางโคจร ทำให้มุมตกกระทบของรังสีอาทิตย์และความยาวนานของกลางวันเปลี่ยนไปตลอดปี",
+      "explanation": "สาเหตุหลักของการเกิดฤดูกาลไม่ใช่ระยะห่างระหว่างโลกกับดวงอาทิตย์ (ความจริงคือโลกอยู่ใกล้ดวงอาทิตย์ที่สุดในเดือนมกราคมซึ่งเป็นฤดูหนาวของซีกโลกเหนือ) แต่เกิดจาก 'แกนหมุนของโลกเอียงประมาณ 23.5 องศาเทียบกับแนวตั้งฉากระนาบวงโคจร' ส่งผลให้ในรอบ 1 ปี ซีกโลกเหนือและซีกโลกใต้สลับกันเอียงรับแสงจากดวงอาทิตย์ด้วยมุมตกกระทบที่ชันกว่า (ความเข้มพลังงานต่อพื้นที่สูงกว่า) และมีช่วงเวลากลางวันยาวนานกว่า"
+    },
+    {
+      "question_no": 24,
+      "question_id": 200004,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "วันครีษมายัน",
+        "พระอาทิตย์เที่ยงคืน",
+        "Solstice"
+      ],
+      "question": "ในวันที่ 21 หรือ 22 มิถุนายน ซึ่งตรงกับ 'วันครีษมายัน' (Summer Solstice) ปรากฏการณ์บนโลกในข้อใดกล่าวถูกต้อง",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900013,
+          "text": "ซีกโลกเหนือมีช่วงเวลากลางคืนยาวนานกว่าช่วงเวลากลางวัน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900014,
+          "text": "ผู้สังเกต ณ ละติจูด 23.5 องศาเหนือ จะเห็นดวงอาทิตย์อยู่ตรงจุดเหนือศีรษะ (Zenith) พอดีในเวลาเที่ยงวันสุริยคติ",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900015,
+          "text": "บริเวณขั้วโลกใต้ (South Pole) จะเกิดปรากฏการณ์พระอาทิตย์เที่ยงคืน (Midnight Sun)",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900016,
+          "text": "ดวงอาทิตย์จะขึ้นทางทิศตะวันออกแท้ (มุมทิศ 90 องศา) และตกทางทิศตะวันตกแท้ สำหรับทุกละติจูดบนโลก",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "ผู้สังเกต ณ ละติจูด 23.5 องศาเหนือ จะเห็นดวงอาทิตย์อยู่ตรงจุดเหนือศีรษะ (Zenith) พอดีในเวลาเที่ยงวันสุริยคติ",
+      "explanation": "วันครีษมายัน แกนโลกซีกเหนือเอียงเข้าหาดวงอาทิตย์มากที่สุดในรอบปี ทำให้: 1) แสงอาทิตย์ส่องตั้งฉากกับพื้นโลกที่เส้นทรอปิกออฟแคนเซอร์ (Tropic of Cancer ละติจูด 23.5° N) ผู้สังเกตที่นี่จึงเห็นดวงอาทิตย์อยู่ตรงจุดจอมฟ้า (Zenith) ตอนเที่ยงวันสุริยคติ 2) ซีกโลกเหนือมีกลางวันยาวที่สุดและกลางคืนสั้นที่สุด 3) เหนือเส้นอาร์กติกเซอร์เคิล (66.5° N ขึ้นไป) เกิดพระอาทิตย์เที่ยงคืน (ไม่ใช่ขั้วโลกใต้) 4) ดวงอาทิตย์ขึ้นทางทิศตะวันออกเฉียงเหนือและตกทางทิศตะวันตกเฉียงเหนือ"
+    },
+    {
+      "question_no": 25,
+      "question_id": 200005,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "วันวิษุวัต",
+        "Equinox",
+        "ทิศทางขึ้นตกของดวงอาทิตย์"
+      ],
+      "question": "ในวันวสันตวิษุวัต (Vernal Equinox ประมาณ 21 มี.ค.) และวันศารทวิษุวัต (Autumnal Equinox ประมาณ 22-23 ก.ย.) ท้องฟ้าและแสงสว่างบนโลกมีลักษณะเด่นอย่างไร",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900017,
+          "text": "ทุกหนแห่งบนโลกมีช่วงเวลากลางวันและกลางคืนยาวนาน 12 ชั่วโมงเท่ากัน และดวงอาทิตย์ขึ้นทางทิศตะวันออกแท้ ตกทางทิศตะวันตกแท้",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900018,
+          "text": "ซีกโลกเหนือเริ่มเข้าสู่ฤดูหนาว และซีกโลกใต้เริ่มเข้าสู่ฤดูร้อนอย่างเป็นทางการ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900019,
+          "text": "ดวงอาทิตย์โคจรมาผ่านจุดเหนือศีรษะของผู้สังเกตที่บริเวณขั้วโลกเหนือและขั้วโลกใต้",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900020,
+          "text": "ดวงอาทิตย์จะขึ้นทางทิศตะวันออกเฉียงเหนือ และตกทางทิศตะวันตกเฉียงใต้ สำหรับประเทศไทย",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "ทุกหนแห่งบนโลกมีช่วงเวลากลางวันและกลางคืนยาวนาน 12 ชั่วโมงเท่ากัน และดวงอาทิตย์ขึ้นทางทิศตะวันออกแท้ ตกทางทิศตะวันตกแท้",
+      "explanation": "วันวิษุวัต (Equinox แปลว่า กลางคืนเท่ากัน) เป็นวันที่ตำแหน่งปรากฏของดวงอาทิตย์ตั้งฉากกับเส้นศูนย์สูตรของโลก (Equator) ทำให้ระนาบแบ่งกลางวัน-กลางคืนผ่านขั้วโลกทั้งสอง ทุกละติจูดบนโลกจะมีช่วงเวลากลางวันและกลางคืนยาวนานเท่ากันประมาณ 12 ชั่วโมง และเป็นวันที่ดวงอาทิตย์ขึ้นทางทิศตะวันออกแท้ (Azimuth 90°) และตกทางทิศตะวันตกแท้ (Azimuth 270°) พอดิบพอดี"
+    },
+    {
+      "question_no": 26,
+      "question_id": 200006,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "เงื่อนไขการเกิดคราส",
+        "ระนาบวงโคจรดวงจันทร์",
+        "โหนด"
+      ],
+      "question": "ในเมื่อดวงจันทร์โคจรรอบโลกครบหนึ่งรอบจันทรคติทุกๆ 29.5 วัน เหตุใดจึง 'ไม่เกิด' สุริยุปราคาในวันแรม 15 ค่ำ และจันทรุปราคาในวันขึ้น 15 ค่ำเป็นประจำทุกเดือน",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900021,
+          "text": "เพราะความเร็วในการโคจรของดวงจันทร์ไม่คงที่ ทำให้เงาเคลื่อนผ่านโลกเร็วเกินกว่าจะสังเกตเห็น",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900022,
+          "text": "เพราะระนาบวงโคจรของดวงจันทร์รอบโลกเอียงทำมุมประมาณ 5 องศากับระนาบสุริยวิถี (Ecliptic)",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900023,
+          "text": "เพราะขนาดปรากฏของดวงอาทิตย์ใหญ่กว่าดวงจันทร์เสมอ ยกเว้นเดือนที่มีสภาพอากาศหนาวเย็น",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900024,
+          "text": "เพราะสนามแม่เหล็กโลกเบี่ยงเบนแนวลำแสงอาทิตย์ไม่ให้ตรงกับระนาบของดวงจันทร์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "เพราะระนาบวงโคจรของดวงจันทร์รอบโลกเอียงทำมุมประมาณ 5 องศากับระนาบสุริยวิถี (Ecliptic)",
+      "explanation": "ระนาบวงโคจรของดวงจันทร์ไม่ได้วางตัวระนาบเดียวกับระนาบทางโคจรของโลกรอบดวงอาทิตย์ (ระนาบสุริยวิถี) แต่ทำมุมเอียงประมาณ 5.14 องศา ในวันขึ้น 15 ค่ำ หรือแรม 15 ค่ำส่วนใหญ่ ดวงจันทร์จึงมักอยู่เหนือหรือใต้ระนาบสุริยวิถี เงาของโลกหรือเงาดวงจันทร์จึงทอดข้ามผ่านไป การจะเกิดคราส (Eclipse) ได้ จะต้องเป็นช่วงที่ดวงจันทร์โคจรมาอยู่ใกล้จุดตัดของระนาบทั้งสองพอดี ซึ่งเรียกว่า จุดโหนด (Lunar Nodes)"
+    },
+    {
+      "question_no": 27,
+      "question_id": 200007,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "สุริยุปราคาวงแหวน",
+        "เงามัวต่อขยาย",
+        "Apogee"
+      ],
+      "question": "ปรากฏการณ์ 'สุริยุปราคาวงแหวน' (Annular Solar Eclipse) เกิดขึ้นภายใต้เงื่อนไขเรขาคณิตดาราศาสตร์ในข้อใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900025,
+          "text": "ดวงจันทร์โคจรอยู่ใกล้โลกมากที่สุด (Perigee) ทำให้เงามืดมีขนาดใหญ่เกินกว่าจะบดบังได้มิด",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900026,
+          "text": "ดวงจันทร์โคจรอยู่ใกล้ระยะไกลโลกมากที่สุด (Apogee) ทำให้ขนาดปรากฏของดวงจันทร์เล็กกว่าดวงอาทิตย์ และยอดกรวยเงาแท้ทอดไปไม่ถึงพื้นผิวโลก",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900027,
+          "text": "โลกโคจรอยู่ไกลดวงอาทิตย์มากที่สุด (Aphelion) ทำให้ขนาดปรากฏของดวงอาทิตย์ใหญ่จนล้นขอบเงามืด",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900028,
+          "text": "ชั้นบรรยากาศของโลกหักเหแสงสีแดงจากดวงอาทิตย์ให้โค้งล้อมรอบขอบของดวงจันทร์",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "ดวงจันทร์โคจรอยู่ใกล้ระยะไกลโลกมากที่สุด (Apogee) ทำให้ขนาดปรากฏของดวงจันทร์เล็กกว่าดวงอาทิตย์ และยอดกรวยเงาแท้ทอดไปไม่ถึงพื้นผิวโลก",
+      "explanation": "เนื่องจากวงโคจรของดวงจันทร์เป็นวงรี เมื่อดวงจันทร์อยู่ที่จุดไกลโลกที่สุด (Apogee) ขนาดเชิงมุมหรือขนาดปรากฏของดวงจันทร์จะเล็กลงจนเล็กกว่าขนาดปรากฏของดวงอาทิตย์ เมื่อเกิดการบดบัง ยอดกรวยเงามืดแท้ (Umbra) จะทอดสิ้นสุดลงในอวกาศก่อนถึงพื้นโลก ผู้สังเกตที่อยู่บนโลกบริเวณใต้แนว 'เงามัวต่อขยาย' (Antumbra) จะมองเห็นดวงจันทร์บังใจกลางดวงอาทิตย์ แต่เหลือขอบสว่างล้อมรอบคล้ายวงแหวนไฟ"
+    },
+    {
+      "question_no": 28,
+      "question_id": 200008,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "จันทรุปราคาเต็มดวง",
+        "พระจันทร์สีเลือด",
+        "การกระเจิงเรย์ลีห์"
+      ],
+      "question": "ในขณะที่เกิด 'จันทรุปราคาเต็มดวง' (Total Lunar Eclipse) เหตุใดดวงจันทร์จึงไม่มืดมิดสนิท แต่มักปรากฏเป็นสีแดงส้มหรือสีแดงอิฐ (Blood Moon)",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900029,
+          "text": "ดวงจันทร์แผ่รังสีความร้อนช่วงคลื่นอินฟราเรดและแสงสีแดงออกมาจากหินบะซอลต์บนพื้นผิว",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900030,
+          "text": "แสงอาทิตย์เดินทางผ่านบรรยากาศโลก แสงคลื่นสั้นกระเจิงออกไปหมด เหลือแสงสีแดงหักเหไปตกกระทบผิวดวงจันทร์แล้วสะท้อนกลับมา",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900031,
+          "text": "แสงสีแดงจากการลุกจ้าของพายุสุริยะพุ่งตรงกระทบดวงจันทร์โดยตรงโดยไม่ถูกโลกบดบัง",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900032,
+          "text": "ก๊าซฮีเลียมและไฮโดรเจนรอบดวงจันทร์เรืองแสงเป็นสีแดงเมื่อได้รับอนุภาคจากลมสุริยะ",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "แสงอาทิตย์เดินทางผ่านบรรยากาศโลก แสงคลื่นสั้นกระเจิงออกไปหมด เหลือแสงสีแดงหักเหไปตกกระทบผิวดวงจันทร์แล้วสะท้อนกลับมา",
+      "explanation": "เมื่อดวงจันทร์เข้าไปอยู่ในเงามืดแท้ (Umbra) ของโลก แสงอาทิตย์บางส่วนยังคงเดินทางเฉียดผ่านชั้นบรรยากาศของโลก การกระเจิงของเรย์ลีห์ (Rayleigh Scattering) ทำให้แสงคลื่นสั้น (สีน้ำเงินและม่วง) กระเจิงออกไปในบรรยากาศโลกเกือบหมด เหลือเพียงแสงคลื่นยาว (สีส้มและแดง) ที่เดินทางผ่านและเกิดการหักเห (Refraction) โค้งเข้าไปในเงามืด ตกกระทบพื้นผิวดวงจันทร์และสะท้อนกลับมาเข้าตาเรา ทำให้เห็นดวงจันทร์เป็นสีแดงอิฐ"
+    },
+    {
+      "question_no": 29,
+      "question_id": 200009,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "ดวงอาทิตย์ตั้งฉาก",
+        "ละติจูดประเทศไทย",
+        "Zenith"
+      ],
+      "question": "กรุงเทพมหานครตั้งอยู่ที่ละติจูดประมาณ 13.7 องศาเหนือ ในรอบ 1 ปี ชาวกรุงเทพฯ จะสังเกตเห็นดวงอาทิตย์ผ่านจุดเหนือศีรษะ (ไร้เงาเวลาเที่ยงวันสุริยคติ) กี่ครั้ง และเกิดขึ้นในช่วงเวลาใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900033,
+          "text": "1 ครั้ง ในวันที่ 21 มิถุนายน (วันครีษมายัน)",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900034,
+          "text": "2 ครั้ง ในช่วงปลายเดือนเมษายน (ประมาณ 26-27 เม.ย.) และช่วงกลางเดือนสิงหาคม (ประมาณ 16 ส.ค.)",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900035,
+          "text": "2 ครั้ง ในวันวสันตวิษุวัต (21 มีนาคม) และวันศารทวิษุวัต (22 กันยายน)",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900036,
+          "text": "ไม่เกิดขึ้นเลย เพราะกรุงเทพฯ ไม่ได้ตั้งอยู่บนเส้นศูนย์สูตรโลก",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "2 ครั้ง ในช่วงปลายเดือนเมษายน (ประมาณ 26-27 เม.ย.) และช่วงกลางเดือนสิงหาคม (ประมาณ 16 ส.ค.)",
+      "explanation": "พื้นที่ใดก็ตามที่ตั้งอยู่ระหว่างละติจูด 23.5° N ถึง 23.5° S (เขตร้อน Tropics) จะมีวันที่ดวงอาทิตย์ส่องตั้งฉากกับพื้นโลกตรงจุดจอมฟ้าพอดีปีละ 2 ครั้งเสมอ โดยครั้งแรกเกิดขึ้นขณะดวงอาทิตย์เคลื่อนที่ขึ้นเหนือ (สำหรับ กทม. ละติจูด 13.7° N คือช่วง 26-27 เม.ย.) และครั้งที่สองเกิดขึ้นขณะดวงอาทิตย์เคลื่อนตัวลงใต้กลับสู่เส้นศูนย์สูตร (ช่วง 16 ส.ค.) วัตถุที่ตั้งฉากกับพื้นจะไร้เงาในเวลาเที่ยงวันสุริยคติ"
+    },
+    {
+      "question_no": 30,
+      "question_id": 200010,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "วันดาราคติ",
+        "วันสุริยคติ",
+        "ดาวขึ้นเร็ววันละ 4 นาที"
+      ],
+      "question": "นักเรียนสังเกตพบว่ากลุ่มดาวนายพราน (Orion) ปรากฏขึ้นพ้นขอบฟ้าทิศตะวันออก 'เร็วขึ้นวันละประมาณ 4 นาที' ปรากฏการณ์นี้เกิดขึ้นเนื่องจากสาเหตุใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900037,
+          "text": "โลกหมุนรอบตัวเองเร็วขึ้นเรื่อยๆ ตามแรงเฉื่อย",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900038,
+          "text": "การควงของแกนหมุนของโลก (Axial Precession) รอบละ 26,000 ปี",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900039,
+          "text": "ขณะที่โลกหมุนรอบตัวเอง โลกก็โคจรรอบดวงอาทิตย์ไปด้วย ทำให้วันสุริยคติ (24 ชม.) ยาวกว่าวันดาราคติประมาณ 4 นาที",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900040,
+          "text": "ดวงดาวมีวงโคจรหมุนรอบศูนย์กลางระบบสุริยะด้วยความเร็วสูง",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "ขณะที่โลกหมุนรอบตัวเอง โลกก็โคจรรอบดวงอาทิตย์ไปด้วย ทำให้วันสุริยคติ (24 ชม.) ยาวกว่าวันดาราคติประมาณ 4 นาที",
+      "explanation": "โลกหมุนรอบตัวเองเทียบกับดาวฤกษ์อันไกลโพ้นครบ 360 องศา เรียกว่า วันดาราคติ (Sidereal Day) ใช้เวลาเพียง 23 ชั่วโมง 56 นาที 4 วินาที แต่เนื่องจากโลกโคจรรอบดวงอาทิตย์ไปข้างหน้าด้วยประมาณ 1 องศาต่อวัน โลกจึงต้องหมุนเพิ่มอีกประมาณ 4 นาทีเพื่อให้ดวงอาทิตย์กลับมาอยู่ที่ตำแหน่งเดิมบนทรงกลมท้องฟ้า (วันสุริยคติ = 24 ชม.) ดังนั้นเมื่อเราใช้เวลานาฬิกาตามดวงอาทิตย์ ดาวฤกษ์จึงปรากฏขึ้นเร็วขึ้นวันละประมาณ 4 นาที (หรือประมาณ 2 ชั่วโมงต่อเดือน)"
+    },
+    {
+      "question_no": 31,
+      "question_id": 200011,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "น้ำตาย",
+        "สภาวะควอดราเจอร์",
+        "Neap Tides"
+      ],
+      "question": "ในวันขึ้น 8 ค่ำ และแรม 8 ค่ำ การจัดวางตำแหน่งของดวงอาทิตย์ โลก และดวงจันทร์ ส่งผลต่อระดับน้ำขึ้น-น้ำลงในลักษณะใด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900041,
+          "text": "เกิดน้ำตาย (Neap Tides) เพราะดวงอาทิตย์และดวงจันทร์ทำมุมตั้งฉากกัน ทำให้ระดับน้ำขึ้นและน้ำลงมีพิสัยแตกต่างกันน้อยที่สุด",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900042,
+          "text": "เกิดน้ำตาย (Neap Tides) เพราะระดับน้ำทะเลจะลดลงจนแห้งขอดต่ำที่สุดในรอบเดือน",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900043,
+          "text": "เกิดน้ำเกิด (Spring Tides) มีคลื่นพายุหนุนซัดชายฝั่งรุนแรงที่สุด",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900044,
+          "text": "เกิดปรากฏการณ์น้ำนิ่งสนิท ไม่มีการขึ้นหรือลงเลยตลอด 24 ชั่วโมง",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "เกิดน้ำตาย (Neap Tides) เพราะดวงอาทิตย์และดวงจันทร์ทำมุมตั้งฉากกัน ทำให้ระดับน้ำขึ้นและน้ำลงมีพิสัยแตกต่างกันน้อยที่สุด",
+      "explanation": "ในวันขึ้น 8 ค่ำ และแรม 8 ค่ำ ดวงอาทิตย์ โลก และดวงจันทร์ ทำมุมตั้งฉากกัน 90 องศา เรียกว่า สภาวะควอดราเจอร์ (Quadrature) แรงไทดัลจากดวงอาทิตย์จะดึงน้ำไปในแนวที่ตัดและขัดขวางแรงดึงดูดของดวงจันทร์ ทำให้มวลน้ำไม่สามารถโป่งพองไปในทิศทางใดทิศทางหนึ่งได้อย่างเต็มที่ เรียกว่า 'น้ำตาย' (Neap Tides) ส่งผลให้เวลาน้ำขึ้นจะขึ้นไม่สูงมาก และเวลาน้ำลงก็ลงไม่ลึกมาก พิสัยความแตกต่างระหว่างระดับน้ำสูงสุดกับต่ำสุดจึงแคบที่สุดในรอบเดือน"
+    },
+    {
+      "question_no": 32,
+      "question_id": 200012,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "Perihelion",
+        "ฤดูหนาวซีกโลกเหนือ",
+        "ระยะห่างจากดวงอาทิตย์"
+      ],
+      "question": "โลกโคจรผ่านจุด 'ใกล้ดวงอาทิตย์มากที่สุด' (Perihelion ประมาณ 147 ล้านกิโลเมตร) ในช่วงต้นเดือนมกราคม แต่เหตุใดซีกโลกเหนือจึงอยู่ใน 'ฤดูหนาว'",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900045,
+          "text": "เพราะลมสุริยะพัดพาความร้อนส่วนใหญ่กระจายออกไปนอกระนาบสุริยวิถี",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900046,
+          "text": "เพราะซีกโลกเหนือเอียงเบนออกจากดวงอาทิตย์ ทำให้รังสีอาทิตย์ตกกระทบเฉียงและความยาวนานของกลางวันสั้น ซึ่งมีผลต่ออุณหภูมิมากกว่าระยะห่าง",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900047,
+          "text": "เพราะปริมาณน้ำแข็งขั้วโลกสะท้อนรังสีความร้อนกลับสู่อวกาศมากกว่า 90%",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900048,
+          "text": "เพราะดวงอาทิตย์ปลดปล่อยพลังงานความร้อนในเดือนมกราคมน้อยกว่าเดือนอื่นๆ",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "เพราะซีกโลกเหนือเอียงเบนออกจากดวงอาทิตย์ ทำให้รังสีอาทิตย์ตกกระทบเฉียงและความยาวนานของกลางวันสั้น ซึ่งมีผลต่ออุณหภูมิมากกว่าระยะห่าง",
+      "explanation": "ระยะห่างของโลกจากดวงอาทิตย์ที่จุดใกล้สุด (Perihelion 147 ล้าน กม.) และไกลสุด (Aphelion 152 ล้าน กม.) แตกต่างกันเพียงประมาณ 3.3% ซึ่งส่งผลต่อพลังงานความร้อนน้อยมาก ปัจจัยชี้ขาดของฤดูกาลคือ 'ความเอียงของแกนโลก' ในเดือนมกราคม ซีกโลกเหนือเอียงเบนหนีออกจากดวงอาทิตย์ ลำแสงอาทิตย์จึงตกกระทบด้วยมุมเฉียง ทำให้พลังงานกระจายตัวกว้างต่อหน่วยพื้นที่ และมีช่วงเวลากลางวันสั้นกว่ากลางคืน ซีกโลกเหนือจึงเป็นฤดูหนาว"
+    },
+    {
+      "question_no": 33,
+      "question_id": 200013,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "ความถี่การมองเห็นคราส",
+        "พื้นที่การสังเกต",
+        "สุริยุปราคา vs จันทรุปราคา"
+      ],
+      "question": "เหตุใดผู้สังเกตบนโลกคนหนึ่ง จึงมีโอกาสพบเห็นปรากฏการณ์ 'จันทรุปราคา' ในชีวิตประจำวันได้บ่อยกว่า 'สุริยุปราคา' ทั้งที่ในความเป็นจริง สุริยุปราคาเกิดขึ้นบ่อยกว่าหรือใกล้เคียงกันในแต่ละปี",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900049,
+          "text": "เพราะเงาของโลกมีขนาดใหญ่มาก ทำให้ผู้คนบนซีกโลกด้านกลางคืนทั้งหมด (คิดเป็นกว่า 50% ของโลก) มองเห็นจันทรุปราคาได้พร้อมกัน",
+          "is_correct": true
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900050,
+          "text": "เพราะสุริยุปราคาเกิดขึ้นเฉพาะบริเวณมหาสมุทรที่ไม่มีผู้คนอาศัยอยู่เท่านั้น",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900051,
+          "text": "เพราะจันทรุปราคาเกิดขึ้นเฉพาะเวลากลางคืนซึ่งเป็นเวลาที่ผู้คนตื่นมามองท้องฟ้ามากกว่า",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900052,
+          "text": "เพราะชั้นบรรยากาศของโลกขยายขนาดเงาของดวงจันทร์ให้มองเห็นได้ยากขึ้น",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 1,
+      "correct_answer_text": "เพราะเงาของโลกมีขนาดใหญ่มาก ทำให้ผู้คนบนซีกโลกด้านกลางคืนทั้งหมด (คิดเป็นกว่า 50% ของโลก) มองเห็นจันทรุปราคาได้พร้อมกัน",
+      "explanation": "ในแต่ละปี สุริยุปราคาเกิดขึ้น 2-5 ครั้ง และจันทรุปราคาเกิดขึ้น 2-3 ครั้ง แต่เหตุผลที่เราเห็นจันทรุปราคาบ่อยกว่า เป็นเพราะเงาแท้ของโลกที่ทอดไปถึงดวงจันทร์มีขนาดใหญ่มาก เมื่อดวงจันทร์เคลื่อนเข้าสู่เงามืด ทุกคนที่อยู่บนซีกโลกด้านกลางคืน (พื้นที่มากกว่าครึ่งหนึ่งของโลก) จะมองเห็นเหตุการณ์ได้พร้อมกัน ตรงข้ามกับสุริยุปราคาเต็มดวง ซึ่งเงาแท้ของดวงจันทร์ทอดลงมาบนผิวโลกเป็นแถบแคบๆ เพียงกว้างประมาณ 100-250 กิโลเมตรเท่านั้น ผู้สังเกตต้องอยู่ตรงแนวคราสแคบๆ นี้เท่านั้นจึงจะเห็นได้"
+    },
+    {
+      "question_no": 34,
+      "question_id": 200014,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "แรงคอริออลิส",
+        "พายุหมุนเขตร้อน",
+        "Coriolis Effect"
+      ],
+      "question": "การหมุนรอบตัวเองของโลกก่อให้เกิด 'แรงคอริออลิส' (Coriolis Effect) ซึ่งส่งผลต่อการเคลื่อนที่ของมวลสารบนผิวโลกในข้อใดอย่างเด่นชัดที่สุด",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900053,
+          "text": "ทำให้กระแสลมในพายุหมุนซีกโลกเหนือพัดเวียนตามเข็มนาฬิกา และซีกโลกใต้พัดเวียนทวนเข็มนาฬิกา",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900054,
+          "text": "ทำให้พายุหมุนในซีกโลกเหนือพัดเวียนทวนเข็มนาฬิกา และบริเวณเส้นศูนย์สูตร (0 องศา) จะไม่พบการก่อตัวของพายุหมุนเขตร้อนเพราะแรงคอริออลิสเป็นศูนย์",
+          "is_correct": true
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900055,
+          "text": "ทำให้คลื่นสึนามิเคลื่อนที่เลี้ยวเบนเข้าหาขั้วโลกทั้งสองเสมอ",
+          "is_correct": false
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900056,
+          "text": "ทำให้แผ่นเปลือกโลกเคลื่อนที่แยกตัวออกจากกันในแนวทิศเหนือ-ใต้",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 2,
+      "correct_answer_text": "ทำให้พายุหมุนในซีกโลกเหนือพัดเวียนทวนเข็มนาฬิกา และบริเวณเส้นศูนย์สูตร (0 องศา) จะไม่พบการก่อตัวของพายุหมุนเขตร้อนเพราะแรงคอริออลิสเป็นศูนย์",
+      "explanation": "แรงคอริออลิส (Coriolis Effect) เป็นแรงเสมือนที่เกิดจากการหมุนรอบตัวเองของโลก โดยจะเบี่ยงเบนทิศทางวัตถุหรือกระแสลมไปทางขวาในซีกโลกเหนือ (ทำให้พายุหมุนเขตร้อนพัดเวียนทวนเข็มนาฬิกาเข้าสู่ศูนย์กลางความกดอากาศต่ำ) และเบี่ยงไปทางซ้ายในซีกโลกใต้ (พัดเวียนตามเข็มนาฬิกา) นอกจากนี้ เนื่องจากพารามิเตอร์คอริออลิสแปรผันตาม sin(ละติจูด) ที่เส้นศูนย์สูตร (0°) จึงมีค่าเป็นศูนย์ ทำให้ไม่มีแรงเหนี่ยวนำให้ลมพัดหมุนวน พายุหมุนเขตร้อนจึงไม่สามารถก่อตัวที่บริเวณเส้นศูนย์สูตรได้ (ต้องห่างออกไปอย่างน้อย 5 องศา)"
+    },
+    {
+      "question_no": 35,
+      "question_id": 200015,
+      "section": "ข้อสอบท้าทายระดับแข่งขัน (น้ำขึ้นน้ำลง ฤดูกาล และคราส)",
+      "difficulty": "competitive_hard",
+      "topics": [
+        "แสงสนธยา",
+        "Astronomical Twilight",
+        "การสังเกตการณ์ท้องฟ้า"
+      ],
+      "question": "นักดาราศาสตร์ต้องการสังเกตหรือถ่ายภาพวัตถุท้องฟ้าที่มีความสว่างน้อย (เช่น เนบิวลาและกาแล็กซีจางๆ) จะต้องรอจนกระทั่งดวงอาทิตย์ตกลับขอบฟ้าจนสิ้นสุดช่วงที่เรียกว่า 'Astronomical Twilight' ซึ่งหมายถึงจุดศูนย์กลางดวงอาทิตย์อยู่ต่ำกว่าขอบฟ้ากี่องศา",
+      "choices": [
+        {
+          "choice_no": 1,
+          "choice_id": 900057,
+          "text": "ต่ำกว่าขอบฟ้า 0 ถึง 6 องศา (Civil Twilight)",
+          "is_correct": false
+        },
+        {
+          "choice_no": 2,
+          "choice_id": 900058,
+          "text": "ต่ำกว่าขอบฟ้า 6 ถึง 12 องศา (Nautical Twilight)",
+          "is_correct": false
+        },
+        {
+          "choice_no": 3,
+          "choice_id": 900059,
+          "text": "ต่ำกว่าขอบฟ้าตั้งแต่ 18 องศาลงไป",
+          "is_correct": true
+        },
+        {
+          "choice_no": 4,
+          "choice_id": 900060,
+          "text": "ต่ำกว่าขอบฟ้าตั้งแต่ 45 องศาลงไป",
+          "is_correct": false
+        }
+      ],
+      "correct_choice": 3,
+      "correct_answer_text": "ต่ำกว่าขอบฟ้าตั้งแต่ 18 องศาลงไป",
+      "explanation": "แสงสนธยา (Twilight) แบ่งออกเป็น 3 ช่วงตามมุมกดของดวงอาทิตย์ใต้ขอบฟ้า: 1) Civil Twilight (0° ถึง 6°) ยังมองเห็นสิ่งของรอบตัวได้ชัด 2) Nautical Twilight (6° ถึง 12°) เริ่มเห็นเส้นขอบฟ้าทะเลและดาวสว่างนำทาง 3) Astronomical Twilight (12° ถึง 18°) ท้องฟ้าเริ่มมืดเกือบสนิท แต่ยังมีแสงอาทิตย์กระเจิงในชั้นบรรยากาศชั้นสูงอยู่จางๆ เมื่อดวงอาทิตย์อยู่ต่ำกว่าขอบฟ้า 18 องศาลงไป ท้องฟ้าจะมืดสนิทสมบูรณ์ (Total Darkness) ปราศจากแสงอาทิตย์รบกวน เหมาะสำหรับการดูดาวและถ่ายภาพดาราศาสตร์ขั้นสูงที่สุด"
+    }
+  ]
+}
+    </script>
+
+    <!-- Quiz Engine Logic -->
+    <script>
+        // Theme Switcher Logic
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.classList.remove('theme-light', 'theme-dark', 'theme-neon');
+            
+            // update buttons
+            document.querySelectorAll('[id^="btn-theme-"]').forEach(btn => {
+                btn.classList.remove('bg-cyan-600', 'text-white');
+                btn.classList.add('text-[var(--text-sub)]');
+            });
+
+            if (theme === 'light') {
+                html.classList.add('theme-light');
+                document.getElementById('btn-theme-light').classList.add('bg-cyan-600', 'text-white');
+            } else if (theme === 'neon') {
+                html.classList.add('theme-neon');
+                document.getElementById('btn-theme-neon').classList.add('bg-cyan-600', 'text-white');
+            } else {
+                html.classList.add('theme-dark');
+                document.getElementById('btn-theme-dark').classList.add('bg-cyan-600', 'text-white');
+            }
+            localStorage.setItem('astronomy_quiz_theme', theme);
+        }
+
+        // Initialize Theme from Storage
+        const savedTheme = localStorage.getItem('astronomy_quiz_theme') || 'dark';
+        setTheme(savedTheme);
+
+        // Parse Question Bank
+        const rawJsonText = document.getElementById('exam-data-json').textContent;
+        const examDatabase = JSON.parse(rawJsonText);
+
+        // App State
+        let activeQuestions = [];
+        let currentIndex = 0;
+        let userAnswers = {}; // { question_index: selected_choice_no }
+        let isAnswerSubmitted = {}; // { question_index: true/false }
+        let quizMode = 'practice'; // 'practice' or 'exam'
+
+        // Setup Event Listeners
+        document.getElementById('select-set').addEventListener('change', function() {
+            const val = this.value;
+            let count = 35;
+            if (val === 'standard') count = 20;
+            else if (val === 'advanced') count = 15;
+            document.getElementById('label-q-count').textContent = count;
+        });
+
+        function startQuiz() {
+            const setType = document.getElementById('select-set').value;
+            quizMode = document.getElementById('select-mode').value;
+            const shuffle = document.getElementById('check-shuffle').checked;
+
+            // Filter questions
+            let pool = [];
+            if (setType === 'standard') {
+                pool = examDatabase.questions.filter(q => q.difficulty === 'foundation');
+            } else if (setType === 'advanced') {
+                pool = examDatabase.questions.filter(q => q.difficulty === 'competitive_hard');
+            } else {
+                pool = [...examDatabase.questions];
+            }
+
+            if (shuffle) {
+                pool = pool.sort(() => Math.random() - 0.5);
+            }
+
+            activeQuestions = pool;
+            currentIndex = 0;
+            userAnswers = {};
+            isAnswerSubmitted = {};
+
+            document.getElementById('setup-view').classList.add('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+
+            renderCurrentQuestion();
+        }
+
+        function renderCurrentQuestion() {
+            const q = activeQuestions[currentIndex];
+            if (!q) return;
+
+            // Update Progress & Index
+            const total = activeQuestions.length;
+            document.getElementById('current-q-index').textContent = currentIndex + 1;
+            document.getElementById('total-q-index').textContent = total;
+            const progressPercent = ((currentIndex + 1) / total) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+
+            // Meta Badges
+            document.getElementById('badge-section').textContent = q.section || 'ดาราศาสตร์';
+            const diffBadge = document.getElementById('badge-difficulty');
+            if (q.difficulty === 'competitive_hard') {
+                diffBadge.textContent = 'ระดับแข่งขัน / สอวน.';
+                diffBadge.className = 'px-2 py-0.5 rounded-full text-xs font-heading bg-amber-950/60 text-amber-300 border border-amber-800/50';
+            } else {
+                diffBadge.textContent = 'ระดับพื้นฐาน ม.5';
+                diffBadge.className = 'px-2 py-0.5 rounded-full text-xs font-heading bg-zinc-800 text-zinc-300';
+            }
+
+            // Topics
+            const topicsBox = document.getElementById('topics-container');
+            topicsBox.innerHTML = '';
+            if (q.topics && q.topics.length) {
+                q.topics.forEach(t => {
+                    const tag = document.createElement('span');
+                    tag.className = 'px-2 py-0.5 rounded text-[11px] font-heading bg-[var(--card-border)] text-[var(--text-sub)]';
+                    tag.textContent = '#' + t;
+                    topicsBox.appendChild(tag);
+                });
+            }
+
+            // Question Text
+            document.getElementById('question-text').textContent = q.question;
+
+            // Choices
+            const choicesBox = document.getElementById('choices-container');
+            choicesBox.innerHTML = '';
+
+            const selectedChoice = userAnswers[currentIndex];
+            const submitted = isAnswerSubmitted[currentIndex];
+
+            q.choices.forEach(ch => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'choice-btn w-full p-3.5 md:p-4 rounded-xl text-left flex items-start gap-3.5 text-sm md:text-base font-body';
+                
+                const badge = document.createElement('span');
+                badge.className = 'w-6 h-6 rounded-full border border-[var(--choice-border)] flex items-center justify-center text-xs font-heading font-semibold flex-shrink-0 mt-0.5';
+                badge.textContent = ch.choice_no;
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'flex-grow';
+                textSpan.textContent = ch.text;
+
+                btn.appendChild(badge);
+                btn.appendChild(textSpan);
+
+                // Styling based on state
+                if (selectedChoice === ch.choice_no) {
+                    btn.classList.add('selected');
+                    badge.classList.add('border-cyan-500', 'bg-cyan-500/20', 'text-cyan-400');
+                }
+
+                if (submitted && (quizMode === 'practice' || document.getElementById('result-view').classList.contains('active-review'))) {
+                    btn.disabled = true;
+                    if (ch.is_correct) {
+                        btn.classList.add('correct');
+                        badge.classList.add('border-emerald-500', 'bg-emerald-500/30', 'text-emerald-400');
+                    } else if (selectedChoice === ch.choice_no && !ch.is_correct) {
+                        btn.classList.add('incorrect');
+                        badge.classList.add('border-rose-500', 'bg-rose-500/30', 'text-rose-400');
+                    }
+                } else if (!submitted) {
+                    btn.onclick = () => selectChoice(ch.choice_no);
+                }
+
+                choicesBox.appendChild(btn);
+            });
+
+            // Explanation Drawer
+            const drawer = document.getElementById('explanation-drawer');
+            const actionBtn = document.getElementById('btn-action');
+
+            if (submitted && quizMode === 'practice') {
+                drawer.classList.remove('hidden');
+                const isCorrect = (selectedChoice === q.correct_choice);
+                const statusDiv = document.getElementById('status-indicator');
+                if (isCorrect) {
+                    statusDiv.className = 'flex items-center gap-2 font-heading font-bold text-base text-emerald-400';
+                    statusDiv.innerHTML = '<span>คำตอบถูกต้อง</span>';
+                } else {
+                    statusDiv.className = 'flex items-center gap-2 font-heading font-bold text-base text-rose-400';
+                    statusDiv.innerHTML = `<span>คำตอบยังไม่ถูกต้อง (คำตอบที่ถูกคือ ตัวเลือก ${q.correct_choice})</span>`;
+                }
+                document.getElementById('explanation-text').textContent = q.explanation;
+                actionBtn.textContent = (currentIndex === activeQuestions.length - 1) ? 'ดูบทสรุปคะแนน' : 'ข้อถัดไป →';
+            } else {
+                drawer.classList.add('hidden');
+                if (quizMode === 'exam') {
+                    actionBtn.textContent = (currentIndex === activeQuestions.length - 1) ? 'ส่งข้อสอบ' : 'ข้อถัดไป →';
+                } else {
+                    actionBtn.textContent = (selectedChoice !== undefined) ? 'ตรวจคำตอบ' : 'ตรวจคำตอบ';
+                }
+            }
+
+            // Prev Button
+            document.getElementById('btn-prev').disabled = (currentIndex === 0);
+
+            // Re-render KaTeX
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('quizCard'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function selectChoice(choiceNo) {
+            userAnswers[currentIndex] = choiceNo;
+            renderCurrentQuestion();
+        }
+
+        function handleActionButton() {
+            const q = activeQuestions[currentIndex];
+            const submitted = isAnswerSubmitted[currentIndex];
+
+            if (quizMode === 'practice') {
+                if (!submitted) {
+                    if (userAnswers[currentIndex] === undefined) {
+                        alert('กรุณาเลือกคำตอบก่อนกดตรวจคำตอบ');
+                        return;
+                    }
+                    isAnswerSubmitted[currentIndex] = true;
+                    renderCurrentQuestion();
+                } else {
+                    if (currentIndex < activeQuestions.length - 1) {
+                        currentIndex++;
+                        renderCurrentQuestion();
+                    } else {
+                        showResults();
+                    }
+                }
+            } else {
+                // Exam Mode
+                if (currentIndex < activeQuestions.length - 1) {
+                    currentIndex++;
+                    renderCurrentQuestion();
+                } else {
+                    // Check if all answered
+                    const answeredCount = Object.keys(userAnswers).length;
+                    if (answeredCount < activeQuestions.length) {
+                        if (!confirm(`คุณยังทำข้อสอบไม่ครบ (ทำแล้ว ${answeredCount} จาก ${activeQuestions.length} ข้อ) ต้องการส่งข้อสอบหรือไม่?`)) {
+                            return;
+                        }
+                    }
+                    showResults();
+                }
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCurrentQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+
+            let totalCorrect = 0;
+            let stdCorrect = 0, stdTotal = 0;
+            let advCorrect = 0, advTotal = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = (userAns === q.correct_choice);
+                if (isCorrect) totalCorrect++;
+
+                if (q.difficulty === 'competitive_hard') {
+                    advTotal++;
+                    if (isCorrect) advCorrect++;
+                } else {
+                    stdTotal++;
+                    if (isCorrect) stdCorrect++;
+                }
+            });
+
+            const totalQ = activeQuestions.length;
+            const percent = Math.round((totalCorrect / totalQ) * 100);
+
+            // Animate Gauge & Count-Up
+            const circle = document.getElementById('gauge-val');
+            const circumference = 2 * Math.PI * 42; // ~263.89
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Animate count-up
+            let currentDisplay = 0;
+            const step = Math.ceil(percent / 30) || 1;
+            const timer = setInterval(() => {
+                currentDisplay += step;
+                if (currentDisplay >= percent) {
+                    currentDisplay = percent;
+                    clearInterval(timer);
+                }
+                document.getElementById('score-percent').textContent = currentDisplay + '%';
+            }, 30);
+
+            document.getElementById('score-fraction').textContent = `${totalCorrect} / ${totalQ} ข้อ`;
+
+            // Performance Remarks
+            const remarkBox = document.getElementById('performance-remark');
+            if (percent >= 80) {
+                remarkBox.textContent = 'ยอดเยี่ยมมาก! คุณมีความเข้าใจหลักการฟิสิกส์ดาราศาสตร์และกลศาสตร์ท้องฟ้าในระดับสูง';
+                remarkBox.className = 'text-base font-semibold font-heading mb-6 text-emerald-400';
+            } else if (percent >= 50) {
+                remarkBox.textContent = 'ผ่านเกณฑ์ดี! มีพื้นฐานดาราศาสตร์ที่ดี สามารถพัฒนาต่อยอดในจุดที่เป็นข้อสอบลวงระดับแข่งขัน';
+                remarkBox.className = 'text-base font-semibold font-heading mb-6 text-cyan-400';
+            } else {
+                remarkBox.textContent = 'ควรทบทวนเพิ่มเติม โดยเฉพาะเรื่องน้ำเกิด-น้ำตาย, คาบเวลาดาราคติ และเรขาคณิตการเกิดคราส';
+                remarkBox.className = 'text-base font-semibold font-heading mb-6 text-amber-400';
+            }
+
+            // Category breakdown
+            document.getElementById('score-standard').textContent = stdTotal > 0 ? `${stdCorrect} / ${stdTotal} ข้อ (${Math.round((stdCorrect/stdTotal)*100)}%)` : '-';
+            document.getElementById('score-advanced').textContent = advTotal > 0 ? `${advCorrect} / ${advTotal} ข้อ (${Math.round((advCorrect/advTotal)*100)}%)` : '-';
+        }
+
+        function reviewAnswers() {
+            // Set all as submitted to inspect answers
+            activeQuestions.forEach((_, idx) => {
+                isAnswerSubmitted[idx] = true;
+            });
+            document.getElementById('result-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+            quizMode = 'practice'; // allow seeing explanations
+            currentIndex = 0;
+            renderCurrentQuestion();
+        }
+
+        function resetToSetup() {
+            document.getElementById('result-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('setup-view').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
