@@ -21,6 +21,7 @@
 
 - [Statistics Interactive Teaching Assistant (Streamlit)](https://stat-distribution-solver-naaptzyidcew7rrys9xj2q.streamlit.app/) — แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (แอปจะหลับเมื่อไม่ได้ใช้ ให้กดปุ่ม Wake up เพื่อปลุกก่อนใช้งาน)
 - [บทที่ 3 ตัวแปรสุ่มและการแจกแจงความน่าจะเป็น](interactive/statistics/01422111-ch03-purehtml.html) — สไลด์ interactive สำหรับสำรวจ random variable และ probability distribution พร้อมตัวอย่างคำนวณ
+- [บทที่ 9 การทดสอบไคสแควร์ (Chi-Square Test)](interactive/statistics/01422111-ch09-chisquare-purehtml.html) — สไลด์ PureHTML สำหรับการทดสอบความสอดคล้องตามทฤษฎี (Goodness-of-Fit) และตารางการจรณ์ (Contingency Table) พร้อมธีม Halloween Spooky / Academic Clean Light
 
 ## GitHub Pages
 

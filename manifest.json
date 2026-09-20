@@ -326,9 +326,28 @@
           ]
         },
         {
+          "id": "stats-ch9",
+          "title": "บทที่ 9: การทดสอบไคสแควร์",
+          "order": 6,
+          "prerequisites": [
+            "stats-ch2"
+          ],
+          "items": [
+            {
+              "id": "stats-ch9-purehtml",
+              "filename": "interactive/statistics/01422111-ch09-chisquare-purehtml.html",
+              "title": "สไลด์ประกอบการสอน: การทดสอบไคสแควร์ (Chi-Square Test)",
+              "description": "สไลด์ PureHTML สำหรับการทดสอบความสอดคล้องตามทฤษฎี (Goodness-of-Fit) และตารางการจรณ์ (Contingency Table) พร้อมธีม Halloween Spooky / Academic Clean Light",
+              "type": "slides",
+              "typeLabel": "สไลด์สอน",
+              "tech": "katex"
+            }
+          ]
+        },
+        {
           "id": "01422111-streamlit-tools",
           "title": "เครื่องมือช่วยสอน: แอป Streamlit",
-          "order": 6,
+          "order": 7,
           "prerequisites": [],
           "items": [
             {

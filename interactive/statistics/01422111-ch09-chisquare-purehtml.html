@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="halloween">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01422111 หลักสถิติ - บทที่ 9 การทดสอบไคสแควร์ (Chi-Square Test)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Pridi:wght@400;500;600&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});"></script>
+
+    <style>
+        :root {
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 240ms;
+            --slide-w: 1040px;
+            --slide-h: 585px;
+            --font-display: 'Bai Jamjuree', 'Pridi', sans-serif;
+            --font-body: 'IBM Plex Sans Thai Looped', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        /* ---- Theme: Halloween Spooky Dark (Default) ---- */
+        [data-theme="halloween"] {
+            color-scheme: dark;
+            --bg-canvas: #100C16;
+            --bg-card: #181322;
+            --bg-card-subtle: #201A2D;
+            --bg-accent-soft: rgba(255, 117, 24, 0.12);
+            --bg-purple-soft: rgba(163, 112, 247, 0.12);
+            --bg-green-soft: rgba(0, 230, 118, 0.12);
+            
+            --text-main: #F4EEFA;
+            --text-muted: #BDB3C8;
+            --text-faint: #7C7288;
+            --text-inverse: #100C16;
+            
+            --border-card: #2B213A;
+            --border-bright: #3D2F54;
+            --border-orange: rgba(255, 117, 24, 0.4);
+            --border-purple: rgba(163, 112, 247, 0.4);
+
+            --color-primary: #FF7518;       /* Pumpkin Orange */
+            --color-secondary: #A370F7;     /* Spectral Magic Violet */
+            --color-accent: #FFB703;        /* Harvest Amber Gold */
+            --color-success: #00E676;       /* Toxic Slime Green */
+            --color-danger: #FF5252;        /* Blood Crimson */
+
+            --nav-bg: rgba(24, 19, 34, 0.85);
+            --grid-line: rgba(255, 117, 24, 0.03);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ---- Theme: Academic Clean Light ---- */
+        [data-theme="light"] {
+            color-scheme: light;
+            --bg-canvas: #FAF8F5;
+            --bg-card: #FFFFFF;
+            --bg-card-subtle: #F3EFE9;
+            --bg-accent-soft: rgba(217, 101, 16, 0.08);
+            --bg-purple-soft: rgba(92, 45, 145, 0.08);
+            --bg-green-soft: rgba(0, 112, 74, 0.08);
+
+            --text-main: #1E2229;
+            --text-muted: #535A68;
+            --text-faint: #8790A0;
+            --text-inverse: #FFFFFF;
+
+            --border-card: #E3DDD5;
+            --border-bright: #D5CDC2;
+            --border-orange: rgba(217, 101, 16, 0.35);
+            --border-purple: rgba(92, 45, 145, 0.35);
+
+            --color-primary: #D96510;       /* Rich Warm Ochre / Orange */
+            --color-secondary: #5C2D91;     /* Royal Academic Purple */
+            --color-accent: #A86F00;        /* Antique Gold */
+            --color-success: #00704A;       /* Siren Green */
+            --color-danger: #C92A2A;        /* Deep Crimson */
+
+            --nav-bg: rgba(255, 255, 255, 0.88);
+            --grid-line: rgba(0, 0, 0, 0.025);
+            --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-canvas);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background var(--duration) var(--ease-out), color var(--duration) var(--ease-out);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background-image: 
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* ---- Progress Bar & Top Navigation ---- */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            z-index: 1000;
+            width: 0%;
+            background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+            transition: width 120ms ease;
+        }
+
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-card);
+            padding: 0.65rem 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-display);
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .badge-course {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            background: var(--bg-accent-soft);
+            color: var(--color-primary);
+            border: 1px solid var(--border-orange);
+            letter-spacing: 0.05em;
+        }
+
+        .brand-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .topnav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-ctrl {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.4rem 0.85rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all var(--duration) var(--ease-out);
+        }
+
+        .btn-ctrl:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            transform: translateY(-1px);
+        }
+
+        /* ---- Slide Container & Deck ---- */
+        .container {
+            max-width: var(--slide-w);
+            margin: 0 auto;
+            padding: 5rem 1.5rem 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            margin-bottom: 3.5rem;
+            padding: 2.8rem 3.2rem;
+            min-height: var(--slide-h);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            scroll-margin-top: 5rem;
+            transition: transform var(--duration) var(--ease-out), border-color var(--duration) var(--ease-out);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+        }
+
+        /* Slide Classes */
+        .slide.cover {
+            justify-content: center;
+            text-align: left;
+            padding: 4rem 4rem;
+            background: radial-gradient(circle at 80% 20%, var(--bg-card-subtle) 0%, var(--bg-card) 70%);
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .slide.cover::before { display: none; }
+
+        .slide.break {
+            justify-content: center;
+            background: radial-gradient(circle at 10% 90%, var(--bg-purple-soft) 0%, var(--bg-card) 75%);
+            border-left: 6px solid var(--color-secondary);
+        }
+
+        .slide-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-primary);
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+
+        .slide-subtitle {
+            font-size: 1.02rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+
+        .slide-footer {
+            margin-top: 1.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+        }
+
+        /* ---- Content Components ---- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.4rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+        }
+
+        .card {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            padding: 1.3rem 1.4rem;
+            position: relative;
+        }
+
+        .card.accent {
+            border-color: var(--border-orange);
+            background: var(--bg-accent-soft);
+        }
+
+        .card.purple {
+            border-color: var(--border-purple);
+            background: var(--bg-purple-soft);
+        }
+
+        .card.success {
+            border-color: rgba(0, 230, 118, 0.3);
+            background: var(--bg-green-soft);
+        }
+
+        .card h4 {
+            font-family: var(--font-display);
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.55rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p, .card li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .card ul {
+            padding-left: 1.3rem;
+            margin-top: 0.4rem;
+        }
+
+        .formula-hero {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-orange);
+            border-radius: 8px;
+            padding: 1.4rem 1.6rem;
+            text-align: center;
+            margin: 0.8rem 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .formula-hero .math-display {
+            font-size: 1.45rem;
+            color: var(--color-primary);
+        }
+
+        /* Clean Academic Tables */
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            background: var(--bg-card-subtle);
+        }
+
+        table.stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+            text-align: center;
+        }
+
+        table.stats-table th {
+            background: var(--bg-accent-soft);
+            color: var(--color-primary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            padding: 0.65rem 0.8rem;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        table.stats-table td {
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid var(--border-card);
+            color: var(--text-main);
+        }
+
+        table.stats-table tr:last-child td {
+            border-bottom: none;
+            font-weight: 600;
+            background: var(--bg-card-subtle);
+        }
+
+        .highlight-cell {
+            color: var(--color-primary) !important;
+            font-weight: 600;
+        }
+
+        /* Roadmap Steps */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: var(--bg-card-subtle);
+            padding: 0.85rem 1.2rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--color-secondary);
+        }
+
+        .step-num {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            background: var(--bg-purple-soft);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .step-content {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .step-content strong {
+            color: var(--text-main);
+        }
+
+        /* Floating Nav & Slide Counter */
+        .nav-arrows {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.8rem;
+            z-index: 800;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all var(--duration) var(--ease-out);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.8rem;
+            z-index: 800;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .slide-counter span {
+            color: var(--color-primary);
+        }
+
+        /* ---- Fullscreen Presenting Mode ---- */
+        body.presenting {
+            overflow: hidden;
+            background: #000;
+        }
+
+        body.presenting .slide {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            max-width: 100vw;
+            min-height: 100vh;
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            padding: 5vh 8vw;
+            opacity: 0;
+            pointer-events: none;
+            display: none;
+            z-index: 999;
+        }
+
+        body.presenting .slide.current {
+            display: flex !important;
+            opacity: 1 !important;
+            pointer-events: auto;
+        }
+
+        body.presenting .topnav,
+        body.presenting .nav-arrows,
+        body.presenting .slide-counter {
+            display: none !important;
+        }
+
+        /* Print Style (A4 Landscape) */
+        @media print {
+            .topnav, .nav-arrows, .slide-counter, .progress-bar { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .container { padding: 0 !important; max-width: 100% !important; }
+            .slide {
+                page-break-after: always;
+                break-after: page;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                min-height: 100vh !important;
+                width: 100% !important;
+                padding: 2.5rem 3rem !important;
+                background: white !important;
+                color: #222 !important;
+            }
+            @page { size: A4 landscape; margin: 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="topnav">
+        <div class="brand-cluster">
+            <span class="badge-course">01422111</span>
+            <span class="brand-title">หลักสถิติ · บทที่ 9 การทดสอบไคสแควร์</span>
+        </div>
+        <div class="topnav-controls">
+            <button class="btn-ctrl" id="presentBtn" title="โหมดนำเสนอ (กด P หรือ F)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+                <span>Present [P]</span>
+            </button>
+            <button class="btn-ctrl" id="themeBtn" title="สลับธีมสี (กด T)">
+                <span>ธีม:</span>
+                <strong id="themeLabel" style="color:var(--color-primary)">Halloween</strong>
+            </button>
+            <button class="btn-ctrl" id="pdfBtn" title="พิมพ์หรือบันทึกเป็น PDF">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+                <span>PDF</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container" id="deck">
+
+        <!-- 1. Cover Slide -->
+        <section class="slide cover" id="slide-1">
+            <div class="slide-header">
+                <span class="slide-eyebrow">LECTURE DECK · PRINCIPLES OF STATISTICS</span>
+                <h1 class="slide-title" style="font-size:2.8rem; margin-bottom:0.6rem; color:var(--color-primary);">
+                    บทที่ 9: การทดสอบไคสแควร์
+                </h1>
+                <h2 class="slide-subtitle" style="font-size:1.4rem; color:var(--color-secondary); font-weight:500;">
+                    Chi-Square Test for Categorical Data
+                </h2>
+            </div>
+            <div class="slide-body" style="max-width:720px;">
+                <p style="font-size:1.1rem; color:var(--text-muted); line-height:1.7;">
+                    การทดสอบสมมติฐานทางสถิติสำหรับ <strong>ข้อมูลเชิงคุณภาพและความถี่นับได้</strong> เพื่อประเมินความสอดคล้องตามทฤษฎี (Goodness-of-Fit) และความเป็นอิสระระหว่างตัวแปรบนตารางการจรณ์ (Contingency Tables)
+                </p>
+                <div style="margin-top:1.5rem; display:flex; gap:1.5rem; align-items:center;">
+                    <div style="font-size:0.95rem; color:var(--text-main);">
+                        <strong>ผู้สอน:</strong> อ.ดร. กิตติพงศ์ ทรัพย์วัฒนาชัย
+                    </div>
+                    <div style="font-size:0.95rem; color:var(--text-faint);">
+                        ภาควิชาสถิติ คณะวิทยาศาสตร์ มหาวิทยาลัยเกษตรศาสตร์
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>01422111 Principles of Statistics</span>
+                <span>Slide 1 / 22</span>
+            </div>
+        </section>
+
+        <!-- 2. The Big Picture -->
+        <section class="slide" id="slide-2">
+            <div class="slide-header">
+                <span class="slide-eyebrow">FOUNDATION & CONTEXT</span>
+                <h2 class="slide-title">ทำไมเราถึงต้องมีบทที่ 9: จุดเปลี่ยนของประเภทข้อมูล</h2>
+                <div class="slide-subtitle">เปรียบเทียบการอนุมานสถิติตั้งแต่บทที่ 6 จนถึงปัจจุบัน</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>บทที่ 6–8: ข้อมูลเชิงปริมาณ (Quantitative)</h4>
+                        <p>มุ่งเน้นการวัดค่าเฉลี่ย $(\mu)$ และความแปรปรวน $(\sigma^2)$ ของข้อมูลที่เป็นตัวเลขต่อเนื่อง</p>
+                        <ul>
+                            <li><strong>1–2 กลุ่ม:</strong> $Z$-test, $t$-test, $F$-test</li>
+                            <li><strong>3 กลุ่มขึ้นไป:</strong> One-Way ANOVA ($F$-test)</li>
+                            <li><strong>ข้อตกลง:</strong> ต้องมีการแจกแจงแบบปกติ (Normality)</li>
+                        </ul>
+                    </div>
+                    <div class="card accent">
+                        <h4>บทที่ 9: ข้อมูลเชิงคุณภาพ (Categorical)</h4>
+                        <p>ข้อมูลอยู่ในรูปของ <strong>จำนวนนับหรือความถี่ (Frequencies: $O$)</strong> ของลักษณะที่สนใจ</p>
+                        <ul>
+                            <li><strong>สัดส่วนหลายกลุ่ม:</strong> Goodness-of-Fit Test ($df = k-1$)</li>
+                            <li><strong>ความสัมพันธ์ 2 ตัวแปร:</strong> Contingency Table ($df = (r-1)(c-1)$)</li>
+                            <li><strong>ข้อตกลง:</strong> ไม่ต้องการข้อสมมติการแจกแจงปกติ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Part 1: The Big Picture</span>
+                <span>Slide 2 / 22</span>
+            </div>
+        </section>
+
+        <!-- 3. Observed vs Expected -->
+        <section class="slide" id="slide-3">
+            <div class="slide-header">
+                <span class="slide-eyebrow">CORE PRINCIPLE</span>
+                <h2 class="slide-title">หัวใจของการทดสอบ: ผลต่างระหว่าง $O$ และ $E$</h2>
+                <div class="slide-subtitle">เปรียบเทียบสิ่งที่สุ่มได้จริง กับ สิ่งที่ควรจะเป็นตามสมมติฐาน</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card" style="border-left:4px solid var(--color-primary);">
+                        <h4 style="color:var(--color-primary)">$O$ : Observed Frequency</h4>
+                        <p><strong>ความถี่ที่สังเกตได้จริง:</strong> ข้อมูลดิบที่ได้จากการเก็บรวบรวมหรือสุ่มตัวอย่างภาคสนาม เป็นจำนวนเต็มบวกเสมอ</p>
+                        <p style="margin-top:0.5rem; font-family:var(--font-mono); font-size:0.88rem; color:var(--text-faint);">
+                            $\sum O_i = n \quad \text{(ขนาดตัวอย่างรวม)}$
+                        </p>
+                    </div>
+                    <div class="card" style="border-left:4px solid var(--color-secondary);">
+                        <h4 style="color:var(--color-secondary)">$E$ : Expected Frequency</h4>
+                        <p><strong>ความถี่ที่คาดหวังตามทฤษฎี:</strong> ค่าที่คำนวณขึ้นภายใต้ข้อตกลงว่าสมมติฐานหลัก ($H_0$) เป็นจริง ไม่จำเป็นต้องเป็นจำนวนเต็ม</p>
+                        <p style="margin-top:0.5rem; font-family:var(--font-mono); font-size:0.88rem; color:var(--text-faint);">
+                            $\sum E_i = \sum O_i = n$
+                        </p>
+                    </div>
+                </div>
+                <div class="card success" style="margin-top:0.4rem;">
+                    <h4>ตรรกะเบื้องหลัง (Statistical Intuition)</h4>
+                    <p>ถ้าผลต่าง $(O - E)$ มีค่าน้อย $\implies$ ข้อมูลจริงสอดคล้องกับทฤษฎี $\implies$ <strong>ยอมรับ $H_0$</strong><br>
+                    ถ้าผลต่าง $(O - E)$ มีค่ามาก $\implies$ ข้อมูลจริงขัดแย้งกับทฤษฎีอย่างมีนัยสำคัญ $\implies$ <strong>ปฏิเสธ $H_0$</strong></p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Part 1: The Big Picture</span>
+                <span>Slide 3 / 22</span>
+            </div>
+        </section>
+
+        <!-- 4. Universal Statistic -->
+        <section class="slide" id="slide-4">
+            <div class="slide-header">
+                <span class="slide-eyebrow">MATHEMATICAL RIGOR</span>
+                <h2 class="slide-title">สูตรแกนกลางอันเป็นหนึ่งเดียว (The Universal Statistic)</h2>
+                <div class="slide-subtitle">สูตรคำนวณสถิติทดสอบไคสแควร์ที่ใช้ตลอดทั้งบทที่ 9</div>
+            </div>
+            <div class="slide-body">
+                <div class="formula-hero">
+                    <div class="math-display">
+                        $$\chi^2 = \sum \frac{(O - E)^2}{E}$$
+                    </div>
+                </div>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>ทำไมต้องยกกำลังสอง?</h4>
+                        <p>เพราะ $\sum (O - E) = 0$ เสมอ การยกกำลังสองจะป้องกันไม่ให้ค่าบวกและค่าลบหักล้างกัน</p>
+                    </div>
+                    <div class="card">
+                        <h4>ทำไมต้องหารด้วย $E$?</h4>
+                        <p>เพื่อถ่วงน้ำหนักความคลาดเคลื่อนเทียบกับขนาดของกลุ่ม (Scale Invariance) ช่องใหญ่ย่อมคลาดเคลื่อนได้มากกว่า</p>
+                    </div>
+                    <div class="card accent">
+                        <h4>ทำไมปฏิเสธฝั่งขวาเท่านั้น?</h4>
+                        <p>เนื่องจาก $(O - E)^2 \ge 0$ ค่า $\chi^2$ จึงไม่มีวันติดลบ ยิ่งผิดปกติค่าจะยิ่งโตไปทางขวา $\chi^2 > \chi^2_{\alpha}$</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Part 1: The Big Picture</span>
+                <span>Slide 4 / 22</span>
+            </div>
+        </section>
+
+        <!-- 5. Assumptions & Golden Rules -->
+        <section class="slide" id="slide-5">
+            <div class="slide-header">
+                <span class="slide-eyebrow">CONDITIONS & CAUTIONS</span>
+                <h2 class="slide-title">ข้อกำหนดและกฎเหล็กที่ห้ามละเมิด</h2>
+                <div class="slide-subtitle">เงื่อนไขการใช้ Chi-Square Test ให้ได้ผลที่ถูกต้องทางทฤษฎี</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card" style="border-top:3px solid var(--color-danger);">
+                        <h4 style="color:var(--color-danger)">กฎของความถี่คาดหวัง ($E_i \ge 5$)</h4>
+                        <ul>
+                            <li><strong>$E_i \ge 5$</strong> ไม่น้อยกว่า $80\%$ ของจำนวนช่องทั้งหมดในตาราง</li>
+                            <li><strong>ห้ามมีช่องใดเลย</strong> ที่มี $E_i < 1$ อย่างเด็ดขาด</li>
+                            <li><strong>วิธีแก้เมื่อละเมิด:</strong> ให้ยุบรวมช่อง (Combine Categories) ที่มีความถี่ต่ำเข้ากับช่องข้างเคียง</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-top:3px solid var(--color-accent);">
+                        <h4 style="color:var(--color-accent)">ขนาดตัวอย่างและความเป็นอิสระ</h4>
+                        <ul>
+                            <li><strong>ขนาดตัวอย่างรวม:</strong> ควรมีขนาดใหญ่เพียงพอ ($n > 50$)</li>
+                            <li><strong>ข้อมูลต้องเป็นจำนวนนับ:</strong> ห้ามนำค่าร้อยละ (%) หรือสัดส่วนมาคำนวณเป็น $O_i$ ตรงๆ</li>
+                            <li><strong>Mutually Exclusive:</strong> หนึ่งตัวอย่างต้องตกอยู่ในช่องใดช่องหนึ่งเพียงช่องเดียวเท่านั้น</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Part 1: The Big Picture</span>
+                <span>Slide 5 / 22</span>
+            </div>
+        </section>
+
+        <!-- 6. Section Break: Goodness of Fit -->
+        <section class="slide break" id="slide-6">
+            <div class="slide-header">
+                <span class="slide-eyebrow" style="color:var(--color-secondary);">SECTION 9.2</span>
+                <h1 class="slide-title" style="font-size:2.5rem; color:var(--text-main);">
+                    การทดสอบภาวะสารูปสนิทดี<br>
+                    <span style="color:var(--color-primary); font-size:1.8rem; font-weight:500;">
+                        Goodness-of-Fit Test & Test of Proportions
+                    </span>
+                </h1>
+            </div>
+            <div class="slide-body" style="max-width:680px;">
+                <p style="font-size:1.05rem; color:var(--text-muted);">
+                    การทดสอบเพื่อดูว่าการแจกแจงของตัวแปรเชิงคุณภาพ 1 ตัวแปรที่มี $k$ กลุ่มย่อย สอดคล้องกับสัดส่วนตามทฤษฎีที่กำหนดไว้ล่วงหน้าหรือไม่ ($df = k - 1$)
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span>Section 9.2: Goodness-of-Fit</span>
+                <span>Slide 6 / 22</span>
+            </div>
+        </section>
+
+        <!-- 7. Goodness-of-fit Protocol -->
+        <section class="slide" id="slide-7">
+            <div class="slide-header">
+                <span class="slide-eyebrow">FRAMEWORK</span>
+                <h2 class="slide-title">ขั้นตอนการทดสอบสัดส่วน 1 ตัวแปร (5 ขั้นตอน)</h2>
+                <div class="slide-subtitle">แบบแผนมาตรฐานสำหรับการทดสอบภาวะสารูปสนิทดี</div>
+            </div>
+            <div class="slide-body">
+                <div class="step-list">
+                    <div class="step-row">
+                        <span class="step-num">Step 1</span>
+                        <div class="step-content">
+                            <strong>ตั้งสมมติฐาน:</strong> $H_0: p_1 = p_{10}, \dots, p_k = p_{k0}$ คู่กับ $H_1: \text{มี } p_i \text{ อย่างน้อย 1 ค่าไม่เป็นไปตาม } H_0$
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <span class="step-num">Step 2</span>
+                        <div class="step-content">
+                            <strong>กำหนดระดับนัยสำคัญ:</strong> เลือกระดับ $\alpha$ (เช่น $0.05$ หรือ $0.01$)
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <span class="step-num">Step 3</span>
+                        <div class="step-content">
+                            <strong>คำนวณตัวสถิติ:</strong> หา $E_i = n \cdot p_{i0}$ และคำนวณ $\chi^2_{\text{คำนวณ}} = \sum_{i=1}^k \dfrac{(O_i - E_i)^2}{E_i}$
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <span class="step-num">Step 4</span>
+                        <div class="step-content">
+                            <strong>หาเขตวิกฤต:</strong> องศาความเป็นอิสระ $df = k - 1 \implies$ ปฏิเสธ $H_0$ เมื่อ $\chi^2 > \chi^2_{\alpha(k-1)}$
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <span class="step-num">Step 5</span>
+                        <div class="step-content">
+                            <strong>สรุปผล:</strong> เปรียบเทียบ $\chi^2_{\text{คำนวณ}}$ กับค่าวิกฤต และเขียนข้อสรุปตามบริบทปัญหา
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Section 9.2: Goodness-of-Fit</span>
+                <span>Slide 7 / 22</span>
+            </div>
+        </section>
+
+        <!-- 8. Example 9.1 Setup -->
+        <section class="slide" id="slide-8">
+            <div class="slide-header">
+                <span class="slide-eyebrow">WORKED EXAMPLE 9.1</span>
+                <h2 class="slide-title">ตัวอย่าง 9.1: การเลือกสีตู้เย็น (สัดส่วนเท่ากันทุกกลุ่ม)</h2>
+                <div class="slide-subtitle">ทดสอบว่าลูกค้านิยมตู้เย็น 6 สี พอๆ กันหรือไม่ ที่ $\alpha = 0.01$</div>
+            </div>
+            <div class="slide-body">
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    สุ่มตัวอย่างลูกค้าที่ซื้อตู้เย็นมาจำนวน $n = 300$ คน ปรากฏการเลือกสีต่างๆ ดังนี้:
+                </p>
+                <div class="table-wrap">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>สีตู้เย็น</th>
+                                <th>เขียว</th>
+                                <th>แดง</th>
+                                <th>ฟ้า</th>
+                                <th>นวล</th>
+                                <th>น้ำตาล</th>
+                                <th>ม่วง</th>
+                                <th>รวม</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>จำนวนลูกค้า ($O_i$)</strong></td>
+                                <td>52</td>
+                                <td>58</td>
+                                <td>60</td>
+                                <td>55</td>
+                                <td>40</td>
+                                <td>35</td>
+                                <td class="highlight-cell">300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card accent" style="margin-top:0.4rem;">
+                    <h4>สมมติฐานและการหา $E_i$</h4>
+                    <p>
+                        $H_0: p_1 = p_2 = p_3 = p_4 = p_5 = p_6 = \dfrac{1}{6}$ (ลูกค้านิยมทุกสีเท่าๆ กัน)<br>
+                        ความถี่คาดหวัง: $E_i = n \cdot p_i = 300 \times \dfrac{1}{6} = 50$ เท่ากันหมดทุกสี ($E_i \ge 5$ ผ่านเกณฑ์สมบูรณ์)
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.1</span>
+                <span>Slide 8 / 22</span>
+            </div>
+        </section>
+
+        <!-- 9. Example 9.1 Calculation -->
+        <section class="slide" id="slide-9">
+            <div class="slide-header">
+                <span class="slide-eyebrow">CALCULATION & DECISION</span>
+                <h2 class="slide-title">ตัวอย่าง 9.1: ตารางคำนวณและข้อสรุป</h2>
+                <div class="slide-subtitle">การคำนวณทีละช่องเพื่อหาผลรวม $\chi^2_{\text{คำนวณ}}$</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="table-wrap">
+                        <table class="stats-table" style="font-size:0.86rem;">
+                            <thead>
+                                <tr>
+                                    <th>สี</th>
+                                    <th>$O_i$</th>
+                                    <th>$E_i$</th>
+                                    <th>$O-E$</th>
+                                    <th>$(O-E)^2/E$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เขียว</td><td>52</td><td>50</td><td>+2</td><td>0.080</td></tr>
+                                <tr><td>แดง</td><td>58</td><td>50</td><td>+8</td><td>1.280</td></tr>
+                                <tr><td>ฟ้า</td><td>60</td><td>50</td><td>+10</td><td>2.000</td></tr>
+                                <tr><td>นวล</td><td>55</td><td>50</td><td>+5</td><td>0.500</td></tr>
+                                <tr><td>น้ำตาล</td><td>40</td><td>50</td><td>-10</td><td>2.000</td></tr>
+                                <tr><td>ม่วง</td><td>35</td><td>50</td><td>-15</td><td>4.500</td></tr>
+                                <tr><td><strong>รวม</strong></td><td><strong>300</strong></td><td><strong>300</strong></td><td><strong>0</strong></td><td class="highlight-cell"><strong>10.360</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card purple">
+                        <h4 style="color:var(--color-secondary);">การตัดสินใจทางสถิติ</h4>
+                        <ul>
+                            <li><strong>ค่าสถิติทดสอบ:</strong> $\chi^2_{\text{คำนวณ}} = 10.360$</li>
+                            <li><strong>องศาความเป็นอิสระ:</strong> $df = 6 - 1 = 5$</li>
+                            <li><strong>ค่าวิกฤตที่ $\alpha = 0.01$:</strong> $\chi^2_{0.01(5)} = 15.09$</li>
+                            <li><strong>ผลการเปรียบเทียบ:</strong> $\chi^2_{\text{คำนวณ}} (10.36) < 15.09$ $\implies$ <strong>ยอมรับ $H_0$</strong></li>
+                        </ul>
+                        <div style="margin-top:0.8rem; padding:0.6rem; background:var(--bg-card); border-radius:4px; font-size:0.9rem;">
+                            <strong>สรุป:</strong> ที่ระดับนัยสำคัญ $0.01$ ลูกค้านิยมตู้เย็นสีต่างๆ พอๆ กัน (ไม่แตกต่างกันอย่างมีนัยสำคัญ)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.1</span>
+                <span>Slide 9 / 22</span>
+            </div>
+        </section>
+
+        <!-- 10. Example 9.2 Specific Ratio -->
+        <section class="slide" id="slide-10">
+            <div class="slide-header">
+                <span class="slide-eyebrow">WORKED EXAMPLE 9.2</span>
+                <h2 class="slide-title">ตัวอย่าง 9.2: สัดส่วนตามทฤษฎีเฉพาะ ($1:1:2$)</h2>
+                <div class="slide-subtitle">ทดสอบข้อสงสัยว่าของบกพร่องกะกลางคืนเป็น 2 เท่าของกะอื่นหรือไม่ ($\alpha = 0.05$)</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>โจทย์และข้อมูล ($n = 80$)</h4>
+                        <p>อัตราส่วนที่สงสัย: กลางวัน : เย็น : กลางคืน = $1 : 1 : 2$</p>
+                        <p>ผลรวมอัตราส่วน $= 1 + 1 + 2 = 4$</p>
+                        <ul>
+                            <li>$p_{\text{กลางวัน}} = 1/4 \implies E = 80 \times 1/4 = 20$ ($O = 20$)</li>
+                            <li>$p_{\text{เย็น}} = 1/4 \implies E = 80 \times 1/4 = 20$ ($O = 25$)</li>
+                            <li>$p_{\text{กลางคืน}} = 2/4 \implies E = 80 \times 2/4 = 40$ ($O = 35$)</li>
+                        </ul>
+                    </div>
+                    <div class="card accent">
+                        <h4>การคำนวณและการตัดสินใจ</h4>
+                        <p>
+                            $$\chi^2 = \frac{(20-20)^2}{20} + \frac{(25-20)^2}{20} + \frac{(35-40)^2}{40}$$
+                            $$\chi^2 = 0 + 1.250 + 0.625 = \mathbf{1.875}$$
+                        </p>
+                        <ul>
+                            <li>$df = 3 - 1 = 2 \implies \chi^2_{0.05(2)} = 5.99$</li>
+                            <li>$\chi^2_{\text{คำนวณ}} = 1.875 < 5.99 \implies$ <strong>ยอมรับ $H_0$</strong></li>
+                        </ul>
+                        <p style="margin-top:0.4rem; font-size:0.9rem; color:var(--text-main);">
+                            <strong>สรุป:</strong> ข้อสงสัยของผู้จัดการถูกต้อง ของบกพร่องกะกลางคืนเป็น $2$ เท่าของกะอื่นจริง ที่ $\alpha=0.05$
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.2</span>
+                <span>Slide 10 / 22</span>
+            </div>
+        </section>
+
+        <!-- 11. Section Break: Contingency Tables -->
+        <section class="slide break" id="slide-11">
+            <div class="slide-header">
+                <span class="slide-eyebrow" style="color:var(--color-secondary);">SECTION 9.3</span>
+                <h1 class="slide-title" style="font-size:2.5rem; color:var(--text-main);">
+                    การทดสอบความเป็นอิสระ<br>
+                    <span style="color:var(--color-primary); font-size:1.8rem; font-weight:500;">
+                        Test of Independence & Contingency Tables ($r \times c$)
+                    </span>
+                </h1>
+            </div>
+            <div class="slide-body" style="max-width:680px;">
+                <p style="font-size:1.05rem; color:var(--text-muted);">
+                    การทดสอบความสัมพันธ์ระหว่างตัวแปรเชิงคุณภาพ 2 ตัวแปร จำแนกบนตารางการจรณ์ขนาด $r \times c$ ภายใต้สมมติฐานว่าตัวแปรทั้งสองไม่มีความเกี่ยวข้องกัน
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span>Section 9.3: Contingency Tables</span>
+                <span>Slide 11 / 22</span>
+            </div>
+        </section>
+
+        <!-- 12. Contingency Table Structure -->
+        <section class="slide" id="slide-12">
+            <div class="slide-header">
+                <span class="slide-eyebrow">TABLE ARCHITECTURE</span>
+                <h2 class="slide-title">โครงสร้างตารางสองทางและสูตรคำนวณ $E_{ij}$</h2>
+                <div class="slide-subtitle">การหาความถี่คาดหวังภายใต้กฎการคูณของความน่าจะเป็นที่เป็นอิสระต่อกัน</div>
+            </div>
+            <div class="slide-body">
+                <div class="formula-hero" style="padding:1.1rem;">
+                    <div class="math-display" style="font-size:1.35rem;">
+                        $$E_{ij} = \frac{(\text{ผลรวมแถวที่ } i) \times (\text{ผลรวมคอลัมน์ที่ } j)}{\text{จำนวนข้อมูลรวมทั้งหมด}} = \frac{n_{i.} \cdot n_{.j}}{n}$$
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>ที่มาของสูตร (Mathematical Origin)</h4>
+                        <p>ถ้าตัวแปร A และ B เป็นอิสระกันตาม $H_0$:</p>
+                        $$P(A_i \cap B_j) = P(A_i) \cdot P(B_j) = \left(\frac{n_{i.}}{n}\right) \left(\frac{n_{.j}}{n}\right)$$
+                        $$E_{ij} = n \cdot P(A_i \cap B_j) = n \left(\frac{n_{i.}}{n}\right) \left(\frac{n_{.j}}{n}\right) = \frac{n_{i.} \cdot n_{.j}}{n}$$
+                    </div>
+                    <div class="card purple">
+                        <h4>องศาความเป็นอิสระ (Degrees of Freedom)</h4>
+                        <p>บนตารางที่มี $r$ แถว และ $c$ คอลัมน์:</p>
+                        <div style="font-size:1.4rem; text-align:center; margin:0.8rem 0; color:var(--color-secondary); font-family:var(--font-mono); font-weight:600;">
+                            $$df = (r - 1)(c - 1)$$
+                        </div>
+                        <p style="font-size:0.88rem;">เมื่อทราบผลรวมขอบ (Marginals) เราสามารถกรอกข้อมูลได้อย่างอิสระเพียง $(r-1)(c-1)$ ช่องเท่านั้น</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Section 9.3: Contingency Tables</span>
+                <span>Slide 12 / 22</span>
+            </div>
+        </section>
+
+        <!-- 13. Example 9.3 Setup -->
+        <section class="slide" id="slide-13">
+            <div class="slide-header">
+                <span class="slide-eyebrow">WORKED EXAMPLE 9.3</span>
+                <h2 class="slide-title">ตัวอย่าง 9.3: อาชีพและความสนใจทางการเมือง ($4 \times 3$)</h2>
+                <div class="slide-subtitle">สุ่มตัวอย่างผู้มีสิทธิเลือกตั้ง 300 คน ทดสอบว่าอาชีพกับความสนใจเป็นอิสระกันหรือไม่ ($\alpha=0.01$)</div>
+            </div>
+            <div class="slide-body">
+                <div class="table-wrap">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>อาชีพ \textbackslash ความสนใจ</th>
+                                <th>สนใจมาก</th>
+                                <th>สนใจปานกลาง</th>
+                                <th>สนใจน้อย</th>
+                                <th>รวมแถว ($n_{i.}$)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>นักธุรกิจ</td><td>40</td><td>35</td><td>15</td><td><strong>90</strong></td></tr>
+                            <tr><td>ข้าราชการ / รัฐวิสาหกิจ</td><td>30</td><td>32</td><td>18</td><td><strong>80</strong></td></tr>
+                            <tr><td>พนักงานเอกชน</td><td>20</td><td>30</td><td>20</td><td><strong>70</strong></td></tr>
+                            <tr><td>นิสิต / นักศึกษา</td><td>15</td><td>28</td><td>17</td><td><strong>60</strong></td></tr>
+                            <tr><td><strong>รวมคอลัมน์ ($n_{.j}$)</strong></td><td><strong>105</strong></td><td><strong>125</strong></td><td><strong>70</strong></td><td class="highlight-cell"><strong>$n = 300$</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top:0.4rem;">
+                    <p>
+                        <strong>ตัวอย่างคำนวณ $E_{11}$ (นักธุรกิจ, สนใจมาก):</strong> $E_{11} = \dfrac{90 \times 105}{300} = 31.50$ | 
+                        <strong>$E_{12}$ (นักธุรกิจ, ปานกลาง):</strong> $E_{12} = \dfrac{90 \times 125}{300} = 37.50$
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.3</span>
+                <span>Slide 13 / 22</span>
+            </div>
+        </section>
+
+        <!-- 14. Example 9.3 Calculation -->
+        <section class="slide" id="slide-14">
+            <div class="slide-header">
+                <span class="slide-eyebrow">CALCULATION MATRIX</span>
+                <h2 class="slide-title">ตัวอย่าง 9.3: เมทริกซ์ความถี่คาดหวัง ($E_{ij}$)</h2>
+                <div class="slide-subtitle">คำนวณ $E_{ij}$ ครบทั้ง 12 ช่อง และตรวจสอบว่า $E_{ij} \ge 5$ ทุกช่อง</div>
+            </div>
+            <div class="slide-body">
+                <div class="table-wrap">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>อาชีพ \textbackslash $E_{ij}$</th>
+                                <th>สนใจมาก ($n_{.1}=105$)</th>
+                                <th>สนใจปานกลาง ($n_{.2}=125$)</th>
+                                <th>สนใจน้อย ($n_{.3}=70$)</th>
+                                <th>รวมแถว</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>นักธุรกิจ ($90$)</td><td>31.5000</td><td>37.5000</td><td>21.0000</td><td>90</td></tr>
+                            <tr><td>ข้าราชการ ($80$)</td><td>28.0000</td><td>33.3333</td><td>18.6667</td><td>80</td></tr>
+                            <tr><td>พนักงานเอกชน ($70$)</td><td>24.5000</td><td>29.1667</td><td>16.3333</td><td>70</td></tr>
+                            <tr><td>นิสิต/นักศึกษา ($60$)</td><td>21.0000</td><td>25.0000</td><td>14.0000</td><td>60</td></tr>
+                            <tr><td><strong>รวมคอลัมน์</strong></td><td><strong>105.00</strong></td><td><strong>125.00</strong></td><td><strong>70.00</strong></td><td class="highlight-cell"><strong>300.00</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card success" style="margin-top:0.4rem;">
+                    <p><strong>ตรวจสอบเงื่อนไข:</strong> ทุกช่องมีค่า $E_{ij} \ge 14.0 > 5$ (ผ่านเกณฑ์ $100\%$ ไม่มีช่องใดต้องกังวล)</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.3</span>
+                <span>Slide 14 / 22</span>
+            </div>
+        </section>
+
+        <!-- 15. Example 9.3 Result -->
+        <section class="slide" id="slide-15">
+            <div class="slide-header">
+                <span class="slide-eyebrow">STATISTICAL DECISION</span>
+                <h2 class="slide-title">ตัวอย่าง 9.3: ผลการทดสอบและข้อสรุป</h2>
+                <div class="slide-subtitle">เปรียบเทียบกับค่าวิกฤตไคสแควร์ที่ $\alpha = 0.01$</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card accent">
+                        <h4>ผลรวม 12 ช่อง</h4>
+                        <div style="font-size:0.88rem; line-height:1.7;">
+                            $$\chi^2 = \frac{(40-31.5)^2}{31.5} + \dots + \frac{(17-14)^2}{14}$$
+                            $$\chi^2 = 2.2937 + 0.1667 + 1.7143 + 0.1429$$
+                            $$+ 0.0533 + 0.0238 + 0.8265 + 0.0238$$
+                            $$+ 0.8231 + 1.7143 + 0.3600 + 0.6429$$
+                            <div style="font-size:1.3rem; font-weight:700; color:var(--color-primary); text-align:center; margin-top:0.5rem;">
+                                $$\chi^2_{\text{คำนวณ}} = \mathbf{8.7853}$$
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card purple">
+                        <h4 style="color:var(--color-secondary);">การสรุปผลเชิงสถิติ</h4>
+                        <ul>
+                            <li><strong>องศาความเป็นอิสระ:</strong><br>$df = (4 - 1)(3 - 1) = (3)(2) = 6$</li>
+                            <li><strong>ค่าวิกฤตที่ $\alpha = 0.01$:</strong><br>$\chi^2_{0.01(6)} = 16.81$</li>
+                            <li><strong>การตัดสินใจ:</strong><br>เนื่องจาก $8.7853 < 16.81$ จึง <strong>ยอมรับ $H_0$</strong></li>
+                        </ul>
+                        <div style="margin-top:0.8rem; padding:0.65rem; background:var(--bg-card); border-radius:4px; font-size:0.92rem;">
+                            <strong>สรุป:</strong> อาชีพและระดับความสนใจทางการเมืองในประเทศเป็นอิสระต่อกัน (ไม่มีความสัมพันธ์กัน) ที่ระดับนัยสำคัญ $0.01$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Worked Example 9.3</span>
+                <span>Slide 15 / 22</span>
+            </div>
+        </section>
+
+        <!-- 16. Independence vs Homogeneity -->
+        <section class="slide" id="slide-16">
+            <div class="slide-header">
+                <span class="slide-eyebrow">THEORY DIFFERENTIATION</span>
+                <h2 class="slide-title">Independence vs. Homogeneity: เหมือนหรือต่างกัน?</h2>
+                <div class="slide-subtitle">การเปรียบเทียบเชิงแนวคิดที่มักออกข้อสอบบรรยาย</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 style="color:var(--color-primary)">Test of Independence</h4>
+                        <ul>
+                            <li><strong>การสุ่มตัวอย่าง:</strong> สุ่มตัวอย่างก้อนเดียว ($n$) จาก 1 ประชากร</li>
+                            <li><strong>ตัวแปร:</strong> จำแนก 2 ตัวแปรพร้อมกันในแต่ละหน่วยสุ่ม</li>
+                            <li><strong>คำถามวิจัย:</strong> ตัวแปร A และ ตัวแปร B สัมพันธ์กันหรือไม่?</li>
+                            <li><strong>ตัวอย่าง:</strong> เพศ กับ ความชอบรสชาติไอศกรีม</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h4 style="color:var(--color-secondary)">Test of Homogeneity</h4>
+                        <ul>
+                            <li><strong>การสุ่มตัวอย่าง:</strong> สุ่มแยกอิสระจาก $r$ ประชากร (ตรึง $n_{i.}$ ไว้ล่วงหน้า)</li>
+                            <li><strong>ตัวแปร:</strong> วัดตัวแปรเชิงคุณภาพ 1 ตัวแปรในแต่ละประชากร</li>
+                            <li><strong>คำถามวิจัย:</strong> สัดส่วนของแต่ละประชากรเท่ากัน (เนื้อเดียวกัน) หรือไม่?</li>
+                            <li><strong>ตัวอย่าง:</strong> สินค้าบกพร่องจากเครื่องจักร 4 เครื่อง (เครื่องละ 100 ชิ้น)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card success" style="margin-top:0.4rem; text-align:center;">
+                    <p><strong>ข้อสังเกตสำคัญ:</strong> แม้จุดประสงค์และวิธีสุ่มจะต่างกัน แต่ <strong>สูตรคำนวณ $E_{ij}$, $\chi^2$ และ $df$ เหมือนกันทุกประการ!</strong></p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Theory & Concepts</span>
+                <span>Slide 16 / 22</span>
+            </div>
+        </section>
+
+        <!-- 17. Section Break: Pitfalls & Mastery -->
+        <section class="slide break" id="slide-17">
+            <div class="slide-header">
+                <span class="slide-eyebrow" style="color:var(--color-secondary);">EXAM READINESS</span>
+                <h1 class="slide-title" style="font-size:2.5rem; color:var(--text-main);">
+                    จุดตกม้าตายและกับดักข้อสอบ<br>
+                    <span style="color:var(--color-primary); font-size:1.8rem; font-weight:500;">
+                        Common Pitfalls & Examination Traps
+                    </span>
+                </h1>
+            </div>
+            <div class="slide-body" style="max-width:680px;">
+                <p style="font-size:1.05rem; color:var(--text-muted);">
+                    รวบรวม 4 ข้อผิดพลาดที่นิสิตทำคะแนนหล่นหายบ่อยที่สุดในห้องสอบวิชาหลักสถิติ
+                </p>
+            </div>
+            <div class="slide-footer">
+                <span>Exam Traps</span>
+                <span>Slide 17 / 22</span>
+            </div>
+        </section>
+
+        <!-- 18. The 4 Exam Traps -->
+        <section class="slide" id="slide-18">
+            <div class="slide-header">
+                <span class="slide-eyebrow">CRITICAL MISTAKES</span>
+                <h2 class="slide-title">4 กับดักข้อสอบที่พบบ่อยที่สุด</h2>
+                <div class="slide-subtitle">ตรวจสอบทุกครั้งก่อนส่งกระดาษคำตอบ</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card" style="border-left:4px solid var(--color-danger);">
+                        <h4 style="color:var(--color-danger)">1. นำร้อยละ (%) มาเป็น $O_i$</h4>
+                        <p><strong>ผิด:</strong> เอาเปอร์เซ็นต์ $20\%, 30\%$ มาตั้งลบในสูตร $\chi^2$<br>
+                        <strong>ถูก:</strong> ต้องคูณด้วยขนาดตัวอย่าง $n$ ให้เป็นความถี่จำนวนนับก่อนเสมอ</p>
+                    </div>
+                    <div class="card" style="border-left:4px solid var(--color-danger);">
+                        <h4 style="color:var(--color-danger)">2. คิด $df$ ผิดบนตารางการจรณ์</h4>
+                        <p><strong>ผิด:</strong> ใช้ $df = n - 1$ หรือ $r \cdot c - 1$<br>
+                        <strong>ถูก:</strong> ต้องใช้ $df = (r - 1)(c - 1)$ เสมอ</p>
+                    </div>
+                    <div class="card" style="border-left:4px solid var(--color-accent);">
+                        <h4 style="color:var(--color-accent)">3. ละเลยแถว "ไม่เกิดเหตุการณ์"</h4>
+                        <p><strong>เช่น ข้อ 9.6 (สินค้าบกพร่อง):</strong> มีสินค้าบกพร่อง ต้องสร้างแถว <strong>"สินค้าไม่บกพร่อง"</strong> ด้วย จึงจะได้ตาราง $2 \times 4$ ที่สมบูรณ์</p>
+                    </div>
+                    <div class="card" style="border-left:4px solid var(--color-accent);">
+                        <h4 style="color:var(--color-accent)">4. เปิดตารางสองทาง ($\alpha/2$)</h4>
+                        <p><strong>ผิด:</strong> เผลอเอา $\alpha$ ไปหาร 2 เหมือนการทดสอบสองทางในบทที่ 7<br>
+                        <strong>ถูก:</strong> $\chi^2$-test เป็นการทดสอบทางขวาทางเดียวเสมอ ใช้ $\alpha$ เต็มค่า</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Exam Traps</span>
+                <span>Slide 18 / 22</span>
+            </div>
+        </section>
+
+        <!-- 19. Exercise 9.6 Deep Dive -->
+        <section class="slide" id="slide-19">
+            <div class="slide-header">
+                <span class="slide-eyebrow">EXAM SPOTLIGHT</span>
+                <h2 class="slide-title">เจาะลึกโจทย์ยอดฮิต: ข้อ 9.6 (สินค้าบกพร่องกับเครื่องจักร)</h2>
+                <div class="slide-subtitle">ตัวอย่างคลาสสิกที่นิสิตมักลืมแถว "สินค้าดี" ($2 \times 4$ Table)</div>
+            </div>
+            <div class="slide-body">
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    สุ่มสินค้าจากเครื่องจักร 4 เครื่อง เครื่องละ 100 ชิ้น ($N=400$) พบของบกพร่อง A:21, B:17, C:23, D:19
+                </p>
+                <div class="table-wrap">
+                    <table class="stats-table" style="font-size:0.88rem;">
+                        <thead>
+                            <tr>
+                                <th>สถานะ \ เครื่องจักร</th>
+                                <th>A (100)</th>
+                                <th>B (100)</th>
+                                <th>C (100)</th>
+                                <th>D (100)</th>
+                                <th>รวม</th>
+                                <th>$E_{ij}$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>บกพร่อง</strong></td>
+                                <td>21</td><td>17</td><td>23</td><td>19</td>
+                                <td><strong>80</strong></td>
+                                <td class="highlight-cell">$100 \times 80 / 400 = \mathbf{20}$</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ไม่บกพร่อง</strong></td>
+                                <td>79</td><td>83</td><td>77</td><td>81</td>
+                                <td><strong>320</strong></td>
+                                <td class="highlight-cell">$100 \times 320 / 400 = \mathbf{80}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card purple" style="margin-top:0.4rem;">
+                    <p>
+                        $$\chi^2 = \sum_{\text{บกพร่อง}} \frac{(O-20)^2}{20} + \sum_{\text{ไม่บกพร่อง}} \frac{(O-80)^2}{80} = 1.00 + 0.25 = \mathbf{1.2500}$$
+                        $df = (2-1)(4-1) = 3 \implies \chi^2_{0.01(3)} = 11.34 \implies \chi^2_{\text{คำนวณ}} < 11.34 \implies$ <strong>ยอมรับ $H_0$</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Exam Spotlight</span>
+                <span>Slide 19 / 22</span>
+            </div>
+        </section>
+
+        <!-- 20. Decision Roadmap -->
+        <section class="slide" id="slide-20">
+            <div class="slide-header">
+                <span class="slide-eyebrow">DECISION ROADMAP</span>
+                <h2 class="slide-title">แผนผังการตัดสินใจเลือกสูตรใน 10 วินาที</h2>
+                <div class="slide-subtitle">สูตรลัดช่วยจำสำหรับใช้ในห้องสอบ</div>
+            </div>
+            <div class="slide-body">
+                <div class="grid-2">
+                    <div class="card accent">
+                        <h4 style="color:var(--color-primary);">โจทย์มีตัวแปรเชิงคุณภาพ 1 ตัว</h4>
+                        <p style="font-size:1.05rem; font-weight:600; color:var(--text-main); margin-bottom:0.4rem;">
+                            Goodness-of-Fit Test
+                        </p>
+                        <ul>
+                            <li><strong>สูตรความถี่คาดหวัง:</strong> $E_i = n \cdot p_{i0}$</li>
+                            <li><strong>องศาความเป็นอิสระ:</strong> $df = k - 1$</li>
+                            <li><strong>ลักษณะโจทย์:</strong> สัดส่วนสี, ลูกเต๋า, เกรด, สัดส่วนวัน</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h4 style="color:var(--color-secondary);">โจทย์มีตัวแปรเชิงคุณภาพ 2 ตัว</h4>
+                        <p style="font-size:1.05rem; font-weight:600; color:var(--text-main); margin-bottom:0.4rem;">
+                            Test of Independence / Homogeneity
+                        </p>
+                        <ul>
+                            <li><strong>สูตรความถี่คาดหวัง:</strong> $E_{ij} = \dfrac{n_{i.} \cdot n_{.j}}{n}$</li>
+                            <li><strong>องศาความเป็นอิสระ:</strong> $df = (r - 1)(c - 1)$</li>
+                            <li><strong>ลักษณะโจทย์:</strong> เพศกับเหตุผลซื้อ, อาชีพกับบัตรเครดิต</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Summary & Roadmap</span>
+                <span>Slide 20 / 22</span>
+            </div>
+        </section>
+
+        <!-- 21. Formula Cheat Sheet -->
+        <section class="slide" id="slide-21">
+            <div class="slide-header">
+                <span class="slide-eyebrow">SUMMARY CHEAT SHEET</span>
+                <h2 class="slide-title">สรุปสูตรและสาระสำคัญบทที่ 9 ในหน้าเดียว</h2>
+                <div class="slide-subtitle">ทบทวนสั้นกระชับก่อนลงมือทำแบบฝึกหัด</div>
+            </div>
+            <div class="slide-body">
+                <div class="table-wrap">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>การทดสอบ</th>
+                                <th>สมมติฐาน $H_0$</th>
+                                <th>ความถี่คาดหวัง ($E$)</th>
+                                <th>องศาอิสระ ($df$)</th>
+                                <th>เกณฑ์ตัดสินใจ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ภาวะสารูปสนิทดี</strong><br>(Goodness-of-Fit)</td>
+                                <td>$p_1=p_{10}, \dots, p_k=p_{k0}$</td>
+                                <td>$E_i = n \cdot p_{i0}$</td>
+                                <td>$k - 1$</td>
+                                <td rowspan="2" style="vertical-align:middle; background:var(--bg-accent-soft); color:var(--color-primary); font-weight:600;">
+                                    ปฏิเสธ $H_0$<br>เมื่อ $\chi^2_{\text{คำนวณ}} > \chi^2_{\alpha, df}$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>ความเป็นอิสระ / เอกภาพ</strong><br>(Contingency Table)</td>
+                                <td>ตัวแปรทั้งสองเป็นอิสระกัน</td>
+                                <td>$E_{ij} = \dfrac{n_{i.} \cdot n_{.j}}{n}$</td>
+                                <td>$(r - 1)(c - 1)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="margin-top:0.4rem; text-align:center;">
+                    <p style="font-family:var(--font-mono); font-size:0.95rem; color:var(--color-primary);">
+                        $$\chi^2 = \sum \frac{(O - E)^2}{E} \quad \text{โดยที่ } n > 50 \text{ และ } E_i \ge 5 \text{ อย่างน้อย } 80\%$$
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Summary Cheat Sheet</span>
+                <span>Slide 21 / 22</span>
+            </div>
+        </section>
+
+        <!-- 22. Closing Slide -->
+        <section class="slide cover" id="slide-22">
+            <div class="slide-header">
+                <span class="slide-eyebrow">END OF LECTURE · CHAPTER 9</span>
+                <h1 class="slide-title" style="font-size:2.8rem; margin-bottom:0.6rem; color:var(--color-primary);">
+                    พร้อมลุยแบบฝึกหัดบทที่ 9!
+                </h1>
+                <h2 class="slide-subtitle" style="font-size:1.3rem; color:var(--color-secondary); font-weight:500;">
+                    01422111 หลักสถิติ · ภาควิชาสถิติ มหาวิทยาลัยเกษตรศาสตร์
+                </h2>
+            </div>
+            <div class="slide-body" style="max-width:720px;">
+                <p style="font-size:1.1rem; color:var(--text-muted); line-height:1.7;">
+                    นิสิตสามารถฝึกทำโจทย์ข้อ 9.1 ถึง 9.9 ในใบงานควบคู่ไปกับการทบทวน Roadmap ในสไลด์นี้ได้ทันทีครับ
+                </p>
+                <div style="margin-top:1.5rem; display:flex; gap:1.2rem;">
+                    <div class="badge-course" style="font-size:0.85rem; padding:0.4rem 0.8rem;">
+                        Q&A Session
+                    </div>
+                    <div class="badge-course" style="font-size:0.85rem; padding:0.4rem 0.8rem; border-color:var(--border-purple); color:var(--color-secondary); background:var(--bg-purple-soft);">
+                        Next: Linear Regression & Correlation
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>Thank you for your attention</span>
+                <span>Slide 22 / 22</span>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Floating Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-btn" id="prevBtn" title="สไลด์ก่อนหน้า (Arrow Left)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="nav-btn" id="nextBtn" title="สไลด์ถัดไป (Arrow Right)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+    </div>
+
+    <!-- Floating Slide Counter -->
+    <div class="slide-counter">
+        <span id="currentNum">1</span> / <span id="totalNum">22</span>
+    </div>
+
+    <script>
+        (function () {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentIdx = 0;
+
+            const progressBar = document.getElementById('progressBar');
+            const currentNum = document.getElementById('currentNum');
+            const totalNum = document.getElementById('totalNum');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const presentBtn = document.getElementById('presentBtn');
+            const themeBtn = document.getElementById('themeBtn');
+            const themeLabel = document.getElementById('themeLabel');
+            const pdfBtn = document.getElementById('pdfBtn');
+
+            if (totalNum) totalNum.textContent = totalSlides;
+
+            function updateUI(idx) {
+                currentIdx = Math.max(0, Math.min(idx, totalSlides - 1));
+                if (currentNum) currentNum.textContent = currentIdx + 1;
+                if (progressBar) progressBar.style.width = ((currentIdx + 1) / totalSlides * 100) + '%';
+                
+                if (prevBtn) prevBtn.disabled = currentIdx === 0;
+                if (nextBtn) nextBtn.disabled = currentIdx === totalSlides - 1;
+
+                slides.forEach((s, i) => {
+                    s.classList.toggle('current', i === currentIdx);
+                });
+            }
+
+            function goTo(idx) {
+                if (idx < 0 || idx >= totalSlides) return;
+                updateUI(idx);
+                if (!document.body.classList.contains('presenting')) {
+                    slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            // Keyboard navigation
+            window.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                
+                switch (e.key) {
+                    case 'ArrowRight':
+                    case 'PageDown':
+                    case ' ':
+                        e.preventDefault();
+                        goTo(currentIdx + 1);
+                        break;
+                    case 'ArrowLeft':
+                    case 'PageUp':
+                        e.preventDefault();
+                        goTo(currentIdx - 1);
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        goTo(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        goTo(totalSlides - 1);
+                        break;
+                    case 'p':
+                    case 'P':
+                    case 'f':
+                    case 'F':
+                        e.preventDefault();
+                        togglePresent();
+                        break;
+                    case 't':
+                    case 'T':
+                        e.preventDefault();
+                        toggleTheme();
+                        break;
+                    case 'Escape':
+                        if (document.body.classList.contains('presenting')) {
+                            togglePresent();
+                        }
+                        break;
+                }
+            });
+
+            if (prevBtn) prevBtn.addEventListener('click', () => goTo(currentIdx - 1));
+            if (nextBtn) nextBtn.addEventListener('click', () => goTo(currentIdx + 1));
+
+            // Present mode toggle
+            function togglePresent() {
+                const isPresenting = document.body.classList.toggle('presenting');
+                if (isPresenting) {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                    }
+                } else {
+                    if (document.exitFullscreen && document.fullscreenElement) {
+                        document.exitFullscreen().catch(() => {});
+                    }
+                    slides[currentIdx].scrollIntoView({ behavior: 'auto', block: 'start' });
+                }
+                updateUI(currentIdx);
+            }
+
+            if (presentBtn) presentBtn.addEventListener('click', togglePresent);
+
+            // Theme toggle
+            function toggleTheme() {
+                const html = document.documentElement;
+                const cur = html.getAttribute('data-theme');
+                const next = cur === 'halloween' ? 'light' : 'halloween';
+                html.setAttribute('data-theme', next);
+                if (themeLabel) themeLabel.textContent = next === 'halloween' ? 'Halloween' : 'Light';
+                try { localStorage.setItem('ch09-theme', next); } catch (e) {}
+            }
+
+            if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+            // Load theme from storage
+            try {
+                const savedTheme = localStorage.getItem('ch09-theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    if (themeLabel) themeLabel.textContent = savedTheme === 'halloween' ? 'Halloween' : 'Light';
+                }
+            } catch (e) {}
+
+            // Save PDF
+            if (pdfBtn) pdfBtn.addEventListener('click', () => window.print());
+
+            // IntersectionObserver for normal scroll sync
+            const io = new IntersectionObserver((entries) => {
+                if (document.body.classList.contains('presenting')) return;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.prototype.indexOf.call(slides, entry.target);
+                        if (idx >= 0) updateUI(idx);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            slides.forEach(s => io.observe(s));
+
+            updateUI(0);
+        })();
+    </script>
+</body>
+
+</html>
