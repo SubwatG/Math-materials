@@ -11,9 +11,6 @@
          * 2-DIGIT PRIZE ANALYTICS (00 - 99)
          * ========================================================================= */
 
-        /**
-         * Computes frequency counts for 00-99 and marginal distributions for tens and units.
-         */
         computeFrequencies: function (data) {
             const counts = {};
             for (let i = 0; i < 100; i++) {
@@ -45,9 +42,6 @@
             };
         },
 
-        /**
-         * Computes Chi-square goodness-of-fit test against Discrete Uniform Distribution U{0, 99}.
-         */
         computeChiSquare: function (data) {
             const freq = this.computeFrequencies(data);
             const n = freq.total;
@@ -77,9 +71,6 @@
             };
         },
 
-        /**
-         * Computes gap intervals between winning occurrences of a specific 2-digit number.
-         */
         computeGaps: function (data, targetNum) {
             const formattedTarget = targetNum.toString().padStart(2, '0');
             const chronological = data.slice().reverse();
@@ -128,11 +119,6 @@
          * 3-DIGIT PRIZE ANALYTICS (000 - 999)
          * ========================================================================= */
 
-        /**
-         * Computes frequency counts for 000-999 and marginal distributions for hundreds, tens, and units.
-         * @param {Array} data
-         * @param {string} category 'sub3' (ท้าย 3 ตัว), 'pre3' (หน้า 3 ตัว), or 'all3' (ทั้งหน้าและท้าย)
-         */
         compute3DFrequencies: function (data, category) {
             category = category || 'sub3';
             const counts = {};
@@ -183,9 +169,6 @@
             };
         },
 
-        /**
-         * Computes gap intervals and occurrences for a specific 3-digit number.
-         */
         compute3DGaps: function (data, target3D, category) {
             category = category || 'sub3';
             const formatted = target3D.toString().padStart(3, '0');
@@ -255,10 +238,6 @@
          * 1ST PRIZE (6-DIGIT) ANALYTICS & CENTRAL LIMIT THEOREM
          * ========================================================================= */
 
-        /**
-         * Computes Central Limit Theorem (digit sum), Combinatorial Duplication patterns,
-         * consecutive duplicates, and 6-position frequency distributions.
-         */
         compute1stPrizeStats: function (data) {
             const valid = data.filter(d => d.p1 && d.p1.toString().length === 6);
             const n = valid.length;
@@ -365,9 +344,6 @@
             };
         },
 
-        /**
-         * Searches 1st prize numbers by full or substring match.
-         */
         search1stPrize: function (data, query) {
             const q = (query || '').trim();
             if (!q) return [];
@@ -378,9 +354,6 @@
          * ALL-PRIZES ARCHITECTURE & 20-YEAR LIFETIME CHECKER
          * ========================================================================= */
 
-        /**
-         * Returns the official 9-tier prize structure and mathematical parameters.
-         */
         getPrizeArchitecture: function () {
             return {
                 tiers: [
@@ -406,9 +379,6 @@
             };
         },
 
-        /**
-         * Fast O(1) lifetime evaluation of a 6-digit ticket against 20 years of draws.
-         */
         checkLifetimeTicket: function (ticketStr) {
             const clean = (ticketStr || '').toString().trim();
             if (clean.length !== 6 || !/^\d{6}$/.test(clean)) return null;
@@ -431,7 +401,6 @@
             const events = [];
             let totalWon = 0;
 
-            // 1. 6-digit tier hits
             hits.forEach(h => {
                 const drawId = h[0];
                 const tier = h[1];
@@ -446,7 +415,6 @@
                 });
             });
 
-            // 2. 2-digit & 3-digit hits
             const sub2 = clean.slice(-2);
             const pre3 = clean.slice(0, 3);
             const sub3 = clean.slice(-3);
@@ -495,13 +463,104 @@
             };
         },
 
+        getTierTopNumbers: function (tierId) {
+            const allData = window.ALL_PRIZES_DATA;
+            if (!allData || !allData.hits) return [];
+
+            const list = [];
+            const tierNum = (tierId === 'all') ? null : parseInt(tierId, 10);
+
+            for (const [num, hits] of Object.entries(allData.hits)) {
+                let matchedHits = hits;
+                if (tierNum !== null) {
+                    matchedHits = hits.filter(h => h[1] === tierNum);
+                }
+                if (matchedHits.length > 0) {
+                    list.push({
+                        num: num,
+                        count: matchedHits.length,
+                        hits: matchedHits
+                    });
+                }
+            }
+
+            list.sort((a, b) => b.count - a.count);
+            return list;
+        },
+
+        getHotPicks: function () {
+            return [
+                { num: '146823', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 5 สองครั้ง, รางวัลที่ 2 หนึ่งครั้ง)' },
+                { num: '474510', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 2 หนึ่งครั้ง, รางวัลที่ 5 สองครั้ง)' },
+                { num: '462934', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 4 สองครั้ง, ข้างเคียงหนึ่งครั้ง)' },
+                { num: '943945', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 5 หนึ่งครั้ง, รางวัลที่ 4 สองครั้ง)' },
+                { num: '110442', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 5 สองครั้ง, ข้างเคียงหนึ่งครั้ง)' },
+                { num: '413163', category: 'Hall of Fame', desc: 'เคยถูกรางวัลที่ 5 ถึง 3 ครั้ง' },
+                { num: '475398', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 4 สองครั้ง, รางวัลที่ 5 หนึ่งครั้ง)' },
+                { num: '124263', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 5 หนึ่งครั้ง, รางวัลที่ 4 สองครั้ง)' },
+                { num: '309592', category: 'Hall of Fame', desc: 'เคยถูกรางวัลที่ 5 ถึง 3 ครั้ง' },
+                { num: '856786', category: 'Hall of Fame', desc: 'เคยถูกรางวัลถึง 3 ครั้ง (รางวัลที่ 5 สองครั้ง, รางวัลที่ 4 หนึ่งครั้ง)' },
+                { num: '226006', category: 'Positional Top', desc: 'ประกอบจากเลขโดดแชมป์ความถี่สูงสุดในแต่ละหลัก (แสน-หน่วย)' },
+                { num: '963875', category: 'Positional Top', desc: 'ประกอบจากเลขโดดอันดับ 2 ของแต่ละหลัก' },
+                { num: '100419', category: 'Positional Top', desc: 'ประกอบจากเลขโดดอันดับ 3 ของแต่ละหลัก' },
+                { num: '223806', category: 'Positional Top', desc: 'ผสมผสานหลักแสน-หมื่นยอดนิยมเข้ากับหลักหน่วยยอดนิยม' },
+                { num: '926415', category: 'Positional Top', desc: 'ผสมผสานเลขโดดความถี่สูงสุด 6 หลัก' },
+                { num: '290079', category: 'Prefix/Suffix', desc: 'เลขหน้า 3 ตัวแชมป์ (290) + เลขท้าย 2 ตัวแชมป์ (79)' },
+                { num: '742085', category: 'Prefix/Suffix', desc: 'เลขหน้า 3 ตัวแชมป์ (742) + เลขท้าย 2 ตัวแชมป์ (85)' },
+                { num: '290092', category: 'Prefix/Suffix', desc: 'เลขหน้า 3 ตัวแชมป์ (290) + เลขท้าย 2 ตัวแชมป์ (92)' },
+                { num: '742014', category: 'Prefix/Suffix', desc: 'เลขหน้า 3 ตัวแชมป์ (742) + เลขท้าย 2 ตัวแชมป์ (14)' },
+                { num: '060064', category: 'Prefix/Suffix', desc: 'เลขหน้า 3 ตัวแชมป์ (060) + เลขท้าย 2 ตัวแชมป์ (64)' }
+            ];
+        },
+
+        runHotPicksBacktest: function () {
+            const picks = this.getHotPicks().map(p => p.num);
+            const allData = window.ALL_PRIZES_DATA;
+            if (!allData || !allData.draws) return null;
+
+            const draws = allData.draws;
+            const totalDraws = draws.length;
+            const totalTickets = totalDraws * picks.length;
+            const totalSpent = totalTickets * 80;
+            let totalWon = 0;
+            let totalHits = 0;
+
+            const tierPrizes = { 1: 6000000, 2: 200000, 3: 80000, 4: 40000, 5: 20000, 6: 100000 };
+
+            picks.forEach(t => {
+                const hits = allData.hits[t] || [];
+                hits.forEach(h => {
+                    const tier = h[1];
+                    totalWon += (tierPrizes[tier] || 0);
+                    totalHits++;
+                });
+
+                const sub2 = t.slice(-2);
+                const pre3 = t.slice(0, 3);
+                const sub3 = t.slice(-3);
+
+                draws.forEach(d => {
+                    if (d.p2 === sub2) { totalWon += 2000; totalHits++; }
+                    if (d.pre3 && d.pre3.includes(pre3)) { totalWon += 4000; totalHits++; }
+                    if (d.sub3 && d.sub3.includes(sub3)) { totalWon += 4000; totalHits++; }
+                });
+            });
+
+            return {
+                totalDraws: totalDraws,
+                totalTickets: totalTickets,
+                totalSpent: totalSpent,
+                totalWon: totalWon,
+                netBalance: totalWon - totalSpent,
+                returnRate: parseFloat(((totalWon - totalSpent) / totalSpent * 100).toFixed(2)),
+                totalHits: totalHits
+            };
+        },
+
         /* =========================================================================
          * MONTE CARLO SIMULATOR
          * ========================================================================= */
 
-        /**
-         * Runs a Monte Carlo simulation over a given number of draws.
-         */
         runMonteCarlo: function (options) {
             const draws = options.draws || 240;
             const ticketCost = options.ticketCost || 80;
@@ -548,9 +607,6 @@
             };
         },
 
-        /**
-         * High-accuracy complementary error function approximation
-         */
         _approxErfc: function (x) {
             const a1 = 0.254829592;
             const a2 = -0.284496736;

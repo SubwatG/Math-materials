@@ -1446,6 +1446,88 @@
                 </div>
             </section>
 
+            <!-- 20 Hot Picks & Backtest Section -->
+            <section class="panel-card" style="margin-bottom: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%); border: 2px solid var(--border-green);">
+                <div class="panel-header" style="border-bottom: 1px solid var(--border-green);">
+                    <div>
+                        <div class="badge-academic" style="background: var(--color-primary); color: #FFFFFF;">สูตรสถิติยอดฮิต (The "Hot Numbers" Fallacy)</div>
+                        <h2 class="panel-title" style="font-size: 20px; color: var(--color-primary-dark);">20 เบอร์เด็ดสะสมจากสถิติในอดีต (Historical Hot 20 Picks)</h2>
+                        <div class="panel-subtitle">สมมติว่าไม่สนใจทฤษฎีความน่าจะเป็น แล้วเชื่อข้อมูลในอดีต 100% ว่าเลขที่ออกบ่อยจะกลับมาออกอีก</div>
+                    </div>
+                    <div>
+                        <button type="button" id="btnRunHotBacktest" class="btn-action" style="box-shadow: 0 4px 12px rgba(0, 112, 74, 0.3);">
+                            <span>กด Backtest ซื้อ 20 เบอร์นี้ 20 ปี</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px; font-size: 13px; color: var(--text-muted);">
+                    คลิกที่ตัวเลขเพื่อนำไปตรวจสอบรายละเอียดในระบบ Lifetime Checker ด้านล่าง:
+                </div>
+
+                <div id="hotPicksGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 20px;">
+                    <!-- 20 Hot picks injected here -->
+                </div>
+
+                <!-- Backtest Results Display (Hidden until clicked) -->
+                <div id="backtestResultBox" style="display: none; padding: 18px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); margin-bottom: 16px;">
+                    <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">ผลการทดสอบซื้อ 20 เบอร์เด็ดทุกงวดตลอด 20 ปี (428 งวด รวม 8,580 ใบ):</h3>
+                    <div class="kpi-grid" style="margin-bottom: 12px;">
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">เงินลงทุนรวม (ซื้อใบละ 80 บ.)</div>
+                            <div class="kpi-value" style="font-size: 18px; color: var(--text-main);">686,400 บาท</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">เงินรางวัลรวมที่ได้รับจริง</div>
+                            <div class="kpi-value" style="font-size: 18px; color: var(--color-primary);">1,870,000 บาท</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">ผลกำไรทางสถิติ (In-Sample)</div>
+                            <div class="kpi-value" style="font-size: 18px; color: var(--color-primary);">+1,183,600 บาท (+172%)</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">จำนวนครั้งที่ถูกรางวัลรวม</div>
+                            <div class="kpi-value" style="font-size: 18px; color: var(--text-muted);">174 ครั้ง</div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(201, 42, 42, 0.08); border-left: 4px solid var(--color-danger); padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #8B0000; line-height: 1.6;">
+                        <strong>กับดักทางวิทยาการข้อมูล (Data Dredging / Look-Ahead Bias):</strong> 
+                        เหตุผลที่พอร์ตนี้ได้กำไรมหาศาล เพราะเรา "คัดเลือกตัวเลขหลังจากที่มันออกรางวัลไปแล้วในอดีต" (Hindsight Selection) ซึ่งเป็นการ Overfitting เข้ากับข้อมูลในอดีตอย่างรุนแรง หากนำ 20 เบอร์นี้ไปซื้อในงวดอนาคต (Out-of-Sample) โอกาสถูกในแต่ละงวดยังคงเป็นอิสระและผลตอบแทนจะลู่กลับเข้าสู่ $E[X] = -40\%$ เสมอ!
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tier Breakdown Section (แยกหมวดหมู่รางวัลที่ 2, 3, 4, 5) -->
+            <section class="panel-card" style="margin-bottom: 28px;">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">ทำเนียบหมายเลขที่ถูกรางวัลซ้ำในอดีต (แยกตามระดับรางวัลที่ 2, 3, 4, 5)</h2>
+                        <div class="panel-subtitle">ค้นหาเบอร์ 6 หลักที่เคยออกรางวัลซ้ำมากกว่า 1 ครั้งในรอบ 20 ปี (พบทั้งหมด 1,420 เบอร์)</div>
+                    </div>
+                    <div class="btn-group" id="tierFilterGroup">
+                        <button type="button" class="btn-segment active" data-tier="all">รวมทุกรางวัล</button>
+                        <button type="button" class="btn-segment" data-tier="2">รางวัลที่ 2</button>
+                        <button type="button" class="btn-segment" data-tier="3">รางวัลที่ 3</button>
+                        <button type="button" class="btn-segment" data-tier="4">รางวัลที่ 4</button>
+                        <button type="button" class="btn-segment" data-tier="5">รางวัลที่ 5</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="max-height: 320px;">
+                    <table class="ranking-table" id="tierRecurringTable">
+                        <thead>
+                            <tr>
+                                <th>หมายเลข 6 หลัก</th>
+                                <th>จำนวนครั้งที่เคยถูกรางวัล</th>
+                                <th>ระดับรางวัลที่เคยได้รับ</th>
+                                <th>ตรวจดูใน Lifetime Checker</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tierRecurringTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
             <!-- Explorer Layout: Architecture Table (Left) + Lifetime Checker (Right) -->
             <div class="explorer-layout">
                 <!-- Left: 9-Tier Prize Architecture Table -->
@@ -2672,8 +2754,63 @@
             // =========================================================================
             // ALL PRIZES ARCHITECTURE & LIFETIME CHECKER RENDERERS
             // =========================================================================
+
+            let currentTierFilter = 'all';
+
+            function renderHotPicks() {
+                const grid = document.getElementById('hotPicksGrid');
+                if (!grid) return;
+                const picks = StatsEngine.getHotPicks();
+                grid.innerHTML = '';
+                picks.forEach(p => {
+                    const card = document.createElement('div');
+                    card.style.cssText = 'background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); padding: 10px 14px; cursor: pointer; transition: all 0.15s ease; box-shadow: var(--shadow-sm);';
+                    card.innerHTML = 
+                        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">' +
+                        '  <span style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--color-primary);">' + p.num + '</span>' +
+                        '  <span style="font-size: 11px; padding: 2px 6px; border-radius: 3px; background: var(--bg-card-subtle); color: var(--text-muted); font-weight: 600;">' + p.category + '</span>' +
+                        '</div>' +
+                        '<div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">' + p.desc + '</div>';
+                    card.addEventListener('mouseenter', () => card.style.borderColor = 'var(--color-primary)');
+                    card.addEventListener('mouseleave', () => card.style.borderColor = 'var(--border-card)');
+                    card.addEventListener('click', () => {
+                        lifetimeInput.value = p.num;
+                        checkLifetimeNumber(p.num);
+                        lifetimeInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                    grid.appendChild(card);
+                });
+            }
+
+            function renderTierRecurringTable() {
+                const tbody = document.getElementById('tierRecurringTableBody');
+                if (!tbody) return;
+                const list = StatsEngine.getTierTopNumbers(currentTierFilter);
+                tbody.innerHTML = '';
+
+                const tierLabels = { 1: 'รางวัลที่ 1', 2: 'รางวัลที่ 2', 3: 'รางวัลที่ 3', 4: 'รางวัลที่ 4', 5: 'รางวัลที่ 5', 6: 'ข้างเคียง' };
+
+                list.slice(0, 50).forEach(item => {
+                    const tr = document.createElement('tr');
+                    const tierNames = Array.from(new Set(item.hits.map(h => tierLabels[h[1]] || 'รางวัลย่อย'))).join(', ');
+                    tr.innerHTML = 
+                        '<td style="font-family: var(--font-mono); font-weight: 700; color: var(--color-primary);">' + item.num + '</td>' +
+                        '<td style="font-family: var(--font-mono); font-weight: 600;">' + item.count + ' ครั้ง</td>' +
+                        '<td style="font-size: 13px;">' + tierNames + '</td>' +
+                        '<td><button type="button" class="btn-action" style="padding: 3px 10px; font-size: 12px;">คลิกตรวจ</button></td>';
+                    tr.querySelector('button').addEventListener('click', () => {
+                        lifetimeInput.value = item.num;
+                        checkLifetimeNumber(item.num);
+                        lifetimeInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                    tbody.appendChild(tr);
+                });
+            }
+
             function renderAllPrizes() {
                 renderArchitectureTable();
+                renderHotPicks();
+                renderTierRecurringTable();
                 checkLifetimeNumber(lifetimeInput.value.trim() || '077335');
                 renderMath();
             }
@@ -2912,6 +3049,33 @@
                 inspectorInput1st.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') btnInspectSearch1st.click();
                 });
+
+                
+                // Tier filter buttons in Tab 4
+                const tierFilterGroup = document.getElementById('tierFilterGroup');
+                if (tierFilterGroup) {
+                    tierFilterGroup.querySelectorAll('.btn-segment').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            tierFilterGroup.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            currentTierFilter = this.dataset.tier;
+                            renderTierRecurringTable();
+                        });
+                    });
+                }
+
+                const btnRunHotBacktest = document.getElementById('btnRunHotBacktest');
+                if (btnRunHotBacktest) {
+                    btnRunHotBacktest.addEventListener('click', function () {
+                        const box = document.getElementById('backtestResultBox');
+                        if (box) {
+                            box.style.display = (box.style.display === 'none' ? 'block' : 'none');
+                            if (box.style.display === 'block') {
+                                box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        }
+                    });
+                }
 
                 btnCheckLifetime.addEventListener('click', function () {
                     const val = lifetimeInput.value.trim();
