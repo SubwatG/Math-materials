@@ -1,6 +1,6 @@
 /**
  * stats-engine.js
- * Analytical calculations and statistical testing for Thai 2-digit and 3-digit lottery data
+ * Analytical calculations and statistical testing for Thai 2-digit, 3-digit, and 1st prize (6-digit) lottery data
  */
 
 (function (window) {
@@ -249,6 +249,131 @@
                 maxGap: maxGap,
                 minGap: minGap
             };
+        },
+
+        /* =========================================================================
+         * 1ST PRIZE (6-DIGIT) ANALYTICS & CENTRAL LIMIT THEOREM
+         * ========================================================================= */
+
+        /**
+         * Computes Central Limit Theorem (digit sum), Combinatorial Duplication patterns,
+         * consecutive duplicates, and 6-position frequency distributions.
+         */
+        compute1stPrizeStats: function (data) {
+            const valid = data.filter(d => d.p1 && d.p1.toString().length === 6);
+            const n = valid.length;
+            if (n === 0) return null;
+
+            const sumFreq = new Array(55).fill(0);
+            let sumTotal = 0;
+            const digitSums = [];
+
+            // 6 positions (0: Hundred-thousands to 5: Units)
+            const positions = Array.from({ length: 6 }, () => new Array(10).fill(0));
+
+            const patterns = {
+                distinct: 0,
+                onePair: 0,
+                twoPairs: 0,
+                threeKind: 0,
+                fullHouse: 0,
+                fourPlus: 0
+            };
+
+            let consecutiveDuplicates = 0;
+
+            valid.forEach(item => {
+                const str = item.p1.toString().padStart(6, '0');
+                let s = 0;
+                const dCount = {};
+                let hasConsec = false;
+
+                for (let i = 0; i < 6; i++) {
+                    const digit = parseInt(str[i], 10);
+                    s += digit;
+                    positions[i][digit]++;
+                    dCount[digit] = (dCount[digit] || 0) + 1;
+                    if (i < 5 && str[i] === str[i + 1]) {
+                        hasConsec = true;
+                    }
+                }
+
+                sumFreq[s]++;
+                sumTotal += s;
+                digitSums.push(s);
+                if (hasConsec) consecutiveDuplicates++;
+
+                const counts = Object.values(dCount).sort((a, b) => b - a);
+                if (counts.length === 6) {
+                    patterns.distinct++;
+                } else if (counts[0] === 2 && counts[1] === 1) {
+                    patterns.onePair++;
+                } else if (counts[0] === 2 && counts[1] === 2) {
+                    patterns.twoPairs++;
+                } else if (counts[0] === 3 && counts[1] === 1) {
+                    patterns.threeKind++;
+                } else if (counts[0] === 3 && counts[1] === 2) {
+                    patterns.fullHouse++;
+                } else if (counts[0] >= 4) {
+                    patterns.fourPlus++;
+                }
+            });
+
+            const meanSum = sumTotal / n;
+            let varSum = 0;
+            digitSums.forEach(s => {
+                varSum += Math.pow(s - meanSum, 2);
+            });
+            const stdSum = Math.sqrt(varSum / n);
+
+            // Chi-Square per position (df = 9)
+            const posStats = positions.map(posArray => {
+                const expected = n / 10.0;
+                let chi2 = 0;
+                posArray.forEach(obs => {
+                    chi2 += Math.pow(obs - expected, 2) / expected;
+                });
+                const df = 9;
+                const z = (Math.pow(chi2 / df, 1 / 3) - (1 - 2 / (9 * df))) / Math.sqrt(2 / (9 * df));
+                const pValue = this._approxErfc(z / Math.SQRT2) * 0.5;
+                return {
+                    counts: posArray,
+                    chi2: parseFloat(chi2.toFixed(2)),
+                    pValue: parseFloat(Math.max(0, Math.min(1, pValue)).toFixed(3)),
+                    isUniform: pValue >= 0.05
+                };
+            });
+
+            return {
+                totalDraws: n,
+                sumDistribution: sumFreq,
+                meanSum: parseFloat(meanSum.toFixed(2)),
+                stdSum: parseFloat(stdSum.toFixed(2)),
+                theoreticalMean: 27.0,
+                theoreticalStd: 7.035,
+                patterns: {
+                    distinct: { count: patterns.distinct, pct: parseFloat((patterns.distinct / n * 100).toFixed(1)), theo: 15.12 },
+                    onePair: { count: patterns.onePair, pct: parseFloat((patterns.onePair / n * 100).toFixed(1)), theo: 45.36 },
+                    twoPairs: { count: patterns.twoPairs, pct: parseFloat((patterns.twoPairs / n * 100).toFixed(1)), theo: 22.68 },
+                    threeKind: { count: patterns.threeKind, pct: parseFloat((patterns.threeKind / n * 100).toFixed(1)), theo: 12.60 },
+                    fourPlus: { count: patterns.fullHouse + patterns.fourPlus, pct: parseFloat(((patterns.fullHouse + patterns.fourPlus) / n * 100).toFixed(1)), theo: 4.24 }
+                },
+                consecutiveDuplicates: {
+                    count: consecutiveDuplicates,
+                    pct: parseFloat((consecutiveDuplicates / n * 100).toFixed(1)),
+                    theo: 40.95
+                },
+                positions: posStats
+            };
+        },
+
+        /**
+         * Searches 1st prize numbers by full or substring match.
+         */
+        search1stPrize: function (data, query) {
+            const q = (query || '').trim();
+            if (!q) return [];
+            return data.filter(d => d.p1 && d.p1.toString().includes(q));
         },
 
         /* =========================================================================

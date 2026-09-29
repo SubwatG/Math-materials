@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สถิติสลากกินแบ่งรัฐบาล: รางวัลเลขท้าย 2 ตัว และ 3 ตัว (พ.ศ. 2543 – 2569)</title>
+    <title>สถิติสลากกินแบ่งรัฐบาล: รางวัลเลขท้าย 2 ตัว, 3 ตัว และรางวัลที่ 1 (พ.ศ. 2543 – 2569)</title>
 
     <!-- Google Fonts: Thai Looped Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             padding: 24px 20px 60px 20px;
         }
@@ -124,12 +124,13 @@
             border-radius: var(--radius-md);
             border: 1px solid var(--border-card);
             box-shadow: var(--shadow-sm);
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 18px;
             font-size: 14px;
             font-weight: 600;
             font-family: var(--font-display);
@@ -311,7 +312,7 @@
         /* Main Explorer Layout (2 Columns) */
         .explorer-layout {
             display: grid;
-            grid-template-columns: 1fr 360px;
+            grid-template-columns: 1fr 380px;
             gap: 24px;
             margin-bottom: 32px;
         }
@@ -415,7 +416,6 @@
             margin-top: 2px;
         }
 
-        /* Heatmap Legend */
         .heatmap-legend {
             display: flex;
             align-items: center;
@@ -443,7 +443,7 @@
         .inspector-badge {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 42px;
+            font-size: 38px;
             font-weight: 700;
             color: var(--color-primary);
             background: var(--bg-accent-soft);
@@ -543,7 +543,7 @@
         .bar-digit {
             font-family: var(--font-mono);
             font-weight: 600;
-            width: 24px;
+            width: 32px;
             text-align: right;
         }
 
@@ -566,7 +566,7 @@
 
         .bar-val {
             font-family: var(--font-mono);
-            width: 70px;
+            width: 80px;
             text-align: left;
             font-size: 12px;
             color: var(--text-muted);
@@ -602,7 +602,7 @@
             margin-bottom: 16px;
         }
 
-        canvas#simCanvas {
+        canvas#simCanvas, canvas#cltCanvas {
             width: 100%;
             height: 100%;
             display: block;
@@ -675,6 +675,26 @@
             background: var(--bg-accent-soft);
         }
 
+        /* Position Matrix Table for 1st Prize */
+        table.position-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        table.position-matrix-table th, table.position-matrix-table td {
+            padding: 8px;
+            border: 1px solid var(--border-card);
+        }
+
+        table.position-matrix-table th {
+            background: var(--bg-card-subtle);
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
         footer.app-footer {
             text-align: center;
             font-size: 13px;
@@ -692,7 +712,7 @@
         <header class="app-header">
             <span class="badge-academic">01422111 หลักสถิติ | ภาควิชาวิทยาการคำนวณและเทคโนโลยีดิจิทัล คณะศิลปศาสตร์และวิทยาศาสตร์ มก. กพส.</span>
             <h1 class="app-title">สถิติสลากกินแบ่งรัฐบาลไทย (พ.ศ. 2543 – 2569)</h1>
-            <p class="app-subtitle">เครื่องมือสำรวจข้อมูลเชิงสถิติ (Data Explorer), การทดสอบภาวะสารูปสนิทดี (Chi-Square Test) และแบบจำลองมอนติคาร์โล</p>
+            <p class="app-subtitle">เครื่องมือสำรวจข้อมูลเชิงสถิติ (Data Explorer), การทดสอบภาวะสารูปสนิทดี (Chi-Square Test) และแบบจำลองทางคณิตศาสตร์</p>
         </header>
 
         <!-- Mode Switcher Tabs -->
@@ -704,6 +724,9 @@
                 <button type="button" class="tab-btn" id="tabMode3D" data-mode="3d">
                     รางวัลเลข 3 ตัว (000 – 999)
                 </button>
+                <button type="button" class="tab-btn" id="tabMode1st" data-mode="1st">
+                    รางวัลที่ 1 (6 หลัก & CLT)
+                </button>
             </div>
         </div>
 
@@ -711,7 +734,7 @@
         <!-- MODE 1: 2-DIGIT VIEW (00 - 99)                                            -->
         <!-- ========================================================================= -->
         <main id="section2D">
-            <!-- Filter Toolbar (Data Explorer First) -->
+            <!-- Filter Toolbar -->
             <section class="filter-toolbar">
                 <div class="filter-row">
                     <div class="filter-group">
@@ -732,7 +755,7 @@
 
                     <div class="filter-group">
                         <button type="button" id="btnExportCSV" class="btn-action">
-                            <span>ดาวน์โหลดข้อมูลที่กรอง (CSV)</span>
+                            <span>ดาวน์โหลดข้อมูล 2 ตัว (CSV)</span>
                         </button>
                         <button type="button" id="btnResetFilter" class="btn-action btn-outline">รีเซ็ต</button>
                     </div>
@@ -768,7 +791,7 @@
                 </div>
             </section>
 
-            <!-- Main Explorer Layout: Heatmap (Left) + Inspector (Right) -->
+            <!-- Explorer Layout: Heatmap + Inspector -->
             <div class="explorer-layout">
                 <!-- Left: 10x10 Heatmap Matrix -->
                 <div class="panel-card">
@@ -1061,10 +1084,7 @@
                         </div>
                     </div>
 
-                    <!-- 10 Hundred Buttons -->
-                    <div class="hundred-bar" id="hundredSelectorBar">
-                        <!-- Buttons 0xx to 9xx will be injected -->
-                    </div>
+                    <div class="hundred-bar" id="hundredSelectorBar"></div>
 
                     <div class="heatmap-container">
                         <table class="heatmap-table" id="heatmapTable3D">
@@ -1132,7 +1152,7 @@
                 </div>
             </div>
 
-            <!-- 3D Marginal Distributions: Hundreds, Tens, Units -->
+            <!-- 3D Marginal Distributions -->
             <div class="marginals-grid">
                 <div class="panel-card">
                     <div class="panel-header">
@@ -1208,6 +1228,190 @@
             </section>
         </main>
 
+        <!-- ========================================================================= -->
+        <!-- MODE 3: 1ST PRIZE VIEW (6 DIGITS & CENTRAL LIMIT THEOREM)                 -->
+        <!-- ========================================================================= -->
+        <main id="section1st" style="display: none;">
+            <!-- Filter Toolbar for 1st Prize -->
+            <section class="filter-toolbar">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <span class="filter-label">ช่วงปี พ.ศ.:</span>
+                        <select id="startYear1st" class="input-select" aria-label="ปีเริ่มต้นรางวัลที่ 1"></select>
+                        <span>ถึง</span>
+                        <select id="endYear1st" class="input-select" aria-label="ปีสิ้นสุดรางวัลที่ 1"></select>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="filter-label">งวดวันที่:</span>
+                        <div class="btn-group" id="dayFilterGroup1st">
+                            <button type="button" class="btn-segment active" data-day="all">ทุกงวด</button>
+                            <button type="button" class="btn-segment" data-day="1">เฉพาะวันที่ 1</button>
+                            <button type="button" class="btn-segment" data-day="16">เฉพาะวันที่ 16</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <button type="button" id="btnExportCSV1st" class="btn-action">
+                            <span>ดาวน์โหลดข้อมูลรางวัลที่ 1 (CSV)</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1st Prize KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">งวดรางวัลที่ 1 ที่วิเคราะห์ ($N$)</div>
+                    <div class="kpi-value" id="kpi1stTotalDraws">0</div>
+                    <div class="kpi-desc" id="kpi1stDateRange">พ.ศ. 2549 - 2569</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">ค่าเฉลี่ยผลรวมเลข 6 หลัก ($\bar{S}$)</div>
+                    <div class="kpi-value" id="kpi1stMeanSum">0.00</div>
+                    <div class="kpi-desc">ทฤษฎี CLT $\mu = 27.00, \sigma = 7.04$</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">สัดส่วนมีเลขซ้ำอย่างน้อย 1 คู่</div>
+                    <div class="kpi-value" id="kpi1stDupRate">0.0%</div>
+                    <div class="kpi-desc">ทฤษฎี Combinatorics $= 84.88\%$</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">สัดส่วนมีเลขเบิ้ลติดกัน (Consecutive)</div>
+                    <div class="kpi-value" id="kpi1stConsecRate">0.0%</div>
+                    <div class="kpi-desc">ทฤษฎี $= 40.95\%$ (เช่น xx11xx)</div>
+                </div>
+            </section>
+
+            <!-- Central Limit Theorem Histogram & Combinatorics Layout -->
+            <div class="explorer-layout">
+                <!-- Left: CLT Histogram + Bell Curve -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">ทฤษฎีบทลิมิตศูนย์กลาง (Central Limit Theorem)</h2>
+                            <div class="panel-subtitle">การกระจายตัวของผลรวมเลขโดด 6 หลัก ($S = \sum d_i$) เทียบกับโค้งปกติ Normal Distribution</div>
+                        </div>
+                    </div>
+
+                    <div class="canvas-container" style="height: 330px;">
+                        <canvas id="cltCanvas"></canvas>
+                    </div>
+
+                    <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 8px;">
+                        ผลรวมของเลขสุ่ม Uniform 6 ตัวจะลู่เข้าสู่การแจกแจงแบบปกติ $\mathcal{N}(\mu=27.0, \sigma=7.035)$ กราฟแท่งคือข้อมูลจริง และเส้นทึบคือเส้นโค้งทฤษฎี
+                    </div>
+                </div>
+
+                <!-- Right: 1st Prize Inspector & Substring Search -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">สืบค้นรางวัลที่ 1 (1st Prize Search)</h2>
+                            <div class="panel-subtitle">พิมพ์เลข 6 หลัก หรือพิมพ์ 2-3 หลัก</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                        <input type="text" id="inspectorInput1st" class="input-number" placeholder="พิมพ์เลขค้นหา..." maxlength="6" style="font-size: 16px; font-weight: 600; width: 150px; text-align: center;">
+                        <button type="button" id="btnInspectSearch1st" class="btn-action" style="padding: 6px 14px;">ค้นหา</button>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="inspector-badge" id="inspTargetNum1st" style="font-size: 32px; letter-spacing: 2px;">730640</div>
+                    </div>
+
+                    <div class="stat-line">
+                        <span class="stat-label">ผลรวมเลข 6 หลัก:</span>
+                        <span class="stat-val" id="inspSum1st">20</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">รูปแบบเลขซ้ำ:</span>
+                        <span class="stat-val" id="inspPattern1st">มีเลขซ้ำ 1 คู่ (0)</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">มีเลขเบิ้ลติดกัน:</span>
+                        <span class="stat-val" id="inspConsec1st">ไม่ใช่</span>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">ประวัติงวดที่พบการจับคู่:</div>
+                        <div class="history-list" id="inspHistoryList1st"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combinatorial Patterns Comparison & Consecutive Duplicates -->
+            <div class="panel-card" style="margin-bottom: 32px;">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">การวิเคราะห์รูปแบบการซ้ำของตัวเลข (Combinatorial Duplication Breakdown)</h2>
+                        <div class="panel-subtitle">เปรียบเทียบสัดส่วนที่เกิดขึ้นจริงจาก 470 งวด เทียบกับความน่าจะเป็นตามทฤษฎีการนับ Combinatorics</div>
+                    </div>
+                </div>
+
+                <div id="patternsContainer" style="margin-top: 12px;"></div>
+            </div>
+
+            <!-- Position-Wise Matrix (แสน ถึง หน่วย) -->
+            <div class="panel-card" style="margin-bottom: 32px;">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">ตารางแจกแจงความถี่แยกรายตำแหน่ง 6 หลัก (Position-wise Distribution)</h2>
+                        <div class="panel-subtitle">ทดสอบความสม่ำเสมอของวงล้อแต่ละหลักตั้งแต่หลักแสนถึงหลักหน่วย (Chi-Square Test per Position, df=9)</div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="position-matrix-table" id="positionMatrixTable">
+                        <thead>
+                            <tr>
+                                <th>เลขโดด</th>
+                                <th>หลักแสน ($d_1$)</th>
+                                <th>หลักหมื่น ($d_2$)</th>
+                                <th>หลักพัน ($d_3$)</th>
+                                <th>หลักร้อย ($d_4$)</th>
+                                <th>หลักสิบ ($d_5$)</th>
+                                <th>หลักหน่วย ($d_6$)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="positionMatrixBody"></tbody>
+                        <tfoot id="positionMatrixFoot"></tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Academic Callout for 1st Prize -->
+            <section class="academic-callout">
+                <h3 class="callout-title">มุมวิชาการ: ความน่าจะเป็นและการนับในรางวัลที่ 1 (Probability & Combinatorics)</h3>
+                <div class="callout-body">
+                    <p>
+                        <strong>1. ทำไมรางวัลที่ 1 จึงมัก "มีเลขซ้ำ" มากกว่า "เลขต่างกันทั้งหมด":</strong>
+                        คนทั่วไปมักคาดหวังว่าเลขรางวัลที่ 1 ควรเป็นเลขที่ไม่มีตัวซ้ำ แต่ในทางความน่าจะเป็น:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$P(\text{ต่างกันทั้งหมด}) = \frac{10 \times 9 \times 8 \times 7 \times 6 \times 5}{10^6} = \frac{151,200}{1,000,000} = 15.12\%$$
+                    </p>
+                    <p>
+                        ดังนั้น โอกาสที่จะมีเลขซ้ำอย่างน้อย 1 คู่จึงมีสูงถึง $1 - 0.1512 = \mathbf{84.88\%}$ การที่รางวัลที่ 1 ออกเลขซ้ำเป็นคู่หรือเป็นตอง จึงเป็นพฤติกรรมธรรมชาติของการสุ่มตัวเลข 6 ตัวจากสเปซ 10 เลขโดด (ทำนองเดียวกับ Birthday Paradox)
+                    </p>
+                    <p>
+                        <strong>2. ทฤษฎีบทลิมิตศูนย์กลาง (Central Limit Theorem):</strong>
+                        ตัวเลขโดดแต่ละหลัก $d_i$ เป็นตัวแปรสุ่ม Uniform $U\{0, 9\}$ ที่มี $\mu = 4.5, \sigma^2 = \frac{99}{12} = 8.25$ ผลรวมของ 6 ตัวแปรสุ่มอิสระ $S = \sum_{i=1}^6 d_i$ จะลู่เข้าสู่การแจกแจงแบบปกติ:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$\mu_S = 6 \times 4.5 = 27.00, \quad \sigma_S = \sqrt{6 \times 8.25} = \sqrt{49.5} \approx 7.035$$
+                    </p>
+                    <p>
+                        จากผลการออกรางวัลจริง 470 งวด ค่าเฉลี่ยผลรวมของรางวัลที่ 1 คือ $\mathbf{\bar{S} = 26.61}$ และส่วนเบี่ยงเบนมาตรฐาน $\mathbf{s = 7.05}$ ซึ่งสอดคล้องกับค่าทางทฤษฎีอย่างสมบูรณ์แบบ
+                    </p>
+                </div>
+            </section>
+        </main>
+
         <!-- Footer -->
         <footer class="app-footer">
             <p>แหล่งข้อมูล: สำนักงานสลากกินแบ่งรัฐบาล (GLO Archive พ.ศ. 2543 – 2569 รวม 627 งวด) | จัดทำเพื่อการศึกษาและวิจัยทางสถิติศาสตร์</p>
@@ -1224,7 +1428,7 @@
             'use strict';
 
             const rawData = window.LOTTERY_DATA || [];
-            let currentMode = '2d'; // '2d' or '3d'
+            let currentMode = '2d'; // '2d', '3d', '1st'
 
             // --- 2D State ---
             let activeData2D = rawData.slice();
@@ -1236,16 +1440,23 @@
             // --- 3D State ---
             let activeData3D = rawData.filter(d => (d.sub3 && d.sub3.length > 0) || (d.pre3 && d.pre3.length > 0));
             let selectedNum3D = '740';
-            let selectedHundred = 7; // 7xx default
-            let category3D = 'sub3'; // 'sub3', 'pre3', 'all3'
+            let selectedHundred = 7;
+            let category3D = 'sub3';
             let sortColumn3D = 'freq';
             let sortAsc3D = false;
+
+            // --- 1st Prize State ---
+            let activeData1st = rawData.filter(d => d.p1 && d.p1.toString().length === 6);
+            let selectedNum1st = activeData1st.length > 0 ? activeData1st[0].p1 : '730640';
+            let dayFilter1st = 'all';
 
             // Tab Switching Elements
             const tabMode2D = document.getElementById('tabMode2D');
             const tabMode3D = document.getElementById('tabMode3D');
+            const tabMode1st = document.getElementById('tabMode1st');
             const section2D = document.getElementById('section2D');
             const section3D = document.getElementById('section3D');
+            const section1st = document.getElementById('section1st');
 
             // 2D DOM Elements
             const startYearSel = document.getElementById('startYear');
@@ -1302,6 +1513,28 @@
             const rankingTableBody3D = document.getElementById('rankingTableBody3D');
             const tableFilterInput3D = document.getElementById('tableFilterInput3D');
 
+            // 1st Prize DOM Elements
+            const startYear1stSel = document.getElementById('startYear1st');
+            const endYear1stSel = document.getElementById('endYear1st');
+            const dayFilterGroup1st = document.getElementById('dayFilterGroup1st');
+            const btnExportCSV1st = document.getElementById('btnExportCSV1st');
+            const kpi1stTotalDraws = document.getElementById('kpi1stTotalDraws');
+            const kpi1stDateRange = document.getElementById('kpi1stDateRange');
+            const kpi1stMeanSum = document.getElementById('kpi1stMeanSum');
+            const kpi1stDupRate = document.getElementById('kpi1stDupRate');
+            const kpi1stConsecRate = document.getElementById('kpi1stConsecRate');
+            const cltCanvas = document.getElementById('cltCanvas');
+            const inspectorInput1st = document.getElementById('inspectorInput1st');
+            const btnInspectSearch1st = document.getElementById('btnInspectSearch1st');
+            const inspTargetNum1st = document.getElementById('inspTargetNum1st');
+            const inspSum1st = document.getElementById('inspSum1st');
+            const inspPattern1st = document.getElementById('inspPattern1st');
+            const inspConsec1st = document.getElementById('inspConsec1st');
+            const inspHistoryList1st = document.getElementById('inspHistoryList1st');
+            const patternsContainer = document.getElementById('patternsContainer');
+            const positionMatrixBody = document.getElementById('positionMatrixBody');
+            const positionMatrixFoot = document.getElementById('positionMatrixFoot');
+
             // =========================================================================
             // INITIALIZATION
             // =========================================================================
@@ -1341,6 +1574,24 @@
                 });
                 startYear3DSel.value = years3D[0];
                 endYear3DSel.value = years3D[years3D.length - 1];
+
+                // 1st Prize Years (2549 - 2569)
+                const years1st = Array.from(new Set(activeData1st.map(d => d.year))).sort((a, b) => a - b);
+                startYear1stSel.innerHTML = '';
+                endYear1stSel.innerHTML = '';
+                years1st.forEach(y => {
+                    const opt1 = document.createElement('option');
+                    opt1.value = y;
+                    opt1.textContent = y;
+                    startYear1stSel.appendChild(opt1);
+
+                    const opt2 = document.createElement('option');
+                    opt2.value = y;
+                    opt2.textContent = y;
+                    endYear1stSel.appendChild(opt2);
+                });
+                startYear1stSel.value = years1st[0];
+                endYear1stSel.value = years1st[years1st.length - 1];
 
                 // Hundred Selector Buttons (0xx - 9xx)
                 hundredSelectorBar.innerHTML = '';
@@ -1603,6 +1854,7 @@
 
             function drawCanvasChart(trajectory) {
                 const canvas = simCanvas;
+                if (!canvas) return;
                 const rect = canvas.getBoundingClientRect();
                 const dpr = window.devicePixelRatio || 1;
                 canvas.width = rect.width * dpr;
@@ -1794,7 +2046,6 @@
                 const freq = StatsEngine.compute3DFrequencies(activeData3D, category3D);
                 const counts = freq.counts;
 
-                // Max count in current 100 block
                 let blockCounts = [];
                 for (let t = 0; t < 10; t++) {
                     for (let u = 0; u < 10; u++) {
@@ -1976,6 +2227,292 @@
             }
 
             // =========================================================================
+            // 1ST PRIZE (6-DIGIT & CLT) RENDERERS
+            // =========================================================================
+            function applyFilters1st() {
+                const startY = parseInt(startYear1stSel.value, 10);
+                const endY = parseInt(endYear1stSel.value, 10);
+
+                activeData1st = rawData.filter(item => {
+                    if (!item.p1 || item.p1.toString().length !== 6) return false;
+                    if (item.year < startY || item.year > endY) return false;
+                    if (dayFilter1st === '1' && item.date !== 1) return false;
+                    if (dayFilter1st === '16' && item.date !== 16) return false;
+                    return true;
+                });
+
+                renderAll1st();
+            }
+
+            function renderAll1st() {
+                renderKPIs1st();
+                drawCLTHistogram();
+                renderPatternsBreakdown();
+                renderPositionMatrixTable();
+                renderInspector1st(selectedNum1st);
+                renderMath();
+            }
+
+            function renderKPIs1st() {
+                const stats = StatsEngine.compute1stPrizeStats(activeData1st);
+                if (!stats) return;
+
+                kpi1stTotalDraws.textContent = stats.totalDraws.toLocaleString('th-TH');
+                kpi1stMeanSum.textContent = stats.meanSum.toFixed(2);
+
+                const dupPct = (100 - stats.patterns.distinct.pct).toFixed(1);
+                kpi1stDupRate.textContent = dupPct + '%';
+
+                kpi1stConsecRate.textContent = stats.consecutiveDuplicates.pct + '%';
+                kpi1stDateRange.textContent = 'พ.ศ. ' + startYear1stSel.value + ' - ' + endYear1stSel.value;
+            }
+
+            // Canvas 2D CLT Digit Sum Histogram + Gaussian Curve
+            function drawCLTHistogram() {
+                const canvas = cltCanvas;
+                if (!canvas) return;
+                const rect = canvas.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+
+                const ctx = canvas.getContext('2d');
+                ctx.resetTransform();
+                ctx.scale(dpr, dpr);
+
+                const w = rect.width;
+                const h = rect.height;
+                const padLeft = 50;
+                const padRight = 30;
+                const padTop = 30;
+                const padBottom = 40;
+
+                ctx.clearRect(0, 0, w, h);
+
+                const stats = StatsEngine.compute1stPrizeStats(activeData1st);
+                if (!stats) return;
+
+                const sumDist = stats.sumDistribution;
+                const n = stats.totalDraws;
+
+                // Max frequency for Y-scale
+                const maxFreq = Math.max(...sumDist, 1);
+                const yMax = Math.ceil(maxFreq * 1.15);
+
+                const minSum = 8;
+                const maxSum = 46;
+                const totalBins = maxSum - minSum + 1;
+
+                function getX(sumVal) {
+                    return padLeft + ((sumVal - minSum) / totalBins) * (w - padLeft - padRight);
+                }
+
+                function getY(countVal) {
+                    return padTop + (1 - (countVal / yMax)) * (h - padTop - padBottom);
+                }
+
+                // Grid Lines
+                ctx.strokeStyle = '#E3DDD5';
+                ctx.lineWidth = 1;
+                ctx.fillStyle = '#8790A0';
+                ctx.font = '11px IBM Plex Mono, monospace';
+
+                const ySteps = 4;
+                for (let i = 0; i <= ySteps; i++) {
+                    const val = (i / ySteps) * yMax;
+                    const y = getY(val);
+                    ctx.beginPath();
+                    ctx.moveTo(padLeft, y);
+                    ctx.lineTo(w - padRight, y);
+                    ctx.stroke();
+                    ctx.fillText(Math.round(val), 15, y + 4);
+                }
+
+                // Draw Bars
+                const barWidth = ((w - padLeft - padRight) / totalBins) * 0.85;
+                for (let s = minSum; s <= maxSum; s++) {
+                    const count = sumDist[s] || 0;
+                    const x = getX(s);
+                    const y = getY(count);
+                    const barHeight = getY(0) - y;
+
+                    ctx.fillStyle = '#00704A';
+                    ctx.fillRect(x, y, barWidth, barHeight);
+
+                    // X-axis labels every 5 units
+                    if (s % 5 === 0) {
+                        ctx.fillStyle = '#535A68';
+                        ctx.fillText(s, x, h - padBottom + 16);
+                    }
+                }
+
+                // Overlay Theoretical Gaussian Curve N(mu=27, sigma=7.035)
+                const mu = 27.0;
+                const sigma = 7.035;
+
+                ctx.strokeStyle = '#A86F00';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+
+                for (let s = minSum; s <= maxSum; s += 0.2) {
+                    // Gaussian pdf: (1 / (sigma * sqrt(2*pi))) * exp(-0.5 * ((x-mu)/sigma)^2)
+                    const pdf = (1 / (sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((s - mu) / sigma, 2));
+                    const expectedCount = pdf * n;
+                    const x = padLeft + ((s - minSum) / totalBins) * (w - padLeft - padRight) + (barWidth / 2);
+                    const y = getY(expectedCount);
+
+                    if (s === minSum) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                // Legend
+                ctx.font = '12px IBM Plex Sans Thai Looped, sans-serif';
+                ctx.fillStyle = '#00704A';
+                ctx.fillRect(padLeft + 10, padTop + 5, 14, 10);
+                ctx.fillText('ความถี่จริง (Empirical Histogram)', padLeft + 30, padTop + 14);
+
+                ctx.strokeStyle = '#A86F00';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(padLeft + 230, padTop + 10);
+                ctx.lineTo(padLeft + 250, padTop + 10);
+                ctx.stroke();
+                ctx.fillStyle = '#A86F00';
+                ctx.fillText('เส้นโค้งปกติเกาส์เซียน N(27, 7.04)', padLeft + 256, padTop + 14);
+            }
+
+            function renderPatternsBreakdown() {
+                const stats = StatsEngine.compute1stPrizeStats(activeData1st);
+                if (!stats) return;
+
+                const items = [
+                    { label: 'ต่างกันทั้งหมด (All Distinct)', emp: stats.patterns.distinct.pct, theo: stats.patterns.distinct.theo, count: stats.patterns.distinct.count },
+                    { label: 'มีเลขซ้ำ 1 คู่ (One Pair)', emp: stats.patterns.onePair.pct, theo: stats.patterns.onePair.theo, count: stats.patterns.onePair.count },
+                    { label: 'มีเลขซ้ำ 2 คู่ (Two Pairs)', emp: stats.patterns.twoPairs.pct, theo: stats.patterns.twoPairs.theo, count: stats.patterns.twoPairs.count },
+                    { label: 'ตอง 3 ตัว (Three of a Kind)', emp: stats.patterns.threeKind.pct, theo: stats.patterns.threeKind.theo, count: stats.patterns.threeKind.count },
+                    { label: 'ซ้ำ 4 ตัวขึ้นไป / Full House', emp: stats.patterns.fourPlus.pct, theo: stats.patterns.fourPlus.theo, count: stats.patterns.fourPlus.count }
+                ];
+
+                patternsContainer.innerHTML = '';
+                items.forEach(it => {
+                    const row = document.createElement('div');
+                    row.style.marginBottom = '14px';
+
+                    row.innerHTML =
+                        '<div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px;">' +
+                        '  <span>' + it.label + '</span>' +
+                        '  <span>' + it.count + ' งวด (จริง: ' + it.emp + '% | ทฤษฎี: ' + it.theo + '%)</span>' +
+                        '</div>' +
+                        '<div style="display: flex; height: 16px; background: var(--bg-card-subtle); border-radius: 3px; overflow: hidden; border: 1px solid var(--border-bright);">' +
+                        '  <div style="width: ' + (it.emp * 1.8) + '%; background: var(--color-primary); border-radius: 2px;"></div>' +
+                        '</div>';
+                    patternsContainer.appendChild(row);
+                });
+            }
+
+            function renderPositionMatrixTable() {
+                const stats = StatsEngine.compute1stPrizeStats(activeData1st);
+                if (!stats) return;
+
+                positionMatrixBody.innerHTML = '';
+                for (let d = 0; d < 10; d++) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = '<td style="font-family: var(--font-mono); font-weight: 600; background: var(--bg-card-subtle);">' + d + '</td>';
+                    for (let p = 0; p < 6; p++) {
+                        const count = stats.positions[p].counts[d];
+                        tr.innerHTML += '<td style="font-family: var(--font-mono);">' + count + '</td>';
+                    }
+                    positionMatrixBody.appendChild(tr);
+                }
+
+                // Chi-Square and p-value in tfoot
+                positionMatrixFoot.innerHTML =
+                    '<tr style="background: var(--bg-card-subtle); font-weight: 600;">' +
+                    '  <td>Chi2 (df=9)</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[0].chi2 + '</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[1].chi2 + '</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[2].chi2 + '</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[3].chi2 + '</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[4].chi2 + '</td>' +
+                    '  <td style="font-family: var(--font-mono);">' + stats.positions[5].chi2 + '</td>' +
+                    '</tr>' +
+                    '<tr style="background: var(--bg-card-subtle); font-size: 12px; color: var(--color-primary);">' +
+                    '  <td>ผลการทดสอบ</td>' +
+                    '  <td>' + (stats.positions[0].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '  <td>' + (stats.positions[1].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '  <td>' + (stats.positions[2].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '  <td>' + (stats.positions[3].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '  <td>' + (stats.positions[4].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '  <td>' + (stats.positions[5].isUniform ? 'สุ่มสม่ำเสมอ' : 'เอนเอียง') + '</td>' +
+                    '</tr>';
+            }
+
+            function renderInspector1st(queryStr) {
+                const matches = StatsEngine.search1stPrize(activeData1st, queryStr);
+                inspTargetNum1st.textContent = queryStr || '-';
+
+                if (matches.length > 0) {
+                    const firstMatch = matches[0];
+                    const numStr = firstMatch.p1.toString().padStart(6, '0');
+                    let s = 0;
+                    const dCount = {};
+                    let hasConsec = false;
+                    for (let i = 0; i < 6; i++) {
+                        s += parseInt(numStr[i], 10);
+                        dCount[numStr[i]] = (dCount[numStr[i]] || 0) + 1;
+                        if (i < 5 && numStr[i] === numStr[i + 1]) hasConsec = true;
+                    }
+                    inspSum1st.textContent = s;
+                    inspConsec1st.textContent = hasConsec ? 'ใช่ (มีเลขเบิ้ลติดกัน)' : 'ไม่ใช่';
+
+                    const cValues = Object.values(dCount).sort((a, b) => b - a);
+                    if (cValues.length === 6) inspPattern1st.textContent = 'ต่างกันทั้งหมด (All Distinct)';
+                    else if (cValues[0] === 2 && cValues[1] === 1) inspPattern1st.textContent = 'มีเลขซ้ำ 1 คู่ (One Pair)';
+                    else if (cValues[0] === 2 && cValues[1] === 2) inspPattern1st.textContent = 'มีเลขซ้ำ 2 คู่ (Two Pairs)';
+                    else if (cValues[0] === 3 && cValues[1] === 1) inspPattern1st.textContent = 'ตอง 3 ตัว (Three of a Kind)';
+                    else inspPattern1st.textContent = 'ซ้ำ 4 ตัวขึ้นไป / Full House';
+                } else {
+                    inspSum1st.textContent = '-';
+                    inspPattern1st.textContent = 'ไม่พบในประวัติ';
+                    inspConsec1st.textContent = '-';
+                }
+
+                inspHistoryList1st.innerHTML = '';
+                if (matches.length === 0) {
+                    inspHistoryList1st.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-faint); font-size: 13px;">ไม่พบเลขที่ค้นหาในงวดที่เลือก</div>';
+                } else {
+                    matches.slice(0, 30).forEach(m => {
+                        const item = document.createElement('div');
+                        item.className = 'history-item';
+                        item.innerHTML = '<span>งวด ' + m.date + ' ' + m.month + ' ' + m.year + '</span>' +
+                                         '<span style="font-family: var(--font-mono); color: var(--color-primary); font-weight: 700; font-size: 14px;">' + m.p1 + '</span>';
+                        inspHistoryList1st.appendChild(item);
+                    });
+                }
+            }
+
+            function exportCSV1st() {
+                if (!activeData1st || activeData1st.length === 0) return;
+                let csv = 'date,month,year,prize_1st,sum_digits\r\n';
+                activeData1st.forEach(item => {
+                    const p1 = item.p1.toString().padStart(6, '0');
+                    const s = p1.split('').reduce((acc, c) => acc + parseInt(c, 10), 0);
+                    csv += item.date + ',' + item.month + ',' + item.year + ',"' + p1 + '",' + s + '\r\n';
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'thai_lottery_1st_prize_' + startYear1stSel.value + '_' + endYear1stSel.value + '.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            // =========================================================================
             // EVENT LISTENERS & SETUP
             // =========================================================================
             function setupEvents() {
@@ -1984,8 +2521,10 @@
                     currentMode = '2d';
                     tabMode2D.classList.add('active');
                     tabMode3D.classList.remove('active');
+                    tabMode1st.classList.remove('active');
                     section2D.style.display = 'block';
                     section3D.style.display = 'none';
+                    section1st.style.display = 'none';
                     renderAll2D();
                 });
 
@@ -1993,9 +2532,22 @@
                     currentMode = '3d';
                     tabMode3D.classList.add('active');
                     tabMode2D.classList.remove('active');
+                    tabMode1st.classList.remove('active');
                     section2D.style.display = 'none';
                     section3D.style.display = 'block';
+                    section1st.style.display = 'none';
                     renderAll3D();
+                });
+
+                tabMode1st.addEventListener('click', () => {
+                    currentMode = '1st';
+                    tabMode1st.classList.add('active');
+                    tabMode2D.classList.remove('active');
+                    tabMode3D.classList.remove('active');
+                    section2D.style.display = 'none';
+                    section3D.style.display = 'none';
+                    section1st.style.display = 'block';
+                    renderAll1st();
                 });
 
                 // 2D Events
@@ -2103,8 +2655,36 @@
                     });
                 });
 
+                // 1st Prize Events
+                startYear1stSel.addEventListener('change', applyFilters1st);
+                endYear1stSel.addEventListener('change', applyFilters1st);
+
+                dayFilterGroup1st.querySelectorAll('.btn-segment').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        dayFilterGroup1st.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        dayFilter1st = this.dataset.day;
+                        applyFilters1st();
+                    });
+                });
+
+                btnExportCSV1st.addEventListener('click', exportCSV1st);
+
+                btnInspectSearch1st.addEventListener('click', function () {
+                    const val = inspectorInput1st.value.trim();
+                    if (val) {
+                        selectedNum1st = val;
+                        renderInspector1st(selectedNum1st);
+                    }
+                });
+
+                inspectorInput1st.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') btnInspectSearch1st.click();
+                });
+
                 window.addEventListener('resize', function () {
                     if (currentMode === '2d') runSimulation();
+                    else if (currentMode === '1st') drawCLTHistogram();
                 });
             }
 
