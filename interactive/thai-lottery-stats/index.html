@@ -727,6 +727,9 @@
                 <button type="button" class="tab-btn" id="tabMode1st" data-mode="1st">
                     รางวัลที่ 1 (6 หลัก & CLT)
                 </button>
+                <button type="button" class="tab-btn" id="tabModeAll" data-mode="all">
+                    โครงสร้างรางวัลทั้งหมด & ตรวจสลาก 20 ปี
+                </button>
             </div>
         </div>
 
@@ -1412,6 +1415,142 @@
             </section>
         </main>
 
+        <!-- ========================================================================= -->
+        <!-- MODE 4: ALL PRIZES ARCHITECTURE & 20-YEAR LIFETIME CHECKER                -->
+        <!-- ========================================================================= -->
+        <main id="sectionAll" style="display: none;">
+            <!-- Statutory KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">เงินรางวัลจัดสรรรวมต่องวด</div>
+                    <div class="kpi-value" style="color: var(--color-primary);">48,000,000 บาท</div>
+                    <div class="kpi-desc">พ.ร.บ. สำนักงานสลากฯ (Payout Ratio 60%)</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">ความน่าจะเป็นที่จะถูกรางวัลใดๆ</div>
+                    <div class="kpi-value" style="color: var(--color-accent);">1.4168%</div>
+                    <div class="kpi-desc">โอกาส 1 ใน 70.58 ใบ (14,168 รางวัลใน 1 ล้านใบ)</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">โอกาส "ไม่ถูกรางวัลใดๆ เลย"</div>
+                    <div class="kpi-value" style="color: var(--color-danger);">98.5832%</div>
+                    <div class="kpi-desc">สูงเกือบ 99% ในสลากแต่ละใบ</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">ค่าคาดหมายสุทธิต่อใบ ($E[X]$)</div>
+                    <div class="kpi-value" style="color: var(--color-danger);">-32.00 บาท</div>
+                    <div class="kpi-desc">ซื้อใบละ 80 บาท ขาดทุนเฉลี่ย -40% (-52 บ. ที่ 100 บ.)</div>
+                </div>
+            </section>
+
+            <!-- Explorer Layout: Architecture Table (Left) + Lifetime Checker (Right) -->
+            <div class="explorer-layout">
+                <!-- Left: 9-Tier Prize Architecture Table -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">สถาปัตยกรรมโครงสร้างรางวัลสลาก 9 ระดับ (Prize Architecture)</h2>
+                            <div class="panel-subtitle">อิงตามสลาก 1 ชุด (1,000,000 ฉบับ) ยอดจำหน่าย 80,000,000 บาท</div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="ranking-table" id="architectureTable">
+                            <thead>
+                                <tr>
+                                    <th>ชื่อรางวัล</th>
+                                    <th>จำนวนรางวัล</th>
+                                    <th>รางวัลละ (บาท)</th>
+                                    <th>รวมเงินรางวัล (บาท)</th>
+                                    <th>ความน่าจะเป็น ($P$)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="architectureTableBody"></tbody>
+                            <tfoot>
+                                <tr style="background: var(--bg-card-subtle); font-weight: 700;">
+                                    <td>รวมทั้งสิ้น</td>
+                                    <td>14,168 รางวัล</td>
+                                    <td>-</td>
+                                    <td style="color: var(--color-primary); font-family: var(--font-mono);">48,000,000 บาท</td>
+                                    <td style="font-family: var(--font-mono);">1.4168%</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right: 20-Year Lifetime 6-Digit Historical Checker -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">ตรวจสลากย้อนหลังทุกรางวัล 20 ปี (Lifetime Checker)</h2>
+                            <div class="panel-subtitle">พิมพ์เลข 6 หลักเพื่อสแกนกับ 50,000+ รางวัลในอดีต (428 งวด)</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                        <input type="text" id="lifetimeInput" class="input-number" placeholder="พิมพ์เลข 6 หลัก..." maxlength="6" value="077335" style="font-size: 16px; font-weight: 600; width: 150px; text-align: center;">
+                        <button type="button" id="btnCheckLifetime" class="btn-action" style="padding: 6px 14px;">ตรวจประวัติ</button>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="inspector-badge" id="lifetimeBadge" style="font-size: 32px; letter-spacing: 2px;">077335</div>
+                    </div>
+
+                    <div class="stat-line">
+                        <span class="stat-label">เงินรางวัลสะสมที่เคยถูกใน 20 ปี:</span>
+                        <span class="stat-val" id="lifetimeTotalWon" style="color: var(--color-primary); font-size: 16px;">0 บาท</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ต้นทุนรวม (ซื้อทุกงวด 428 งวด x 80 บ.):</span>
+                        <span class="stat-val" id="lifetimeTotalSpent">34,240 บาท</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ผลกำไร/ขาดทุนสุทธิ (Net P&L):</span>
+                        <span class="stat-val" id="lifetimeNetBalance" style="font-weight: 700;">0 บาท</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">จำนวนครั้งที่ถูกรางวัลรวม:</span>
+                        <span class="stat-val" id="lifetimeWinCount">0 ครั้ง</span>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">ประวัติรางวัลที่เคยได้รับ:</div>
+                        <div class="history-list" id="lifetimeHistoryList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Callout for All Prizes -->
+            <section class="academic-callout">
+                <h3 class="callout-title">มุมวิชาการ: กฎหมายสลากกินแบ่งและคณิตศาสตร์ของความคาดหมาย (Statutory Expected Value)</h3>
+                <div class="callout-body">
+                    <p>
+                        <strong>1. สัดส่วนเงินรางวัลตามกฎหมาย (พ.ร.บ. สำนักงานสลากกินแบ่งรัฐบาล พ.ศ. 2517 มาตรา 22):</strong>
+                        กฎหมายกำหนดกรอบการจัดสรรเงินรายได้จากการจำหน่ายสลากไว้อย่างชัดเจน:
+                        <ul>
+                            <li style="margin-left: 20px;"><strong>ร้อยละ 60:</strong> จัดสรรเป็นเงินรางวัล (Payout Ratio)</li>
+                            <li style="margin-left: 20px;"><strong>ไม่น้อยกว่าร้อยละ 23:</strong> ส่งเป็นรายได้แผ่นดิน</li>
+                            <li style="margin-left: 20px;"><strong>ไม่เกินร้อยละ 17:</strong> ค่าใช้จ่ายในการบริหารจัดการและค่าตอบแทนการจำหน่าย</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <strong>2. บทพิสูจน์ค่าคาดหมายที่เป็นลบเสมอ ($E[X] = -40\%$):</strong>
+                        จากเงินรางวัล 48 ล้านบาทต่อสลาก 1 ล้านฉบับ เงินรางวัลเฉลี่ยต่อใบคือ $rac{48,000,000}{1,000,000} = 48$ บาท เมื่อซื้อที่ราคาควบคุม 80 บาท ค่าคาดหมายกำไรสุทธิคือ:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$E[X] = 48 - 80 = -32 	ext{ บาทต่อใบ (อัตราผลตอบแทน } -40\%)$$
+                    </p>
+                    <p>
+                        และหากซื้อตามราคาตลาดทั่วไป 100 บาท ค่าคาดหมายจะยิ่งติดลบหนักขึ้นเป็น $E[X] = 48 - 100 = -52 	ext{ บาทต่อใบ (Return } -52\%)$ แสดงให้เห็นว่าในระยะยาวตามกฎจำนวนมาก (Law of Large Numbers) การซื้อสลากไม่ใช่เครื่องมือสร้างผลตอบแทนทางการเงิน แต่เป็นเกมการกุศลที่มีอัตราเสียเปรียบของระบบ (House Edge) สูงถึง $40\%$
+                    </p>
+                </div>
+            </section>
+        </main>
+
         <!-- Footer -->
         <footer class="app-footer">
             <p>แหล่งข้อมูล: สำนักงานสลากกินแบ่งรัฐบาล (GLO Archive พ.ศ. 2543 – 2569 รวม 627 งวด) | จัดทำเพื่อการศึกษาและวิจัยทางสถิติศาสตร์</p>
@@ -1421,6 +1560,7 @@
 
     <!-- Scripts -->
     <script src="lottery-data.js"></script>
+    <script src="all-prizes-data.js"></script>
     <script src="stats-engine.js"></script>
     <script>
         // Main Application Controller
@@ -1454,6 +1594,19 @@
             const tabMode2D = document.getElementById('tabMode2D');
             const tabMode3D = document.getElementById('tabMode3D');
             const tabMode1st = document.getElementById('tabMode1st');
+            const tabModeAll = document.getElementById('tabModeAll');
+            const sectionAll = document.getElementById('sectionAll');
+
+            // All Prizes DOM
+            const lifetimeInput = document.getElementById('lifetimeInput');
+            const btnCheckLifetime = document.getElementById('btnCheckLifetime');
+            const lifetimeBadge = document.getElementById('lifetimeBadge');
+            const lifetimeTotalWon = document.getElementById('lifetimeTotalWon');
+            const lifetimeTotalSpent = document.getElementById('lifetimeTotalSpent');
+            const lifetimeNetBalance = document.getElementById('lifetimeNetBalance');
+            const lifetimeWinCount = document.getElementById('lifetimeWinCount');
+            const lifetimeHistoryList = document.getElementById('lifetimeHistoryList');
+            const architectureTableBody = document.getElementById('architectureTableBody');
             const section2D = document.getElementById('section2D');
             const section3D = document.getElementById('section3D');
             const section1st = document.getElementById('section1st');
@@ -2515,6 +2668,63 @@
             // =========================================================================
             // EVENT LISTENERS & SETUP
             // =========================================================================
+
+            // =========================================================================
+            // ALL PRIZES ARCHITECTURE & LIFETIME CHECKER RENDERERS
+            // =========================================================================
+            function renderAllPrizes() {
+                renderArchitectureTable();
+                checkLifetimeNumber(lifetimeInput.value.trim() || '077335');
+                renderMath();
+            }
+
+            function renderArchitectureTable() {
+                const arch = StatsEngine.getPrizeArchitecture();
+                architectureTableBody.innerHTML = '';
+                arch.tiers.forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = '<td style="font-weight: 600;">' + t.name + '</td>' +
+                                   '<td style="font-family: var(--font-mono);">' + t.count.toLocaleString('th-TH') + '</td>' +
+                                   '<td style="font-family: var(--font-mono);">' + t.prize.toLocaleString('th-TH') + '</td>' +
+                                   '<td style="font-family: var(--font-mono); color: var(--color-primary);">' + t.totalAmt.toLocaleString('th-TH') + '</td>' +
+                                   '<td style="font-family: var(--font-mono);">' + t.prob + '</td>';
+                    architectureTableBody.appendChild(tr);
+                });
+            }
+
+            function checkLifetimeNumber(ticketNum) {
+                const res = StatsEngine.checkLifetimeTicket(ticketNum);
+                lifetimeBadge.textContent = ticketNum || '-';
+
+                if (!res) {
+                    lifetimeTotalWon.textContent = '0 บาท';
+                    lifetimeNetBalance.textContent = '-';
+                    lifetimeWinCount.textContent = '0 ครั้ง';
+                    lifetimeHistoryList.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-faint); font-size: 13px;">กรุณาระบุเลข 6 หลักให้ถูกต้อง (000000 - 999999)</div>';
+                    return;
+                }
+
+                lifetimeTotalWon.textContent = res.totalWon.toLocaleString('th-TH') + ' บาท';
+                lifetimeTotalSpent.textContent = res.totalSpent.toLocaleString('th-TH') + ' บาท (' + res.totalDraws + ' งวด)';
+                const bal = res.netBalance;
+                lifetimeNetBalance.textContent = (bal > 0 ? '+' : '') + bal.toLocaleString('th-TH') + ' บาท';
+                lifetimeNetBalance.style.color = bal >= 0 ? 'var(--color-primary)' : 'var(--color-danger)';
+                lifetimeWinCount.textContent = res.events.length + ' ครั้ง';
+
+                lifetimeHistoryList.innerHTML = '';
+                if (res.events.length === 0) {
+                    lifetimeHistoryList.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-faint); font-size: 13px;">ไม่เคยถูกรางวัลใดๆ เลยในรอบ 20 ปี (' + res.totalDraws + ' งวด)</div>';
+                } else {
+                    res.events.forEach(ev => {
+                        const item = document.createElement('div');
+                        item.className = 'history-item';
+                        item.innerHTML = '<span>งวด ' + ev.drawDate + ' (' + ev.tierName + ')</span>' +
+                                         '<span style="font-family: var(--font-mono); color: var(--color-primary); font-weight: 700;">+' + ev.prize.toLocaleString('th-TH') + ' บ. [' + ev.matchedNumber + ']</span>';
+                        lifetimeHistoryList.appendChild(item);
+                    });
+                }
+            }
+
             function setupEvents() {
                 // Tab Switcher
                 tabMode2D.addEventListener('click', () => {
@@ -2522,6 +2732,8 @@
                     tabMode2D.classList.add('active');
                     tabMode3D.classList.remove('active');
                     tabMode1st.classList.remove('active');
+                    tabModeAll.classList.remove('active');
+                    sectionAll.style.display = 'none';
                     section2D.style.display = 'block';
                     section3D.style.display = 'none';
                     section1st.style.display = 'none';
@@ -2533,6 +2745,8 @@
                     tabMode3D.classList.add('active');
                     tabMode2D.classList.remove('active');
                     tabMode1st.classList.remove('active');
+                    tabModeAll.classList.remove('active');
+                    sectionAll.style.display = 'none';
                     section2D.style.display = 'none';
                     section3D.style.display = 'block';
                     section1st.style.display = 'none';
@@ -2544,10 +2758,27 @@
                     tabMode1st.classList.add('active');
                     tabMode2D.classList.remove('active');
                     tabMode3D.classList.remove('active');
+                    tabModeAll.classList.remove('active');
                     section2D.style.display = 'none';
                     section3D.style.display = 'none';
+                    sectionAll.style.display = 'none';
                     section1st.style.display = 'block';
                     renderAll1st();
+                });
+
+                tabModeAll.addEventListener('click', () => {
+                    currentMode = 'all';
+                    tabModeAll.classList.add('active');
+                    tabMode2D.classList.remove('active');
+                    tabMode3D.classList.remove('active');
+                    tabMode1st.classList.remove('active');
+                    tabModeAll.classList.remove('active');
+                    sectionAll.style.display = 'none';
+                    section2D.style.display = 'none';
+                    section3D.style.display = 'none';
+                    section1st.style.display = 'none';
+                    sectionAll.style.display = 'block';
+                    renderAllPrizes();
                 });
 
                 // 2D Events
@@ -2680,6 +2911,15 @@
 
                 inspectorInput1st.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') btnInspectSearch1st.click();
+                });
+
+                btnCheckLifetime.addEventListener('click', function () {
+                    const val = lifetimeInput.value.trim();
+                    checkLifetimeNumber(val);
+                });
+
+                lifetimeInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') btnCheckLifetime.click();
                 });
 
                 window.addEventListener('resize', function () {

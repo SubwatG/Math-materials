@@ -1,6 +1,6 @@
 /**
  * stats-engine.js
- * Analytical calculations and statistical testing for Thai 2-digit, 3-digit, and 1st prize (6-digit) lottery data
+ * Analytical calculations and statistical testing for Thai 2-digit, 3-digit, 1st prize, and all-tier lottery data
  */
 
 (function (window) {
@@ -268,7 +268,6 @@
             let sumTotal = 0;
             const digitSums = [];
 
-            // 6 positions (0: Hundred-thousands to 5: Units)
             const positions = Array.from({ length: 6 }, () => new Array(10).fill(0));
 
             const patterns = {
@@ -326,7 +325,6 @@
             });
             const stdSum = Math.sqrt(varSum / n);
 
-            // Chi-Square per position (df = 9)
             const posStats = positions.map(posArray => {
                 const expected = n / 10.0;
                 let chi2 = 0;
@@ -374,6 +372,127 @@
             const q = (query || '').trim();
             if (!q) return [];
             return data.filter(d => d.p1 && d.p1.toString().includes(q));
+        },
+
+        /* =========================================================================
+         * ALL-PRIZES ARCHITECTURE & 20-YEAR LIFETIME CHECKER
+         * ========================================================================= */
+
+        /**
+         * Returns the official 9-tier prize structure and mathematical parameters.
+         */
+        getPrizeArchitecture: function () {
+            return {
+                tiers: [
+                    { name: 'รางวัลที่ 1', count: 1, prize: 6000000, prob: '1/1,000,000 (0.0001%)', totalAmt: 6000000, desc: 'ตรงทั้ง 6 หลัก' },
+                    { name: 'ข้างเคียงรางวัลที่ 1', count: 2, prize: 100000, prob: '2/1,000,000 (0.0002%)', totalAmt: 200000, desc: 'มากกว่า/น้อยกว่ารางวัลที่ 1 หนึ่งหลัก' },
+                    { name: 'รางวัลที่ 2', count: 5, prize: 200000, prob: '5/1,000,000 (0.0005%)', totalAmt: 1000000, desc: 'ตรงทั้ง 6 หลัก (หมุน 5 ครั้ง)' },
+                    { name: 'รางวัลที่ 3', count: 10, prize: 80000, prob: '10/1,000,000 (0.0010%)', totalAmt: 800000, desc: 'ตรงทั้ง 6 หลัก (หมุน 10 ครั้ง)' },
+                    { name: 'รางวัลที่ 4', count: 50, prize: 40000, prob: '50/1,000,000 (0.0050%)', totalAmt: 2000000, desc: 'ตรงทั้ง 6 หลัก (หมุน 50 ครั้ง)' },
+                    { name: 'รางวัลที่ 5', count: 100, prize: 20000, prob: '100/1,000,000 (0.0100%)', totalAmt: 2000000, desc: 'ตรงทั้ง 6 หลัก (หมุน 100 ครั้ง)' },
+                    { name: 'รางวัลเลขหน้า 3 ตัว', count: 2000, prize: 4000, prob: '2/1,000 (0.2000%)', totalAmt: 8000000, desc: 'ตรงกับ 3 ตัวหน้า (หมุน 2 ครั้ง)' },
+                    { name: 'รางวัลเลขท้าย 3 ตัว', count: 2000, prize: 4000, prob: '2/1,000 (0.2000%)', totalAmt: 8000000, desc: 'ตรงกับ 3 ตัวท้าย (หมุน 2 ครั้ง)' },
+                    { name: 'รางวัลเลขท้าย 2 ตัว', count: 10000, prize: 2000, prob: '1/100 (1.0000%)', totalAmt: 20000000, desc: 'ตรงกับ 2 ตัวท้าย (หมุน 1 ครั้ง)' }
+                ],
+                totalTickets: 1000000,
+                totalWinningTickets: 14168,
+                totalPrizePayout: 48000000,
+                ticketPriceStatutory: 80,
+                payoutRatio: 60.0,
+                winAnyProbability: 0.014168,
+                loseProbability: 0.985832,
+                expectedValue80: -32.0,
+                expectedValue100: -52.0
+            };
+        },
+
+        /**
+         * Fast O(1) lifetime evaluation of a 6-digit ticket against 20 years of draws.
+         */
+        checkLifetimeTicket: function (ticketStr) {
+            const clean = (ticketStr || '').toString().trim();
+            if (clean.length !== 6 || !/^\d{6}$/.test(clean)) return null;
+
+            const allData = window.ALL_PRIZES_DATA;
+            if (!allData || !allData.draws) return null;
+
+            const draws = allData.draws;
+            const hits = allData.hits[clean] || [];
+
+            const tierInfo = {
+                1: { name: 'รางวัลที่ 1', prize: 6000000 },
+                2: { name: 'รางวัลที่ 2', prize: 200000 },
+                3: { name: 'รางวัลที่ 3', prize: 80000 },
+                4: { name: 'รางวัลที่ 4', prize: 40000 },
+                5: { name: 'รางวัลที่ 5', prize: 20000 },
+                6: { name: 'ข้างเคียงรางวัลที่ 1', prize: 100000 }
+            };
+
+            const events = [];
+            let totalWon = 0;
+
+            // 1. 6-digit tier hits
+            hits.forEach(h => {
+                const drawId = h[0];
+                const tier = h[1];
+                const d = draws[drawId];
+                const info = tierInfo[tier] || { name: 'รางวัลพิเศษ', prize: 0 };
+                totalWon += info.prize;
+                events.push({
+                    drawDate: d.d + ' ' + d.m + ' ' + d.y,
+                    tierName: info.name,
+                    prize: info.prize,
+                    matchedNumber: clean
+                });
+            });
+
+            // 2. 2-digit & 3-digit hits
+            const sub2 = clean.slice(-2);
+            const pre3 = clean.slice(0, 3);
+            const sub3 = clean.slice(-3);
+
+            draws.forEach(d => {
+                if (d.p2 === sub2) {
+                    totalWon += 2000;
+                    events.push({
+                        drawDate: d.d + ' ' + d.m + ' ' + d.y,
+                        tierName: 'รางวัลเลขท้าย 2 ตัว',
+                        prize: 2000,
+                        matchedNumber: sub2
+                    });
+                }
+                if (d.pre3 && d.pre3.includes(pre3)) {
+                    totalWon += 4000;
+                    events.push({
+                        drawDate: d.d + ' ' + d.m + ' ' + d.y,
+                        tierName: 'รางวัลเลขหน้า 3 ตัว',
+                        prize: 4000,
+                        matchedNumber: pre3
+                    });
+                }
+                if (d.sub3 && d.sub3.includes(sub3)) {
+                    totalWon += 4000;
+                    events.push({
+                        drawDate: d.d + ' ' + d.m + ' ' + d.y,
+                        tierName: 'รางวัลเลขท้าย 3 ตัว',
+                        prize: 4000,
+                        matchedNumber: sub3
+                    });
+                }
+            });
+
+            const totalDraws = draws.length;
+            const totalSpent80 = totalDraws * 80;
+            const netBalance80 = totalWon - totalSpent80;
+
+            return {
+                ticket: clean,
+                totalDraws: totalDraws,
+                totalWon: totalWon,
+                totalSpent: totalSpent80,
+                netBalance: netBalance80,
+                events: events.reverse()
+            };
         },
 
         /* =========================================================================
