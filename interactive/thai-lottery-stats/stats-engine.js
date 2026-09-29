@@ -513,6 +513,19 @@
             ];
         },
 
+        generateRandom20: function () {
+            const list = [];
+            for (let i = 0; i < 20; i++) {
+                const rand = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+                const stats = this.checkLifetimeTicket(rand);
+                list.push({
+                    num: rand,
+                    stats: stats
+                });
+            }
+            return list;
+        },
+
         runHotPicksBacktest: function () {
             const picks = this.getHotPicks().map(p => p.num);
             const allData = window.ALL_PRIZES_DATA;

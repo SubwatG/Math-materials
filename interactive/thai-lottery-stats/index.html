@@ -715,35 +715,41 @@
             <p class="app-subtitle">เครื่องมือสำรวจข้อมูลเชิงสถิติ (Data Explorer), การทดสอบภาวะสารูปสนิทดี (Chi-Square Test) และแบบจำลองทางคณิตศาสตร์</p>
         </header>
 
-<!-- 20 Hot Picks & Backtest Section -->
-            <section class="panel-card" style="margin-bottom: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%); border: 2px solid var(--border-green);">
-                <div class="panel-header" style="border-bottom: 1px solid var(--border-green);">
-                    <div>
-                        <div class="badge-academic" style="background: var(--color-primary); color: #FFFFFF;">สูตรสถิติยอดฮิต (The "Hot Numbers" Fallacy)</div>
-                        <h2 class="panel-title" style="font-size: 20px; color: var(--color-primary-dark);">20 เบอร์เด็ดสะสมจากสถิติในอดีต (Historical Hot 20 Picks)</h2>
-                        <div class="panel-subtitle">สมมติว่าไม่สนใจทฤษฎีความน่าจะเป็น แล้วเชื่อข้อมูลในอดีต 100% ว่าเลขที่ออกบ่อยจะกลับมาออกอีก</div>
+        <!-- 20 Hot Picks & Random 20 Generator Hero Section -->
+        <section class="panel-card" style="margin-bottom: 24px; background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%); border: 2px solid var(--border-green);">
+            <div class="panel-header" style="border-bottom: 1px solid var(--border-green);">
+                <div>
+                    <div class="badge-academic" style="background: var(--color-primary); color: #FFFFFF;">ศูนย์ทดลองพอร์ตตัวเลข 20 เบอร์ (Portfolio Lab)</div>
+                    <h2 class="panel-title" style="font-size: 20px; color: var(--color-primary-dark);">การทดลอง 20 เบอร์เด็ดสถิติสะสม vs ระบบสุ่ม 20 หมายเลข</h2>
+                    <div class="panel-subtitle">เปรียบเทียบพอร์ตเลขที่คัดจากสถิติในอดีต (Hot Picks) กับพอร์ตสุ่มอิสระ พร้อมตรวจสถิติประวัติย้อนหลังรายตัว</div>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="btn-group" id="heroPicksModeGroup">
+                        <button type="button" class="btn-segment active" data-heromode="hot">20 เบอร์เด็ดสถิติ</button>
+                        <button type="button" class="btn-segment" data-heromode="random">สุ่มเลข 20 ตัว</button>
                     </div>
-                    <div>
-                        <button type="button" id="btnRunHotBacktest" class="btn-action" style="box-shadow: 0 4px 12px rgba(0, 112, 74, 0.3);">
-                            <span>กด Backtest ซื้อ 20 เบอร์นี้ 20 ปี</span>
-                        </button>
-                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-VIEW 1: HOT PICKS (20 เบอร์เด็ด) -->
+            <div id="subViewHotPicks">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                    <span style="font-size: 13px; color: var(--text-muted);">
+                        คลิกที่ตัวเลขเพื่อนำไปตรวจสอบรายละเอียดในระบบ Lifetime Checker ด้านล่าง:
+                    </span>
+                    <button type="button" id="btnRunHotBacktest" class="btn-action" style="box-shadow: 0 4px 12px rgba(0, 112, 74, 0.25);">
+                        <span>กด Backtest ซื้อ 20 เบอร์เด็ดนี้ 20 ปี</span>
+                    </button>
                 </div>
 
-                <div style="margin-bottom: 16px; font-size: 13px; color: var(--text-muted);">
-                    คลิกที่ตัวเลขเพื่อนำไปตรวจสอบรายละเอียดในระบบ Lifetime Checker ด้านล่าง:
-                </div>
+                <div id="hotPicksGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 20px;"></div>
 
-                <div id="hotPicksGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 20px;">
-                    <!-- 20 Hot picks injected here -->
-                </div>
-
-                <!-- Backtest Results Display (Hidden until clicked) -->
+                <!-- Hot Backtest Result Box -->
                 <div id="backtestResultBox" style="display: none; padding: 18px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); margin-bottom: 16px;">
                     <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">ผลการทดสอบซื้อ 20 เบอร์เด็ดทุกงวดตลอด 20 ปี (428 งวด รวม 8,580 ใบ):</h3>
                     <div class="kpi-grid" style="margin-bottom: 12px;">
                         <div class="kpi-card" style="padding: 12px;">
-                            <div class="kpi-title">เงินลงทุนรวม (ซื้อใบละ 80 บ.)</div>
+                            <div class="kpi-title">เงินลงทุนรวม (ใบละ 80 บ.)</div>
                             <div class="kpi-value" style="font-size: 18px; color: var(--text-main);">686,400 บาท</div>
                         </div>
                         <div class="kpi-card" style="padding: 12px;">
@@ -761,10 +767,105 @@
                     </div>
                     <div style="background: rgba(201, 42, 42, 0.08); border-left: 4px solid var(--color-danger); padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #8B0000; line-height: 1.6;">
                         <strong>กับดักทางวิทยาการข้อมูล (Data Dredging / Look-Ahead Bias):</strong> 
-                        เหตุผลที่พอร์ตนี้ได้กำไรมหาศาล เพราะเรา "คัดเลือกตัวเลขหลังจากที่มันออกรางวัลไปแล้วในอดีต" (Hindsight Selection) ซึ่งเป็นการ Overfitting เข้ากับข้อมูลในอดีตอย่างรุนแรง หากนำ 20 เบอร์นี้ไปซื้อในงวดอนาคต (Out-of-Sample) โอกาสถูกในแต่ละงวดยังคงเป็นอิสระและผลตอบแทนจะลู่กลับเข้าสู่ $E[X] = -40\%$ เสมอ!
+                        เหตุผลที่พอร์ตนี้ได้กำไรมหาศาล เพราะเรา "คัดเลือกตัวเลขหลังจากที่มันออกรางวัลไปแล้วในอดีต" (Hindsight Selection) ซึ่งเป็นการ Overfitting หากนำ 20 เบอร์นี้ไปซื้อในงวดอนาคต (Out-of-Sample) โอกาสถูกในแต่ละงวดยังคงเป็นอิสระและผลตอบแทนจะลู่กลับเข้าสู่ $E[X] = -40\%$ เสมอ!
                     </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- SUB-VIEW 2: RANDOM 20 GENERATOR (ระบบสุ่มเลข 20 ตัว) -->
+            <div id="subViewRandom20" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                    <span style="font-size: 13px; color: var(--text-muted);">
+                        ระบบสุ่มเลข 6 หลัก 20 เบอร์ พร้อมตรวจสอบสถิติประวัติย้อนหลัง 20 ปีของแต่ละเบอร์ทันที:
+                    </span>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" id="btnGenRandom20" class="btn-action">
+                            <span>สุ่ม 20 หมายเลขใหม่</span>
+                        </button>
+                        <button type="button" id="btnRunRandomBacktest" class="btn-action btn-outline">
+                            <span>ดูผล Backtest รวมของชุดนี้</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 20 Random Grid with stats for each number -->
+                <div id="random20Grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 20px;"></div>
+
+                <!-- Random Backtest Result Box -->
+                <div id="randomBacktestResultBox" style="display: none; padding: 18px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); margin-bottom: 16px;">
+                    <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">ผลการซื้อชุดสุ่ม 20 เบอร์นี้ทุกงวดตลอด 20 ปี (428 งวด รวม 8,580 ใบ):</h3>
+                    <div class="kpi-grid" style="margin-bottom: 12px;">
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">เงินลงทุนรวม (ใบละ 80 บ.)</div>
+                            <div class="kpi-value" style="font-size: 18px; color: var(--text-main);">686,400 บาท</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">เงินรางวัลรวมที่ได้รับจริง</div>
+                            <div class="kpi-value" id="randomTotalWonKpi" style="font-size: 18px; color: var(--color-primary);">0 บาท</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">ผลตอบแทนสุทธิ (P&L)</div>
+                            <div class="kpi-value" id="randomNetPnlKpi" style="font-size: 18px; color: var(--color-danger);">0 บาท</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 12px;">
+                            <div class="kpi-title">จำนวนครั้งที่ถูกรางวัลรวม</div>
+                            <div class="kpi-value" id="randomHitsKpi" style="font-size: 18px; color: var(--text-muted);">0 ครั้ง</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                        สังเกตได้ว่าชุดตัวเลขสุ่มที่ไม่ได้ผ่านการคัดสรรหลังผลออก (No Look-ahead Bias) จะให้ผลตอบแทนสุทธิที่ขาดทุนใกล้เคียงกับค่าคาดหมายทางทฤษฎี $E[X] = -40\%$ ตามกฎจำนวนมาก (Law of Large Numbers)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safe Lottery Playing & Risk Management Guide (เทคนิคการซื้อและการเลือกเลขให้ปลอดภัย) -->
+        <section class="panel-card" style="margin-bottom: 24px; border-left: 4px solid var(--color-primary);">
+            <div class="panel-header">
+                <div>
+                    <div class="badge-academic" style="background: var(--bg-accent-soft); color: var(--color-primary);">เศรษฐศาสตร์พฤติกรรม & การบริหารความเสี่ยง</div>
+                    <h2 class="panel-title" style="font-size: 18px; color: var(--color-primary-dark);">เทคนิคการซื้อและการเลือกเลขให้ปลอดภัย (Safe Lottery Playing & Risk Mitigation)</h2>
+                    <div class="panel-subtitle">หลักการทางคณิตศาสตร์และการเงินเพื่อป้องกันความเสี่ยงทางการเงินและไม่ตกเป็นเหยื่อภาพลวงตา</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px;">
+                <div style="background: var(--bg-card-subtle); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+                    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">1. กฎเพดานเพื่อความบันเทิง (1-2% Rule)</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        มองเงินซื้อสลากเป็น <em>"ค่าใช้จ่ายเพื่อความบันเทิง (Entertainment Expense)"</em> ไม่ใช่การลงทุน กำหนดงบตายตัวไม่เกิน 1–2% ของรายได้ต่อเดือน (เช่น งวดละ 1–2 ใบ) และ<strong>ห้ามกู้หนี้ยืมสิน</strong>มาซื้อเด็ดขาด
+                    </p>
+                </div>
+
+                <div style="background: var(--bg-card-subtle); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+                    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">2. กลยุทธ์เลี่ยงเลขมหาชน (Anti-Crowding)</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        ในระบบที่มีการหารรางวัลหรือหวยใต้ดิน การซื้อเลขดัง (วันสำคัญ ทะเบียนรถผู้นำ) มีความเสี่ยงถูกอั้นหรือจ่ายครึ่งราคา การเลือกเลขที่กระจายตัวสูงช่วยลดการแย่งรางวัลกับคนหมู่มาก
+                    </p>
+                </div>
+
+                <div style="background: var(--bg-card-subtle); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+                    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">3. ระวังกับดักการแทงทบ (Martingale Trap)</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        ความเชื่อว่า <em>"งวดนี้ไม่ถูก งวดหน้าต้องซื้อเพิ่มเป็น 2 เท่าเพื่อเอาทุนคืน"</em> เป็นความเข้าใจผิดร้ายแรง ในเกมที่ค่าคาดหมายติดลบ ($E[X] < 0$) การแทงทบจะทำให้เกิด <strong>พอร์ตล้มละลาย (Risk of Ruin) 100%</strong> ในเวลาอันสั้น
+                    </p>
+                </div>
+
+                <div style="background: var(--bg-card-subtle); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+                    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">4. ซื้อกระจายเลข ดีกว่าซื้อเลขชุดซ้ำเบอร์</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        การซื้อเลขชุดเดิม 5 ใบ โอกาสถูกรางวัลใหญ่ยังคงเท่าเดิมคือ 1 ในล้าน แต่ความเสี่ยงสูง การซื้อกระจาย 5 เลขที่ต่างกันจะช่วยเพิ่มโอกาสถูกรางวัลใดรางวัลหนึ่งเป็น 5 เท่า ($pprox 7\%$) ช่วยลดความผันผวน
+                    </p>
+                </div>
+
+                <div style="background: var(--bg-card-subtle); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+                    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">5. สลากออมทรัพย์: ทางเลือกที่เงินต้นไม่หาย</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        สำหรับผู้ที่ชอบลุ้นรางวัล ทางเลือกที่ปลอดภัยที่สุดคือ <strong>สลากออมสิน, สลาก ธ.ก.ส., หรือสลาก ธอส.</strong> ได้สิทธิ์ลุ้นรางวัลใหญ่เหมือนกัน แต่เงินต้นคงอยู่ครบ 100% พร้อมได้รับดอกเบี้ยเมื่อครบกำหนด
+                    </p>
+                </div>
+            </div>
+        </section>
 
 
 
@@ -2760,6 +2861,64 @@
 
             let currentTierFilter = 'all';
 
+                        let currentRandom20 = [];
+
+            function renderRandom20() {
+                const grid = document.getElementById('random20Grid');
+                if (!grid) return;
+                currentRandom20 = StatsEngine.generateRandom20();
+                grid.innerHTML = '';
+
+                let portfolioWon = 0;
+                let portfolioHits = 0;
+
+                currentRandom20.forEach(item => {
+                    const st = item.stats;
+                    const won = st ? st.totalWon : 0;
+                    const net = st ? st.netBalance : -34240;
+                    const hits = st ? st.events.length : 0;
+                    portfolioWon += won;
+                    portfolioHits += hits;
+
+                    const card = document.createElement('div');
+                    card.style.cssText = 'background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); padding: 12px 14px; cursor: pointer; transition: all 0.15s ease; box-shadow: var(--shadow-sm);';
+                    
+                    const pnlColor = net >= 0 ? 'var(--color-primary)' : 'var(--color-danger)';
+                    const pnlSign = net > 0 ? '+' : '';
+
+                    card.innerHTML = 
+                        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">' +
+                        '  <span style="font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--color-primary); letter-spacing: 1px;">' + item.num + '</span>' +
+                        '  <span style="font-size: 11px; padding: 2px 6px; border-radius: 3px; background: var(--bg-card-subtle); color: var(--text-muted); font-weight: 600;">ถูก ' + hits + ' ครั้ง</span>' +
+                        '</div>' +
+                        '<div style="font-size: 13px; margin-bottom: 2px;">รางวัลสะสม: <strong style="color: var(--text-main); font-family: var(--font-mono);">' + won.toLocaleString('th-TH') + ' บ.</strong></div>' +
+                        '<div style="font-size: 12px; color: ' + pnlColor + '; font-weight: 600;">Net P&L: ' + pnlSign + net.toLocaleString('th-TH') + ' บ.</div>';
+
+                    card.addEventListener('mouseenter', () => card.style.borderColor = 'var(--color-primary)');
+                    card.addEventListener('mouseleave', () => card.style.borderColor = 'var(--border-card)');
+                    card.addEventListener('click', () => {
+                        // Switch to all prizes tab and inspect
+                        tabModeAll.click();
+                        lifetimeInput.value = item.num;
+                        checkLifetimeNumber(item.num);
+                        lifetimeInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                    grid.appendChild(card);
+                });
+
+                const randomTotalWonKpi = document.getElementById('randomTotalWonKpi');
+                const randomNetPnlKpi = document.getElementById('randomNetPnlKpi');
+                const randomHitsKpi = document.getElementById('randomHitsKpi');
+                if (randomTotalWonKpi) randomTotalWonKpi.textContent = portfolioWon.toLocaleString('th-TH') + ' บาท';
+                if (randomHitsKpi) randomHitsKpi.textContent = portfolioHits + ' ครั้ง';
+                if (randomNetPnlKpi) {
+                    const totalSpent = 686400;
+                    const net = portfolioWon - totalSpent;
+                    randomNetPnlKpi.textContent = (net > 0 ? '+' : '') + net.toLocaleString('th-TH') + ' บาท';
+                    randomNetPnlKpi.style.color = net >= 0 ? 'var(--color-primary)' : 'var(--color-danger)';
+                }
+            }
+
             function renderHotPicks() {
                 const grid = document.getElementById('hotPicksGrid');
                 if (!grid) return;
@@ -3055,6 +3214,50 @@
 
                 
                 // Tier filter buttons in Tab 4
+                                // Hero picks mode toggle (Hot picks vs Random 20)
+                const heroPicksModeGroup = document.getElementById('heroPicksModeGroup');
+                const subViewHotPicks = document.getElementById('subViewHotPicks');
+                const subViewRandom20 = document.getElementById('subViewRandom20');
+                if (heroPicksModeGroup) {
+                    heroPicksModeGroup.querySelectorAll('.btn-segment').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            heroPicksModeGroup.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            const mode = this.dataset.heromode;
+                            if (mode === 'hot') {
+                                subViewHotPicks.style.display = 'block';
+                                subViewRandom20.style.display = 'none';
+                            } else {
+                                subViewHotPicks.style.display = 'none';
+                                subViewRandom20.style.display = 'block';
+                                if (currentRandom20.length === 0) {
+                                    renderRandom20();
+                                }
+                            }
+                        });
+                    });
+                }
+
+                const btnGenRandom20 = document.getElementById('btnGenRandom20');
+                if (btnGenRandom20) {
+                    btnGenRandom20.addEventListener('click', function () {
+                        renderRandom20();
+                    });
+                }
+
+                const btnRunRandomBacktest = document.getElementById('btnRunRandomBacktest');
+                if (btnRunRandomBacktest) {
+                    btnRunRandomBacktest.addEventListener('click', function () {
+                        const box = document.getElementById('randomBacktestResultBox');
+                        if (box) {
+                            box.style.display = (box.style.display === 'none' ? 'block' : 'none');
+                            if (box.style.display === 'block') {
+                                box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        }
+                    });
+                }
+
                 const tierFilterGroup = document.getElementById('tierFilterGroup');
                 if (tierFilterGroup) {
                     tierFilterGroup.querySelectorAll('.btn-segment').forEach(btn => {
@@ -3110,6 +3313,7 @@
             // Bootstrap
             initFilters();
             setupEvents();
+            renderHotPicks();
             applyFilters2D();
 
             document.addEventListener('DOMContentLoaded', renderMath);
