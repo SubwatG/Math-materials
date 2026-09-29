@@ -1,12 +1,16 @@
 /**
  * stats-engine.js
- * Analytical calculations and statistical testing for Thai 2-digit lottery data
+ * Analytical calculations and statistical testing for Thai 2-digit and 3-digit lottery data
  */
 
 (function (window) {
     'use strict';
 
     const StatsEngine = {
+        /* =========================================================================
+         * 2-DIGIT PRIZE ANALYTICS (00 - 99)
+         * ========================================================================= */
+
         /**
          * Computes frequency counts for 00-99 and marginal distributions for tens and units.
          */
@@ -20,22 +24,24 @@
             const tens = new Array(10).fill(0);
             const units = new Array(10).fill(0);
 
+            let validCount = 0;
             data.forEach(item => {
-                const num = item.num.padStart(2, '0');
+                const num = (item.num || item.p2 || '').toString().padStart(2, '0');
                 if (counts[num] !== undefined) {
                     counts[num]++;
+                    validCount++;
+                    const t = parseInt(num[0], 10);
+                    const u = parseInt(num[1], 10);
+                    if (!isNaN(t)) tens[t]++;
+                    if (!isNaN(u)) units[u]++;
                 }
-                const t = parseInt(num[0], 10);
-                const u = parseInt(num[1], 10);
-                if (!isNaN(t)) tens[t]++;
-                if (!isNaN(u)) units[u]++;
             });
 
             return {
                 counts: counts,
                 tens: tens,
                 units: units,
-                total: data.length
+                total: validCount
             };
         },
 
@@ -43,12 +49,12 @@
          * Computes Chi-square goodness-of-fit test against Discrete Uniform Distribution U{0, 99}.
          */
         computeChiSquare: function (data) {
-            const n = data.length;
+            const freq = this.computeFrequencies(data);
+            const n = freq.total;
             if (n === 0) {
                 return { chi2: 0, df: 99, pValue: 1, expected: 0, isUniform: true };
             }
 
-            const freq = this.computeFrequencies(data);
             const expected = n / 100.0;
             let chi2 = 0;
 
@@ -59,9 +65,7 @@
             }
 
             const df = 99;
-            // Wilson-Hilferty approximation for Chi-square p-value
             const z = (Math.pow(chi2 / df, 1 / 3) - (1 - 2 / (9 * df))) / Math.sqrt(2 / (9 * df));
-            // Complementary error function approximation
             const pValue = this._approxErfc(z / Math.SQRT2) * 0.5;
 
             return {
@@ -78,14 +82,13 @@
          */
         computeGaps: function (data, targetNum) {
             const formattedTarget = targetNum.toString().padStart(2, '0');
-            // Data is ordered newest first in original archive
-            // We sort chronologically for interval analysis:
             const chronological = data.slice().reverse();
             const indices = [];
             const occurrences = [];
 
             chronological.forEach((item, index) => {
-                if (item.num === formattedTarget) {
+                const num = (item.num || item.p2 || '').toString().padStart(2, '0');
+                if (num === formattedTarget) {
                     indices.push(index);
                     occurrences.push({
                         drawIndex: index + 1,
@@ -112,7 +115,7 @@
             return {
                 targetNum: formattedTarget,
                 count: occurrences.length,
-                occurrences: occurrences.reverse(), // newest first for display
+                occurrences: occurrences.reverse(),
                 gaps: gaps,
                 currentGap: currentGap,
                 averageGap: avgGap ? parseFloat(avgGap.toFixed(1)) : null,
@@ -121,27 +124,158 @@
             };
         },
 
+        /* =========================================================================
+         * 3-DIGIT PRIZE ANALYTICS (000 - 999)
+         * ========================================================================= */
+
+        /**
+         * Computes frequency counts for 000-999 and marginal distributions for hundreds, tens, and units.
+         * @param {Array} data
+         * @param {string} category 'sub3' (ท้าย 3 ตัว), 'pre3' (หน้า 3 ตัว), or 'all3' (ทั้งหน้าและท้าย)
+         */
+        compute3DFrequencies: function (data, category) {
+            category = category || 'sub3';
+            const counts = {};
+            for (let i = 0; i < 1000; i++) {
+                const key = i.toString().padStart(3, '0');
+                counts[key] = 0;
+            }
+
+            const hundreds = new Array(10).fill(0);
+            const tens = new Array(10).fill(0);
+            const units = new Array(10).fill(0);
+
+            let totalDrawsWithData = 0;
+            let totalPrizes = 0;
+
+            data.forEach(item => {
+                let pool = [];
+                if (category === 'sub3') pool = item.sub3 || [];
+                else if (category === 'pre3') pool = item.pre3 || [];
+                else if (category === 'all3') pool = (item.sub3 || []).concat(item.pre3 || []);
+
+                if (pool.length > 0) {
+                    totalDrawsWithData++;
+                }
+
+                pool.forEach(nStr => {
+                    const clean = nStr.toString().padStart(3, '0');
+                    if (counts[clean] !== undefined) {
+                        counts[clean]++;
+                        totalPrizes++;
+                        const h = parseInt(clean[0], 10);
+                        const t = parseInt(clean[1], 10);
+                        const u = parseInt(clean[2], 10);
+                        if (!isNaN(h)) hundreds[h]++;
+                        if (!isNaN(t)) tens[t]++;
+                        if (!isNaN(u)) units[u]++;
+                    }
+                });
+            });
+
+            return {
+                counts: counts,
+                hundreds: hundreds,
+                tens: tens,
+                units: units,
+                totalDraws: totalDrawsWithData,
+                totalPrizes: totalPrizes
+            };
+        },
+
+        /**
+         * Computes gap intervals and occurrences for a specific 3-digit number.
+         */
+        compute3DGaps: function (data, target3D, category) {
+            category = category || 'sub3';
+            const formatted = target3D.toString().padStart(3, '0');
+            const chronological = data.slice().reverse();
+            const occurrences = [];
+            const indices = [];
+
+            chronological.forEach((item, index) => {
+                const sub3 = item.sub3 || [];
+                const pre3 = item.pre3 || [];
+
+                const inSub = sub3.includes(formatted);
+                const inPre = pre3.includes(formatted);
+
+                let matched = false;
+                let typeLabel = '';
+
+                if (category === 'sub3' && inSub) {
+                    matched = true;
+                    typeLabel = 'เลขท้าย 3 ตัว';
+                } else if (category === 'pre3' && inPre) {
+                    matched = true;
+                    typeLabel = 'เลขหน้า 3 ตัว';
+                } else if (category === 'all3' && (inSub || inPre)) {
+                    matched = true;
+                    typeLabel = (inSub && inPre) ? 'ทั้งหน้าและท้าย' : (inSub ? 'เลขท้าย 3 ตัว' : 'เลขหน้า 3 ตัว');
+                }
+
+                if (matched) {
+                    indices.push(index);
+                    occurrences.push({
+                        drawIndex: index + 1,
+                        date: item.date,
+                        month: item.month,
+                        year: item.year,
+                        type: typeLabel
+                    });
+                }
+            });
+
+            const gaps = [];
+            for (let i = 1; i < indices.length; i++) {
+                gaps.push(indices[i] - indices[i - 1]);
+            }
+
+            const totalDraws = chronological.filter(item => (item.sub3 && item.sub3.length > 0) || (item.pre3 && item.pre3.length > 0)).length;
+            const lastOccurrenceIndex = indices.length > 0 ? indices[indices.length - 1] : -1;
+            const currentGap = lastOccurrenceIndex >= 0 ? (chronological.length - 1) - lastOccurrenceIndex : totalDraws;
+
+            const avgGap = gaps.length > 0 ? (gaps.reduce((a, b) => a + b, 0) / gaps.length) : null;
+            const maxGap = gaps.length > 0 ? Math.max(...gaps) : null;
+            const minGap = gaps.length > 0 ? Math.min(...gaps) : null;
+
+            return {
+                targetNum: formatted,
+                count: occurrences.length,
+                occurrences: occurrences.reverse(),
+                gaps: gaps,
+                currentGap: currentGap,
+                averageGap: avgGap ? parseFloat(avgGap.toFixed(1)) : null,
+                maxGap: maxGap,
+                minGap: minGap
+            };
+        },
+
+        /* =========================================================================
+         * MONTE CARLO SIMULATOR
+         * ========================================================================= */
+
         /**
          * Runs a Monte Carlo simulation over a given number of draws.
          */
         runMonteCarlo: function (options) {
-            const draws = options.draws || 240; // e.g. 10 years * 24 draws/year
+            const draws = options.draws || 240;
             const ticketCost = options.ticketCost || 80;
             const prizeAmount = options.prizeAmount || 2000;
-            const strategy = options.strategy || 'fixed'; // 'fixed' or 'random'
+            const strategy = options.strategy || 'fixed';
             const fixedTarget = (options.targetNum !== undefined) ? options.targetNum.toString().padStart(2, '0') : '79';
 
             let balance = 0;
             const trajectory = [];
-            const expectedValuePerDraw = (prizeAmount * 0.01) - ticketCost; // -60 for 80 THB ticket
+            const expectedValuePerDraw = (prizeAmount * 0.01) - ticketCost;
 
             let wins = 0;
 
             for (let t = 1; t <= draws; t++) {
                 balance -= ticketCost;
                 const drawn = Math.floor(Math.random() * 100).toString().padStart(2, '0');
-                const myPick = (strategy === 'fixed') 
-                    ? fixedTarget 
+                const myPick = (strategy === 'fixed')
+                    ? fixedTarget
                     : Math.floor(Math.random() * 100).toString().padStart(2, '0');
 
                 if (drawn === myPick) {
@@ -174,7 +308,6 @@
          * High-accuracy complementary error function approximation
          */
         _approxErfc: function (x) {
-            // Abramowitz and Stegun approximation formula 7.1.26
             const a1 = 0.254829592;
             const a2 = -0.284496736;
             const a3 = 1.421413741;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สถิติสลากกินแบ่งรัฐบาล: รางวัลเลขท้าย 2 ตัว (พ.ศ. 2543 – 2567)</title>
+    <title>สถิติสลากกินแบ่งรัฐบาล: รางวัลเลขท้าย 2 ตัว และ 3 ตัว (พ.ศ. 2543 – 2569)</title>
 
     <!-- Google Fonts: Thai Looped Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,8 +77,8 @@
 
         /* Top Header */
         header.app-header {
-            margin-bottom: 28px;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border-card);
         }
 
@@ -109,12 +109,48 @@
             color: var(--text-muted);
         }
 
+        /* Mode Switcher Tabs */
+        .mode-tabs-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .mode-tabs {
+            display: inline-flex;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: var(--font-display);
+            color: var(--text-muted);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--color-primary);
+            color: var(--text-inverse);
+            box-shadow: 0 2px 8px rgba(0, 112, 74, 0.25);
+        }
+
         /* Filter Toolbar Card */
         .filter-toolbar {
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: 16px 20px;
             margin-bottom: 24px;
             box-shadow: var(--shadow-sm);
         }
@@ -456,18 +492,44 @@
             background: var(--bg-card-subtle);
         }
 
+        /* Hundred Selector for 3D Mode */
+        .hundred-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .btn-hundred {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-card);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-hundred:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-hundred.active {
+            background: var(--color-primary);
+            color: #FFFFFF;
+            border-color: var(--color-primary-dark);
+        }
+
         /* Marginal Digits Bar Section */
         .marginals-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
             margin-bottom: 32px;
-        }
-
-        @media (max-width: 768px) {
-            .marginals-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .bar-chart-row {
@@ -504,7 +566,7 @@
 
         .bar-val {
             font-family: var(--font-mono);
-            width: 50px;
+            width: 70px;
             text-align: left;
             font-size: 12px;
             color: var(--text-muted);
@@ -578,7 +640,7 @@
 
         /* Ranking Data Table */
         .table-responsive {
-            max-height: 400px;
+            max-height: 420px;
             overflow-y: auto;
             border: 1px solid var(--border-card);
             border-radius: var(--radius-sm);
@@ -629,296 +691,526 @@
         <!-- Header -->
         <header class="app-header">
             <span class="badge-academic">01422111 หลักสถิติ | ภาควิชาวิทยาการคำนวณและเทคโนโลยีดิจิทัล คณะศิลปศาสตร์และวิทยาศาสตร์ มก. กพส.</span>
-            <h1 class="app-title">สถิติสลากกินแบ่งรัฐบาล: รางวัลเลขท้าย 2 ตัว (พ.ศ. 2543 – 2567)</h1>
-            <p class="app-subtitle">เครื่องมือสำรวจข้อมูลเชิงสถิติ (Data Explorer), การทดสอบภาวะสารูปสนิทดี (Chi-Square Test) และการจำลองมอนติคาร์โล (Monte Carlo Simulation)</p>
+            <h1 class="app-title">สถิติสลากกินแบ่งรัฐบาลไทย (พ.ศ. 2543 – 2569)</h1>
+            <p class="app-subtitle">เครื่องมือสำรวจข้อมูลเชิงสถิติ (Data Explorer), การทดสอบภาวะสารูปสนิทดี (Chi-Square Test) และแบบจำลองมอนติคาร์โล</p>
         </header>
 
-        <!-- Filter Toolbar (Data Explorer First) -->
-        <section class="filter-toolbar">
-            <div class="filter-row">
-                <div class="filter-group">
-                    <span class="filter-label">ช่วงปี พ.ศ.:</span>
-                    <select id="startYear" class="input-select" aria-label="ปีเริ่มต้น"></select>
-                    <span>ถึง</span>
-                    <select id="endYear" class="input-select" aria-label="ปีสิ้นสุด"></select>
+        <!-- Mode Switcher Tabs -->
+        <div class="mode-tabs-container">
+            <div class="mode-tabs">
+                <button type="button" class="tab-btn active" id="tabMode2D" data-mode="2d">
+                    รางวัลเลขท้าย 2 ตัว (00 – 99)
+                </button>
+                <button type="button" class="tab-btn" id="tabMode3D" data-mode="3d">
+                    รางวัลเลข 3 ตัว (000 – 999)
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- MODE 1: 2-DIGIT VIEW (00 - 99)                                            -->
+        <!-- ========================================================================= -->
+        <main id="section2D">
+            <!-- Filter Toolbar (Data Explorer First) -->
+            <section class="filter-toolbar">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <span class="filter-label">ช่วงปี พ.ศ.:</span>
+                        <select id="startYear" class="input-select" aria-label="ปีเริ่มต้น"></select>
+                        <span>ถึง</span>
+                        <select id="endYear" class="input-select" aria-label="ปีสิ้นสุด"></select>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="filter-label">งวดวันที่:</span>
+                        <div class="btn-group" id="dayFilterGroup">
+                            <button type="button" class="btn-segment active" data-day="all">ทุกงวด</button>
+                            <button type="button" class="btn-segment" data-day="1">เฉพาะวันที่ 1</button>
+                            <button type="button" class="btn-segment" data-day="16">เฉพาะวันที่ 16</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <button type="button" id="btnExportCSV" class="btn-action">
+                            <span>ดาวน์โหลดข้อมูลที่กรอง (CSV)</span>
+                        </button>
+                        <button type="button" id="btnResetFilter" class="btn-action btn-outline">รีเซ็ต</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Summary Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">จำนวนงวดที่วิเคราะห์ ($N$)</div>
+                    <div class="kpi-value" id="kpiTotalDraws">0</div>
+                    <div class="kpi-desc" id="kpiDateRange">พ.ศ. 2543 - 2569</div>
                 </div>
 
-                <div class="filter-group">
-                    <span class="filter-label">งวดวันที่:</span>
-                    <div class="btn-group" id="dayFilterGroup">
-                        <button type="button" class="btn-segment active" data-day="all">ทุกงวด</button>
-                        <button type="button" class="btn-segment" data-day="1">เฉพาะวันที่ 1</button>
-                        <button type="button" class="btn-segment" data-day="16">เฉพาะวันที่ 16</button>
+                <div class="kpi-card">
+                    <div class="kpi-title">ความถี่คาดหมายต่อเลข ($E_i$)</div>
+                    <div class="kpi-value" id="kpiExpected">0.00</div>
+                    <div class="kpi-desc">ทฤษฎี $E_i = N / 100$ ภายใต้ $U\{0, 99\}$</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">สถิติทดสอบไคสแควร์ ($\chi^2$)</div>
+                    <div class="kpi-value" id="kpiChi2">0.0000</div>
+                    <div class="kpi-desc">องศาความเป็นอิสระ $df = 99$</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">ผลการทดสอบ ($p\text{-value}$)</div>
+                    <div class="kpi-value" id="kpiPValue">0.0000</div>
+                    <div class="kpi-desc">
+                        <span id="kpiHypothesisBadge" class="kpi-badge success">ยอมรับ $H_0$ (กระจายแบบสุ่มสม่ำเสมอ)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Explorer Layout: Heatmap (Left) + Inspector (Right) -->
+            <div class="explorer-layout">
+                <!-- Left: 10x10 Heatmap Matrix -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">ตารางแจกแจงความถี่เลขท้าย 2 ตัว ($10 \times 10$ Matrix)</h2>
+                            <div class="panel-subtitle">แกนตั้ง: หลักสิบ (0–9) | แกนนอน: หลักหน่วย (0–9) | คลิกที่ช่องเพื่อดูประวัติ</div>
+                        </div>
+                    </div>
+
+                    <div class="heatmap-container">
+                        <table class="heatmap-table" id="heatmapTable">
+                            <thead>
+                                <tr id="heatmapHeaderRow">
+                                    <th>สิบ \ หน่วย</th>
+                                </tr>
+                            </thead>
+                            <tbody id="heatmapBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="heatmap-legend">
+                        <span>ความถี่ต่ำ</span>
+                        <div class="legend-bar">
+                            <div class="legend-stop" style="background: #F4EFEA;"></div>
+                            <div class="legend-stop" style="background: #C7E3D6;"></div>
+                            <div class="legend-stop" style="background: #7DBE9F;"></div>
+                            <div class="legend-stop" style="background: #2D9665;"></div>
+                            <div class="legend-stop" style="background: #00704A;"></div>
+                        </div>
+                        <span>ความถี่สูง</span>
                     </div>
                 </div>
 
-                <div class="filter-group">
-                    <button type="button" id="btnExportCSV" class="btn-action">
-                        <span>ดาวน์โหลดข้อมูลที่กรอง (CSV)</span>
-                    </button>
-                    <button type="button" id="btnResetFilter" class="btn-action btn-outline">รีเซ็ต</button>
+                <!-- Right: Number Inspector Pane -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">เจาะลึกรายเลข (Number Inspector)</h2>
+                            <div class="panel-subtitle">ค้นหาหรือคลิกเลขจากตาราง Matrix</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                        <input type="text" id="inspectorInput" class="input-number" placeholder="พิมพ์เลข 00-99" maxlength="2" style="font-size: 16px; font-weight: 600; width: 140px; text-align: center;">
+                        <button type="button" id="btnInspectSearch" class="btn-action" style="padding: 6px 14px;">ค้นหา</button>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="inspector-badge" id="inspTargetNum">79</div>
+                    </div>
+
+                    <div class="stat-line">
+                        <span class="stat-label">ออกทั้งหมด:</span>
+                        <span class="stat-val" id="inspCount">0 ครั้ง</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">สัดส่วนต่อจำนวนงวด:</span>
+                        <span class="stat-val" id="inspPct">0.00%</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ออกล่าสุดเมื่อ:</span>
+                        <span class="stat-val" id="inspLastDrawn">-</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ไม่ได้ออกมาแล้ว:</span>
+                        <span class="stat-val" id="inspCurrentGap">0 งวด</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ระยะห่างเฉลี่ยระหว่างครั้งที่ออก:</span>
+                        <span class="stat-val" id="inspAvgGap">0.0 งวด</span>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">ประวัติงวดที่ออก:</div>
+                        <div class="history-list" id="inspHistoryList"></div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- KPI Summary Cards -->
-        <section class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-title">จำนวนงวดที่วิเคราะห์ ($N$)</div>
-                <div class="kpi-value" id="kpiTotalDraws">0</div>
-                <div class="kpi-desc" id="kpiDateRange">พ.ศ. 2543 - 2567</div>
-            </div>
+            <!-- Marginal Distributions: Tens & Units -->
+            <div class="marginals-grid">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3 class="panel-title">การกระจายตัวของ "หลักสิบ" (0–9)</h3>
+                    </div>
+                    <div id="tensDistributionContainer"></div>
+                </div>
 
-            <div class="kpi-card">
-                <div class="kpi-title">ความถี่คาดหมายต่อเลข ($E_i$)</div>
-                <div class="kpi-value" id="kpiExpected">0.00</div>
-                <div class="kpi-desc">ทฤษฎี $E_i = N / 100$ ภายใต้ $U\{0, 99\}$</div>
-            </div>
-
-            <div class="kpi-card">
-                <div class="kpi-title">สถิติทดสอบไคสแควร์ ($\chi^2$)</div>
-                <div class="kpi-value" id="kpiChi2">0.0000</div>
-                <div class="kpi-desc">องศาความเป็นอิสระ $df = 99$</div>
-            </div>
-
-            <div class="kpi-card">
-                <div class="kpi-title">ผลการทดสอบ ($p\text{-value}$)</div>
-                <div class="kpi-value" id="kpiPValue">0.0000</div>
-                <div class="kpi-desc">
-                    <span id="kpiHypothesisBadge" class="kpi-badge success">ยอมรับ $H_0$ (กระจายแบบสุ่มสม่ำเสมอ)</span>
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3 class="panel-title">การกระจายตัวของ "หลักหน่วย" (0–9)</h3>
+                    </div>
+                    <div id="unitsDistributionContainer"></div>
                 </div>
             </div>
-        </section>
 
-        <!-- Main Explorer Layout: Heatmap (Left) + Inspector (Right) -->
-        <div class="explorer-layout">
-            <!-- Left: 10x10 Heatmap Matrix -->
-            <div class="panel-card">
+            <!-- Monte Carlo Simulator Section -->
+            <section class="simulator-section">
                 <div class="panel-header">
                     <div>
-                        <h2 class="panel-title">ตารางแจกแจงความถี่เลขท้าย 2 ตัว ($10 \times 10$ Matrix)</h2>
-                        <div class="panel-subtitle">แกนตั้ง: หลักสิบ (0–9) | แกนนอน: หลักหน่วย (0–9) | คลิกที่ช่องเพื่อดูประวัติ</div>
+                        <h2 class="panel-title">แบบจำลองมอนติคาร์โล (Monte Carlo Simulator & Ruin Analysis)</h2>
+                        <div class="panel-subtitle">จำลองพอร์ตการซื้อสลากกินแบ่งรัฐบาลตามทฤษฎีกฎจำนวนมาก (Law of Large Numbers)</div>
                     </div>
                 </div>
 
-                <div class="heatmap-container">
-                    <table class="heatmap-table" id="heatmapTable">
+                <div class="sim-controls">
+                    <div>
+                        <label class="filter-label" for="simCost">ราคาสลากต่อใบ (บาท):</label>
+                        <select id="simCost" class="input-select" style="width: 100%; margin-top: 4px;">
+                            <option value="80">80 บาท (ราคาตามกฎหมาย)</option>
+                            <option value="100">100 บาท (ราคาตลาดทั่วไป)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="filter-label" for="simStrategy">กลยุทธ์การเลือกเลข:</label>
+                        <select id="simStrategy" class="input-select" style="width: 100%; margin-top: 4px;">
+                            <option value="fixed">ซื้อเลขเดิมทุกงวด (Fixed Target)</option>
+                            <option value="random">สุ่มเลขใหม่ทุกงวด (Random Pick)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="filter-label" for="simYears">ระยะเวลาที่จำลอง (ปี):</label>
+                        <select id="simYears" class="input-select" style="width: 100%; margin-top: 4px;">
+                            <option value="5">5 ปี (120 งวด)</option>
+                            <option value="10" selected>10 ปี (240 งวด)</option>
+                            <option value="20">20 ปี (480 งวด)</option>
+                            <option value="30">30 ปี (720 งวด)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-end;">
+                        <button type="button" id="btnRunSim" class="btn-action" style="width: 100%; justify-content: center; height: 38px;">
+                            <span>เริ่มจำลองการสุ่มใหม่</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="simCanvas"></canvas>
+                </div>
+
+                <div class="kpi-grid" style="margin-bottom: 0;">
+                    <div class="kpi-card" style="padding: 14px 16px;">
+                        <div class="kpi-title">เงินลงทุนซื้อสลากรวม</div>
+                        <div class="kpi-value" id="simTotalSpent" style="font-size: 20px; color: var(--text-main);">0 บาท</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 14px 16px;">
+                        <div class="kpi-title">เงินรางวัลรวมที่ถูก</div>
+                        <div class="kpi-value" id="simTotalWon" style="font-size: 20px; color: var(--color-primary);">0 บาท</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 14px 16px;">
+                        <div class="kpi-title">ผลตอบแทนสุทธิ (P&L)</div>
+                        <div class="kpi-value" id="simNetBalance" style="font-size: 20px; color: var(--color-danger);">0 บาท</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 14px 16px;">
+                        <div class="kpi-title">ถูกรางวัล / จำนวนงวด (Win Rate)</div>
+                        <div class="kpi-value" id="simWinRate" style="font-size: 20px; color: var(--text-muted);">0 / 0 (0.0%)</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Full Frequency Ranking Table -->
+            <section class="panel-card" style="margin-bottom: 32px;">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">ตารางสรุปความถี่ 100 หมายเลข (00 – 99)</h2>
+                        <div class="panel-subtitle">คลิกที่หัวตารางเพื่อจัดเรียงตามลำดับที่ต้องการ</div>
+                    </div>
+                    <div>
+                        <input type="text" id="tableFilterInput" class="input-select" placeholder="ค้นหาเลข..." style="width: 140px;">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="ranking-table" id="rankingTable">
                         <thead>
-                            <tr id="heatmapHeaderRow">
-                                <th>สิบ \ หน่วย</th>
-                                <!-- 0-9 columns will be injected -->
+                            <tr>
+                                <th data-sort="num">หมายเลข</th>
+                                <th data-sort="freq">จำนวนครั้งที่ออก (ความถี่)</th>
+                                <th data-sort="pct">สัดส่วน (%)</th>
+                                <th data-sort="last">ออกครั้งล่าสุด</th>
                             </tr>
                         </thead>
-                        <tbody id="heatmapBody">
-                            <!-- 10 rows will be injected -->
-                        </tbody>
+                        <tbody id="rankingTableBody"></tbody>
                     </table>
                 </div>
+            </section>
 
-                <div class="heatmap-legend">
-                    <span>ความถี่ต่ำ</span>
-                    <div class="legend-bar">
-                        <div class="legend-stop" style="background: #F4EFEA;"></div>
-                        <div class="legend-stop" style="background: #C7E3D6;"></div>
-                        <div class="legend-stop" style="background: #7DBE9F;"></div>
-                        <div class="legend-stop" style="background: #2D9665;"></div>
-                        <div class="legend-stop" style="background: #00704A;"></div>
+            <!-- Academic Callout: Debunking Fallacy -->
+            <section class="academic-callout">
+                <h3 class="callout-title">มุมวิชาการ: การลบล้างความเชื่อผิดๆ ด้วยหลักคณิตศาสตร์ (Debunking Fallacies)</h3>
+                <div class="callout-body">
+                    <p>
+                        <strong>1. เหตุใดเลขที่ "ไม่ออกมานาน" จึงไม่ได้กำลังจะออก (Gambler's Fallacy):</strong>
+                        ในกระบวนการออกสลากกินแบ่งรัฐบาล การหมุนวงล้อแต่ละงวดถือเป็นเหตุการณ์ที่เป็นอิสระต่อกัน (Independent Trials) ตามสัจพจน์ความน่าจะเป็น:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$P(A_t \mid A_{t-1}, A_{t-2}, \dots, A_1) = P(A_t) = \frac{1}{100} = 0.01$$
+                    </p>
+                    <p>
+                        อุปกรณ์ออกรางวัลไม่มี "หน่วยความจำ" (Memoryless Property) การที่ตัวเลขบางตัวเคยออกน้อยครั้งในรอบหลายปี ไม่ได้ทำให้ความน่าจะเป็นที่จะออกในงวดถัดไปสูงขึ้นแม้แต่น้อย มันยังคงเท่ากับ $\frac{1}{100}$ เสมอ
+                    </p>
+                    <p>
+                        <strong>2. ผลการทดสอบไคสแควร์ ($\chi^2 \approx 82.26, p \approx 0.888$):</strong>
+                        เนื่องจากค่า $p\text{-value}$ สูงกว่าระดับนัยสำคัญ $\alpha = 0.05$ อย่างมีนัยสำคัญ เราจึง <em>ยอมรับสมมติฐานหลัก ($H_0$)</em> ว่าผลสลากเลขท้าย 2 ตัวของไทยมีการแจกแจงแบบเอกรูปไม่ต่อเนื่อง (Discrete Uniform Distribution) ความถี่ที่แตกต่างกันในอดีตเป็นเพียงความแปรปรวนตามธรรมชาติของการสุ่ม (Pure Random Noise)
+                    </p>
+                    <p>
+                        <strong>3. ค่าคาดหมายติดลบ (Negative Expected Value):</strong>
+                        หากซื้อสลาก 1 ใบ ราคา 80 บาท โอกาสถูกเลขท้าย 2 ตัวคือ $1\%$ ได้รางวัล 2,000 บาท ค่าคาดหมายของกำไรสุทธิต่อใบคือ:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$E[X] = (2000 \times 0.01) - 80 = 20 - 80 = -60 \text{ บาท (ผลตอบแทน } -75\%)$$
+                    </p>
+                    <p>
+                        ตามกฎจำนวนมาก (Law of Large Numbers) ยิ่งผู้เล่นซื้อจำนวนงวดมากขึ้นเท่าใด ผลรวมทางการเงินจะลู่เข้าสู่ค่าคาดหมายที่เป็นลบเสมอ
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <!-- ========================================================================= -->
+        <!-- MODE 2: 3-DIGIT VIEW (000 - 999)                                          -->
+        <!-- ========================================================================= -->
+        <main id="section3D" style="display: none;">
+            <!-- Filter Toolbar for 3D -->
+            <section class="filter-toolbar">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <span class="filter-label">หมวดรางวัล 3 ตัว:</span>
+                        <div class="btn-group" id="filter3DCategoryGroup">
+                            <button type="button" class="btn-segment active" data-cat="sub3">เฉพาะเลขท้าย 3 ตัว</button>
+                            <button type="button" class="btn-segment" data-cat="pre3">เฉพาะเลขหน้า 3 ตัว</button>
+                            <button type="button" class="btn-segment" data-cat="all3">รวมทั้งหน้าและท้าย</button>
+                        </div>
                     </div>
-                    <span>ความถี่สูง</span>
+
+                    <div class="filter-group">
+                        <span class="filter-label">ช่วงปี พ.ศ.:</span>
+                        <select id="startYear3D" class="input-select" aria-label="ปีเริ่มต้น 3 ตัว"></select>
+                        <span>ถึง</span>
+                        <select id="endYear3D" class="input-select" aria-label="ปีสิ้นสุด 3 ตัว"></select>
+                    </div>
+
+                    <div class="filter-group">
+                        <button type="button" id="btnExportCSV3D" class="btn-action">
+                            <span>ดาวน์โหลดข้อมูลเลข 3 ตัว (CSV)</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3D KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">งวดที่มีข้อมูลเลข 3 ตัว ($N$)</div>
+                    <div class="kpi-value" id="kpi3DTotalDraws">0</div>
+                    <div class="kpi-desc" id="kpi3DDateRange">พ.ศ. 2549 - 2569</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">จำนวนรางวัล 3 ตัวทั้งหมดที่ออก</div>
+                    <div class="kpi-value" id="kpi3DTotalPrizes">0</div>
+                    <div class="kpi-desc">รวมทุกงวดในช่วงที่เลือก</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">เลข 3 ตัวที่เคยออกอย่างน้อย 1 ครั้ง</div>
+                    <div class="kpi-value" id="kpi3DUniqueNumbers">0</div>
+                    <div class="kpi-desc">จากทั้งหมด 1,000 หมายเลข (000–999)</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-title">ความถี่เฉลี่ยต่อหมายเลข ($E_i$)</div>
+                    <div class="kpi-value" id="kpi3DAvgFreq">0.00</div>
+                    <div class="kpi-desc">ทฤษฎี $E_i = \text{Total Prizes} / 1000$</div>
+                </div>
+            </section>
+
+            <!-- 3D Matrix with Hundred-Selector & Inspector -->
+            <div class="explorer-layout">
+                <!-- Left: Hundred Selector & 10x10 Matrix -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">ตารางความถี่ 1,000 หมายเลข (แยกตามหมวดหลักร้อย)</h2>
+                            <div class="panel-subtitle">เลือกหมวดหลักร้อยด้านล่างเพื่อแสดง Matrix $10 \times 10$ ของเลขท้ายสองหลัก</div>
+                        </div>
+                    </div>
+
+                    <!-- 10 Hundred Buttons -->
+                    <div class="hundred-bar" id="hundredSelectorBar">
+                        <!-- Buttons 0xx to 9xx will be injected -->
+                    </div>
+
+                    <div class="heatmap-container">
+                        <table class="heatmap-table" id="heatmapTable3D">
+                            <thead>
+                                <tr id="heatmapHeaderRow3D">
+                                    <th>สิบ \ หน่วย</th>
+                                </tr>
+                            </thead>
+                            <tbody id="heatmapBody3D"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="heatmap-legend">
+                        <span>ออก 0 ครั้ง</span>
+                        <div class="legend-bar">
+                            <div class="legend-stop" style="background: #F4EFEA;"></div>
+                            <div class="legend-stop" style="background: #C7E3D6;"></div>
+                            <div class="legend-stop" style="background: #7DBE9F;"></div>
+                            <div class="legend-stop" style="background: #2D9665;"></div>
+                            <div class="legend-stop" style="background: #00704A;"></div>
+                        </div>
+                        <span>ออกบ่อยสุด</span>
+                    </div>
+                </div>
+
+                <!-- Right: 3-Digit Number Inspector -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">เจาะลึกเลข 3 ตัว (3-Digit Inspector)</h2>
+                            <div class="panel-subtitle">พิมพ์เลข 000–999 หรือคลิกจากตาราง</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                        <input type="text" id="inspectorInput3D" class="input-number" placeholder="พิมพ์ 000-999" maxlength="3" style="font-size: 16px; font-weight: 600; width: 140px; text-align: center;">
+                        <button type="button" id="btnInspectSearch3D" class="btn-action" style="padding: 6px 14px;">ค้นหา</button>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="inspector-badge" id="inspTargetNum3D">740</div>
+                    </div>
+
+                    <div class="stat-line">
+                        <span class="stat-label">ออกทั้งหมด:</span>
+                        <span class="stat-val" id="inspCount3D">0 ครั้ง</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ออกล่าสุดเมื่อ:</span>
+                        <span class="stat-val" id="inspLastDrawn3D">-</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ไม่ได้ออกมาแล้ว:</span>
+                        <span class="stat-val" id="inspCurrentGap3D">0 งวด</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">ระยะห่างเฉลี่ยระหว่างครั้งที่ออก:</span>
+                        <span class="stat-val" id="inspAvgGap3D">-</span>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">ประวัติงวดที่ออก:</div>
+                        <div class="history-list" id="inspHistoryList3D"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right: Number Inspector Pane -->
-            <div class="panel-card">
+            <!-- 3D Marginal Distributions: Hundreds, Tens, Units -->
+            <div class="marginals-grid">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3 class="panel-title">การกระจายตัวของ "หลักร้อย" (0–9)</h3>
+                    </div>
+                    <div id="hundredsDistributionContainer"></div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3 class="panel-title">การกระจายตัวของ "หลักสิบ" (0–9)</h3>
+                    </div>
+                    <div id="tensDistributionContainer3D"></div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3 class="panel-title">การกระจายตัวของ "หลักหน่วย" (0–9)</h3>
+                    </div>
+                    <div id="unitsDistributionContainer3D"></div>
+                </div>
+            </div>
+
+            <!-- Full 3-Digit Ranking Table -->
+            <section class="panel-card" style="margin-bottom: 32px;">
                 <div class="panel-header">
                     <div>
-                        <h2 class="panel-title">เจาะลึกรายเลข (Number Inspector)</h2>
-                        <div class="panel-subtitle">ค้นหาหรือคลิกเลขจากตาราง Matrix</div>
+                        <h2 class="panel-title">ตารางสรุปความถี่ 1,000 หมายเลข (000 – 999)</h2>
+                        <div class="panel-subtitle">คลิกที่หัวตารางเพื่อจัดเรียงตามลำดับที่ต้องการ</div>
+                    </div>
+                    <div>
+                        <input type="text" id="tableFilterInput3D" class="input-select" placeholder="ค้นหาเลข 3 ตัว..." style="width: 160px;">
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                    <input type="text" id="inspectorInput" class="input-number" placeholder="พิมพ์เลข 00-99" maxlength="2" style="font-size: 16px; font-weight: 600; width: 140px; text-align: center;">
-                    <button type="button" id="btnInspectSearch" class="btn-action" style="padding: 6px 14px;">ค้นหา</button>
+                <div class="table-responsive">
+                    <table class="ranking-table" id="rankingTable3D">
+                        <thead>
+                            <tr>
+                                <th data-sort="num">หมายเลข (3 หลัก)</th>
+                                <th data-sort="freq">จำนวนครั้งที่ออก (ความถี่)</th>
+                                <th data-sort="pct">สัดส่วนต่อรางวัลทั้งหมด (%)</th>
+                                <th data-sort="last">ออกครั้งล่าสุด</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody3D"></tbody>
+                    </table>
                 </div>
+            </section>
 
-                <div style="text-align: center;">
-                    <div class="inspector-badge" id="inspTargetNum">79</div>
+            <!-- 3D Academic Callout -->
+            <section class="academic-callout">
+                <h3 class="callout-title">มุมวิชาการ: ค่าคาดหมายของรางวัลเลข 3 ตัว (Mathematical Analysis for 3-Digit Prize)</h3>
+                <div class="callout-body">
+                    <p>
+                        <strong>1. ความน่าจะเป็นในการถูกรางวัลเลขท้าย 3 ตัว:</strong>
+                        ปัจจุบันรางวัลเลขท้าย 3 ตัวมี 2 รางวัลต่องวด จากหมายเลขที่เป็นไปได้ทั้งหมด 1,000 หมายเลข ($000$ ถึง $999$):
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$P(\text{ถูกเลขท้าย 3 ตัว}) = \frac{2}{1000} = \frac{1}{500} = 0.002 \quad (0.2\%)$$
+                    </p>
+                    <p>
+                        <strong>2. การคำนวณค่าคาดหมาย (Expected Value):</strong>
+                        เงินรางวัลเลขท้าย 3 ตัวคือ 4,000 บาท เมื่อซื้อสลากราคาใบละ 80 บาท ค่าคาดหมายของผลตอบแทนสุทธิคือ:
+                    </p>
+                    <p style="text-align: center; margin: 12px 0;">
+                        $$E[X] = (4000 \times 0.002) - 80 = 8 - 80 = -72 \text{ บาท (อัตราผลตอบแทน } -90\%)$$
+                    </p>
+                    <p>
+                        จะเห็นได้ว่ารางวัลเลขท้าย 3 ตัวมีอัตราการขาดทุนคาดหมายเฉลี่ยสูงถึง $-90\%$ (ในขณะที่เลขท้าย 2 ตัวขาดทุนเฉลี่ย $-75\%$) สะท้อนถึง House Edge ที่สูงมากของโครงสร้างรางวัล
+                    </p>
                 </div>
-
-                <div class="stat-line">
-                    <span class="stat-label">ออกทั้งหมด:</span>
-                    <span class="stat-val" id="inspCount">0 ครั้ง</span>
-                </div>
-                <div class="stat-line">
-                    <span class="stat-label">สัดส่วนต่อจำนวนงวด:</span>
-                    <span class="stat-val" id="inspPct">0.00%</span>
-                </div>
-                <div class="stat-line">
-                    <span class="stat-label">ออกล่าสุดเมื่อ:</span>
-                    <span class="stat-val" id="inspLastDrawn">-</span>
-                </div>
-                <div class="stat-line">
-                    <span class="stat-label">ไม่ได้ออกมาแล้ว:</span>
-                    <span class="stat-val" id="inspCurrentGap">0 งวด</span>
-                </div>
-                <div class="stat-line">
-                    <span class="stat-label">ระยะห่างเฉลี่ยระหว่างครั้งที่ออก:</span>
-                    <span class="stat-val" id="inspAvgGap">0.0 งวด</span>
-                </div>
-
-                <div style="margin-top: 14px;">
-                    <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">ประวัติงวดที่ออก:</div>
-                    <div class="history-list" id="inspHistoryList"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Marginal Distributions: Tens & Units -->
-        <div class="marginals-grid">
-            <div class="panel-card">
-                <div class="panel-header">
-                    <h3 class="panel-title">การกระจายตัวของ "หลักสิบ" (0–9)</h3>
-                </div>
-                <div id="tensDistributionContainer"></div>
-            </div>
-
-            <div class="panel-card">
-                <div class="panel-header">
-                    <h3 class="panel-title">การกระจายตัวของ "หลักหน่วย" (0–9)</h3>
-                </div>
-                <div id="unitsDistributionContainer"></div>
-            </div>
-        </div>
-
-        <!-- Monte Carlo Simulator Section -->
-        <section class="simulator-section">
-            <div class="panel-header">
-                <div>
-                    <h2 class="panel-title">แบบจำลองมอนติคาร์โล (Monte Carlo Simulator & Ruin Analysis)</h2>
-                    <div class="panel-subtitle">จำลองพอร์ตการซื้อสลากกินแบ่งรัฐบาลตามทฤษฎีกฎจำนวนมาก (Law of Large Numbers)</div>
-                </div>
-            </div>
-
-            <div class="sim-controls">
-                <div>
-                    <label class="filter-label" for="simCost">ราคาสลากต่อใบ (บาท):</label>
-                    <select id="simCost" class="input-select" style="width: 100%; margin-top: 4px;">
-                        <option value="80">80 บาท (ราคาตามกฎหมาย)</option>
-                        <option value="100">100 บาท (ราคาตลาดทั่วไป)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="filter-label" for="simStrategy">กลยุทธ์การเลือกเลข:</label>
-                    <select id="simStrategy" class="input-select" style="width: 100%; margin-top: 4px;">
-                        <option value="fixed">ซื้อเลขเดิมทุกงวด (Fixed Target)</option>
-                        <option value="random">สุ่มเลขใหม่ทุกงวด (Random Pick)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="filter-label" for="simYears">ระยะเวลาที่จำลอง (ปี):</label>
-                    <select id="simYears" class="input-select" style="width: 100%; margin-top: 4px;">
-                        <option value="5">5 ปี (120 งวด)</option>
-                        <option value="10" selected>10 ปี (240 งวด)</option>
-                        <option value="20">20 ปี (480 งวด)</option>
-                        <option value="30">30 ปี (720 งวด)</option>
-                    </select>
-                </div>
-
-                <div style="display: flex; align-items: flex-end;">
-                    <button type="button" id="btnRunSim" class="btn-action" style="width: 100%; justify-content: center; height: 38px;">
-                        <span>เริ่มจำลองการสุ่มใหม่</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="canvas-container">
-                <canvas id="simCanvas"></canvas>
-            </div>
-
-            <div class="kpi-grid" style="margin-bottom: 0;">
-                <div class="kpi-card" style="padding: 14px 16px;">
-                    <div class="kpi-title">เงินลงทุนซื้อสลากรวม</div>
-                    <div class="kpi-value" id="simTotalSpent" style="font-size: 20px; color: var(--text-main);">0 บาท</div>
-                </div>
-                <div class="kpi-card" style="padding: 14px 16px;">
-                    <div class="kpi-title">เงินรางวัลรวมที่ถูก</div>
-                    <div class="kpi-value" id="simTotalWon" style="font-size: 20px; color: var(--color-primary);">0 บาท</div>
-                </div>
-                <div class="kpi-card" style="padding: 14px 16px;">
-                    <div class="kpi-title">ผลตอบแทนสุทธิ (P&L)</div>
-                    <div class="kpi-value" id="simNetBalance" style="font-size: 20px; color: var(--color-danger);">0 บาท</div>
-                </div>
-                <div class="kpi-card" style="padding: 14px 16px;">
-                    <div class="kpi-title">ถูกรางวัล / จำนวนงวด (Win Rate)</div>
-                    <div class="kpi-value" id="simWinRate" style="font-size: 20px; color: var(--text-muted);">0 / 0 (0.0%)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Full Frequency Ranking Table -->
-        <section class="panel-card" style="margin-bottom: 32px;">
-            <div class="panel-header">
-                <div>
-                    <h2 class="panel-title">ตารางสรุปความถี่ 100 หมายเลข (00 – 99)</h2>
-                    <div class="panel-subtitle">คลิกที่หัวตารางเพื่อจัดเรียงตามลำดับที่ต้องการ</div>
-                </div>
-                <div>
-                    <input type="text" id="tableFilterInput" class="input-select" placeholder="ค้นหาเลข..." style="width: 140px;">
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table class="ranking-table" id="rankingTable">
-                    <thead>
-                        <tr>
-                            <th data-sort="num">หมายเลข</th>
-                            <th data-sort="freq">จำนวนครั้งที่ออก (ความถี่)</th>
-                            <th data-sort="pct">สัดส่วน (%)</th>
-                            <th data-sort="last">ออกครั้งล่าสุด</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rankingTableBody"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Academic Callout: Debunking Fallacy -->
-        <section class="academic-callout">
-            <h3 class="callout-title">มุมวิชาการ: การลบล้างความเชื่อผิดๆ ด้วยหลักคณิตศาสตร์ (Debunking Fallacies)</h3>
-            <div class="callout-body">
-                <p>
-                    <strong>1. เหตุใดเลขที่ "ไม่ออกมานาน" จึงไม่ได้กำลังจะออก (Gambler's Fallacy):</strong>
-                    ในกระบวนการออกสลากกินแบ่งรัฐบาล การหมุนวงล้อแต่ละงวดถือเป็นเหตุการณ์ที่เป็นอิสระต่อกัน (Independent Trials) ตามสัจพจน์ความน่าจะเป็น:
-                </p>
-                <p style="text-align: center; margin: 12px 0;">
-                    $$P(A_t \mid A_{t-1}, A_{t-2}, \dots, A_1) = P(A_t) = \frac{1}{100} = 0.01$$
-                </p>
-                <p>
-                    อุปกรณ์ออกรางวัลไม่มี "หน่วยความจำ" (Memoryless Property) การที่เลข 84 เคยออกเพียงครั้งเดียวในรอบ 24 ปี ไม่ได้ทำให้ความน่าจะเป็นที่จะออกในงวดถัดไปสูงขึ้นแม้แต่น้อย มันยังคงเท่ากับ $\frac{1}{100}$ เสมอ
-                </p>
-                <p>
-                    <strong>2. ผลการทดสอบไคสแควร์ ($\chi^2 \approx 82.26, p \approx 0.888$):</strong>
-                    เนื่องจากค่า $p\text{-value}$ สูงกว่าระดับนัยสำคัญ $\alpha = 0.05$ อย่างมีนัยสำคัญ เราจึง <em>ยอมรับสมมติฐานหลัก ($H_0$)</em> ว่าผลสลากเลขท้าย 2 ตัวของไทยมีการแจกแจงแบบเอกรูปไม่ต่อเนื่อง (Discrete Uniform Distribution) ความถี่ที่แตกต่างกันในอดีต (เช่น 79 ออก 12 ครั้ง ขณะที่ 84 ออก 1 ครั้ง) เป็นเพียงความแปรปรวนตามธรรมชาติของการสุ่ม (Pure Random Noise)
-                </p>
-                <p>
-                    <strong>3. ค่าคาดหมายติดลบ (Negative Expected Value):</strong>
-                    หากซื้อสลาก 1 ใบ ราคา 80 บาท โอกาสถูกเลขท้าย 2 ตัวคือ $1\%$ ได้รางวัล 2,000 บาท ค่าคาดหมายของกำไรสุทธิต่อใบคือ:
-                </p>
-                <p style="text-align: center; margin: 12px 0;">
-                    $$E[X] = (2000 \times 0.01) - 80 = 20 - 80 = -60 \text{ บาท (ผลตอบแทน } -75\%)$$
-                </p>
-                <p>
-                    ตามกฎจำนวนมาก (Law of Large Numbers) ยิ่งผู้เล่นซื้อจำนวนงวดมากขึ้นเท่าใด ผลรวมทางการเงินจะลู่เข้าสู่ค่าคาดหมายที่เป็นลบเสมอ
-                </p>
-            </div>
-        </section>
+            </section>
+        </main>
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p>แหล่งข้อมูล: สำนักงานสลากกินแบ่งรัฐบาล (GLO Archive พ.ศ. 2543 – 2567 รวม 565 งวด) | จัดทำเพื่อการศึกษาและวิจัยทางสถิติศาสตร์</p>
+            <p>แหล่งข้อมูล: สำนักงานสลากกินแบ่งรัฐบาล (GLO Archive พ.ศ. 2543 – 2569 รวม 627 งวด) | จัดทำเพื่อการศึกษาและวิจัยทางสถิติศาสตร์</p>
             <p>เผยแพร่ภายใต้โครงการ SubwatG / Math-materials บน GitHub Pages</p>
         </footer>
     </div>
@@ -932,28 +1224,41 @@
             'use strict';
 
             const rawData = window.LOTTERY_DATA || [];
-            let activeData = rawData.slice();
-            let selectedNum = '79';
-            let dayFilter = 'all';
-            let sortColumn = 'freq';
-            let sortAsc = false;
+            let currentMode = '2d'; // '2d' or '3d'
 
-            // DOM Elements
+            // --- 2D State ---
+            let activeData2D = rawData.slice();
+            let selectedNum2D = '79';
+            let dayFilter2D = 'all';
+            let sortColumn2D = 'freq';
+            let sortAsc2D = false;
+
+            // --- 3D State ---
+            let activeData3D = rawData.filter(d => (d.sub3 && d.sub3.length > 0) || (d.pre3 && d.pre3.length > 0));
+            let selectedNum3D = '740';
+            let selectedHundred = 7; // 7xx default
+            let category3D = 'sub3'; // 'sub3', 'pre3', 'all3'
+            let sortColumn3D = 'freq';
+            let sortAsc3D = false;
+
+            // Tab Switching Elements
+            const tabMode2D = document.getElementById('tabMode2D');
+            const tabMode3D = document.getElementById('tabMode3D');
+            const section2D = document.getElementById('section2D');
+            const section3D = document.getElementById('section3D');
+
+            // 2D DOM Elements
             const startYearSel = document.getElementById('startYear');
             const endYearSel = document.getElementById('endYear');
             const dayFilterGroup = document.getElementById('dayFilterGroup');
             const btnResetFilter = document.getElementById('btnResetFilter');
             const btnExportCSV = document.getElementById('btnExportCSV');
-
-            // KPI Elements
             const kpiTotalDraws = document.getElementById('kpiTotalDraws');
             const kpiDateRange = document.getElementById('kpiDateRange');
             const kpiExpected = document.getElementById('kpiExpected');
             const kpiChi2 = document.getElementById('kpiChi2');
             const kpiPValue = document.getElementById('kpiPValue');
             const kpiHypothesisBadge = document.getElementById('kpiHypothesisBadge');
-
-            // Inspector Elements
             const inspectorInput = document.getElementById('inspectorInput');
             const btnInspectSearch = document.getElementById('btnInspectSearch');
             const inspTargetNum = document.getElementById('inspTargetNum');
@@ -963,12 +1268,8 @@
             const inspCurrentGap = document.getElementById('inspCurrentGap');
             const inspAvgGap = document.getElementById('inspAvgGap');
             const inspHistoryList = document.getElementById('inspHistoryList');
-
-            // Table Elements
             const rankingTableBody = document.getElementById('rankingTableBody');
             const tableFilterInput = document.getElementById('tableFilterInput');
-
-            // Monte Carlo Elements
             const simCost = document.getElementById('simCost');
             const simStrategy = document.getElementById('simStrategy');
             const simYears = document.getElementById('simYears');
@@ -979,13 +1280,37 @@
             const simNetBalance = document.getElementById('simNetBalance');
             const simWinRate = document.getElementById('simWinRate');
 
-            // Initialize Year Dropdowns
-            function initYearFilters() {
-                const years = Array.from(new Set(rawData.map(d => d.year))).sort((a, b) => a - b);
+            // 3D DOM Elements
+            const filter3DCategoryGroup = document.getElementById('filter3DCategoryGroup');
+            const startYear3DSel = document.getElementById('startYear3D');
+            const endYear3DSel = document.getElementById('endYear3D');
+            const btnExportCSV3D = document.getElementById('btnExportCSV3D');
+            const kpi3DTotalDraws = document.getElementById('kpi3DTotalDraws');
+            const kpi3DDateRange = document.getElementById('kpi3DDateRange');
+            const kpi3DTotalPrizes = document.getElementById('kpi3DTotalPrizes');
+            const kpi3DUniqueNumbers = document.getElementById('kpi3DUniqueNumbers');
+            const kpi3DAvgFreq = document.getElementById('kpi3DAvgFreq');
+            const hundredSelectorBar = document.getElementById('hundredSelectorBar');
+            const inspectorInput3D = document.getElementById('inspectorInput3D');
+            const btnInspectSearch3D = document.getElementById('btnInspectSearch3D');
+            const inspTargetNum3D = document.getElementById('inspTargetNum3D');
+            const inspCount3D = document.getElementById('inspCount3D');
+            const inspLastDrawn3D = document.getElementById('inspLastDrawn3D');
+            const inspCurrentGap3D = document.getElementById('inspCurrentGap3D');
+            const inspAvgGap3D = document.getElementById('inspAvgGap3D');
+            const inspHistoryList3D = document.getElementById('inspHistoryList3D');
+            const rankingTableBody3D = document.getElementById('rankingTableBody3D');
+            const tableFilterInput3D = document.getElementById('tableFilterInput3D');
+
+            // =========================================================================
+            // INITIALIZATION
+            // =========================================================================
+            function initFilters() {
+                // 2D Years (2543 - 2569)
+                const years2D = Array.from(new Set(rawData.map(d => d.year))).sort((a, b) => a - b);
                 startYearSel.innerHTML = '';
                 endYearSel.innerHTML = '';
-
-                years.forEach(y => {
+                years2D.forEach(y => {
                     const opt1 = document.createElement('option');
                     opt1.value = y;
                     opt1.textContent = y;
@@ -996,41 +1321,75 @@
                     opt2.textContent = y;
                     endYearSel.appendChild(opt2);
                 });
+                startYearSel.value = years2D[0];
+                endYearSel.value = years2D[years2D.length - 1];
 
-                startYearSel.value = years[0];
-                endYearSel.value = years[years.length - 1];
+                // 3D Years (2549 - 2569)
+                const years3D = Array.from(new Set(activeData3D.map(d => d.year))).sort((a, b) => a - b);
+                startYear3DSel.innerHTML = '';
+                endYear3DSel.innerHTML = '';
+                years3D.forEach(y => {
+                    const opt1 = document.createElement('option');
+                    opt1.value = y;
+                    opt1.textContent = y;
+                    startYear3DSel.appendChild(opt1);
+
+                    const opt2 = document.createElement('option');
+                    opt2.value = y;
+                    opt2.textContent = y;
+                    endYear3DSel.appendChild(opt2);
+                });
+                startYear3DSel.value = years3D[0];
+                endYear3DSel.value = years3D[years3D.length - 1];
+
+                // Hundred Selector Buttons (0xx - 9xx)
+                hundredSelectorBar.innerHTML = '';
+                for (let h = 0; h < 10; h++) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn-hundred' + (h === selectedHundred ? ' active' : '');
+                    btn.dataset.hundred = h;
+                    btn.textContent = h + 'xx (' + (h * 100).toString().padStart(3, '0') + '–' + (h * 100 + 99).toString().padStart(3, '0') + ')';
+                    btn.addEventListener('click', function () {
+                        hundredSelectorBar.querySelectorAll('.btn-hundred').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        selectedHundred = h;
+                        render3DHeatmap();
+                    });
+                    hundredSelectorBar.appendChild(btn);
+                }
             }
 
-            // Apply Filters
-            function applyFilters() {
+            // =========================================================================
+            // 2D RENDERERS
+            // =========================================================================
+            function applyFilters2D() {
                 const startY = parseInt(startYearSel.value, 10);
                 const endY = parseInt(endYearSel.value, 10);
 
-                activeData = rawData.filter(item => {
+                activeData2D = rawData.filter(item => {
                     if (item.year < startY || item.year > endY) return false;
-                    if (dayFilter === '1' && item.date !== 1) return false;
-                    if (dayFilter === '16' && item.date !== 16) return false;
+                    if (dayFilter2D === '1' && item.date !== 1) return false;
+                    if (dayFilter2D === '16' && item.date !== 16) return false;
                     return true;
                 });
 
-                renderAll();
+                renderAll2D();
             }
 
-            // Render Entire Dashboard
-            function renderAll() {
-                renderKPIs();
-                renderHeatmap();
-                renderInspector(selectedNum);
-                renderMarginals();
-                renderRankingTable();
+            function renderAll2D() {
+                renderKPIs2D();
+                renderHeatmap2D();
+                renderInspector2D(selectedNum2D);
+                renderMarginals2D();
+                renderRankingTable2D();
                 runSimulation();
                 renderMath();
             }
 
-            // Render KPIs
-            function renderKPIs() {
-                const chiRes = StatsEngine.computeChiSquare(activeData);
-                kpiTotalDraws.textContent = activeData.length.toLocaleString('th-TH');
+            function renderKPIs2D() {
+                const chiRes = StatsEngine.computeChiSquare(activeData2D);
+                kpiTotalDraws.textContent = activeData2D.length.toLocaleString('th-TH');
                 kpiExpected.textContent = chiRes.expected.toFixed(2);
                 kpiChi2.textContent = chiRes.chi2.toFixed(4);
                 kpiPValue.textContent = chiRes.pValue.toFixed(4);
@@ -1050,8 +1409,7 @@
                 }
             }
 
-            // Render Heatmap Matrix
-            function renderHeatmap() {
+            function renderHeatmap2D() {
                 const headerRow = document.getElementById('heatmapHeaderRow');
                 headerRow.innerHTML = '<th>สิบ \\ หน่วย</th>';
                 for (let u = 0; u < 10; u++) {
@@ -1063,7 +1421,7 @@
                 const tbody = document.getElementById('heatmapBody');
                 tbody.innerHTML = '';
 
-                const freq = StatsEngine.computeFrequencies(activeData);
+                const freq = StatsEngine.computeFrequencies(activeData2D);
                 const counts = freq.counts;
                 const countsArr = Object.values(counts);
                 const maxCount = Math.max(...countsArr, 1);
@@ -1079,13 +1437,12 @@
                         const numStr = '' + t + u;
                         const count = counts[numStr] || 0;
                         const td = document.createElement('td');
-                        td.className = 'heatmap-cell' + (numStr === selectedNum ? ' selected' : '');
+                        td.className = 'heatmap-cell' + (numStr === selectedNum2D ? ' selected' : '');
                         td.dataset.num = numStr;
 
-                        // Color scale from cream (#FAF8F5) to Starbucks green (#00704A)
                         const norm = maxCount > minCount ? (count - minCount) / (maxCount - minCount) : 0.5;
-                        const bgLightness = 96 - (norm * 52); // 96% down to 44%
-                        const bgSaturation = 20 + (norm * 75); // 20% up to 95%
+                        const bgLightness = 96 - (norm * 52);
+                        const bgSaturation = 20 + (norm * 75);
                         td.style.backgroundColor = 'hsl(158, ' + bgSaturation + '%, ' + bgLightness + '%)';
                         td.style.color = bgLightness < 65 ? '#FFFFFF' : '#1E2229';
 
@@ -1093,10 +1450,10 @@
                                        '<span class="cell-count">' + count + '</span>';
 
                         td.addEventListener('click', function () {
-                            document.querySelectorAll('.heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
+                            document.querySelectorAll('#heatmapBody .heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
                             td.classList.add('selected');
-                            selectedNum = numStr;
-                            renderInspector(selectedNum);
+                            selectedNum2D = numStr;
+                            renderInspector2D(selectedNum2D);
                         });
 
                         tr.appendChild(td);
@@ -1105,13 +1462,12 @@
                 }
             }
 
-            // Render Number Inspector
-            function renderInspector(numStr) {
-                const gapRes = StatsEngine.computeGaps(activeData, numStr);
+            function renderInspector2D(numStr) {
+                const gapRes = StatsEngine.computeGaps(activeData2D, numStr);
                 inspTargetNum.textContent = numStr;
                 inspCount.textContent = gapRes.count + ' ครั้ง';
 
-                const pct = activeData.length > 0 ? (gapRes.count / activeData.length * 100).toFixed(2) : '0.00';
+                const pct = activeData2D.length > 0 ? (gapRes.count / activeData2D.length * 100).toFixed(2) : '0.00';
                 inspPct.textContent = pct + '%';
 
                 if (gapRes.occurrences.length > 0) {
@@ -1120,12 +1476,11 @@
                     inspCurrentGap.textContent = gapRes.currentGap + ' งวดที่ผ่านมา';
                 } else {
                     inspLastDrawn.textContent = 'ไม่เคยออกในช่วงที่เลือก';
-                    inspCurrentGap.textContent = activeData.length + ' งวด';
+                    inspCurrentGap.textContent = activeData2D.length + ' งวด';
                 }
 
                 inspAvgGap.textContent = (gapRes.averageGap !== null ? gapRes.averageGap : '-') + ' งวด';
 
-                // History List
                 inspHistoryList.innerHTML = '';
                 if (gapRes.occurrences.length === 0) {
                     inspHistoryList.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-faint); font-size: 13px;">ไม่พบข้อมูลในช่วงที่เลือก</div>';
@@ -1140,10 +1495,9 @@
                 }
             }
 
-            // Render Marginal Distributions (Tens and Units)
-            function renderMarginals() {
-                const freq = StatsEngine.computeFrequencies(activeData);
-                const total = activeData.length || 1;
+            function renderMarginals2D() {
+                const freq = StatsEngine.computeFrequencies(activeData2D);
+                const total = activeData2D.length || 1;
 
                 function buildBars(containerId, dataArr) {
                     const container = document.getElementById(containerId);
@@ -1169,9 +1523,8 @@
                 buildBars('unitsDistributionContainer', freq.units);
             }
 
-            // Render Ranking Table
-            function renderRankingTable() {
-                const freq = StatsEngine.computeFrequencies(activeData);
+            function renderRankingTable2D() {
+                const freq = StatsEngine.computeFrequencies(activeData2D);
                 const query = (tableFilterInput.value || '').trim();
 
                 let rows = [];
@@ -1180,8 +1533,8 @@
                     if (query && !numStr.includes(query)) continue;
 
                     const count = freq.counts[numStr] || 0;
-                    const pct = activeData.length > 0 ? (count / activeData.length * 100).toFixed(2) : '0.00';
-                    const gapRes = StatsEngine.computeGaps(activeData, numStr);
+                    const pct = activeData2D.length > 0 ? (count / activeData2D.length * 100).toFixed(2) : '0.00';
+                    const gapRes = StatsEngine.computeGaps(activeData2D, numStr);
                     const lastDrawn = gapRes.occurrences.length > 0
                         ? (gapRes.occurrences[0].date + ' ' + gapRes.occurrences[0].month + ' ' + gapRes.occurrences[0].year)
                         : '-';
@@ -1196,14 +1549,13 @@
                     });
                 }
 
-                // Sort rows
                 rows.sort((a, b) => {
                     let diff = 0;
-                    if (sortColumn === 'num') diff = parseInt(a.num, 10) - parseInt(b.num, 10);
-                    else if (sortColumn === 'freq') diff = a.freq - b.freq;
-                    else if (sortColumn === 'pct') diff = a.pct - b.pct;
-                    else if (sortColumn === 'last') diff = a.lastIndex - b.lastIndex;
-                    return sortAsc ? diff : -diff;
+                    if (sortColumn2D === 'num') diff = parseInt(a.num, 10) - parseInt(b.num, 10);
+                    else if (sortColumn2D === 'freq') diff = a.freq - b.freq;
+                    else if (sortColumn2D === 'pct') diff = a.pct - b.pct;
+                    else if (sortColumn2D === 'last') diff = a.lastIndex - b.lastIndex;
+                    return sortAsc2D ? diff : -diff;
                 });
 
                 rankingTableBody.innerHTML = '';
@@ -1215,17 +1567,16 @@
                                    '<td style="font-family: var(--font-mono);">' + r.pct + '%</td>' +
                                    '<td>' + r.lastDrawn + '</td>';
                     tr.addEventListener('click', () => {
-                        selectedNum = r.num;
-                        document.querySelectorAll('.heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
-                        const cell = document.querySelector('.heatmap-cell[data-num="' + selectedNum + '"]');
+                        selectedNum2D = r.num;
+                        document.querySelectorAll('#heatmapBody .heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
+                        const cell = document.querySelector('#heatmapBody .heatmap-cell[data-num="' + selectedNum2D + '"]');
                         if (cell) cell.classList.add('selected');
-                        renderInspector(selectedNum);
+                        renderInspector2D(selectedNum2D);
                     });
                     rankingTableBody.appendChild(tr);
                 });
             }
 
-            // Monte Carlo Simulation Runner & Canvas Drawing
             function runSimulation() {
                 const cost = parseInt(simCost.value, 10);
                 const years = parseInt(simYears.value, 10);
@@ -1237,10 +1588,9 @@
                     ticketCost: cost,
                     prizeAmount: 2000,
                     strategy: strategy,
-                    targetNum: selectedNum
+                    targetNum: selectedNum2D
                 });
 
-                // Update Sim KPIs
                 simTotalSpent.textContent = simResult.totalSpent.toLocaleString('th-TH') + ' บาท';
                 simTotalWon.textContent = simResult.totalWon.toLocaleString('th-TH') + ' บาท';
                 const bal = simResult.finalBalance;
@@ -1251,7 +1601,6 @@
                 drawCanvasChart(simResult.trajectory);
             }
 
-            // Draw Canvas 2D Trajectory
             function drawCanvasChart(trajectory) {
                 const canvas = simCanvas;
                 const rect = canvas.getBoundingClientRect();
@@ -1271,10 +1620,8 @@
                 const padBottom = 40;
 
                 ctx.clearRect(0, 0, w, h);
-
                 if (!trajectory || trajectory.length === 0) return;
 
-                // Find min & max balance
                 let minVal = 0;
                 let maxVal = 0;
                 trajectory.forEach(pt => {
@@ -1284,7 +1631,6 @@
                     if (pt.expected > maxVal) maxVal = pt.expected;
                 });
 
-                // Add padding to y bounds
                 const yRange = Math.max(maxVal - minVal, 1000);
                 const yMin = minVal - (yRange * 0.08);
                 const yMax = maxVal + (yRange * 0.08);
@@ -1297,7 +1643,6 @@
                     return padTop + (1 - (val - yMin) / (yMax - yMin)) * (h - padTop - padBottom);
                 }
 
-                // Draw Grid Lines
                 ctx.strokeStyle = '#E3DDD5';
                 ctx.lineWidth = 1;
                 ctx.fillStyle = '#8790A0';
@@ -1314,7 +1659,6 @@
                     ctx.fillText(Math.round(val).toLocaleString('th-TH'), 10, y + 4);
                 }
 
-                // Zero Line (Breakeven)
                 if (yMin <= 0 && yMax >= 0) {
                     const zeroY = getY(0);
                     ctx.strokeStyle = '#535A68';
@@ -1329,7 +1673,6 @@
                     ctx.fillText('จุดคุ้มทุน (0)', w - padRight - 70, zeroY - 6);
                 }
 
-                // Theoretical Expected Value Line (Dashed Orange/Ochre)
                 ctx.strokeStyle = '#A86F00';
                 ctx.lineWidth = 2;
                 ctx.setLineDash([5, 5]);
@@ -1343,7 +1686,6 @@
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                // Actual Trajectory Line (Starbucks Green or Crimson)
                 ctx.strokeStyle = '#00704A';
                 ctx.lineWidth = 2.5;
                 ctx.beginPath();
@@ -1355,7 +1697,6 @@
                 });
                 ctx.stroke();
 
-                // Draw Win Points
                 trajectory.forEach(pt => {
                     if (pt.isWin) {
                         const x = getX(pt.draw);
@@ -1370,7 +1711,6 @@
                     }
                 });
 
-                // Legend
                 ctx.font = '12px IBM Plex Sans Thai Looped, sans-serif';
                 ctx.fillStyle = '#00704A';
                 ctx.fillRect(padLeft + 10, padTop + 10, 16, 3);
@@ -1381,16 +1721,11 @@
                 ctx.fillText('ค่าคาดหมายตามทฤษฎี E[X]', padLeft + 252, padTop + 15);
             }
 
-            // Export CSV (RFC 4180)
-            function exportCSV() {
-                if (!activeData || activeData.length === 0) {
-                    alert('ไม่มีข้อมูลสำหรับดาวน์โหลด');
-                    return;
-                }
-
+            function exportCSV2D() {
+                if (!activeData2D || activeData2D.length === 0) return;
                 let csv = 'date,month,year,num\r\n';
-                activeData.forEach(item => {
-                    csv += item.date + ',' + item.month + ',' + item.year + ',"' + item.num + '"\r\n';
+                activeData2D.forEach(item => {
+                    csv += item.date + ',' + item.month + ',' + item.year + ',"' + (item.num || item.p2) + '"\r\n';
                 });
 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -1404,7 +1739,375 @@
                 URL.revokeObjectURL(url);
             }
 
-            // Render Math in Page
+            // =========================================================================
+            // 3D RENDERERS
+            // =========================================================================
+            function applyFilters3D() {
+                const startY = parseInt(startYear3DSel.value, 10);
+                const endY = parseInt(endYear3DSel.value, 10);
+
+                activeData3D = rawData.filter(item => {
+                    const has3D = (item.sub3 && item.sub3.length > 0) || (item.pre3 && item.pre3.length > 0);
+                    if (!has3D) return false;
+                    if (item.year < startY || item.year > endY) return false;
+                    return true;
+                });
+
+                renderAll3D();
+            }
+
+            function renderAll3D() {
+                renderKPIs3D();
+                render3DHeatmap();
+                renderInspector3D(selectedNum3D);
+                renderMarginals3D();
+                renderRankingTable3D();
+                renderMath();
+            }
+
+            function renderKPIs3D() {
+                const freq = StatsEngine.compute3DFrequencies(activeData3D, category3D);
+                kpi3DTotalDraws.textContent = freq.totalDraws.toLocaleString('th-TH');
+                kpi3DTotalPrizes.textContent = freq.totalPrizes.toLocaleString('th-TH');
+
+                const uniqueCount = Object.values(freq.counts).filter(c => c > 0).length;
+                kpi3DUniqueNumbers.textContent = uniqueCount + ' / 1,000';
+
+                const avgFreq = (freq.totalPrizes / 1000.0).toFixed(2);
+                kpi3DAvgFreq.textContent = avgFreq;
+
+                kpi3DDateRange.textContent = 'พ.ศ. ' + startYear3DSel.value + ' - ' + endYear3DSel.value;
+            }
+
+            function render3DHeatmap() {
+                const headerRow = document.getElementById('heatmapHeaderRow3D');
+                headerRow.innerHTML = '<th>สิบ \\ หน่วย</th>';
+                for (let u = 0; u < 10; u++) {
+                    const th = document.createElement('th');
+                    th.textContent = u;
+                    headerRow.appendChild(th);
+                }
+
+                const tbody = document.getElementById('heatmapBody3D');
+                tbody.innerHTML = '';
+
+                const freq = StatsEngine.compute3DFrequencies(activeData3D, category3D);
+                const counts = freq.counts;
+
+                // Max count in current 100 block
+                let blockCounts = [];
+                for (let t = 0; t < 10; t++) {
+                    for (let u = 0; u < 10; u++) {
+                        const numStr = '' + selectedHundred + t + u;
+                        blockCounts.push(counts[numStr] || 0);
+                    }
+                }
+                const maxCount = Math.max(...blockCounts, 1);
+
+                for (let t = 0; t < 10; t++) {
+                    const tr = document.createElement('tr');
+                    const th = document.createElement('th');
+                    th.textContent = t;
+                    tr.appendChild(th);
+
+                    for (let u = 0; u < 10; u++) {
+                        const numStr = '' + selectedHundred + t + u;
+                        const count = counts[numStr] || 0;
+                        const td = document.createElement('td');
+                        td.className = 'heatmap-cell' + (numStr === selectedNum3D ? ' selected' : '');
+                        td.dataset.num = numStr;
+
+                        const norm = count / maxCount;
+                        const bgLightness = 96 - (norm * 52);
+                        const bgSaturation = 20 + (norm * 75);
+                        td.style.backgroundColor = count > 0 ? ('hsl(158, ' + bgSaturation + '%, ' + bgLightness + '%)') : '#FAF8F5';
+                        td.style.color = (count > 0 && bgLightness < 65) ? '#FFFFFF' : '#1E2229';
+
+                        td.innerHTML = '<span class="cell-num">' + numStr + '</span>' +
+                                       '<span class="cell-count">' + count + '</span>';
+
+                        td.addEventListener('click', function () {
+                            document.querySelectorAll('#heatmapBody3D .heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
+                            td.classList.add('selected');
+                            selectedNum3D = numStr;
+                            renderInspector3D(selectedNum3D);
+                        });
+
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+            }
+
+            function renderInspector3D(numStr) {
+                const gapRes = StatsEngine.compute3DGaps(activeData3D, numStr, category3D);
+                inspTargetNum3D.textContent = numStr;
+                inspCount3D.textContent = gapRes.count + ' ครั้ง';
+
+                if (gapRes.occurrences.length > 0) {
+                    const latest = gapRes.occurrences[0];
+                    inspLastDrawn3D.textContent = latest.date + ' ' + latest.month + ' ' + latest.year + ' (' + latest.type + ')';
+                    inspCurrentGap3D.textContent = gapRes.currentGap + ' งวดที่ผ่านมา';
+                } else {
+                    inspLastDrawn3D.textContent = 'ไม่เคยออกในช่วงที่เลือก';
+                    inspCurrentGap3D.textContent = activeData3D.length + ' งวด';
+                }
+
+                inspAvgGap3D.textContent = (gapRes.averageGap !== null ? gapRes.averageGap : '-') + ' งวด';
+
+                inspHistoryList3D.innerHTML = '';
+                if (gapRes.occurrences.length === 0) {
+                    inspHistoryList3D.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-faint); font-size: 13px;">ไม่พบข้อมูลในช่วงที่เลือก</div>';
+                } else {
+                    gapRes.occurrences.forEach((occ) => {
+                        const item = document.createElement('div');
+                        item.className = 'history-item';
+                        item.innerHTML = '<span>งวดที่ ' + occ.drawIndex + ' (' + occ.date + ' ' + occ.month + ' ' + occ.year + ')</span>' +
+                                         '<span style="font-family: var(--font-mono); color: var(--color-primary); font-weight: 600;">' + numStr + ' [' + occ.type + ']</span>';
+                        inspHistoryList3D.appendChild(item);
+                    });
+                }
+            }
+
+            function renderMarginals3D() {
+                const freq = StatsEngine.compute3DFrequencies(activeData3D, category3D);
+                const total = freq.totalPrizes || 1;
+
+                function buildBars(containerId, dataArr) {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
+                    const maxVal = Math.max(...dataArr, 1);
+
+                    dataArr.forEach((val, digit) => {
+                        const pct = (val / total * 100).toFixed(1);
+                        const fillWidth = (val / maxVal * 100);
+
+                        const row = document.createElement('div');
+                        row.className = 'bar-chart-row';
+                        row.innerHTML = '<span class="bar-digit">' + digit + '</span>' +
+                                        '<div class="bar-track">' +
+                                        '  <div class="bar-fill" style="width: ' + fillWidth + '%;"></div>' +
+                                        '</div>' +
+                                        '<span class="bar-val">' + val + ' (' + pct + '%)</span>';
+                        container.appendChild(row);
+                    });
+                }
+
+                buildBars('hundredsDistributionContainer', freq.hundreds);
+                buildBars('tensDistributionContainer3D', freq.tens);
+                buildBars('unitsDistributionContainer3D', freq.units);
+            }
+
+            function renderRankingTable3D() {
+                const freq = StatsEngine.compute3DFrequencies(activeData3D, category3D);
+                const query = (tableFilterInput3D.value || '').trim();
+                const total = freq.totalPrizes || 1;
+
+                let rows = [];
+                for (let i = 0; i < 1000; i++) {
+                    const numStr = i.toString().padStart(3, '0');
+                    if (query && !numStr.includes(query)) continue;
+
+                    const count = freq.counts[numStr] || 0;
+                    const pct = (count / total * 100).toFixed(2);
+                    const gapRes = StatsEngine.compute3DGaps(activeData3D, numStr, category3D);
+                    const lastDrawn = gapRes.occurrences.length > 0
+                        ? (gapRes.occurrences[0].date + ' ' + gapRes.occurrences[0].month + ' ' + gapRes.occurrences[0].year)
+                        : '-';
+                    const lastIndex = gapRes.occurrences.length > 0 ? gapRes.occurrences[0].drawIndex : -1;
+
+                    rows.push({
+                        num: numStr,
+                        freq: count,
+                        pct: parseFloat(pct),
+                        lastDrawn: lastDrawn,
+                        lastIndex: lastIndex
+                    });
+                }
+
+                rows.sort((a, b) => {
+                    let diff = 0;
+                    if (sortColumn3D === 'num') diff = parseInt(a.num, 10) - parseInt(b.num, 10);
+                    else if (sortColumn3D === 'freq') diff = a.freq - b.freq;
+                    else if (sortColumn3D === 'pct') diff = a.pct - b.pct;
+                    else if (sortColumn3D === 'last') diff = a.lastIndex - b.lastIndex;
+                    return sortAsc3D ? diff : -diff;
+                });
+
+                rankingTableBody3D.innerHTML = '';
+                rows.slice(0, 100).forEach(r => {
+                    const tr = document.createElement('tr');
+                    tr.style.cursor = 'pointer';
+                    tr.innerHTML = '<td style="font-family: var(--font-mono); font-weight: 600; color: var(--color-primary);">' + r.num + '</td>' +
+                                   '<td style="font-family: var(--font-mono);">' + r.freq + '</td>' +
+                                   '<td style="font-family: var(--font-mono);">' + r.pct + '%</td>' +
+                                   '<td>' + r.lastDrawn + '</td>';
+                    tr.addEventListener('click', () => {
+                        selectedNum3D = r.num;
+                        selectedHundred = parseInt(r.num[0], 10);
+                        hundredSelectorBar.querySelectorAll('.btn-hundred').forEach(b => {
+                            b.classList.toggle('active', parseInt(b.dataset.hundred, 10) === selectedHundred);
+                        });
+                        render3DHeatmap();
+                        renderInspector3D(selectedNum3D);
+                    });
+                    rankingTableBody3D.appendChild(tr);
+                });
+            }
+
+            function exportCSV3D() {
+                if (!activeData3D || activeData3D.length === 0) return;
+                let csv = 'date,month,year,pre3,sub3\r\n';
+                activeData3D.forEach(item => {
+                    const pre = (item.pre3 || []).join(';');
+                    const sub = (item.sub3 || []).join(';');
+                    csv += item.date + ',' + item.month + ',' + item.year + ',"' + pre + '","' + sub + '"\r\n';
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'thai_lottery_3digits_' + startYear3DSel.value + '_' + endYear3DSel.value + '.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            // =========================================================================
+            // EVENT LISTENERS & SETUP
+            // =========================================================================
+            function setupEvents() {
+                // Tab Switcher
+                tabMode2D.addEventListener('click', () => {
+                    currentMode = '2d';
+                    tabMode2D.classList.add('active');
+                    tabMode3D.classList.remove('active');
+                    section2D.style.display = 'block';
+                    section3D.style.display = 'none';
+                    renderAll2D();
+                });
+
+                tabMode3D.addEventListener('click', () => {
+                    currentMode = '3d';
+                    tabMode3D.classList.add('active');
+                    tabMode2D.classList.remove('active');
+                    section2D.style.display = 'none';
+                    section3D.style.display = 'block';
+                    renderAll3D();
+                });
+
+                // 2D Events
+                startYearSel.addEventListener('change', applyFilters2D);
+                endYearSel.addEventListener('change', applyFilters2D);
+
+                dayFilterGroup.querySelectorAll('.btn-segment').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        dayFilterGroup.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        dayFilter2D = this.dataset.day;
+                        applyFilters2D();
+                    });
+                });
+
+                btnResetFilter.addEventListener('click', function () {
+                    initFilters();
+                    dayFilter2D = 'all';
+                    dayFilterGroup.querySelectorAll('.btn-segment').forEach(b => {
+                        b.classList.toggle('active', b.dataset.day === 'all');
+                    });
+                    applyFilters2D();
+                });
+
+                btnExportCSV.addEventListener('click', exportCSV2D);
+
+                btnInspectSearch.addEventListener('click', function () {
+                    const val = inspectorInput.value.trim().padStart(2, '0');
+                    if (/^\d{2}$/.test(val)) {
+                        selectedNum2D = val;
+                        document.querySelectorAll('#heatmapBody .heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
+                        const cell = document.querySelector('#heatmapBody .heatmap-cell[data-num="' + selectedNum2D + '"]');
+                        if (cell) cell.classList.add('selected');
+                        renderInspector2D(selectedNum2D);
+                    }
+                });
+
+                inspectorInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') btnInspectSearch.click();
+                });
+
+                tableFilterInput.addEventListener('input', renderRankingTable2D);
+
+                document.querySelectorAll('#rankingTable th').forEach(th => {
+                    th.addEventListener('click', function () {
+                        const col = this.dataset.sort;
+                        if (sortColumn2D === col) {
+                            sortAsc2D = !sortAsc2D;
+                        } else {
+                            sortColumn2D = col;
+                            sortAsc2D = (col === 'num');
+                        }
+                        renderRankingTable2D();
+                    });
+                });
+
+                btnRunSim.addEventListener('click', runSimulation);
+                simCost.addEventListener('change', runSimulation);
+                simStrategy.addEventListener('change', runSimulation);
+                simYears.addEventListener('change', runSimulation);
+
+                // 3D Events
+                filter3DCategoryGroup.querySelectorAll('.btn-segment').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        filter3DCategoryGroup.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        category3D = this.dataset.cat;
+                        renderAll3D();
+                    });
+                });
+
+                startYear3DSel.addEventListener('change', applyFilters3D);
+                endYear3DSel.addEventListener('change', applyFilters3D);
+                btnExportCSV3D.addEventListener('click', exportCSV3D);
+
+                btnInspectSearch3D.addEventListener('click', function () {
+                    const val = inspectorInput3D.value.trim().padStart(3, '0');
+                    if (/^\d{3}$/.test(val)) {
+                        selectedNum3D = val;
+                        selectedHundred = parseInt(val[0], 10);
+                        hundredSelectorBar.querySelectorAll('.btn-hundred').forEach(b => {
+                            b.classList.toggle('active', parseInt(b.dataset.hundred, 10) === selectedHundred);
+                        });
+                        render3DHeatmap();
+                        renderInspector3D(selectedNum3D);
+                    }
+                });
+
+                inspectorInput3D.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') btnInspectSearch3D.click();
+                });
+
+                tableFilterInput3D.addEventListener('input', renderRankingTable3D);
+
+                document.querySelectorAll('#rankingTable3D th').forEach(th => {
+                    th.addEventListener('click', function () {
+                        const col = this.dataset.sort;
+                        if (sortColumn3D === col) {
+                            sortAsc3D = !sortAsc3D;
+                        } else {
+                            sortColumn3D = col;
+                            sortAsc3D = (col === 'num');
+                        }
+                        renderRankingTable3D();
+                    });
+                });
+
+                window.addEventListener('resize', function () {
+                    if (currentMode === '2d') runSimulation();
+                });
+            }
+
             function renderMath() {
                 if (window.renderMathInElement) {
                     renderMathInElement(document.body, {
@@ -1417,77 +2120,11 @@
                 }
             }
 
-            // Setup Event Listeners
-            function setupEvents() {
-                startYearSel.addEventListener('change', applyFilters);
-                endYearSel.addEventListener('change', applyFilters);
-
-                dayFilterGroup.querySelectorAll('.btn-segment').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        dayFilterGroup.querySelectorAll('.btn-segment').forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        dayFilter = this.dataset.day;
-                        applyFilters();
-                    });
-                });
-
-                btnResetFilter.addEventListener('click', function () {
-                    initYearFilters();
-                    dayFilter = 'all';
-                    dayFilterGroup.querySelectorAll('.btn-segment').forEach(b => {
-                        b.classList.toggle('active', b.dataset.day === 'all');
-                    });
-                    applyFilters();
-                });
-
-                btnExportCSV.addEventListener('click', exportCSV);
-
-                btnInspectSearch.addEventListener('click', function () {
-                    const val = inspectorInput.value.trim().padStart(2, '0');
-                    if (/^\d{2}$/.test(val)) {
-                        selectedNum = val;
-                        document.querySelectorAll('.heatmap-cell.selected').forEach(c => c.classList.remove('selected'));
-                        const cell = document.querySelector('.heatmap-cell[data-num="' + selectedNum + '"]');
-                        if (cell) cell.classList.add('selected');
-                        renderInspector(selectedNum);
-                    }
-                });
-
-                inspectorInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') btnInspectSearch.click();
-                });
-
-                tableFilterInput.addEventListener('input', renderRankingTable);
-
-                document.querySelectorAll('#rankingTable th').forEach(th => {
-                    th.addEventListener('click', function () {
-                        const col = this.dataset.sort;
-                        if (sortColumn === col) {
-                            sortAsc = !sortAsc;
-                        } else {
-                            sortColumn = col;
-                            sortAsc = (col === 'num');
-                        }
-                        renderRankingTable();
-                    });
-                });
-
-                btnRunSim.addEventListener('click', runSimulation);
-                simCost.addEventListener('change', runSimulation);
-                simStrategy.addEventListener('change', runSimulation);
-                simYears.addEventListener('change', runSimulation);
-
-                window.addEventListener('resize', function () {
-                    runSimulation();
-                });
-            }
-
             // Bootstrap
-            initYearFilters();
+            initFilters();
             setupEvents();
-            applyFilters();
+            applyFilters2D();
 
-            // Wait for KaTeX to finish loading if needed
             document.addEventListener('DOMContentLoaded', renderMath);
             setTimeout(renderMath, 600);
         })();
