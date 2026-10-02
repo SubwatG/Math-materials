@@ -360,6 +360,26 @@
               "tech": "streamlit"
             }
           ]
+        },
+        {
+          "id": "01422111-thai-lottery-stats",
+          "title": "สถิติประยุกต์: สลากกินแบ่งรัฐบาลไทย (Lottery Statistics, CLT & 20-Year Archive)",
+          "order": 8,
+          "prerequisites": [
+            "stats-ch1",
+            "stats-ch3"
+          ],
+          "items": [
+            {
+              "id": "thai-lottery-stats-app",
+              "filename": "interactive/thai-lottery-stats/index.html",
+              "title": "สถิติสลากกินแบ่งรัฐบาลไทย: 2 ตัว, 3 ตัว, รางวัลที่ 1 & พอร์ต 20 เบอร์เด็ด",
+              "description": "เครื่องมือสำรวจข้อมูลสถิติ 24 ปี (627 งวด), Chi-Square Test, CLT บนรางวัลที่ 1, พอร์ต 20 เบอร์เด็ด vs สุ่ม 20 ตัว, ตรวจสลาก 20 ปี และคู่มือการซื้อให้ปลอดภัย",
+              "type": "interactive",
+              "typeLabel": "เว็บแอป",
+              "tech": "vanilla-js"
+            }
+          ]
         }
       ]
     },
@@ -430,7 +450,9 @@
           "id": "m5-complex-plane-sets-topic",
           "title": "บทที่ 2.5: เซตของจุดในระนาบเชิงซ้อน (Sets of Points)",
           "order": 2,
-          "prerequisites": ["m5-polar-form-topic"],
+          "prerequisites": [
+            "m5-polar-form-topic"
+          ],
           "items": [
             {
               "id": "m5-complex-plane-workbench",
