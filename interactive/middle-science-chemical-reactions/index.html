@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="ระบบแบบทดสอบเชิงโต้ตอบ วิทยาศาสตร์ ม.3 เล่ม 2: ปฏิกิริยาเคมีและปฏิกิริยากรด-เบส พร้อมแล็บจำลองอุณหภูมิและการเตรียมตัวคาบถัดไป" />
+  <title>แบบทดสอบปฏิกิริยาเคมี & กรด-เบส — วิทยาศาสตร์ ม.3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="if(window.renderMathInElement) try{renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});}catch(e){}"></script>
+
+  <style>
+    :root {
+      --bg: #f4f5f0;
+      --bg-elev: #ffffff;
+      --bg-elev-2: #f8faf7;
+      --fg: #1e2621;
+      --fg-dim: #4d5750;
+      --muted: #6f7a72;
+      --border: rgba(30, 38, 33, 0.14);
+      --border-strong: rgba(30, 38, 33, 0.28);
+      
+      --accent: #2e6047;
+      --accent-hover: #234d37;
+      --accent-subtle: #e6ede8;
+      --accent-2: #8b572a;
+      
+      --good: #216a3a;
+      --good-bg: #eaf4ed;
+      --bad: #9b2c2c;
+      --bad-bg: #fbeeed;
+      --warn: #92540d;
+      --warn-bg: #fef7e7;
+      
+      --font-body: 'IBM Plex Sans Thai Looped', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #18201a;
+      --bg-elev: #212c24;
+      --bg-elev-2: #28362c;
+      --fg: #edf2ed;
+      --fg-dim: #b8c4ba;
+      --muted: #839185;
+      --border: rgba(237, 242, 237, 0.12);
+      --border-strong: rgba(237, 242, 237, 0.24);
+      
+      --accent: #86b896;
+      --accent-hover: #9ec9ac;
+      --accent-subtle: #243529;
+      --accent-2: #dfa878;
+      
+      --good: #72cf93;
+      --good-bg: #1e3525;
+      --bad: #e88b8b;
+      --bad-bg: #3d2222;
+      --warn: #f0bd64;
+      --warn-bg: #382c16;
+      
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+      --shadow-md: 0 6px 20px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      line-height: 1.68;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: transparent;
+      z-index: 1000;
+    }
+    .top-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-weight: 600;
+    }
+    .btn-icon {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-icon:hover {
+      border-color: var(--border-strong);
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 90px;
+    }
+
+    .hero {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 30px 28px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 32px;
+      border-top: 4px solid var(--accent);
+    }
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 10px;
+      color: var(--fg);
+    }
+    .hero p {
+      font-size: 16px;
+      color: var(--fg-dim);
+      line-height: 1.7;
+    }
+
+    .student-badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .field-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .field-group input {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev-2);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 15px;
+    }
+    .field-group input:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    section.exam-sec {
+      margin-bottom: 40px;
+    }
+    .sec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .sec-title {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sec-tag {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .q-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease;
+    }
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+    .q-stem {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: var(--fg);
+    }
+
+    .opt-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .opt-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-elev-2);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+    .opt-letter {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .opt-btn.is-selected {
+      border-color: var(--accent) !important;
+      background: var(--accent-subtle) !important;
+      font-weight: 600;
+    }
+
+    .opt-btn.graded-correct {
+      border-color: var(--good) !important;
+      background: var(--good-bg) !important;
+      color: var(--good) !important;
+      font-weight: 700;
+    }
+    .opt-btn.graded-wrong {
+      border-color: var(--bad) !important;
+      background: var(--bad-bg) !important;
+      color: var(--bad) !important;
+    }
+
+    /* Classification Items (Responsive Rows) */
+    .classify-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .classify-item {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .classify-text {
+      font-size: 15.5px;
+      color: var(--fg);
+      flex: 1;
+      min-width: 240px;
+    }
+    .classify-explain {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .btn-toggle-pair {
+      display: inline-flex;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      flex-shrink: 0;
+    }
+    .toggle-opt {
+      padding: 8px 16px;
+      border: none;
+      background: var(--bg-elev);
+      color: var(--fg-dim);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .toggle-opt:hover:not(:disabled) {
+      background: var(--border);
+    }
+    .toggle-opt.is-selected {
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .toggle-opt.graded-correct {
+      background: var(--good) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
+    .toggle-opt.graded-wrong {
+      background: var(--bad) !important;
+      color: #ffffff !important;
+    }
+
+    /* Simulation Lab Cards */
+    .lab-box {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .lab-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .lab-desc {
+      font-size: 15px;
+      color: var(--fg-dim);
+      margin-bottom: 16px;
+      line-height: 1.65;
+    }
+    .lab-cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .lab-card-row {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .lab-card-info {
+      flex: 1;
+      min-width: 260px;
+    }
+    .lab-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+    .lab-metrics {
+      display: flex;
+      gap: 14px;
+      margin-top: 5px;
+      font-size: 13.5px;
+      font-family: var(--font-mono);
+      color: var(--fg-dim);
+    }
+    .delta-pos { color: #b91c1c; font-weight: 700; }
+    .delta-neg { color: #0369a1; font-weight: 700; }
+    html[data-theme="dark"] .delta-pos { color: #fca5a5; }
+    html[data-theme="dark"] .delta-neg { color: #93c5fd; }
+
+    /* Feedback / Explanation Box */
+    .q-feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+    .q-feedback.show-feedback {
+      display: block;
+    }
+    .q-feedback.is-correct {
+      background: var(--good-bg);
+      border-left: 4px solid var(--good);
+      color: var(--fg);
+    }
+    .q-feedback.is-wrong {
+      background: var(--bad-bg);
+      border-left: 4px solid var(--bad);
+      color: var(--fg);
+    }
+    .feedback-hdr {
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    /* Results Dashboard */
+    .results-hero {
+      display: none;
+      background: var(--bg-elev);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 36px;
+      text-align: center;
+    }
+    .results-hero.active {
+      display: block;
+    }
+    .results-hero h2 {
+      font-size: 26px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .score-circle {
+      display: inline-block;
+      margin: 16px 0;
+      font-size: 52px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      line-height: 1;
+    }
+    .score-pct {
+      font-size: 20px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .breakdown-card {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+    }
+    .breakdown-num {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--fg);
+    }
+    .breakdown-lbl {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Submit Card */
+    .submit-card {
+      background: var(--bg-elev);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      margin-top: 36px;
+    }
+    .btn-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .btn-submit {
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 12px rgba(46, 96, 71, 0.25);
+    }
+    .btn-outline {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border-strong);
+      color: var(--fg);
+    }
+    .btn-outline:hover {
+      background: var(--border);
+    }
+
+    @media print {
+      .site-header, .top-progress, .btn-action-row, .header-actions, .field-group input {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .q-card, .lab-box, .results-hero, .submit-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 16px;
+      }
+      .q-feedback {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 23px; }
+      header.site-header { padding: 10px 14px; }
+      .container { padding: 16px 12px 60px; }
+      .btn-submit { width: 100%; }
+      .classify-item, .lab-card-row { flex-direction: column; align-items: flex-start; }
+      .btn-toggle-pair { width: 100%; }
+      .toggle-opt { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-progress"><div class="top-progress-bar" id="progressBar"></div></div>
+
+  <header class="site-header">
+    <div class="brand-wrap">
+      <span class="brand-title">วิทยาศาสตร์ ม.3 · เล่ม 2</span>
+      <span class="brand-subtitle">สสวท. ปรับปรุง 2560 · หน่วยที่ 5 ปฏิกิริยาเคมี</span>
+    </div>
+    <div class="header-actions">
+      <span class="status-badge" id="headerProgress">ตอบแล้ว 0 / 26 ข้อ</span>
+      <button class="btn-icon" id="themeToggleBtn" title="สลับโหมดมืด/สว่าง">
+        <span id="themeIcon">🌓</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="results-hero" id="resultsHero">
+      <h2>🎉 ผลการประเมินแบบทดสอบ</h2>
+      <p style="color: var(--fg-dim);">รายงานผลคะแนนและการวิเคราะห์มโนทัศน์วิทยาศาสตร์</p>
+      <div class="score-circle" id="scoreCircle">0 / 26</div>
+      <div class="score-pct" id="scorePct">คิดเป็น 0%</div>
+
+      <div class="breakdown-grid">
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec1">0/3</div>
+          <div class="breakdown-lbl">1. นิยามระดับอนุภาค</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec2">0/6</div>
+          <div class="breakdown-lbl">2. กายภาพ vs เคมี</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec3">0/3</div>
+          <div class="breakdown-lbl">3. กฎทรงมวล</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec4">0/5</div>
+          <div class="breakdown-lbl">4. แล็บอุณหภูมิ</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec5">0/4</div>
+          <div class="breakdown-lbl">5. กรด-เบส & โลหะ</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec6">0/5</div>
+          <div class="breakdown-lbl">6. เตรียมตัวคาบหน้า</div>
+        </div>
+      </div>
+
+      <p style="font-size: 14.5px; color: var(--muted); margin-top: 14px;">
+        นักเรียนสามารถเลื่อนลงด้านล่างเพื่อดู <strong>เฉลยละเอียดและเหตุผลทางวิทยาศาสตร์</strong> ในแต่ละข้อได้เลยครับ
+      </p>
+    </div>
+
+    <div class="hero">
+      <div class="hero-tag">TUTOR SCIENCE · EXAM & LAB SIMULATION</div>
+      <h1>ปฏิกิริยาเคมีและปฏิกิริยากรด-เบส</h1>
+      <p>
+        แบบทดสอบวัดความเข้าใจและฝึกคิดวิเคราะห์ <strong>(ไม่เฉลยคำตอบระหว่างทำ — ตรวจและเฉลยพร้อมกันทีเดียวเมื่อส่งข้อสอบ)</strong> ครอบคลุมตั้งแต่การจัดเรียงอะตอมใหม่, การแยกแยะกายภาพ-เคมี, กฎทรงมวล, แล็บจำลองวัดอุณหภูมิ, กรด-เบส จนถึงการสืบค้นสมการล่วงหน้าสำหรับคาบถัดไป
+      </p>
+
+      <div class="student-badge-grid">
+        <div class="field-group">
+          <label for="studentName">ชื่อ - นามสกุล นักเรียน</label>
+          <input type="text" id="studentName" placeholder="เช่น ด.ช.แทนคุณ รักเรียน" autocomplete="off" />
+        </div>
+        <div class="field-group">
+          <label for="studentNick">ชื่อเล่น / รหัสนักเรียน</label>
+          <input type="text" id="studentNick" placeholder="เช่น แทน (ม.3/1)" autocomplete="off" />
+        </div>
+        <div class="field-group">
+          <label for="studyDate">วันที่ทำแบบทดสอบ</label>
+          <input type="text" id="studyDate" value="10 ตุลาคม 2569" />
+        </div>
+      </div>
+    </div>
+
+    <section class="exam-sec" id="sec1">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 1: พื้นฐานการเกิดปฏิกิริยาเคมี (3 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/3 · คลิป 001</span>
+      </div>
+      <div class="q-list" id="qListSec1"></div>
+    </section>
+
+    <section class="exam-sec" id="sec2">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 2: จำแนก 'การเปลี่ยนแปลงทางกายภาพ' vs 'การเปลี่ยนแปลงทางเคมี' (6 ข้อ)</h2>
+        <span class="sec-tag">ทักษะการแยกแยะสารใหม่ · 6 คะแนน</span>
+      </div>
+
+      <div class="q-card">
+        <div class="q-stem">
+          พิจารณาเหตุการณ์ในชีวิตประจำวันต่อไปนี้ แล้วเลือกระบุว่าเป็นการเปลี่ยนแปลงทางกายภาพ (Physical) หรือ ทางเคมี (Chemical)
+        </div>
+
+        <div class="classify-list" id="classifyList"></div>
+
+        <div class="q-feedback" id="feedbackSec2">
+          <div class="feedback-hdr">เกณฑ์การตัดสิน:</div>
+          <div>เกณฑ์ที่สำคัญที่สุดคือ <strong>'เกิดสารใหม่หรือไม่'</strong> หากเกิดสารใหม่ที่มีสมบัติต่างจากเดิมจัดเป็นเคมี หากเป็นเพียงการเปลี่ยนสถานะหรือการละลายทางกายภาพจัดเป็นกายภาพ</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="exam-sec" id="sec3">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 3: กฎทรงมวลและการวิเคราะห์ระบบเปิด-ปิด (3 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/4 · คลิป 002</span>
+      </div>
+      <div class="q-list" id="qListSec3"></div>
+    </section>
+
+    <section class="exam-sec" id="sec4">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 4: การจำลองแล็บวัดอุณหภูมิ (Temperature Lab Simulation) (5 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/5 · ดูด vs คายความร้อน</span>
+      </div>
+
+      <div class="lab-box">
+        <div class="lab-title">🧪 บันทึกผลการทดลองการถ่ายโอนความร้อนในห้องปฏิบัติการ</div>
+        <div class="lab-desc">
+          นักเรียนทำการทดลองผสมสารในหลอดทดลอง 5 หลอด (A ถึง E) ที่อุณหภูมิห้อง และใช้เทอร์มอมิเตอร์วัดอุณหภูมิของสารละลายก่อนผสม ($T_1$) และหลังทำปฏิกิริยาสิ้นสุด ($T_2$)<br>
+          <strong>คำชี้แจง:</strong> จงวิเคราะห์ผลการทดลอง แล้วระบุว่าปฏิกิริยาในแต่ละหลอดทดลองจัดเป็น <strong>'ดูดความร้อน (Endothermic)'</strong> หรือ <strong>'คายความร้อน (Exothermic)'</strong>
+        </div>
+
+        <div class="lab-cards-grid" id="labCardsGrid"></div>
+
+        <div class="q-feedback" id="feedbackSec4">
+          <div class="feedback-hdr">หลักการวิเคราะห์:</div>
+          <div>
+            • <strong>$\Delta T > 0$ (อุณหภูมิสูงขึ้น / สัมผัสร้อน):</strong> ระบบปล่อยความร้อนออกมา ⟶ <strong>ปฏิกิริยาคายความร้อน</strong><br>
+            • <strong>$\Delta T < 0$ (อุณหภูมิลดลง / สัมผัสเย็น):</strong> ระบบดูดความร้อนจากสิ่งแวดล้อมเข้าไป ⟶ <strong>ปฏิกิริยาดูดความร้อน</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="exam-sec" id="sec5">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 5: ปฏิกิริยากรด-เบส และปฏิกิริยากับโลหะ (4 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/6 · คลิป 004-005</span>
+      </div>
+      <div class="q-list" id="qListSec5"></div>
+    </section>
+
+    <section class="exam-sec" id="sec6">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 6: เตรียมตัวสู่บทเรียนถัดไป (สืบค้นสมการล่วงหน้า 5 ข้อ)</h2>
+        <span class="sec-tag">สสวท. คลิป 006-007 · คาบหน้า</span>
+      </div>
+      <div class="q-list" id="qListSec6"></div>
+    </section>
+
+    <div class="submit-card" id="submitSection">
+      <h2 style="font-size: 22px; color: var(--accent); margin-bottom: 8px;">ส่งแบบทดสอบเพื่อตรวจและดูเฉลย</h2>
+      <p style="color: var(--fg-dim); font-size: 15px; margin-bottom: 18px;">
+        ตรวจสอบคำตอบให้ครบทุกข้อก่อนกดส่ง เมื่อกดส่งแล้วระบบจะคำนวณคะแนนรวม แสดงบทวิเคราะห์ และเปิดเฉลยละเอียดทุกข้อพร้อมกันทันที
+      </p>
+
+      <div class="btn-action-row">
+        <button class="btn-submit btn-primary" id="submitExamBtn">
+          <span>📝 ส่งข้อสอบและตรวจคำตอบ (Submit & Grade)</span>
+        </button>
+        <button class="btn-submit btn-outline" id="copyReportBtn" style="display: none;">
+          <span>📋 คัดลอกผลคะแนนและรายงาน (Copy Report)</span>
+        </button>
+        <button class="btn-submit btn-outline" id="printReportBtn" style="display: none;">
+          <span>🖨️ พิมพ์ / บันทึก PDF</span>
+        </button>
+        <button class="btn-submit btn-outline" id="retakeBtn" style="display: none;">
+          <span>🔄 ทำแบบทดสอบใหม่อีกครั้ง</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const sec1Data = [
+      {
+        id: 's1_1',
+        num: 1,
+        stem: 'ในระดับอนุภาค เมื่อเกิดปฏิกิริยาเคมีขึ้น ข้อใดอธิบายพฤติกรรมของอะตอมได้ถูกต้องที่สุด',
+        options: [
+          { key: 'A', text: 'อะตอมของสารตั้งต้นสลายตัวหายไป แล้วมีอะตอมของสารใหม่เกิดขึ้นมาแทน' },
+          { key: 'B', text: 'อะตอมเดิมเกิดการสลายพันธะ แล้วสร้างพันธะใหม่โดยชนิดและจำนวนอะตอมคงที่' },
+          { key: 'C', text: 'อะตอมขยายขนาดใหญ่ขึ้นและเปลี่ยนรูปร่างอย่างถาวร' },
+          { key: 'D', text: 'เกิดการหลอมรวมของนิวเคลียสอะตอมกลายเป็นธาตุใหม่' }
+        ],
+        answer: 'B',
+        explain: 'ปฏิกิริยาเคมีคือการสลายพันธะเดิมและสร้างพันธะใหม่ (Rearrangement) อะตอมไม่สูญหายและไม่มีอะตอมใหม่เกิดขึ้น สอดคล้องกับกฎทรงมวล'
+      },
+      {
+        id: 's1_2',
+        num: 2,
+        stem: 'การเขียน "สมการข้อความ (Word Equation)" เพื่อแสดงปฏิกิริยาเคมี มีรูปแบบมาตรฐานตามข้อใด',
+        options: [
+          { key: 'A', text: 'ผลิตภัณฑ์ ⟶ สารตั้งต้น' },
+          { key: 'B', text: 'สารตั้งต้น ⟶ ผลิตภัณฑ์' },
+          { key: 'C', text: 'สารตั้งต้น = ผลิตภัณฑ์' },
+          { key: 'D', text: 'สารตั้งต้น + ผลิตภัณฑ์ ⟶ พลังงาน' }
+        ],
+        answer: 'B',
+        explain: 'สมการข้อความเขียนโดยให้ "สารตั้งต้น" อยู่ทางซ้ายของลูกศร และ "ผลิตภัณฑ์" อยู่ทางขวาของลูกศร (สารตั้งต้น ⟶ ผลิตภัณฑ์)'
+      },
+      {
+        id: 's1_3',
+        num: 3,
+        stem: 'เกณฑ์ตัดสินที่แน่นอนและเด็ดขาดที่สุดว่า "เกิดปฏิกิริยาเคมีขึ้นจริงหรือไม่" คือข้อใด',
+        options: [
+          { key: 'A', text: 'มีการเปลี่ยนสถานะของสสารเสมอ' },
+          { key: 'B', text: 'เกิด "สารใหม่" ที่มีสมบัติทางกายภาพและเคมีต่างไปจากสารเดิม' },
+          { key: 'C', text: 'ต้องมีการเปลี่ยนสีเพียงอย่างเดียว' },
+          { key: 'D', text: 'ต้องมีแสงสว่างวาบเกิดขึ้นเสมอ' }
+        ],
+        answer: 'B',
+        explain: 'การเปลี่ยนแปลงทางเคมีต้องเกิด "สารใหม่" เสมอ ส่วนการเปลี่ยนสีหรือเปลี่ยนสถานะบางครั้งอาจเป็นเพียงทางกายภาพ'
+      }
+    ];
+
+    const sec2Data = [
+      { id: 's2_1', text: '4. การหลอมเหลวของน้ำแข็งและเทียนไขเมื่อได้รับความร้อน', answer: 'physical', explain: 'เป็นการเปลี่ยนสถานะ (ของแข็ง ⟶ ของเหลว) องค์ประกอบทางเคมียังเหมือนเดิม' },
+      { id: 's2_2', text: '5. การใส่แผ่นสังกะสีลงในกรดไฮโดรคลอริกแล้วเกิดฟองแก๊สติดไฟได้', answer: 'chemical', explain: 'เกิดสารใหม่คือ แก๊สไฮโดรเจน (H₂) และเกลือซิงค์คลอไรด์' },
+      { id: 's2_3', text: '6. การระเหิดของก้อนการบูรในตู้เสื้อผ้าจนมีขนาดเล็กลง', answer: 'physical', explain: 'เป็นการเปลี่ยนสถานะจากของแข็งกลายเป็นไอโดยตรง องค์ประกอบเคมีคงเดิม' },
+      { id: 's2_4', text: '7. การหมักนมสดจนเกิดรสเปรี้ยวและโปรตีนจับตัวเป็นก้อนโยเกิร์ต', answer: 'chemical', explain: 'เกิดกรดแลกติกและสารใหม่จากกระบวนการหมักของแบคทีเรีย' },
+      { id: 's2_5', text: '8. การละลายน้ำตาลทรายในน้ำจนได้สารละลายใสไม่มีสี', answer: 'physical', explain: 'เป็นการแพร่กระจายของโมเลกุลน้ำตาลในน้ำ (การละลาย) เมื่อระเหยน้ำออกจะได้น้ำตาลกลับคืนมา' },
+      { id: 's2_6', text: '9. การจุดก้านไม้ขีดไฟจนเกิดเปลวไฟ มีควันและเกิดเขม่าดำ', answer: 'chemical', explain: 'เกิดปฏิกิริยาการเผาไหม้ ได้สารใหม่คือ ก๊าซ ควัน และขี้เถ้าคาร์บอน' }
+    ];
+
+    const sec3Data = [
+      {
+        id: 's3_1',
+        num: 10,
+        stem: 'เนื้อความของ "กฎทรงมวล (Law of Conservation of Mass)" ของลาวัวซีเย เป็นจริงอย่างแน่นอนในเงื่อนไขใด',
+        options: [
+          { key: 'A', text: 'ในระบบเปิดเท่านั้น' },
+          { key: 'B', text: 'ในระบบปิดเท่านั้น (มวลสารตั้งต้นทั้งหมด = มวลผลิตภัณฑ์ทั้งหมด)' },
+          { key: 'C', text: 'เฉพาะปฏิกิริยาที่เกิดตะกอนเท่านั้น' },
+          { key: 'D', text: 'เฉพาะปฏิกิริยาที่ไม่มีการคายความร้อน' }
+        ],
+        answer: 'B',
+        explain: 'กฎทรงมวลระบุว่าในระบบปิด มวลรวมของสารก่อนเกิดปฏิกิริยาจะเท่ากับมวลรวมของสารหลังเกิดปฏิกิริยาเสมอ'
+      },
+      {
+        id: 's3_2',
+        num: 11,
+        stem: 'นักเรียนใส่แผ่นสังกะสี 10.0 กรัม ลงในกรดไฮโดรคลอริกในบีกเกอร์เปิด ปรากฏว่าชั่งมวลหลังทำปฏิกิริยาสิ้นสุดได้น้อยกว่าเดิม 0.2 กรัม เหตุใดมวลจึงลดลง',
+        options: [
+          { key: 'A', text: 'ขัดแย้งกับกฎทรงมวล เพราะมวลสสารสูญหายไป' },
+          { key: 'B', text: 'แก๊สไฮโดรเจนที่เกิดขึ้นลอยหนีออกจากบีกเกอร์เปิด' },
+          { key: 'C', text: 'สังกะสีระเหิดกลายเป็นไอ' },
+          { key: 'D', text: 'กรดไฮโดรคลอริกทำลายมวลของอะตอม' }
+        ],
+        answer: 'B',
+        explain: 'บีกเกอร์เปิดเป็นระบบเปิด แก๊สไฮโดรเจนที่เกิดจากปฏิกิริยาจะลอยหนีออกสู่บรรยากาศ มวลที่หายไปคือมวลของแก๊สไฮโดรเจนที่หนีไป'
+      },
+      {
+        id: 's3_3',
+        num: 12,
+        stem: 'วางตะปูเหล็ก 5.0 กรัม ทิ้งไว้ในอากาศชื้นจนเกิดสนิมเหล็กทั้งหมด ชั่งมวลสนิมได้ 6.8 กรัม เหตุใดมวลจึงเพิ่มขึ้น',
+        options: [
+          { key: 'A', text: 'เหล็กดึงแก๊สออกซิเจนและน้ำจากอากาศเข้ามาร่วมเกิดปฏิกิริยา' },
+          { key: 'B', text: 'เนื้อเหล็กเกิดการขยายตัวเพราะความร้อน' },
+          { key: 'C', text: 'การทดลองนี้ละเมิดกฎทรงมวล' },
+          { key: 'D', text: 'เกิดแก๊สคาร์บอนไดออกไซด์สะสมในเนื้อสนิม' }
+        ],
+        answer: 'A',
+        explain: 'การเกิดสนิมเหล็กต้องใช้ออกซิเจนและน้ำจากอากาศ เมื่อรวมกันเป็นสนิมเหล็ก มวลของออกซิเจนและน้ำจึงถูกนับรวมเข้าไปด้วย'
+      }
+    ];
+
+    const sec4Data = [
+      { id: 's4_a', lab: 'A', num: 13, reactants: 'กรดไฮโดรคลอริก + โซเดียมไฮดรอกไซด์', t1: 26, t2: 35, dt: '+9°C', touch: 'ร้อนขึ้น', answer: 'exo', explain: 'อุณหภูมิสูงขึ้น (ΔT = +9°C) ⟶ ปฏิกิริยาคายความร้อน (Exothermic)' },
+      { id: 's4_b', lab: 'B', num: 14, reactants: 'น้ำกลั่น + แอมโมเนียมคลอไรด์', t1: 25, t2: 19, dt: '-6°C', touch: 'เย็นลง', answer: 'endo', explain: 'อุณหภูมิลดลง (ΔT = -6°C) ⟶ ปฏิกิริยาดูดความร้อน (Endothermic)' },
+      { id: 's4_c', lab: 'C', num: 15, reactants: 'กรดซิตริก + ผงเบกกิ้งโซดา', t1: 26, t2: 18, dt: '-8°C', touch: 'เกิดฟองแก๊ส เย็นจัด', answer: 'endo', explain: 'อุณหภูมิลดลง (ΔT = -8°C) ⟶ ปฏิกิริยาดูดความร้อน (Endothermic)' },
+      { id: 's4_d', lab: 'D', num: 16, reactants: 'น้ำกลั่น + ปูนขาว (CaO)', t1: 26, t2: 46, dt: '+20°C', touch: 'เดือดปุด ร้อนมาก', answer: 'exo', explain: 'อุณหภูมิสูงขึ้นมาก (ΔT = +20°C) ⟶ ปฏิกิริยาคายความร้อน (Exothermic)' },
+      { id: 's4_e', lab: 'E', num: 17, reactants: 'กรดไฮโดรคลอริก + โลหะสังกะสี', t1: 25, t2: 33, dt: '+8°C', touch: 'ฟองแก๊ส อุ่นขึ้น', answer: 'exo', explain: 'อุณหภูมิสูงขึ้น (ΔT = +8°C) ⟶ ปฏิกิริยาคายความร้อน (Exothermic)' }
+    ];
+
+    const sec5Data = [
+      {
+        id: 's5_1',
+        num: 18,
+        stem: 'ปฏิกิริยาระหว่าง "กรดกับเบส" (ปฏิกิริยาสะเทิน) จะได้ผลิตภัณฑ์และมีการเปลี่ยนแปลงพลังงานตามข้อใด',
+        options: [
+          { key: 'A', text: 'เกลือ + น้ำ และเป็นปฏิกิริยาคายความร้อนเสมอ' },
+          { key: 'B', text: 'เกลือ + แก๊สไฮโดรเจน และเป็นปฏิกิริยาดูดความร้อน' },
+          { key: 'C', text: 'แก๊สคาร์บอนไดออกไซด์ + น้ำ และอุณหภูมิลดลง' },
+          { key: 'D', text: 'ได้สารละลายที่มีค่า pH เป็น 0 เสมอ' }
+        ],
+        answer: 'A',
+        explain: 'กรด + เบส ⟶ เกลือ + น้ำ (ปฏิกิริยาสะเทิน) และเป็นปฏิกิริยาคายความร้อนเสมอ อุณหภูมิสารละลายจึงสูงขึ้น'
+      },
+      {
+        id: 's5_2',
+        num: 19,
+        stem: 'เมื่อกรดไฮโดรคลอริกทำปฏิกิริยากับลวดแมกนีเซียม เกิดแก๊สชนิดหนึ่ง นำก้านไม้ขีดไฟที่ติดไฟไปจ่อ เกิดเสียง "ป็อป" แก๊สดังกล่าวคือแก๊สใด',
+        options: [
+          { key: 'A', text: 'แก๊สออกซิเจน (O₂)' },
+          { key: 'B', text: 'แก๊สไฮโดรเจน (H₂)' },
+          { key: 'C', text: 'แก๊สคาร์บอนไดออกไซด์ (CO₂)' },
+          { key: 'D', text: 'แก๊สไนโตรเจนไดออกไซด์ (NO₂)' }
+        ],
+        answer: 'B',
+        explain: 'กรดทำปฏิกิริยากับโลหะจะได้แก๊สไฮโดรเจน (H₂) ซึ่งติดไฟได้และเกิดเสียงระเบิดเล็กๆ ว่า "ป็อป" (Pop test)'
+      },
+      {
+        id: 's5_3',
+        num: 20,
+        stem: 'ข้อใดถูกต้องเกี่ยวกับปฏิกิริยาระหว่าง "เบสกับโลหะ" ตามหลักสูตร สสวท.',
+        options: [
+          { key: 'A', text: 'เบสไม่ทำปฏิกิริยากับโลหะทุกชนิดในทุกกรณี' },
+          { key: 'B', text: 'เบสสามารถทำปฏิกิริยากับโลหะบางชนิด เช่น อะลูมิเนียมและสังกะสี เกิดแก๊สไฮโดรเจนได้เช่นเดียวกับกรด' },
+          { key: 'C', text: 'เบสทำปฏิกิริยากับโลหะแล้วได้แก๊สออกซิเจนเสมอ' },
+          { key: 'D', text: 'เบสจะสลายตัวกลายเป็นกรดเมื่อสัมผัสโลหะ' }
+        ],
+        answer: 'B',
+        explain: 'สารละลายเบส เช่น NaOH ทำปฏิกิริยากับโลหะ Al หรือ Zn ได้แก๊สไฮโดรเจน (H₂) เช่นกัน จึงห้ามใช้ภาชนะอะลูมิเนียมบรรจุสารละลายด่างเข้มข้น'
+      },
+      {
+        id: 's5_4',
+        num: 21,
+        stem: 'การนำ "ปูนขาว (แคลเซียมไฮดรอกไซด์)" ไปโรยในพื้นที่การเกษตร มีจุดประสงค์เพื่อสิ่งใด',
+        options: [
+          { key: 'A', text: 'เพิ่มความเป็นกรดให้กับดินด่าง' },
+          { key: 'B', text: 'ปรับสภาพ "ดินเปรี้ยว (ดินกรด)" ให้มีค่า pH เข้าใกล้ความเป็นกลางด้วยปฏิกิริยาสะเทิน' },
+          { key: 'C', text: 'ช่วยเร่งการเกิดสนิมในดิน' },
+          { key: 'D', text: 'ทำลายแร่ธาตุที่ไม่จำเป็นในดินทิ้งไป' }
+        ],
+        answer: 'B',
+        explain: 'ปูนขาวเป็นเบส เมื่อใส่ลงในดินเปรี้ยว (ดินกรด) จะเกิดปฏิกิริยาสะเทิน ช่วยลดความเป็นกรดและปรับค่า pH ของดิน'
+      }
+    ];
+
+    const sec6Data = [
+      {
+        id: 's6_1',
+        num: 22,
+        stem: 'สมการข้อความ (Word Equation) ของ "ปฏิกิริยาการเกิดสนิมเหล็ก" ที่จะได้เรียนในคาบถัดไป คือข้อใด',
+        options: [
+          { key: 'A', text: 'เหล็ก + แก๊สออกซิเจน + น้ำ ⟶ สนิมเหล็ก' },
+          { key: 'B', text: 'เหล็ก + กรด ⟶ สนิมเหล็ก + แก๊สไฮโดรเจน' },
+          { key: 'C', text: 'เหล็ก + เกลือ ⟶ สนิมเหล็ก + น้ำ' },
+          { key: 'D', text: 'เหล็ก + แสงแดด ⟶ สนิมเหล็ก' }
+        ],
+        answer: 'A',
+        explain: 'สมการการเกิดสนิมเหล็ก: เหล็ก + แก๊สออกซิเจน + น้ำ ⟶ สนิมเหล็ก (4Fe + 3O₂ + 2xH₂O ⟶ 2Fe₂O₃·xH₂O)'
+      },
+      {
+        id: 's6_2',
+        num: 23,
+        stem: 'หากต้องการป้องกันไม่ให้เหล็กเกิดสนิม หลักการทางเคมีที่สำคัญที่สุดคือข้อใด',
+        options: [
+          { key: 'A', text: 'ป้องกันไม่ให้เหล็กสัมผัสกับ "น้ำและแก๊สออกซิเจน" พร้อมกัน เช่น การทาสีหรือชุบสังกะสี' },
+          { key: 'B', text: 'นำเหล็กไปแช่ในน้ำตลอดเวลาเพื่อไม่ให้โดนอากาศ' },
+          { key: 'C', text: 'ตั้งเหล็กไว้กลางแดดจัดเพื่อไล่แก๊สคาร์บอนไดออกไซด์' },
+          { key: 'D', text: 'ล้างเหล็กด้วยกรดไฮโดรคลอริกทุกสัปดาห์' }
+        ],
+        answer: 'A',
+        explain: 'เนื่องจากสนิมต้องการทั้งน้ำและออกซิเจน การป้องกันคือการเคลือบผิว (ทาสี, ชุบโลหะ, เคลือบน้ำมัน) เพื่อกั้นไม่ให้สัมผัสน้ำและออกซิเจน'
+      },
+      {
+        id: 's6_3',
+        num: 24,
+        stem: 'เมื่อสารประกอบไฮโดรคาร์บอน (เช่น แก๊สมีเทน) เกิด "การเผาไหม้อย่างสมบูรณ์" สมการข้อความที่ถูกต้องคือข้อใด',
+        options: [
+          { key: 'A', text: 'มีเทน + แก๊สออกซิเจน ⟶ แก๊สคาร์บอนไดออกไซด์ + น้ำ + พลังงาน' },
+          { key: 'B', text: 'มีเทน + แก๊สออกซิเจน ⟶ แก๊สคาร์บอนมอนอกไซด์ + เขม่า' },
+          { key: 'C', text: 'มีเทน + พลังงาน ⟶ คาร์บอน + น้ำ' },
+          { key: 'D', text: 'มีเทน + น้ำ ⟶ แก๊สไฮโดรเจน + ความร้อน' }
+        ],
+        answer: 'A',
+        explain: 'การเผาไหม้สมบูรณ์ (มีออกซิเจนเพียงพอ): สารไฮโดรคาร์บอน + ออกซิเจน ⟶ แก๊สคาร์บอนไดออกไซด์ + น้ำ + พลังงาน'
+      },
+      {
+        id: 's6_4',
+        num: 25,
+        stem: 'หากการเผาไหม้เกิดขึ้นในบริเวณที่อับอากาศ (ออกซิเจนไม่เพียงพอ) จะเกิดแก๊สพิษชนิดใดที่ไม่มีสี ไม่มีกลิ่น ขัดขวางการลำเลียงออกซิเจนในเลือด',
+        options: [
+          { key: 'A', text: 'แก๊สคาร์บอนมอนอกไซด์ (CO)' },
+          { key: 'B', text: 'แก๊สคาร์บอนไดออกไซด์ (CO₂)' },
+          { key: 'C', text: 'แก๊สไฮโดรเจน (H₂)' },
+          { key: 'D', text: 'แก๊สไนโตรเจน (N₂)' }
+        ],
+        answer: 'A',
+        explain: 'การเผาไหม้ไม่สมบูรณ์จะเกิดแก๊สคาร์บอนมอนอกไซด์ (CO) ซึ่งอันตรายถึงชีวิตเพราะแย่งจับกับฮีโมโกลบินในเม็ดเลือดแดงได้ดีกว่าออกซิเจน'
+      },
+      {
+        id: 's6_5',
+        num: 26,
+        stem: 'สมการข้อความของกระบวนการ "การสังเคราะห์ด้วยแสง (Photosynthesis)" ของพืชคือข้อใด',
+        options: [
+          { key: 'A', text: 'แก๊สคาร์บอนไดออกไซด์ + น้ำ + พลังงานแสง ⟶ น้ำตาลกลูโคส + แก๊สออกซิเจน' },
+          { key: 'B', text: 'น้ำตาลกลูโคส + แก๊สออกซิเจน ⟶ แก๊สคาร์บอนไดออกไซด์ + น้ำ + พลังงาน' },
+          { key: 'C', text: 'แก๊สออกซิเจน + แสง ⟶ น้ำตาลกลูโคส + น้ำ' },
+          { key: 'D', text: 'แก๊สไนโตรเจน + น้ำ + แสง ⟶ แป้ง + แก๊สออกซิเจน' }
+        ],
+        answer: 'A',
+        explain: 'พืชใช้คลอโรฟิลล์ดูดกลืนพลังงานแสง: 6CO₂ + 6H₂O + แสง ⟶ C₆H₁₂O₆ + 6O₂'
+      }
+    ];
+
+    let userAnswers = {};
+    let isGraded = false;
+
+    function renderMCQSection(containerId, dataList) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      dataList.forEach(q => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = 'qCard_' + q.id;
+
+        const selected = userAnswers[q.id];
+
+        let optsHtml = '';
+        q.options.forEach(opt => {
+          let btnClass = 'opt-btn';
+          if (selected === opt.key) {
+            btnClass += ' is-selected';
+          }
+          if (isGraded) {
+            if (opt.key === q.answer) {
+              btnClass += ' graded-correct';
+            } else if (selected === opt.key) {
+              btnClass += ' graded-wrong';
+            }
+          }
+
+          optsHtml += `
+            <button class="${btnClass}" onclick="handleSelect('${q.id}', '${opt.key}')" ${isGraded ? 'disabled' : ''}>
+              <span class="opt-letter">${opt.key}</span>
+              <span>${opt.text}</span>
+            </button>
+          `;
+        });
+
+        let feedbackHtml = '';
+        if (isGraded) {
+          const isCorrect = selected === q.answer;
+          feedbackHtml = `
+            <div class="q-feedback show-feedback ${isCorrect ? 'is-correct' : 'is-wrong'}">
+              <div class="feedback-hdr">${isCorrect ? '✓ ตอบถูกต้อง (+1 คะแนน)' : '✗ ยังไม่ถูกต้อง (คำตอบที่ถูกคือข้อ ' + q.answer + ')'}</div>
+              <div>${q.explain}</div>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="q-meta">
+            <span>ข้อที่ ${q.num}</span>
+            <span>${isGraded ? (selected === q.answer ? '✅ ได้คะแนน' : '❌ ผิด') : ''}</span>
+          </div>
+          <div class="q-stem">${q.num}. ${q.stem}</div>
+          <div class="opt-grid">${optsHtml}</div>
+          ${feedbackHtml}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderClassifySection() {
+      const container = document.getElementById('classifyList');
+      container.innerHTML = '';
+
+      sec2Data.forEach((item, idx) => {
+        const selected = userAnswers[item.id];
+        const row = document.createElement('div');
+        row.className = 'classify-item';
+
+        let physClass = 'toggle-opt';
+        let chemClass = 'toggle-opt';
+
+        if (selected === 'physical') physClass += ' is-selected';
+        if (selected === 'chemical') chemClass += ' is-selected';
+
+        if (isGraded) {
+          if (item.answer === 'physical') physClass += ' graded-correct';
+          if (item.answer === 'chemical') chemClass += ' graded-correct';
+
+          if (selected === 'physical' && item.answer !== 'physical') physClass += ' graded-wrong';
+          if (selected === 'chemical' && item.answer !== 'chemical') chemClass += ' graded-wrong';
+        }
+
+        row.innerHTML = `
+          <div class="classify-text">
+            <strong>${item.text}</strong>
+            ${isGraded ? `<div class="classify-explain">• ${item.explain}</div>` : ''}
+          </div>
+          <div class="btn-toggle-pair">
+            <button class="${physClass}" onclick="handleSelect('${item.id}', 'physical')" ${isGraded ? 'disabled' : ''}>กายภาพ</button>
+            <button class="${chemClass}" onclick="handleSelect('${item.id}', 'chemical')" ${isGraded ? 'disabled' : ''}>เคมี</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      if (isGraded) {
+        document.getElementById('feedbackSec2').classList.add('show-feedback');
+      }
+    }
+
+    function renderLabSection() {
+      const container = document.getElementById('labCardsGrid');
+      container.innerHTML = '';
+
+      sec4Data.forEach((item, idx) => {
+        const selected = userAnswers[item.id];
+        const row = document.createElement('div');
+        row.className = 'lab-card-row';
+
+        let endoClass = 'toggle-opt';
+        let exoClass = 'toggle-opt';
+
+        if (selected === 'endo') endoClass += ' is-selected';
+        if (selected === 'exo') exoClass += ' is-selected';
+
+        if (isGraded) {
+          if (item.answer === 'endo') endoClass += ' graded-correct';
+          if (item.answer === 'exo') exoClass += ' graded-correct';
+
+          if (selected === 'endo' && item.answer !== 'endo') endoClass += ' graded-wrong';
+          if (selected === 'exo' && item.answer !== 'exo') exoClass += ' graded-wrong';
+        }
+
+        const deltaClass = item.dt.startsWith('+') ? 'delta-pos' : 'delta-neg';
+
+        row.innerHTML = `
+          <div class="lab-card-info">
+            <div>
+              <span class="lab-tag">ข้อ ${item.num} (หลอด ${item.lab}):</span>
+              <strong>${item.reactants}</strong>
+            </div>
+            <div class="lab-metrics">
+              <span>T₁: ${item.t1}°C</span>
+              <span>⟶</span>
+              <span>T₂: ${item.t2}°C</span>
+              <span class="${deltaClass}">ΔT: ${item.dt}</span>
+              <span>(${item.touch})</span>
+            </div>
+            ${isGraded ? `<div style="font-size: 13.5px; color: var(--muted); margin-top: 4px;">• ${item.explain}</div>` : ''}
+          </div>
+          <div class="btn-toggle-pair">
+            <button class="${endoClass}" onclick="handleSelect('${item.id}', 'endo')" ${isGraded ? 'disabled' : ''}>ดูดความร้อน</button>
+            <button class="${exoClass}" onclick="handleSelect('${item.id}', 'exo')" ${isGraded ? 'disabled' : ''}>คายความร้อน</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      if (isGraded) {
+        document.getElementById('feedbackSec4').classList.add('show-feedback');
+      }
+    }
+
+    function handleSelect(id, val) {
+      if (isGraded) return;
+      userAnswers[id] = val;
+      renderAll();
+    }
+    window.handleSelect = handleSelect;
+
+    function renderAll() {
+      renderMCQSection('qListSec1', sec1Data);
+      renderClassifySection();
+      renderMCQSection('qListSec3', sec3Data);
+      renderLabSection();
+      renderMCQSection('qListSec5', sec5Data);
+      renderMCQSection('qListSec6', sec6Data);
+
+      updateProgress();
+
+      if (window.renderMathInElement) {
+        try {
+          renderMathInElement(document.body, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false}
+            ]
+          });
+        } catch(e) {}
+      }
+    }
+
+    function updateProgress() {
+      const answered = Object.keys(userAnswers).length;
+      const total = 26;
+      document.getElementById('headerProgress').textContent = `ตอบแล้ว ${answered} / ${total} ข้อ`;
+      const pct = Math.min(100, Math.round((answered / total) * 100));
+      document.getElementById('progressBar').style.width = pct + '%';
+    }
+
+    function gradeExam() {
+      let s1 = 0, s2 = 0, s3 = 0, s4 = 0, s5 = 0, s6 = 0;
+
+      sec1Data.forEach(q => { if (userAnswers[q.id] === q.answer) s1++; });
+      sec2Data.forEach(q => { if (userAnswers[q.id] === q.answer) s2++; });
+      sec3Data.forEach(q => { if (userAnswers[q.id] === q.answer) s3++; });
+      sec4Data.forEach(q => { if (userAnswers[q.id] === q.answer) s4++; });
+      sec5Data.forEach(q => { if (userAnswers[q.id] === q.answer) s5++; });
+      sec6Data.forEach(q => { if (userAnswers[q.id] === q.answer) s6++; });
+
+      const total = s1 + s2 + s3 + s4 + s5 + s6;
+      const pct = Math.round((total / 26) * 100);
+
+      document.getElementById('scoreCircle').textContent = `${total} / 26`;
+      document.getElementById('scorePct').textContent = `คิดเป็น ${pct}% (${total >= 20 ? 'ยอดเยี่ยมมาก 🌟' : total >= 15 ? 'ผ่านเกณฑ์ดี 👍' : 'ควรทบทวนเพิ่มเติม 📚'})`;
+
+      document.getElementById('bkSec1').textContent = `${s1} / 3`;
+      document.getElementById('bkSec2').textContent = `${s2} / 6`;
+      document.getElementById('bkSec3').textContent = `${s3} / 3`;
+      document.getElementById('bkSec4').textContent = `${s4} / 5`;
+      document.getElementById('bkSec5').textContent = `${s5} / 4`;
+      document.getElementById('bkSec6').textContent = `${s6} / 5`;
+
+      isGraded = true;
+      document.getElementById('resultsHero').classList.add('active');
+      document.getElementById('submitExamBtn').style.display = 'none';
+      document.getElementById('copyReportBtn').style.display = 'inline-flex';
+      document.getElementById('printReportBtn').style.display = 'inline-flex';
+      document.getElementById('retakeBtn').style.display = 'inline-flex';
+
+      renderAll();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('submitExamBtn').addEventListener('click', () => {
+      const answered = Object.keys(userAnswers).length;
+      if (answered < 26) {
+        const proceed = confirm(`นักเรียนตอบไปแล้ว ${answered} / 26 ข้อ ยังเหลืออีก ${26 - answered} ข้อ\nต้องการส่งตรวจคำตอบเลยหรือไม่?`);
+        if (!proceed) return;
+      }
+      gradeExam();
+    });
+
+    document.getElementById('copyReportBtn').addEventListener('click', () => {
+      const name = document.getElementById('studentName').value.trim() || 'ไม่ระบุชื่อ';
+      const nick = document.getElementById('studentNick').value.trim() || '-';
+      const date = document.getElementById('studyDate').value.trim() || '-';
+
+      let s1 = 0, s2 = 0, s3 = 0, s4 = 0, s5 = 0, s6 = 0;
+      sec1Data.forEach(q => { if (userAnswers[q.id] === q.answer) s1++; });
+      sec2Data.forEach(q => { if (userAnswers[q.id] === q.answer) s2++; });
+      sec3Data.forEach(q => { if (userAnswers[q.id] === q.answer) s3++; });
+      sec4Data.forEach(q => { if (userAnswers[q.id] === q.answer) s4++; });
+      sec5Data.forEach(q => { if (userAnswers[q.id] === q.answer) s5++; });
+      sec6Data.forEach(q => { if (userAnswers[q.id] === q.answer) s6++; });
+      const total = s1 + s2 + s3 + s4 + s5 + s6;
+      const pct = Math.round((total / 26) * 100);
+
+      const lines = [
+        '==============================',
+        '📘 รายงานผลคะแนน: วิทยาศาสตร์ ม.3 (ปฏิกิริยาเคมี & กรด-เบส)',
+        '==============================',
+        `👤 นักเรียน: ${name} (ชื่อเล่น: ${nick})`,
+        `📅 วันที่: ${date}`,
+        `🎯 คะแนนรวม: ${total} / 26 คะแนน (${pct}%)`,
+        '------------------------------',
+        'รายละเอียดรายหมวดหมู่:',
+        `• 1. นิยามระดับอนุภาค: ${s1}/3`,
+        `• 2. กายภาพ vs เคมี: ${s2}/6`,
+        `• 3. กฎทรงมวลในระบบ: ${s3}/3`,
+        `• 4. แล็บจำลองอุณหภูมิ (ดูด/คาย): ${s4}/5`,
+        `• 5. กรด-เบส & ปฏิกิริยากับโลหะ: ${s5}/4`,
+        `• 6. สืบค้นล่วงหน้าคาบถัดไป: ${s6}/5`,
+        '==============================',
+        'ส่งรายงานผลให้อาจารย์กิตติพงศ์เรียบร้อยแล้ว'
+      ];
+      const text = lines.join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✓ คัดลอกสรุปผลคะแนนเรียบร้อยแล้ว!\nสามารถนำไปวาง (Paste) ส่งรายงานผลให้อาจารย์ได้ทันทีครับ');
+      }).catch(err => {
+        prompt('โปรดคัดลอกข้อความสรุปผลคะแนนด้านล่างนี้:', text);
+      });
+    });
+
+    document.getElementById('printReportBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('retakeBtn').addEventListener('click', () => {
+      if (confirm('ต้องการเริ่มทำแบบทดสอบใหม่อีกครั้งใช่หรือไม่?')) {
+        userAnswers = {};
+        isGraded = false;
+        document.getElementById('resultsHero').classList.remove('active');
+        document.getElementById('submitExamBtn').style.display = 'inline-flex';
+        document.getElementById('copyReportBtn').style.display = 'none';
+        document.getElementById('printReportBtn').style.display = 'none';
+        document.getElementById('retakeBtn').style.display = 'none';
+        renderAll();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌓';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+    });
+  </script>
+</body>
+</html>
