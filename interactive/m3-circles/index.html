@@ -1,0 +1,3051 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>วงกลม (Circles) · ห้องทดลองเรขาคณิต ม.3 เล่ม 2</title>
+  <meta name="description" content="ห้องทดลองเรขาคณิตวงกลมแบบโต้ตอบ ครอบคลุมทฤษฎีบทเรื่องมุม คอร์ด และเส้นสัมผัสทุกข้อตามหลักสูตร สสวท. ม.3 เล่ม 2">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* vendor/katex.min.css inlined / referenced for s1-doctor */
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --ink: #0f172a;
+      --ink-muted: #64748b;
+      --ink-light: #94a3b8;
+      
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --primary-border: #bfdbfe;
+      
+      --emerald: #059669;
+      --emerald-soft: #ecfdf5;
+      --emerald-border: #a7f3d0;
+      
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --amber-border: #fde68a;
+      
+      --rose: #e11d48;
+      --rose-soft: #fff1f2;
+      --rose-border: #fecdd3;
+      
+      --violet: #7c3aed;
+      --violet-soft: #f5f3ff;
+      --violet-border: #ddd6fe;
+
+      --cyan: #0284c7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.06), 0 2px 6px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(0,0,0,0.08), 0 4px 12px -2px rgba(0,0,0,0.04);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      
+      --font-heading: "Bai Jamjuree", sans-serif;
+      --font-body: "IBM Plex Sans Thai Looped", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg: #090d16;
+      --surface: #0f172a;
+      --surface-subtle: #1e293b;
+      --border: #334155;
+      --border-strong: #475569;
+      --ink: #f8fafc;
+      --ink-muted: #94a3b8;
+      --ink-light: #64748b;
+      
+      --primary: #3b82f6;
+      --primary-soft: rgba(59, 130, 246, 0.15);
+      --primary-border: #1d4ed8;
+      
+      --emerald: #10b981;
+      --emerald-soft: rgba(16, 185, 129, 0.15);
+      --emerald-border: #047857;
+      
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --amber-border: #b45309;
+      
+      --rose: #f43f5e;
+      --rose-soft: rgba(244, 63, 94, 0.15);
+      --rose-border: #be123c;
+      
+      --violet: #8b5cf6;
+      --violet-soft: rgba(139, 92, 246, 0.15);
+      --violet-border: #6d28d9;
+
+      --cyan: #38bdf8;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.3);
+      --shadow-lg: 0 12px 32px -4px rgba(0,0,0,0.4);
+    }
+
+    [data-theme="cyber"] {
+      --bg: #030712;
+      --surface: #0b1120;
+      --surface-subtle: #111827;
+      --border: #1e293b;
+      --border-strong: #00f0ff;
+      --ink: #f0fdf4;
+      --ink-muted: #9ca3af;
+      --ink-light: #6b7280;
+      
+      --primary: #00f0ff;
+      --primary-soft: rgba(0, 240, 255, 0.12);
+      --primary-border: #00f0ff;
+      
+      --emerald: #10b981;
+      --emerald-soft: rgba(16, 185, 129, 0.15);
+      --emerald-border: #10b981;
+      
+      --amber: #fbbf24;
+      --amber-soft: rgba(251, 191, 36, 0.15);
+      --amber-border: #fbbf24;
+      
+      --rose: #ff007f;
+      --rose-soft: rgba(255, 0, 127, 0.15);
+      --rose-border: #ff007f;
+      
+      --violet: #a855f7;
+      --violet-soft: rgba(168, 85, 247, 0.15);
+      --violet-border: #a855f7;
+
+      --cyan: #22d3ee;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, .brand, .tab-btn, .metric-label, .btn {
+      font-family: var(--font-heading);
+    }
+
+    .katex {
+      font-size: 1.08em;
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 1680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 24px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Top Navigation Header */
+    .top-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 22px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .header-tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-group {
+      display: flex;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .theme-btn:hover {
+      color: var(--ink);
+    }
+
+    .theme-btn.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Tabs Bar */
+    .tabs-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 6px;
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .tabs-list {
+      display: flex;
+      gap: 6px;
+      min-width: max-content;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background: var(--surface-subtle);
+      color: var(--ink);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .tab-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.08);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .tab-btn.active .tab-num {
+      background: rgba(255,255,255,0.25);
+      color: #ffffff;
+    }
+
+    /* Main Workspace Grid */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(500px, 1.35fr) minmax(360px, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Canvas Section */
+    .canvas-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .canvas-stage-wrapper {
+      position: relative;
+      width: 100%;
+      height: 620px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .canvas-stage-wrapper {
+        height: 480px;
+      }
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* Canvas Overlays */
+    .canvas-hud-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      pointer-events: none;
+      gap: 10px;
+    }
+
+    .hud-badge {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
+    [data-theme="dark"] .hud-badge,
+    [data-theme="cyber"] .hud-badge {
+      background: rgba(15, 23, 42, 0.92);
+      border-color: var(--border);
+    }
+
+    .hud-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--emerald);
+    }
+
+    .canvas-instruction {
+      font-size: 12px;
+      color: var(--ink-muted);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      pointer-events: auto;
+    }
+
+    [data-theme="dark"] .canvas-instruction,
+    [data-theme="cyber"] .canvas-instruction {
+      background: rgba(15, 23, 42, 0.92);
+    }
+
+    .canvas-toolbar-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px;
+    }
+
+    .preset-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin-right: 4px;
+    }
+
+    .preset-btn {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-btn:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    .zoom-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    /* Sidebar Content Panel */
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--surface-subtle);
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+    }
+
+    /* Telemetry Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .metric-box {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: border-color 0.15s ease;
+    }
+
+    .metric-box.highlight-primary {
+      border-color: var(--primary-border);
+      background: var(--primary-soft);
+    }
+
+    .metric-box.highlight-emerald {
+      border-color: var(--emerald-border);
+      background: var(--emerald-soft);
+    }
+
+    .metric-box.highlight-amber {
+      border-color: var(--amber-border);
+      background: var(--amber-soft);
+    }
+
+    .metric-box.highlight-rose {
+      border-color: var(--rose-border);
+      background: var(--rose-soft);
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* Invariant Highlight Callout */
+    .callout-box {
+      background: var(--emerald-soft);
+      border: 1px solid var(--emerald-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .callout-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout-desc {
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* Theory & Proof Text */
+    .theory-text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .proof-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .proof-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+    }
+
+    .step-marker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Controls Group */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .toggle-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-control:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary-border);
+    }
+
+    .toggle-control input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Slider Container */
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .slider-row input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Quiz Challenge Card */
+    .quiz-box {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-q {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .quiz-opt-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+
+    .quiz-opt-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .quiz-opt-btn.correct {
+      background: var(--emerald-soft);
+      border-color: var(--emerald);
+      color: var(--emerald);
+      font-weight: 700;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+
+    .quiz-feedback {
+      font-size: 12.5px;
+      line-height: 1.5;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      display: none;
+    }
+
+    .quiz-feedback.show-correct {
+      display: block;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
+    }
+
+    .quiz-feedback.show-wrong {
+      display: block;
+      background: var(--rose-soft);
+      color: var(--rose);
+      border: 1px solid var(--rose-border);
+    }
+
+    /* Footer */
+    .app-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      background: var(--surface);
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="top-header">
+      <div class="header-info">
+        <div class="breadcrumb">
+          <span>คณิตศาสตร์ ม.3 เล่ม 2</span>
+          <span>·</span>
+          <span>เรขาคณิตแบบยุคลิด</span>
+          <span>·</span>
+          <span>บทที่ 2 วงกลม (สสวท.)</span>
+        </div>
+        <div class="header-title-row">
+          <h1 class="header-title">วงกลมและทฤษฎีบทเรขาคณิต (Circles Interactive Lab)</h1>
+          <span class="header-tag">หลักสูตร สสวท. ฉบับปรับปรุง 2560</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="theme-group">
+          <button class="theme-btn active" data-theme-val="light" onclick="setTheme('light')">Studio Light</button>
+          <button class="theme-btn" data-theme-val="dark" onclick="setTheme('dark')">Dark Obsidian</button>
+          <button class="theme-btn" data-theme-val="cyber" onclick="setTheme('cyber')">Cyber Neon</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-wrapper">
+      <div class="tabs-list" id="tabsList">
+        <button class="tab-btn active" onclick="switchTab('anatomy')">
+          <span class="tab-num">0</span>
+          <span>ส่วนประกอบ & สามเหลี่ยมหน้าจั่ว</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('central_inscribed')">
+          <span class="tab-num">1</span>
+          <span>มุมที่จุด ศก. & ในส่วนโค้ง</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('same_arc')">
+          <span class="tab-num">2</span>
+          <span>มุมในส่วนโค้งเดียวกัน</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('semicircle')">
+          <span class="tab-num">3</span>
+          <span>มุมในครึ่งวงกลม (มุมฉาก)</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('cyclic_quad')">
+          <span class="tab-num">4</span>
+          <span>สี่เหลี่ยมแนบในวงกลม</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('chords')">
+          <span class="tab-num">5</span>
+          <span>คอร์ดและการตั้งฉากแบ่งครึ่ง</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tangents')">
+          <span class="tab-num">6</span>
+          <span>เส้นสัมผัส & จุดภายนอก</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('alternate_segment')">
+          <span class="tab-num">7</span>
+          <span>ทฤษฎีบทส่วนโค้งสลับ</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('worked_examples')">
+          <span class="tab-num">8</span>
+          <span>ตัวอย่างโจทย์ & การลากเส้นช่วย</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Workspace Grid -->
+    <main class="workspace-grid">
+      
+      <!-- Left: Interactive Canvas Stage -->
+      <section class="canvas-panel">
+        <div class="canvas-stage-wrapper" id="canvasWrapper">
+          <canvas id="geoCanvas"></canvas>
+          
+          <!-- Top Canvas HUD -->
+          <div class="canvas-hud-top">
+            <div class="hud-badge" id="hudBadge">
+              <span class="hud-dot"></span>
+              <span id="hudBadgeText">กำลังโหลดข้อมูลเรขาคณิต...</span>
+            </div>
+            <div class="canvas-instruction">
+              <span>คลิกหรือแตะที่จุดแล้วลากเพื่อสำรวจ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Canvas Controls & Presets -->
+        <div class="canvas-toolbar-bottom">
+          <div class="preset-group" id="presetGroup">
+            <span class="preset-label">ตำแหน่งแนะนำ:</span>
+            <!-- Dynamically injected preset buttons -->
+          </div>
+          <div class="zoom-group">
+            <button class="icon-btn" onclick="zoomView(1.1)" title="ขยาย">+</button>
+            <button class="icon-btn" onclick="zoomView(0.9)" title="ย่อ">−</button>
+            <button class="icon-btn" onclick="resetView()" title="รีเซ็ตมุมมอง">⟳</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Theory, Telemetry & Controls Sidebar -->
+      <aside class="sidebar-panel">
+        
+        <!-- Theory Card -->
+        <div class="card" id="theoryCard">
+          <div class="card-header">
+            <h2 class="card-title" id="theoryTitle">หัวข้อทฤษฎีบท</h2>
+            <span class="card-badge" id="theoryCurriculum">สสวท. ม.3</span>
+          </div>
+          <div class="theory-text" id="theoryBody">
+            กำลังโหลดเนื้อหาทฤษฎีบท...
+          </div>
+          <div class="callout-box" id="invariantCallout">
+            <div class="callout-title" id="calloutTitle">ความสัมพันธ์คงตัว (Invariant)</div>
+            <div class="callout-desc" id="calloutDesc">รายละเอียดความคงตัว</div>
+          </div>
+        </div>
+
+        <!-- Telemetry Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">มาตรวัดสด (Live Telemetry)</h2>
+            <span class="card-badge">60 FPS Realtime</span>
+          </div>
+          <div class="metrics-grid" id="metricsGrid">
+            <!-- Dynamically injected metric boxes -->
+          </div>
+        </div>
+
+        <!-- Proof & Intuition Card -->
+        <div class="card" id="proofCard">
+          <div class="card-header">
+            <h2 class="card-title">แนวคิดเบื้องหลัง & การพิสูจน์ (Intuition)</h2>
+            <span class="card-badge" id="proofBadge">กุญแจสำคัญ</span>
+          </div>
+          <div class="theory-text" id="proofBody">
+            คำอธิบายการลากเส้นช่วย
+          </div>
+        </div>
+
+        <!-- Controls & Options Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">ตัวเลือกการแสดงผล (Visual Options)</h2>
+            <span class="card-badge">ปรับแต่ง</span>
+          </div>
+          <div class="controls-grid" id="controlsGrid">
+            <label class="toggle-control">
+              <input type="checkbox" id="chkShowAngles" checked onchange="toggleOption('showAngles', this.checked)">
+              <span>แสดงค่ามุมบนรูป</span>
+            </label>
+            <label class="toggle-control">
+              <input type="checkbox" id="chkShowRadii" checked onchange="toggleOption('showRadii', this.checked)">
+              <span>แสดงเส้นรัศมี</span>
+            </label>
+            <label class="toggle-control">
+              <input type="checkbox" id="chkShowAux" checked onchange="toggleOption('showAux', this.checked)">
+              <span>แสดงเส้นช่วยการพิสูจน์</span>
+            </label>
+            <label class="toggle-control">
+              <input type="checkbox" id="chkShowShading" checked onchange="toggleOption('showShading', this.checked)">
+              <span>แรเงาสามเหลี่ยม/เซกเตอร์</span>
+            </label>
+          </div>
+          <div id="extraSlidersContainer" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Extra sliders for chords/external point if needed -->
+          </div>
+        </div>
+
+        <!-- Quick Concept Check Quiz -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">ทบทวนความเข้าใจฉับไว (Concept Check)</h2>
+            <span class="card-badge">คำถามสั้น</span>
+          </div>
+          <div class="quiz-box" id="quizBox">
+            <div class="quiz-q" id="quizQ">กำลังโหลดคำถาม...</div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+          </div>
+        </div>
+
+      </aside>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <strong>คณิตศาสตร์ ม.3 เล่ม 2</strong>
+        <span>·</span>
+        <span>จัดทำโดย อ.กิตติพงศ์ ทรัพย์วัฒนาชัย</span>
+        <span>·</span>
+        <span>ภาควิชาวิทยาการคำนวณและเทคโนโลยีดิจิทัล คณะศิลปศาสตร์และวิทยาศาสตร์ มหาวิทยาลัยเกษตรศาสตร์</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://subwatg.github.io/Math-materials/" target="_blank">Math Materials Hub</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    // Theme Management
+    function setTheme(theme) {
+      if (theme === 'light') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+      });
+      requestAnimationFrame(draw);
+    }
+
+    // Geometry State & Points
+    const state = {
+      activeTab: 'anatomy',
+      scale: 1.0,
+      zoom: 1.0,
+      panX: 0,
+      panY: 0,
+      options: {
+        showAngles: true,
+        showRadii: true,
+        showAux: true,
+        showShading: true
+      },
+      // Points for each tab
+      tabsData: {
+        anatomy: {
+          angleA: 30 * Math.PI / 180,
+          angleB: 120 * Math.PI / 180,
+          showChord: true,
+          showDiameter: true,
+          showTangent: true,
+          showSecant: false
+        },
+        central_inscribed: {
+          angleA: 30 * Math.PI / 180,
+          angleB: 150 * Math.PI / 180,
+          angleC: 270 * Math.PI / 180
+        },
+        same_arc: {
+          angleA: 35 * Math.PI / 180,
+          angleB: 145 * Math.PI / 180,
+          angleC: 250 * Math.PI / 180,
+          angleD: 295 * Math.PI / 180
+        },
+        semicircle: {
+          angleDiameter: 0, // A at 0, B at PI
+          angleC: 110 * Math.PI / 180
+        },
+        cyclic_quad: {
+          angleA: 35 * Math.PI / 180,
+          angleB: 115 * Math.PI / 180,
+          angleC: 215 * Math.PI / 180,
+          angleD: 310 * Math.PI / 180
+        },
+        chords: {
+          angleChord: 0, // horizontal
+          distFactor: 0.5, // dist / R
+          showSecondChord: false,
+          distFactor2: 0.5
+        },
+        tangents: {
+          subMode: 'two_tangents', // 'single' or 'two_tangents'
+          angleP: 25 * Math.PI / 180,
+          distRatio: 2.0 // dist / R
+        },
+        alternate_segment: {
+          angleA: 0 * Math.PI / 180, // tangent point
+          angleB: 70 * Math.PI / 180, // chord other end
+          angleC: 210 * Math.PI / 180 // opposite arc point
+        },
+        worked_examples: {
+          exType: 'ex1', // 'ex1' or 'ex2'
+          ex1Angle: 35, // degrees
+          ex2R: 10,
+          ex2C1: 16,
+          ex2C2: 12,
+          ex2Opposite: true // opposite or same side
+        }
+      }
+    };
+
+    // Math Helpers
+    function normAngle(a) {
+      let ang = a % (2 * Math.PI);
+      if (ang < 0) ang += 2 * Math.PI;
+      return ang;
+    }
+
+    function radToDeg(r) {
+      return (r * 180 / Math.PI);
+    }
+
+    function degToRad(d) {
+      return (d * Math.PI / 180);
+    }
+
+    function angleBetweenVectors(v1, v2) {
+      const dot = v1.x * v2.x + v1.y * v2.y;
+      const l1 = Math.hypot(v1.x, v1.y);
+      const l2 = Math.hypot(v2.x, v2.y);
+      if (l1 === 0 || l2 === 0) return 0;
+      const cosVal = Math.max(-1, Math.min(1, dot / (l1 * l2)));
+      return Math.acos(cosVal);
+    }
+
+    function vertexAngle(p1, vertex, p2) {
+      const v1 = { x: p1.x - vertex.x, y: p1.y - vertex.y };
+      const v2 = { x: p2.x - vertex.x, y: p2.y - vertex.y };
+      return angleBetweenVectors(v1, v2);
+    }
+
+    // Canvas Setup
+    const canvas = document.getElementById('geoCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let centerX = 0;
+    let centerY = 0;
+    let radius = 180;
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      centerX = width / 2 + state.panX;
+      centerY = height / 2 + state.panY;
+      radius = Math.min(width, height) * 0.36 * state.zoom;
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // Zoom & Reset
+    function zoomView(factor) {
+      state.zoom = Math.max(0.5, Math.min(2.5, state.zoom * factor));
+      radius = Math.min(width, height) * 0.36 * state.zoom;
+      draw();
+    }
+
+    function resetView() {
+      state.zoom = 1.0;
+      state.panX = 0;
+      state.panY = 0;
+      centerX = width / 2;
+      centerY = height / 2;
+      radius = Math.min(width, height) * 0.36;
+      draw();
+    }
+
+    function toggleOption(key, val) {
+      state.options[key] = val;
+      draw();
+    }
+
+    // Drag Interaction System
+    let draggedItem = null;
+    let hoverItem = null;
+
+    function getCirclePoint(angle) {
+      return {
+        x: centerX + radius * Math.cos(angle),
+        y: centerY + radius * Math.sin(angle)
+      };
+    }
+
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function findHitHandle(pos) {
+      const tab = state.activeTab;
+      const hitRadius = 26; // generous touch hitbox
+
+      if (tab === 'anatomy') {
+        const d = state.tabsData.anatomy;
+        const pA = getCirclePoint(d.angleA);
+        const pB = getCirclePoint(d.angleB);
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'angleA' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'angleB' };
+      } else if (tab === 'central_inscribed') {
+        const d = state.tabsData.central_inscribed;
+        const pA = getCirclePoint(d.angleA);
+        const pB = getCirclePoint(d.angleB);
+        const pC = getCirclePoint(d.angleC);
+        if (Math.hypot(pos.x - pC.x, pos.y - pC.y) < hitRadius) return { id: 'angleC' };
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'angleA' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'angleB' };
+      } else if (tab === 'same_arc') {
+        const d = state.tabsData.same_arc;
+        const pA = getCirclePoint(d.angleA);
+        const pB = getCirclePoint(d.angleB);
+        const pC = getCirclePoint(d.angleC);
+        const pD = getCirclePoint(d.angleD);
+        if (Math.hypot(pos.x - pC.x, pos.y - pC.y) < hitRadius) return { id: 'angleC' };
+        if (Math.hypot(pos.x - pD.x, pos.y - pD.y) < hitRadius) return { id: 'angleD' };
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'angleA' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'angleB' };
+      } else if (tab === 'semicircle') {
+        const d = state.tabsData.semicircle;
+        const pC = getCirclePoint(d.angleC);
+        const pA = getCirclePoint(d.angleDiameter);
+        const pB = getCirclePoint(d.angleDiameter + Math.PI);
+        if (Math.hypot(pos.x - pC.x, pos.y - pC.y) < hitRadius) return { id: 'angleC' };
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'diamA' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'diamB' };
+      } else if (tab === 'cyclic_quad') {
+        const d = state.tabsData.cyclic_quad;
+        const pA = getCirclePoint(d.angleA);
+        const pB = getCirclePoint(d.angleB);
+        const pC = getCirclePoint(d.angleC);
+        const pD = getCirclePoint(d.angleD);
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'angleA' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'angleB' };
+        if (Math.hypot(pos.x - pC.x, pos.y - pC.y) < hitRadius) return { id: 'angleC' };
+        if (Math.hypot(pos.x - pD.x, pos.y - pD.y) < hitRadius) return { id: 'angleD' };
+      } else if (tab === 'chords') {
+        const d = state.tabsData.chords;
+        const midX = centerX + d.distFactor * radius * Math.cos(d.angleChord - Math.PI/2);
+        const midY = centerY + d.distFactor * radius * Math.sin(d.angleChord - Math.PI/2);
+        if (Math.hypot(pos.x - midX, pos.y - midY) < hitRadius + 4) return { id: 'chordMid' };
+      } else if (tab === 'tangents') {
+        const d = state.tabsData.tangents;
+        const pDist = d.distRatio * radius;
+        const pX = centerX + pDist * Math.cos(d.angleP);
+        const pY = centerY + pDist * Math.sin(d.angleP);
+        if (Math.hypot(pos.x - pX, pos.y - pY) < hitRadius + 6) return { id: 'pointP' };
+      } else if (tab === 'alternate_segment') {
+        const d = state.tabsData.alternate_segment;
+        const pA = getCirclePoint(d.angleA);
+        const pB = getCirclePoint(d.angleB);
+        const pC = getCirclePoint(d.angleC);
+        if (Math.hypot(pos.x - pC.x, pos.y - pC.y) < hitRadius) return { id: 'angleC' };
+        if (Math.hypot(pos.x - pB.x, pos.y - pB.y) < hitRadius) return { id: 'angleB' };
+        if (Math.hypot(pos.x - pA.x, pos.y - pA.y) < hitRadius) return { id: 'angleA' };
+      }
+      return null;
+    }
+
+    canvas.addEventListener('pointerdown', (e) => {
+      const pos = getPointerPos(e);
+      const hit = findHitHandle(pos);
+      if (hit) {
+        draggedItem = hit;
+        canvas.setPointerCapture(e.pointerId);
+        canvas.style.cursor = 'grabbing';
+      }
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      const pos = getPointerPos(e);
+      if (!draggedItem) {
+        const hit = findHitHandle(pos);
+        canvas.style.cursor = hit ? 'grab' : 'crosshair';
+        return;
+      }
+
+      // Dragging logic
+      const tab = state.activeTab;
+      const angle = normAngle(Math.atan2(pos.y - centerY, pos.x - centerX));
+
+      if (tab === 'anatomy') {
+        state.tabsData.anatomy[draggedItem.id] = angle;
+      } else if (tab === 'central_inscribed') {
+        state.tabsData.central_inscribed[draggedItem.id] = angle;
+      } else if (tab === 'same_arc') {
+        state.tabsData.same_arc[draggedItem.id] = angle;
+      } else if (tab === 'semicircle') {
+        if (draggedItem.id === 'angleC') {
+          state.tabsData.semicircle.angleC = angle;
+        } else if (draggedItem.id === 'diamA') {
+          state.tabsData.semicircle.angleDiameter = angle;
+        } else if (draggedItem.id === 'diamB') {
+          state.tabsData.semicircle.angleDiameter = normAngle(angle - Math.PI);
+        }
+      } else if (tab === 'cyclic_quad') {
+        state.tabsData.cyclic_quad[draggedItem.id] = angle;
+      } else if (tab === 'chords') {
+        if (draggedItem.id === 'chordMid') {
+          const dist = Math.hypot(pos.x - centerX, pos.y - centerY);
+          state.tabsData.chords.distFactor = Math.max(0.05, Math.min(0.92, dist / radius));
+          state.tabsData.chords.angleChord = normAngle(Math.atan2(pos.y - centerY, pos.x - centerX) + Math.PI/2);
+        }
+      } else if (tab === 'tangents') {
+        if (draggedItem.id === 'pointP') {
+          const dist = Math.hypot(pos.x - centerX, pos.y - centerY);
+          state.tabsData.tangents.distRatio = Math.max(1.15, Math.min(2.8, dist / radius));
+          state.tabsData.tangents.angleP = normAngle(Math.atan2(pos.y - centerY, pos.x - centerX));
+        }
+      } else if (tab === 'alternate_segment') {
+        state.tabsData.alternate_segment[draggedItem.id] = angle;
+      }
+
+      draw();
+    });
+
+    function endDrag(e) {
+      if (draggedItem) {
+        draggedItem = null;
+        canvas.style.cursor = 'crosshair';
+      }
+    }
+
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+
+    // Drawing Primitives
+    function getCssColor(varName, fallback) {
+      const val = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      return val || fallback;
+    }
+
+    function drawCircleBase() {
+      const borderCol = getCssColor('--border-strong', '#cbd5e1');
+      const surfaceCol = getCssColor('--surface', '#ffffff');
+      
+      // Outer subtle circle fill
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = surfaceCol;
+      ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = borderCol;
+      ctx.stroke();
+
+      // Center point O
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 4.5, 0, 2 * Math.PI);
+      ctx.fillStyle = getCssColor('--ink', '#0f172a');
+      ctx.fill();
+      drawPointBadge('O', centerX - 14, centerY - 14);
+    }
+
+    function drawPointBadge(label, x, y, bgCol, textCol) {
+      ctx.save();
+      ctx.font = 'bold 14px "Bai Jamjuree", sans-serif';
+      const textWidth = ctx.measureText(label).width;
+      const padX = 6;
+      const padY = 3;
+      const bW = textWidth + padX * 2;
+      const bH = 20;
+
+      ctx.fillStyle = bgCol || getCssColor('--surface', '#ffffff');
+      ctx.strokeStyle = getCssColor('--border', '#cbd5e1');
+      ctx.lineWidth = 1.2;
+      
+      // Rounded rect
+      ctx.beginPath();
+      ctx.roundRect(x - padX, y - 14, bW, bH, 5);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = textCol || getCssColor('--ink', '#0f172a');
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, x, y - 4);
+      ctx.restore();
+    }
+
+    function drawHandle(p, label, colorKey, radiusPx = 7.5) {
+      const col = getCssColor(colorKey, '#2563eb');
+      
+      // Pulse outer ring
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radiusPx + 4, 0, 2 * Math.PI);
+      ctx.fillStyle = col + '26'; // 15% opacity
+      ctx.fill();
+
+      // White ring
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radiusPx, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = col;
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2.5, 0, 2 * Math.PI);
+      ctx.fillStyle = col;
+      ctx.fill();
+
+      // Label offset outwards from center
+      const ang = Math.atan2(p.y - centerY, p.x - centerX);
+      const lx = p.x + 18 * Math.cos(ang);
+      const ly = p.y + 18 * Math.sin(ang);
+      drawPointBadge(label, lx, ly);
+    }
+
+    function drawAngleArc(vertex, p1, p2, arcRadius, colorKey, labelText) {
+      const a1 = Math.atan2(p1.y - vertex.y, p1.x - vertex.x);
+      const a2 = Math.atan2(p2.y - vertex.y, p2.x - vertex.x);
+      
+      let diff = a2 - a1;
+      while (diff < -Math.PI) diff += 2 * Math.PI;
+      while (diff > Math.PI) diff -= 2 * Math.PI;
+
+      const col = getCssColor(colorKey, '#2563eb');
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(vertex.x, vertex.y);
+      ctx.arc(vertex.x, vertex.y, arcRadius, a1, a1 + diff, diff < 0);
+      ctx.closePath();
+      ctx.fillStyle = col + '28';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(vertex.x, vertex.y, arcRadius, a1, a1 + diff, diff < 0);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = col;
+      ctx.stroke();
+
+      if (labelText && state.options.showAngles) {
+        const midAng = a1 + diff / 2;
+        const tx = vertex.x + (arcRadius + 16) * Math.cos(midAng);
+        const ty = vertex.y + (arcRadius + 16) * Math.sin(midAng);
+        
+        ctx.font = '600 12.5px "JetBrains Mono", monospace';
+        const tw = ctx.measureText(labelText).width;
+        ctx.fillStyle = getCssColor('--surface', '#ffffff');
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(tx - tw/2 - 4, ty - 9, tw + 8, 18, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = col;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labelText, tx, ty);
+      }
+      ctx.restore();
+    }
+
+    function drawRightAngleCorner(vertex, p1, p2, size = 14, colorKey = '--amber') {
+      const v1 = { x: p1.x - vertex.x, y: p1.y - vertex.y };
+      const v2 = { x: p2.x - vertex.x, y: p2.y - vertex.y };
+      const l1 = Math.hypot(v1.x, v1.y);
+      const l2 = Math.hypot(v2.x, v2.y);
+      if (l1 === 0 || l2 === 0) return;
+      
+      const u1 = { x: (v1.x / l1) * size, y: (v1.y / l1) * size };
+      const u2 = { x: (v2.x / l2) * size, y: (v2.y / l2) * size };
+
+      const c1 = { x: vertex.x + u1.x, y: vertex.y + u1.y };
+      const c2 = { x: vertex.x + u1.x + u2.x, y: vertex.y + u1.y + u2.y };
+      const c3 = { x: vertex.x + u2.x, y: vertex.y + u2.y };
+
+      const col = getCssColor(colorKey, '#d97706');
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(vertex.x, vertex.y);
+      ctx.lineTo(c1.x, c1.y);
+      ctx.lineTo(c2.x, c2.y);
+      ctx.lineTo(c3.x, c3.y);
+      ctx.closePath();
+      ctx.fillStyle = col + '33';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(c1.x, c1.y);
+      ctx.lineTo(c2.x, c2.y);
+      ctx.lineTo(c3.x, c3.y);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = col;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // MAIN DRAW DISPATCHER
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      drawCircleBase();
+
+      const tab = state.activeTab;
+      if (tab === 'anatomy') drawTabAnatomy();
+      else if (tab === 'central_inscribed') drawTabCentralInscribed();
+      else if (tab === 'same_arc') drawTabSameArc();
+      else if (tab === 'semicircle') drawTabSemicircle();
+      else if (tab === 'cyclic_quad') drawTabCyclicQuad();
+      else if (tab === 'chords') drawTabChords();
+      else if (tab === 'tangents') drawTabTangents();
+      else if (tab === 'alternate_segment') drawTabAlternateSegment();
+      else if (tab === 'worked_examples') drawTabWorkedExamples();
+    }
+
+    // TAB 0: ANATOMY & ISOSCELES
+    function drawTabAnatomy() {
+      const d = state.tabsData.anatomy;
+      const pA = getCirclePoint(d.angleA);
+      const pB = getCirclePoint(d.angleB);
+      const pO = { x: centerX, y: centerY };
+
+      // Isosceles Triangle OAB
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--primary-soft', 'rgba(37, 99, 235, 0.1)');
+        ctx.fill();
+      }
+
+      // Radii OA and OB
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Equal radius tick marks on OA and OB
+      drawTickMark(pO, pA);
+      drawTickMark(pO, pB);
+
+      // Chord AB
+      ctx.lineWidth = 2.8;
+      ctx.strokeStyle = getCssColor('--ink', '#0f172a');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Diameter line (horizontal across center)
+      const pD1 = { x: centerX - radius, y: centerY };
+      const pD2 = { x: centerX + radius, y: centerY };
+      ctx.save();
+      ctx.setLineDash([6, 5]);
+      ctx.strokeStyle = getCssColor('--emerald', '#059669');
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(pD1.x, pD1.y);
+      ctx.lineTo(pD2.x, pD2.y);
+      ctx.stroke();
+      ctx.restore();
+      drawPointBadge('เส้นผ่านศูนย์กลาง (2r)', centerX + radius * 0.45, centerY - 10);
+
+      // Tangent line at point B
+      const tangentVec = { x: -Math.sin(d.angleB), y: Math.cos(d.angleB) };
+      const tLen = 90;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+      ctx.beginPath();
+      ctx.moveTo(pB.x - tangentVec.x * tLen, pB.y - tangentVec.y * tLen);
+      ctx.lineTo(pB.x + tangentVec.x * tLen, pB.y + tangentVec.y * tLen);
+      ctx.stroke();
+      drawRightAngleCorner(pB, pO, { x: pB.x + tangentVec.x * tLen, y: pB.y + tangentVec.y * tLen }, 12, '--rose');
+      drawPointBadge('เส้นสัมผัส (Tangent)', pB.x + tangentVec.x * 55, pB.y + tangentVec.y * 55);
+
+      // Angles at base of triangle OAB
+      const angleOAB = radToDeg(vertexAngle(pO, pA, pB));
+      const angleOBA = radToDeg(vertexAngle(pO, pB, pA));
+      const angleAOB = radToDeg(vertexAngle(pA, pO, pB));
+
+      drawAngleArc(pA, pO, pB, 28, '--amber', angleOAB.toFixed(1) + '°');
+      drawAngleArc(pB, pO, pA, 28, '--amber', angleOBA.toFixed(1) + '°');
+      drawAngleArc(pO, pA, pB, 32, '--primary', angleAOB.toFixed(1) + '°');
+
+      // Draw Handles
+      drawHandle(pA, 'A', '--primary');
+      drawHandle(pB, 'B (จุดสัมผัส)', '--rose');
+
+      // Update Telemetry
+      updateTelemetry([
+        { label: 'รัศมี OA', val: 'r', sub: 'ด้านประกอบมุมยอด' },
+        { label: 'รัศมี OB', val: 'r', sub: 'ด้านประกอบมุมยอด' },
+        { label: 'มุมที่ฐาน ∠OAB', val: angleOAB.toFixed(1) + '°', sub: 'เท่ากันเสมอ (หน้าจั่ว)' },
+        { label: 'มุมที่ฐาน ∠OBA', val: angleOBA.toFixed(1) + '°', sub: 'เท่ากันเสมอ (หน้าจั่ว)' },
+        { label: 'มุมยอด ∠AOB', val: angleAOB.toFixed(1) + '°', sub: '180° - 2(มุมฐาน)' }
+      ]);
+
+      setHudBadge('หัวใจวงกลม: รัศมียาวเท่ากันเสมอ (OA = OB = r) สร้างสามเหลี่ยมหน้าจั่ว');
+    }
+
+    function drawTickMark(p1, p2) {
+      const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const len = Math.hypot(dx, dy);
+      if (len === 0) return;
+      const nx = -dy / len;
+      const ny = dx / len;
+      const tLen = 6;
+      ctx.save();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = getCssColor('--amber', '#d97706');
+      ctx.beginPath();
+      ctx.moveTo(mid.x - nx * tLen, mid.y - ny * tLen);
+      ctx.lineTo(mid.x + nx * tLen, mid.y + ny * tLen);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // TAB 1: CENTRAL VS INSCRIBED ANGLE (Theorem 1)
+    function drawTabCentralInscribed() {
+      const d = state.tabsData.central_inscribed;
+      const pA = getCirclePoint(d.angleA);
+      const pB = getCirclePoint(d.angleB);
+      const pC = getCirclePoint(d.angleC);
+      const pO = { x: centerX, y: centerY };
+
+      // Highlight Arc AB (the subtending arc)
+      ctx.save();
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = getCssColor('--amber', '#d97706');
+      ctx.beginPath();
+      // Draw arc from A to B along the minor arc
+      let a1 = d.angleA;
+      let a2 = d.angleB;
+      let diff = a2 - a1;
+      while (diff < -Math.PI) diff += 2 * Math.PI;
+      while (diff > Math.PI) diff -= 2 * Math.PI;
+      ctx.arc(centerX, centerY, radius, a1, a1 + diff, diff < 0);
+      ctx.stroke();
+      ctx.restore();
+
+      // Shading inscribed triangle ACB
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pC.x, pC.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--emerald-soft', 'rgba(5, 150, 105, 0.08)');
+        ctx.fill();
+      }
+
+      // Radii OA and OB (Central angle arms)
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--amber', '#d97706');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Inscribed angle arms CA and CB
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--emerald', '#059669');
+      ctx.beginPath();
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Base chord AB
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = getCssColor('--border-strong', '#94a3b8');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+      ctx.restore();
+
+      // Auxiliary Proof Line: Ray from C through O
+      if (state.options.showAux) {
+        const oppC = { x: centerX - (pC.x - centerX), y: centerY - (pC.y - centerY) };
+        ctx.save();
+        ctx.setLineDash([5, 4]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = getCssColor('--violet', '#7c3aed');
+        ctx.beginPath();
+        ctx.moveTo(pC.x, pC.y);
+        ctx.lineTo(oppC.x, oppC.y);
+        ctx.stroke();
+
+        // Radius OC line
+        ctx.restore();
+        drawPointBadge('เส้นช่วยผ่าน ศก.', (centerX + oppC.x)/2 + 10, (centerY + oppC.y)/2);
+      }
+
+      // Angles calculation
+      const angleAOB = radToDeg(vertexAngle(pA, pO, pB));
+      const angleACB = radToDeg(vertexAngle(pA, pC, pB));
+      const ratio = angleAOB / angleACB;
+
+      drawAngleArc(pO, pA, pB, 34, '--amber', angleAOB.toFixed(1) + '°');
+      drawAngleArc(pC, pA, pB, 42, '--emerald', angleACB.toFixed(1) + '°');
+
+      // Handles
+      drawHandle(pA, 'A', '--amber');
+      drawHandle(pB, 'B', '--amber');
+      drawHandle(pC, 'C (ลากเลื่อนได้)', '--emerald', 9);
+
+      // Update Telemetry
+      updateTelemetry([
+        { label: 'มุมที่จุด ศก. ∠AOB', val: angleAOB.toFixed(1) + '°', sub: 'กางบนส่วนโค้ง AB' },
+        { label: 'มุมในส่วนโค้ง ∠ACB', val: angleACB.toFixed(1) + '°', sub: 'กางบนส่วนโค้ง AB' },
+        { label: 'อัตราส่วน (ศก. / ส่วนโค้ง)', val: ratio.toFixed(2) + '×', sub: 'เท่ากับ 2.00 เท่าเสมอ' },
+        { label: 'สถานะทฤษฎีบท 1', val: '∠AOB = 2∠ACB', sub: 'สอดคล้อง 100%' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 1: มุมที่จุดศูนย์กลาง = 2 เท่าของมุมในส่วนโค้ง (' + angleAOB.toFixed(1) + '° = 2 × ' + angleACB.toFixed(1) + '°)');
+    }
+
+    // TAB 2: ANGLES IN SAME ARC (Theorem 2)
+    function drawTabSameArc() {
+      const d = state.tabsData.same_arc;
+      const pA = getCirclePoint(d.angleA);
+      const pB = getCirclePoint(d.angleB);
+      const pC = getCirclePoint(d.angleC);
+      const pD = getCirclePoint(d.angleD);
+
+      // Subtending Arc AB (Golden)
+      ctx.save();
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = getCssColor('--amber', '#d97706');
+      ctx.beginPath();
+      let a1 = d.angleA, a2 = d.angleB;
+      let diff = a2 - a1;
+      while (diff < -Math.PI) diff += 2 * Math.PI;
+      while (diff > Math.PI) diff -= 2 * Math.PI;
+      ctx.arc(centerX, centerY, radius, a1, a1 + diff, diff < 0);
+      ctx.stroke();
+      ctx.restore();
+
+      // Inscribed Angle C (Emerald)
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = getCssColor('--emerald', '#059669');
+      ctx.beginPath();
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Inscribed Angle D (Cyan / Blue)
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = getCssColor('--cyan', '#0284c7');
+      ctx.beginPath();
+      ctx.moveTo(pD.x, pD.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pD.x, pD.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Common chord AB
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = getCssColor('--ink-muted', '#64748b');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+      ctx.restore();
+
+      const angleACB = radToDeg(vertexAngle(pA, pC, pB));
+      const angleADB = radToDeg(vertexAngle(pA, pD, pB));
+
+      drawAngleArc(pC, pA, pB, 38, '--emerald', angleACB.toFixed(1) + '°');
+      drawAngleArc(pD, pA, pB, 38, '--cyan', angleADB.toFixed(1) + '°');
+
+      // Handles
+      drawHandle(pA, 'A', '--amber');
+      drawHandle(pB, 'B', '--amber');
+      drawHandle(pC, 'C (ลากอิสระ)', '--emerald', 9);
+      drawHandle(pD, 'D (ลากอิสระ)', '--cyan', 9);
+
+      updateTelemetry([
+        { label: 'มุมในส่วนโค้ง ∠ACB', val: angleACB.toFixed(1) + '°', sub: 'รองรับด้วยส่วนโค้ง AB' },
+        { label: 'มุมในส่วนโค้ง ∠ADB', val: angleADB.toFixed(1) + '°', sub: 'รองรับด้วยส่วนโค้ง AB' },
+        { label: 'ผลต่าง (|∠C - ∠D|)', val: Math.abs(angleACB - angleADB).toFixed(1) + '°', sub: 'เท่ากันเป๊ะ (0.0°)' },
+        { label: 'สถานะทฤษฎีบท 2', val: '∠ACB = ∠ADB', sub: 'มุมในส่วนโค้งเดียวกันย่อมเท่ากัน' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 2: มุมในส่วนโค้งที่รองรับด้วยส่วนโค้งเดียวกันเท่ากันเสมอ (' + angleACB.toFixed(1) + '° = ' + angleADB.toFixed(1) + '°)');
+    }
+
+    // TAB 3: ANGLE IN SEMICIRCLE (Theorem 3)
+    function drawTabSemicircle() {
+      const d = state.tabsData.semicircle;
+      const pA = getCirclePoint(d.angleDiameter);
+      const pB = getCirclePoint(d.angleDiameter + Math.PI);
+      const pC = getCirclePoint(d.angleC);
+      const pO = { x: centerX, y: centerY };
+
+      // Highlight Diameter AB
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Triangle ACB
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pC.x, pC.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--amber-soft', 'rgba(217, 119, 6, 0.1)');
+        ctx.fill();
+      }
+
+      // Arms CA and CB
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--amber', '#d97706');
+      ctx.beginPath();
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pC.x, pC.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Radius OC (Auxiliary line)
+      if (state.options.showRadii) {
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.8;
+        ctx.strokeStyle = getCssColor('--violet', '#7c3aed');
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pC.x, pC.y);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Right Angle at C
+      drawRightAngleCorner(pC, pA, pB, 18, '--amber');
+
+      // Lengths for Pythagoras
+      const lenAC = Math.hypot(pC.x - pA.x, pC.y - pA.y) / 25;
+      const lenBC = Math.hypot(pC.x - pB.x, pC.y - pB.y) / 25;
+      const lenAB = (2 * radius) / 25;
+      const pythSum = (lenAC * lenAC + lenBC * lenBC);
+      const pythHyp = (lenAB * lenAB);
+
+      drawAngleArc(pC, pA, pB, 40, '--amber', '90.0° (มุมฉาก)');
+
+      // Handles
+      drawHandle(pA, 'A (เส้นผ่าน ศก.)', '--primary');
+      drawHandle(pB, 'B (เส้นผ่าน ศก.)', '--primary');
+      drawHandle(pC, 'C (เลื่อนรอบครึ่งวงกลม)', '--amber', 9);
+
+      updateTelemetry([
+        { label: 'ขนาดมุม ∠ACB', val: '90.0°', sub: 'มุมในครึ่งวงกลมเป็นมุมฉากเสมอ' },
+        { label: 'ด้าน AC', val: lenAC.toFixed(2), sub: 'ด้านประกอบมุมฉาก' },
+        { label: 'ด้าน BC', val: lenBC.toFixed(2), sub: 'ด้านประกอบมุมฉาก' },
+        { label: 'ด้านตรงข้ามมุมฉาก AB', val: lenAB.toFixed(2), sub: 'เส้นผ่านศูนย์กลาง 2r' },
+        { label: 'พีทาโกรัส AC² + BC²', val: pythSum.toFixed(1), sub: 'เท่ากับ AB² = ' + pythHyp.toFixed(1) }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 3: มุมในครึ่งวงกลมเป็นมุมฉาก 90° เสมอ (เชื่อมโยงทฤษฎีบทพีทาโกรัส c² = a² + b²)');
+    }
+
+    // TAB 4: CYCLIC QUADRILATERAL (Theorems 4 & 5)
+    function drawTabCyclicQuad() {
+      const d = state.tabsData.cyclic_quad;
+      // Sort angles counterclockwise to avoid self-intersecting polygon
+      let raw = [
+        { label: 'A', ang: d.angleA, col: '--primary' },
+        { label: 'B', ang: d.angleB, col: '--emerald' },
+        { label: 'C', ang: d.angleC, col: '--primary' },
+        { label: 'D', ang: d.angleD, col: '--emerald' }
+      ];
+      raw.sort((x, y) => x.ang - y.ang);
+      
+      const pts = raw.map(item => getCirclePoint(item.ang));
+      const pA = pts[0], pB = pts[1], pC = pts[2], pD = pts[3];
+
+      // Quadrilateral Shading
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.lineTo(pC.x, pC.y);
+        ctx.lineTo(pD.x, pD.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--primary-soft', 'rgba(37, 99, 235, 0.08)');
+        ctx.fill();
+      }
+
+      // Edges
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--ink', '#0f172a');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.lineTo(pC.x, pC.y);
+      ctx.lineTo(pD.x, pD.y);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Exterior Angle Extension: Extend AB beyond B to point X
+      const dirAB = { x: pB.x - pA.x, y: pB.y - pA.y };
+      const lenAB = Math.hypot(dirAB.x, dirAB.y);
+      const extLen = 75;
+      const pX = { x: pB.x + (dirAB.x / lenAB) * extLen, y: pB.y + (dirAB.y / lenAB) * extLen };
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+      ctx.beginPath();
+      ctx.moveTo(pB.x, pB.y);
+      ctx.lineTo(pX.x, pX.y);
+      ctx.stroke();
+      ctx.restore();
+      drawPointBadge('X (ต่อด้าน)', pX.x + 8, pX.y);
+
+      // Angles
+      const angA = radToDeg(vertexAngle(pD, pA, pB));
+      const angB = radToDeg(vertexAngle(pA, pB, pC));
+      const angC = radToDeg(vertexAngle(pB, pC, pD));
+      const angD = radToDeg(vertexAngle(pC, pD, pA));
+
+      // Exterior Angle at B: angle between BC and BX
+      const extB = radToDeg(vertexAngle(pC, pB, pX));
+
+      // Arcs for Opposite Angles
+      drawAngleArc(pA, pD, pB, 26, '--primary', angA.toFixed(1) + '°');
+      drawAngleArc(pC, pB, pD, 26, '--primary', angC.toFixed(1) + '°');
+      drawAngleArc(pB, pA, pC, 26, '--emerald', angB.toFixed(1) + '°');
+      drawAngleArc(pD, pC, pA, 26, '--emerald', angD.toFixed(1) + '°');
+
+      // Exterior Angle Arc at B
+      drawAngleArc(pB, pC, pX, 32, '--rose', extB.toFixed(1) + '°');
+
+      // Handles
+      drawHandle(pA, raw[0].label, '--primary');
+      drawHandle(pB, raw[1].label, '--emerald');
+      drawHandle(pC, raw[2].label, '--primary');
+      drawHandle(pD, raw[3].label, '--emerald');
+
+      const sumAC = angA + angC;
+      const sumBD = angB + angD;
+
+      updateTelemetry([
+        { label: 'มุมตรงข้าม ∠A + ∠C', val: sumAC.toFixed(1) + '°', sub: angA.toFixed(1) + '° + ' + angC.toFixed(1) + '° = 180°' },
+        { label: 'มุมตรงข้าม ∠B + ∠D', val: sumBD.toFixed(1) + '°', sub: angB.toFixed(1) + '° + ' + angD.toFixed(1) + '° = 180°' },
+        { label: 'มุมภายนอก ∠CBX', val: extB.toFixed(1) + '°', sub: 'เท่ากับมุมตรงข้ามภายใน ∠D (' + angD.toFixed(1) + '°)' },
+        { label: 'สถานะทฤษฎีบท 4 & 5', val: 'ผลบวก = 180°', sub: 'มุมภายนอก = มุมตรงข้ามภายใน' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 4 & 5: มุมตรงข้ามสี่เหลี่ยมแนบในวงกลมรวมกันได้ 180° และมุมภายนอกเท่ากับมุมตรงข้ามภายใน');
+    }
+
+    // TAB 5: CHORDS & BISECTOR (Theorems 6 & 7)
+    function drawTabChords() {
+      const d = state.tabsData.chords;
+      const pO = { x: centerX, y: centerY };
+
+      // Direction perpendicular to chord angle
+      const perpAngle = d.angleChord - Math.PI / 2;
+      const chordDist = d.distFactor * radius;
+      
+      const pM = {
+        x: centerX + chordDist * Math.cos(perpAngle),
+        y: centerY + chordDist * Math.sin(perpAngle)
+      };
+
+      // Half chord length using Pythagoras: c/2 = sqrt(r^2 - d^2)
+      const halfC = Math.sqrt(Math.max(0, radius * radius - chordDist * chordDist));
+      const chordDir = { x: Math.cos(d.angleChord), y: Math.sin(d.angleChord) };
+
+      const pA = { x: pM.x - chordDir.x * halfC, y: pM.y - chordDir.y * halfC };
+      const pB = { x: pM.x + chordDir.x * halfC, y: pM.y + chordDir.y * halfC };
+
+      // Shaded Right Triangle OMA
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pM.x, pM.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--amber-soft', 'rgba(217, 119, 6, 0.12)');
+        ctx.fill();
+      }
+
+      // Radius OA
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.stroke();
+
+      // Perpendicular line OM
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pM.x, pM.y);
+      ctx.stroke();
+
+      // Chord AB
+      ctx.lineWidth = 3.2;
+      ctx.strokeStyle = getCssColor('--ink', '#0f172a');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Equal tick marks on AM and MB
+      drawTickMark(pA, pM);
+      drawTickMark(pM, pB);
+
+      // Right angle symbol at M
+      drawRightAngleCorner(pM, pO, pB, 14, '--rose');
+
+      // Second Chord comparison (if toggled)
+      if (d.showSecondChord) {
+        const chordDist2 = d.distFactor2 * radius;
+        const perpAngle2 = perpAngle + Math.PI; // opposite side
+        const pM2 = {
+          x: centerX + chordDist2 * Math.cos(perpAngle2),
+          y: centerY + chordDist2 * Math.sin(perpAngle2)
+        };
+        const halfC2 = Math.sqrt(Math.max(0, radius * radius - chordDist2 * chordDist2));
+        const pC = { x: pM2.x - chordDir.x * halfC2, y: pM2.y - chordDir.y * halfC2 };
+        const pD = { x: pM2.x + chordDir.x * halfC2, y: pM2.y + chordDir.y * halfC2 };
+
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = getCssColor('--emerald', '#059669');
+        ctx.beginPath();
+        ctx.moveTo(pC.x, pC.y);
+        ctx.lineTo(pD.x, pD.y);
+        ctx.stroke();
+
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pM2.x, pM2.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        drawPointBadge('คอร์ด CD', (pC.x + pD.x)/2, (pC.y + pD.y)/2 - 12);
+      }
+
+      // Handles
+      drawHandle(pA, 'A', '--primary');
+      drawHandle(pB, 'B', '--primary');
+      drawHandle(pM, 'M (จุดกึ่งกลาง)', '--rose', 8);
+
+      const dVal = (chordDist / 20).toFixed(1);
+      const halfCVal = (halfC / 20).toFixed(1);
+      const fullCVal = (halfC * 2 / 20).toFixed(1);
+      const rVal = (radius / 20).toFixed(1);
+
+      updateTelemetry([
+        { label: 'ระยะห่าง d = OM', val: dVal + ' ซม.', sub: 'เส้นตั้งฉากจากจุดศูนย์กลาง' },
+        { label: 'ครึ่งคอร์ด c/2', val: halfCVal + ' ซม.', sub: 'AM = MB = ' + halfCVal },
+        { label: 'ความยาวคอร์ด c = AB', val: fullCVal + ' ซม.', sub: '2 × ' + halfCVal },
+        { label: 'รัศมี r = OA', val: rVal + ' ซม.', sub: 'ด้านตรงข้ามมุมฉาก' },
+        { label: 'พีทาโกรัส r² = d² + (c/2)²', val: (rVal*rVal).toFixed(0) + ' = ' + ((dVal*dVal + halfCVal*halfCVal)).toFixed(0), sub: 'สัมพันธ์กัน 100%' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 6 & 7: เส้นตั้งฉากจากจุดศูนย์กลางย่อมแบ่งครึ่งคอร์ดเสมอ (AM = MB) และคอร์ดเท่ากันย่อมห่างเท่ากัน');
+    }
+
+    // TAB 6: TANGENTS (Theorems 8 & 9)
+    function drawTabTangents() {
+      const d = state.tabsData.tangents;
+      const pO = { x: centerX, y: centerY };
+
+      const dist = d.distRatio * radius;
+      const pP = {
+        x: centerX + dist * Math.cos(d.angleP),
+        y: centerY + dist * Math.sin(d.angleP)
+      };
+
+      // Tangent points from external point P
+      const alpha = Math.acos(radius / dist);
+      const aA = d.angleP - alpha;
+      const aB = d.angleP + alpha;
+
+      const pA = getCirclePoint(aA);
+      const pB = getCirclePoint(aB);
+
+      // Shaded Triangles OAP and OBP
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.lineTo(pP.x, pP.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--rose-soft', 'rgba(225, 29, 72, 0.08)');
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.lineTo(pP.x, pP.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--primary-soft', 'rgba(37, 99, 235, 0.08)');
+        ctx.fill();
+      }
+
+      // Radii OA and OB
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Tangents PA and PB
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+      ctx.beginPath();
+      ctx.moveTo(pP.x, pP.y);
+      ctx.lineTo(pA.x, pA.y);
+      ctx.moveTo(pP.x, pP.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Bisector Line OP
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = getCssColor('--violet', '#7c3aed');
+      ctx.beginPath();
+      ctx.moveTo(pO.x, pO.y);
+      ctx.lineTo(pP.x, pP.y);
+      ctx.stroke();
+      ctx.restore();
+
+      // Right angles at points of tangency A and B
+      drawRightAngleCorner(pA, pO, pP, 16, '--rose');
+      drawRightAngleCorner(pB, pO, pP, 16, '--rose');
+
+      // Equal tick marks on PA and PB
+      drawTickMark(pP, pA);
+      drawTickMark(pP, pB);
+
+      // Angles
+      const angAPO = radToDeg(vertexAngle(pA, pP, pO));
+      const angBPO = radToDeg(vertexAngle(pB, pP, pO));
+      const angTotalP = angAPO + angBPO;
+
+      const angAOP = radToDeg(vertexAngle(pA, pO, pP));
+      const angBOP = radToDeg(vertexAngle(pB, pO, pP));
+      const angTotalO = angAOP + angBOP;
+
+      drawAngleArc(pP, pA, pO, 32, '--violet', angAPO.toFixed(1) + '°');
+      drawAngleArc(pP, pB, pO, 32, '--violet', angBPO.toFixed(1) + '°');
+
+      // Handles
+      drawHandle(pA, 'A (จุดสัมผัส)', '--rose');
+      drawHandle(pB, 'B (จุดสัมผัส)', '--rose');
+      drawHandle(pP, 'P (จุดภายนอก: ลากได้)', '--violet', 9.5);
+
+      const tanLen = (Math.sqrt(dist * dist - radius * radius) / 20).toFixed(1);
+
+      updateTelemetry([
+        { label: 'ความยาวเส้นสัมผัส PA', val: tanLen + ' ซม.', sub: 'PA = PB เสมอ' },
+        { label: 'ความยาวเส้นสัมผัส PB', val: tanLen + ' ซม.', sub: 'PA = PB เสมอ' },
+        { label: 'มุมที่จุดภายนอก ∠APB', val: angTotalP.toFixed(1) + '°', sub: 'OP แบ่งครึ่งมุม (' + angAPO.toFixed(1) + '° + ' + angBPO.toFixed(1) + '°)' },
+        { label: 'มุมที่จุด ศก. ∠AOB', val: angTotalO.toFixed(1) + '°', sub: 'OP แบ่งครึ่งมุม (' + angAOP.toFixed(1) + '° + ' + angBOP.toFixed(1) + '°)' },
+        { label: 'ผลรวมมุมตรงข้าม P + O', val: (angTotalP + angTotalO).toFixed(0) + '°', sub: 'เท่ากับ 180° เสมอ (มุมฉาก 2 มุม)' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 8 & 9: รัศมีตั้งฉากกับเส้นสัมผัส, ส่วนของเส้นสัมผัสจากจุดภายนอกยาวเท่ากัน (PA = PB) และ OP แบ่งครึ่งมุม');
+    }
+
+    // TAB 7: ALTERNATE SEGMENT THEOREM (Theorem 10)
+    function drawTabAlternateSegment() {
+      const d = state.tabsData.alternate_segment;
+      const pA = getCirclePoint(d.angleA);
+      const pB = getCirclePoint(d.angleB);
+      const pC = getCirclePoint(d.angleC);
+      const pO = { x: centerX, y: centerY };
+
+      // Tangent line at point A
+      const tanDir = { x: -Math.sin(d.angleA), y: Math.cos(d.angleA) };
+      const tLen = 140;
+      const pT1 = { x: pA.x - tanDir.x * tLen, y: pA.y - tanDir.y * tLen };
+      const pT2 = { x: pA.x + tanDir.x * tLen, y: pA.y + tanDir.y * tLen };
+
+      ctx.lineWidth = 2.8;
+      ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+      ctx.beginPath();
+      ctx.moveTo(pT1.x, pT1.y);
+      ctx.lineTo(pT2.x, pT2.y);
+      ctx.stroke();
+
+      drawPointBadge('เส้นสัมผัส (Tangent)', pT2.x + 8, pT2.y);
+
+      // Inscribed Triangle ABC
+      if (state.options.showShading) {
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.lineTo(pC.x, pC.y);
+        ctx.closePath();
+        ctx.fillStyle = getCssColor('--emerald-soft', 'rgba(5, 150, 105, 0.08)');
+        ctx.fill();
+      }
+
+      // Chord AB (Common boundary)
+      ctx.lineWidth = 3.2;
+      ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Triangle arms AC and BC
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = getCssColor('--emerald', '#059669');
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pC.x, pC.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      // Pick tangent ray that makes acute angle with chord AB
+      const angTanChord1 = radToDeg(vertexAngle(pB, pA, pT2));
+      const angTanChord2 = radToDeg(vertexAngle(pB, pA, pT1));
+      const useT2 = angTanChord1 <= 90;
+      const targetT = useT2 ? pT2 : pT1;
+      const angleTanChord = useT2 ? angTanChord1 : angTanChord2;
+
+      // Inscribed angle ACB subtended by chord AB in alternate segment
+      const angleACB = radToDeg(vertexAngle(pA, pC, pB));
+
+      // Draw highlighted matching angle arcs in vibrant emerald
+      drawAngleArc(pA, pB, targetT, 38, '--emerald', angleTanChord.toFixed(1) + '°');
+      drawAngleArc(pC, pA, pB, 38, '--emerald', angleACB.toFixed(1) + '°');
+
+      // Handles
+      drawHandle(pA, 'A (จุดสัมผัส)', '--rose');
+      drawHandle(pB, 'B (ปลายคอร์ด)', '--primary');
+      drawHandle(pC, 'C (ในส่วนโค้งตรงข้าม)', '--emerald', 9);
+
+      updateTelemetry([
+        { label: 'มุมเส้นสัมผัส-คอร์ด', val: angleTanChord.toFixed(1) + '°', sub: 'มุมจรดกับคอร์ด AB' },
+        { label: 'มุมในส่วนโค้งตรงข้าม ∠ACB', val: angleACB.toFixed(1) + '°', sub: 'กางบนคอร์ด AB' },
+        { label: 'ผลต่าง (|มุมคอร์ด - ∠ACB|)', val: Math.abs(angleTanChord - angleACB).toFixed(1) + '°', sub: 'เท่ากันเป๊ะ 100%' },
+        { label: 'สถานะทฤษฎีบท 10', val: 'Alternate Segment', sub: 'มุมสัมผัส-คอร์ด = มุมส่วนโค้งตรงข้าม' }
+      ]);
+
+      setHudBadge('ทฤษฎีบท 10 (Alternate Segment): มุมระหว่างเส้นสัมผัสกับคอร์ด เท่ากับมุมในส่วนโค้งฝั่งตรงข้ามเสมอ (' + angleTanChord.toFixed(1) + '° = ' + angleACB.toFixed(1) + '°)');
+    }
+
+    // TAB 8: WORKED EXAMPLES & AUXILIARY LINES LAB
+    function drawTabWorkedExamples() {
+      const d = state.tabsData.worked_examples;
+      const pO = { x: centerX, y: centerY };
+
+      if (d.exType === 'ex1') {
+        // Example 1: Tangent chord angle 35 deg -> find central angle AOB
+        const theta = degToRad(d.ex1Angle);
+        const pA = getCirclePoint(0); // right side
+        const pB = getCirclePoint(2 * theta); // central angle = 2*theta
+
+        // Tangent at A (vertical line)
+        ctx.lineWidth = 2.8;
+        ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y - 120);
+        ctx.lineTo(pA.x, pA.y + 120);
+        ctx.stroke();
+
+        // Radii OA and OB
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pA.x, pA.y);
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.stroke();
+
+        // Chord AB
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = getCssColor('--ink', '#0f172a');
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.stroke();
+
+        // Right angle at A between OA and Tangent
+        drawRightAngleCorner(pA, pO, { x: pA.x, y: pA.y + 100 }, 15, '--rose');
+
+        // Angle between tangent and chord
+        const pT = { x: pA.x, y: pA.y + 100 };
+        drawAngleArc(pA, pB, pT, 36, '--rose', d.ex1Angle.toFixed(0) + '°');
+
+        // Central angle AOB
+        drawAngleArc(pO, pA, pB, 42, '--amber', (d.ex1Angle * 2).toFixed(0) + '°');
+
+        // Isosceles base angle
+        const baseAng = 90 - d.ex1Angle;
+        drawAngleArc(pA, pB, pO, 52, '--primary', baseAng.toFixed(0) + '°');
+        drawAngleArc(pB, pA, pO, 38, '--primary', baseAng.toFixed(0) + '°');
+
+        drawHandle(pA, 'A (จุดสัมผัส)', '--rose');
+        drawHandle(pB, 'B', '--primary');
+
+        updateTelemetry([
+          { label: 'มุมคอร์ดกับเส้นสัมผัส', val: d.ex1Angle.toFixed(0) + '°', sub: 'โจทย์กำหนด (ปรับสไลเดอร์ได้)' },
+          { label: 'มุมในสามเหลี่ยม ∠OAB', val: baseAng.toFixed(0) + '°', sub: '90° - ' + d.ex1Angle.toFixed(0) + '° (รัศมีตั้งฉากเส้นสัมผัส)' },
+          { label: 'มุมที่ฐาน ∠OBA', val: baseAng.toFixed(0) + '°', sub: 'เท่ากับ ∠OAB (สามเหลี่ยมหน้าจั่ว)' },
+          { label: 'มุมที่จุด ศก. ∠AOB', val: (d.ex1Angle * 2).toFixed(0) + '°', sub: '180° - 2(' + baseAng.toFixed(0) + '°) = 2 เท่าของมุมสัมผัส' }
+        ]);
+
+        setHudBadge('ตัวอย่างที่ 1: หา ∠AOB จากมุมเส้นสัมผัส-คอร์ด (วิธีรัศมีตั้งฉาก 90° vs วิธีส่วนโค้งสลับ)');
+      } else {
+        // Example 2: Two parallel chords (12 cm and 16 cm) in circle of radius 10 cm
+        const rVal = d.ex2R; // 10
+        const c1Val = d.ex2C1; // 16
+        const c2Val = d.ex2C2; // 12
+
+        const d1 = Math.sqrt(Math.max(0, rVal * rVal - (c1Val / 2) * (c1Val / 2))); // 6
+        const d2 = Math.sqrt(Math.max(0, rVal * rVal - (c2Val / 2) * (c2Val / 2))); // 8
+
+        const pxPerCm = (radius / rVal);
+        const d1Px = d1 * pxPerCm;
+        const d2Px = (d.ex2Opposite ? -1 : 1) * d2 * pxPerCm;
+
+        // Chord 1 (length c1)
+        const halfC1Px = (c1Val / 2) * pxPerCm;
+        const pA1 = { x: centerX - halfC1Px, y: centerY + d1Px };
+        const pB1 = { x: centerX + halfC1Px, y: centerY + d1Px };
+
+        // Chord 2 (length c2)
+        const halfC2Px = (c2Val / 2) * pxPerCm;
+        const pA2 = { x: centerX - halfC2Px, y: centerY + d2Px };
+        const pB2 = { x: centerX + halfC2Px, y: centerY + d2Px };
+
+        // Draw Chord 1
+        ctx.lineWidth = 3.5;
+        ctx.strokeStyle = getCssColor('--primary', '#2563eb');
+        ctx.beginPath();
+        ctx.moveTo(pA1.x, pA1.y);
+        ctx.lineTo(pB1.x, pB1.y);
+        ctx.stroke();
+
+        // Draw Chord 2
+        ctx.lineWidth = 3.5;
+        ctx.strokeStyle = getCssColor('--emerald', '#059669');
+        ctx.beginPath();
+        ctx.moveTo(pA2.x, pA2.y);
+        ctx.lineTo(pB2.x, pB2.y);
+        ctx.stroke();
+
+        // Perpendicular distance line through center
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = getCssColor('--rose', '#e11d48');
+        ctx.beginPath();
+        ctx.moveTo(centerX, pA1.y);
+        ctx.lineTo(centerX, pA2.y);
+        ctx.stroke();
+        ctx.restore();
+
+        // Right angles at midpoints
+        drawRightAngleCorner({ x: centerX, y: pA1.y }, pO, pB1, 12, '--rose');
+        drawRightAngleCorner({ x: centerX, y: pA2.y }, pO, pB2, 12, '--rose');
+
+        // Radii to chord endpoints
+        ctx.save();
+        ctx.setLineDash([3, 3]);
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = getCssColor('--amber', '#d97706');
+        ctx.beginPath();
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pB1.x, pB1.y);
+        ctx.moveTo(pO.x, pO.y);
+        ctx.lineTo(pB2.x, pB2.y);
+        ctx.stroke();
+        ctx.restore();
+
+        drawPointBadge('คอร์ด 1: ' + c1Val + ' ซม.', (pA1.x + pB1.x)/2, pA1.y - 12);
+        drawPointBadge('คอร์ด 2: ' + c2Val + ' ซม.', (pA2.x + pB2.x)/2, pA2.y - 12);
+
+        const totalDist = d.ex2Opposite ? (d1 + d2) : Math.abs(d1 - d2);
+
+        updateTelemetry([
+          { label: 'ระยะห่าง d₁ (คอร์ดแรก)', val: d1.toFixed(1) + ' ซม.', sub: '√(10² - 8²) = √36 = 6' },
+          { label: 'ระยะห่าง d₂ (คอร์ดสอง)', val: d2.toFixed(1) + ' ซม.', sub: '√(10² - 6²) = √64 = 8' },
+          { label: 'ตำแหน่งคอร์ดทั้งสอง', val: d.ex2Opposite ? 'คนละข้าง ศก.' : 'ข้างเดียวกัน ศก.', sub: d.ex2Opposite ? 'บวกกัน (d₁ + d₂)' : 'ลบกัน (|d₁ - d₂|)' },
+          { label: 'ระยะห่างระหว่างคอร์ด (d)', val: totalDist.toFixed(1) + ' ซม.', sub: d.ex2Opposite ? '6 + 8 = 14 ซม.' : '|8 - 6| = 2 ซม.' }
+        ]);
+
+        setHudBadge('ตัวอย่างที่ 2: ระยะห่างคอร์ดคู่ขนาน (' + c1Val + ' ซม. และ ' + c2Val + ' ซม.) = ' + totalDist.toFixed(1) + ' ซม.');
+      }
+    }
+
+    // TELEMETRY & HUD UPDATE
+    function updateTelemetry(items) {
+      const grid = document.getElementById('metricsGrid');
+      grid.innerHTML = items.map((item, idx) => {
+        let hlClass = '';
+        if (idx === 0) hlClass = 'highlight-primary';
+        else if (idx === 1) hlClass = 'highlight-emerald';
+        else if (idx === 2) hlClass = 'highlight-amber';
+        else if (idx === 3) hlClass = 'highlight-rose';
+        return `
+          <div class="metric-box ${hlClass}">
+            <span class="metric-label">${item.label}</span>
+            <span class="metric-val">${item.val}</span>
+            <span class="metric-sub">${item.sub}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setHudBadge(text) {
+      document.getElementById('hudBadgeText').textContent = text;
+    }
+
+    // TAB DEFINITIONS & CONTENT
+    const tabsConfig = {
+      anatomy: {
+        title: 'ส่วนประกอบสำคัญ & มโนทัศน์สามเหลี่ยมหน้าจั่ว',
+        curriculum: 'บทนิยามพื้นฐาน',
+        theoryBody: `
+          วงกลมประกอบด้วยส่วนประกอบสำคัญ 5 ชนิด:
+          <ul style="margin: 8px 0 8px 20px; display: flex; flex-direction: column; gap: 4px;">
+            <li><strong>รัศมี (Radius, $r$):</strong> เส้นตรงจากจุดศูนย์กลาง $O$ ไปยังเส้นรอบวง</li>
+            <li><strong>คอร์ด (Chord):</strong> ส่วนของเส้นตรงที่มีจุดปลายทั้งสองอยู่บนเส้นรอบวง</li>
+            <li><strong>เส้นผ่านศูนย์กลาง (Diameter, $2r$):</strong> คอร์ดที่ยาวที่สุดและลากผ่านจุดศูนย์กลาง</li>
+            <li><strong>เส้นสัมผัส (Tangent line):</strong> เส้นตรงที่ตัดวงกลมเพียงจุดเดียว เรียกว่า <em>จุดสัมผัส</em></li>
+            <li><strong>เส้นตัด (Secant line):</strong> เส้นตรงที่ตัดวงกลมสองจุด</li>
+          </ul>
+        `,
+        calloutTitle: 'หัวใจสำคัญที่สุดของเรขาคณิตวงกลม',
+        calloutDesc: 'รัศมีของวงกลมวงเดียวกันยาวเท่ากันเสมอ ($OA = OB = r$) การลากรัศมีไปยังจุดใดๆ บนเส้นรอบวงจะสร้าง <strong>รูปสามเหลี่ยมหน้าจั่ว</strong> ได้ทันที ซึ่งทำให้มุมที่ฐานเท่ากัน ($\\angle OAB = \\angle OBA$) นี่คือกุญแจดอกหลักในการไล่มุมเรขาคณิตทุกข้อ!',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">ขั้นที่ 1</span>
+              <span>ลากส่วนของเส้นตรงจากจุดศูนย์กลาง $O$ ไปยังจุดปลายของคอร์ด $A$ และ $B$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ขั้นที่ 2</span>
+              <span>เนื่องจาก $OA$ และ $OB$ เป็นรัศมีของวงกลม จึงได้ว่า $OA = OB = r$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ขั้นที่ 3</span>
+              <span>รูปสามเหลี่ยมที่มีด้านยาวเท่ากันสองด้านคือ <em>สามเหลี่ยมหน้าจั่ว</em> ส่งผลให้มุมตรงข้ามด้านที่เท่ากันย่อมมีขนาดเท่ากัน ($\\angle OAB = \\angle OBA$)</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'สามเหลี่ยมด้านเท่า (60°)', action: () => { state.tabsData.anatomy.angleA = degToRad(30); state.tabsData.anatomy.angleB = degToRad(90); draw(); } },
+          { label: 'มุมยอด 90°', action: () => { state.tabsData.anatomy.angleA = degToRad(45); state.tabsData.anatomy.angleB = degToRad(135); draw(); } },
+          { label: 'เส้นผ่านศูนย์กลาง (180°)', action: () => { state.tabsData.anatomy.angleA = degToRad(0); state.tabsData.anatomy.angleB = degToRad(180); draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้ามุมยอด $\\angle AOB$ ที่จุดศูนย์กลางกาง $80^\\circ$ ขนาดของมุมที่ฐาน $\\angle OAB$ จะกางกี่องศา?',
+          options: ['40°', '50°', '80°', '100°'],
+          correct: 1,
+          feedback: 'ถูกต้อง! เนื่องจากสามเหลี่ยม OAB เป็นสามเหลี่ยมหน้าจั่ว มุมที่ฐานทั้งสองเท่ากัน: (180° - 80°) / 2 = 50°'
+        }
+      },
+
+      central_inscribed: {
+        title: 'ทฤษฎีบท 1: มุมที่จุดศูนย์กลางและมุมในส่วนโค้ง',
+        curriculum: 'สสวท. ทฤษฎีบท 1.1',
+        theoryBody: `
+          <strong>ทฤษฎีบท:</strong> ในวงกลมวงเดียวกัน ขนาดของมุมที่จุดศูนย์กลางจะเท่ากับสองเท่าของขนาดของมุมในส่วนโค้งของวงกลมที่รองรับด้วยส่วนโค้งเดียวกัน
+          $$ \\angle AOB = 2 \\times \\angle ACB $$
+          <em>ข้อสังเกตสำคัญ:</em> ส่วนโค้ง $AB$ ต้องเป็นส่วนโค้งเดียวกันที่รองรับทั้งมุมที่จุดศูนย์กลางและมุมที่เส้นรอบวง
+        `,
+        calloutTitle: 'ความคงตัว (Invariant)',
+        calloutDesc: 'ไม่ว่าเราจะเลื่อนจุด $C$ ไปยังตำแหน่งใดก็ตามบนส่วนโค้งใหญ่ ขนาดของมุม $\\angle ACB$ จะคงที่ตลอดเวลา และมีขนาดเป็นครึ่งหนึ่งของ $\\angle AOB$ เสมอ!',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">เส้นช่วย</span>
+              <span>ลากเส้นผ่านศูนย์กลางจากจุด $C$ ผ่านจุดศูนย์กลาง $O$ ไปยังจุดตรงข้าม แบ่งมุม $\\angle ACB$ ออกเป็นสองมุม $\\alpha$ และ $\\beta$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">หน้าจั่ว 1</span>
+              <span>ใน $\\triangle OAC$, $OA = OC = r$ จึงเป็นสามเหลี่ยมหน้าจั่ว มีมุมที่ฐานเท่ากับ $\\alpha$ มุมภายนอก $\\angle AOX = 2\\alpha$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">หน้าจั่ว 2</span>
+              <span>ใน $\\triangle OBC$, $OB = OC = r$ จึงเป็นสามเหลี่ยมหน้าจั่ว มีมุมที่ฐานเท่ากับ $\\beta$ มุมภายนอก $\\angle BOX = 2\\beta$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">รวมมุม</span>
+              <span>$\\angle AOB = \\angle AOX + \\angle BOX = 2\\alpha + 2\\beta = 2(\\alpha + \\beta) = 2\\angle ACB$ พิสูจน์เสร็จสมบูรณ์!</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'มุมส่วนโค้ง 30° (ศก. 60°)', action: () => { state.tabsData.central_inscribed.angleA = degToRad(60); state.tabsData.central_inscribed.angleB = degToRad(120); state.tabsData.central_inscribed.angleC = degToRad(270); draw(); } },
+          { label: 'มุมส่วนโค้ง 45° (ศก. 90°)', action: () => { state.tabsData.central_inscribed.angleA = degToRad(45); state.tabsData.central_inscribed.angleB = degToRad(135); state.tabsData.central_inscribed.angleC = degToRad(270); draw(); } },
+          { label: 'มุมส่วนโค้ง 60° (ศก. 120°)', action: () => { state.tabsData.central_inscribed.angleA = degToRad(30); state.tabsData.central_inscribed.angleB = degToRad(150); state.tabsData.central_inscribed.angleC = degToRad(270); draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้ามุมที่จุดศูนย์กลาง $\\angle AOB = 114^\\circ$ ขนาดของมุมในส่วนโค้ง $\\angle ACB$ ที่รองรับด้วยส่วนโค้งเดียวกันมีขนาดกี่องศา?',
+          options: ['57°', '114°', '228°', '66°'],
+          correct: 0,
+          feedback: 'ถูกต้อง! ขนาดของมุมในส่วนโค้ง = ครึ่งหนึ่งของมุมที่จุดศูนย์กลาง: 114° / 2 = 57°'
+        }
+      },
+
+      same_arc: {
+        title: 'ทฤษฎีบท 2: มุมในส่วนโค้งที่รองรับด้วยส่วนโค้งเดียวกัน',
+        curriculum: 'สสวท. ทฤษฎีบท 1.2',
+        theoryBody: `
+          <strong>ทฤษฎีบท:</strong> ในวงกลมวงเดียวกัน มุมในส่วนโค้งของวงกลมที่รองรับด้วยส่วนโค้งเดียวกันย่อมมีขนาดเท่ากันเสมอ
+          $$ \\angle ACB = \\angle ADB $$
+          <em>บทขยาย:</em> ไม่ว่าจะมีมุมบนส่วนโค้งกี่มุม ตราบใดที่ขาของมุมทั้งสองตั้งอยู่บนจุด $A$ และ $B$ เดียวกัน ทุกมุมจะมีขนาดเท่ากันหมด
+        `,
+        calloutTitle: 'ความคงตัว (Invariant)',
+        calloutDesc: 'ลองเลื่อนจุด $C$ และ $D$ สลับตำแหน่งกันไปมา จะพบว่า $\\angle ACB$ และ $\\angle ADB$ เท่ากันอย่างสมบูรณ์แบบ เพราะทั้งคู่ต่างเท่ากับครึ่งหนึ่งของมุมที่จุดศูนย์กลาง $\\angle AOB$',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">ขั้นที่ 1</span>
+              <span>จากทฤษฎีบท 1 มุมที่จุดศูนย์กลางเป็นสองเท่าของมุมในส่วนโค้ง: $\\angle AOB = 2\\angle ACB$ ดังนั้น $\\angle ACB = \\frac{1}{2}\\angle AOB$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ขั้นที่ 2</span>
+              <span>ในทำนองเดียวกัน มุม $\\angle ADB$ ก็รองรับด้วยส่วนโค้ง $AB$ เดียวกัน: $\\angle ADB = \\frac{1}{2}\\angle AOB$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">สรุป</span>
+              <span>ดังนั้น $\\angle ACB = \\angle ADB$ เท่ากันเสมอ!</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'มุม 45°', action: () => { state.tabsData.same_arc.angleA = degToRad(45); state.tabsData.same_arc.angleB = degToRad(135); state.tabsData.same_arc.angleC = degToRad(240); state.tabsData.same_arc.angleD = degToRad(300); draw(); } },
+          { label: 'จุด C และ D อยู่ชิดกัน', action: () => { state.tabsData.same_arc.angleC = degToRad(260); state.tabsData.same_arc.angleD = degToRad(280); draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้า $\\angle ACB = 42^\\circ$ และจุด $D$ อยู่บนส่วนโค้งเดียวกัน ขนาดของมุม $\\angle ADB$ คือเท่าใด?',
+          options: ['21°', '42°', '84°', '138°'],
+          correct: 1,
+          feedback: 'ถูกต้อง! มุมในส่วนโค้งที่รองรับด้วยส่วนโค้งเดียวกันย่อมมีขนาดเท่ากันเสมอ คือ 42°'
+        }
+      },
+
+      semicircle: {
+        title: 'ทฤษฎีบท 3: มุมในครึ่งวงกลมเป็นมุมฉาก',
+        curriculum: 'สสวท. ทฤษฎีบท 1.3',
+        theoryBody: `
+          <strong>ทฤษฎีบท:</strong> มุมในครึ่งวงกลมมีขนาดเท่ากับ $90^\\circ$ (มุมฉาก) เสมอ
+          $$ \\angle ACB = 90^\\circ $$
+          <em>ที่มา:</em> เนื่องจากเส้นผ่านศูนย์กลาง $AB$ ทำมุมที่จุดศูนย์กลางเป็นเส้นตรง $180^\\circ$ มุมในส่วนโค้งจึงเท่ากับ $180^\\circ / 2 = 90^\\circ$
+        `,
+        calloutTitle: 'เทคนิคการมองหาสามเหลี่ยมมุมฉากในวงกลม',
+        calloutDesc: 'เมื่อใดก็ตามที่โจทย์ระบุว่าด้านใดด้านหนึ่งของสามเหลี่ยมเป็น <strong>เส้นผ่านศูนย์กลาง</strong> มุมตรงข้ามเส้นผ่านศูนย์กลางจะกาง $90^\\circ$ ทันที และสามารถใช้ทฤษฎีบทพีทาโกรัส $AB^2 = AC^2 + BC^2$ เชื่อมโยงความยาวด้านได้ทันที!',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">มุมเส้นตรง</span>
+              <span>ส่วนของเส้นตรง $AB$ ผ่านจุดศูนย์กลาง $O$ ดังนั้น $\\angle AOB = 180^\\circ$ (มุมตรง)</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ทบ. 1</span>
+              <span>จากทฤษฎีบท 1 มุมในส่วนโค้ง $\\angle ACB = \\frac{1}{2}\\angle AOB = \\frac{1}{2}(180^\\circ) = 90^\\circ$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">พีทาโกรัส</span>
+              <span>เนื่องจาก $\\triangle ACB$ เป็นสามเหลี่ยมมุมฉาก จะได้ $AC^2 + BC^2 = AB^2 = (2r)^2$ เสมอ</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'อัตราส่วน 3 : 4 : 5', action: () => { state.tabsData.semicircle.angleDiameter = 0; state.tabsData.semicircle.angleC = Math.acos(3/5); draw(); } },
+          { label: 'สามเหลี่ยมหน้าจั่ว (45°-45°-90°)', action: () => { state.tabsData.semicircle.angleDiameter = 0; state.tabsData.semicircle.angleC = degToRad(90); draw(); } },
+          { label: 'หมุนเส้นผ่านศูนย์กลาง 45°', action: () => { state.tabsData.semicircle.angleDiameter = degToRad(45); state.tabsData.semicircle.angleC = degToRad(170); draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้า $AB$ เป็นเส้นผ่านศูนย์กลางยาว $10$ ซม. และ $AC = 6$ ซม. ด้าน $BC$ จะยาวกี่เซนติเมตร?',
+          options: ['6 ซม.', '8 ซม.', '10 ซม.', '12 ซม.'],
+          correct: 1,
+          feedback: 'ถูกต้อง! มุม C เป็นมุมฉาก ใช้พีทาโกรัส: BC = √(10² - 6²) = √(100 - 36) = √64 = 8 ซม.'
+        }
+      },
+
+      cyclic_quad: {
+        title: 'ทฤษฎีบท 4 & 5: รูปสี่เหลี่ยมแนบในวงกลม (Cyclic Quadrilateral)',
+        curriculum: 'สสวท. ทฤษฎีบท 1.4 & 1.5',
+        theoryBody: `
+          <strong>ทฤษฎีบท 4 (มุมตรงข้าม):</strong> รูปสี่เหลี่ยมใดๆ ที่แนบในวงกลม ผลบวกของขนาดของมุมตรงข้ามจะเท่ากับ $180^\\circ$
+          $$ \\angle A + \\angle C = 180^\\circ, \\quad \\angle B + \\angle D = 180^\\circ $$
+          <strong>ทฤษฎีบท 5 (มุมภายนอก):</strong> ถ้าต่อด้านใดด้านหนึ่งของรูปสี่เหลี่ยมแนบในวงกลมออกไป ขนาดของมุมภายนอกจะเท่ากับขนาดของมุมภายในที่อยู่ตรงข้าม
+          $$ \\angle CBX = \\angle D $$
+        `,
+        calloutTitle: 'ความคงตัว (Invariant)',
+        calloutDesc: 'ไม่ว่าจะลากจุด $A, B, C, D$ ไปที่ใดบนวงกลม ผลบวกของมุมตรงข้ามจะตรึงอยู่ที่ $180^\\circ$ เสมอ และมุมภายนอกที่ต่อด้านออกไปจะกางเท่ากับมุมภายในฝั่งตรงข้ามเป๊ะ!',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">มุมรอบจุด</span>
+              <span>ลากรัศมี $OA$ และ $OC$ จะได้มุมที่จุดศูนย์กลางสองมุมที่ประกอบกันเป็นวงกลมเต็มวง ($360^\\circ$)</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ครึ่งหนึ่ง</span>
+              <span>$\\angle B = \\frac{1}{2}$ ของมุมที่ ศก. ฝั่งหนึ่ง และ $\\angle D = \\frac{1}{2}$ ของมุมที่ ศก. อีกฝั่งหนึ่ง</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ผลรวม</span>
+              <span>$\\angle B + \\angle D = \\frac{1}{2}(360^\\circ) = 180^\\circ$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">มุมภายนอก</span>
+              <span>เนื่องจาก $\\angle B + \\angle CBX = 180^\\circ$ (เส้นตรง) และ $\\angle B + \\angle D = 180^\\circ$ ดังนั้น $\\angle CBX = \\angle D$</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'สี่เหลี่ยมผืนผ้า (90° ทุกมุม)', action: () => { state.tabsData.cyclic_quad.angleA = degToRad(45); state.tabsData.cyclic_quad.angleB = degToRad(135); state.tabsData.cyclic_quad.angleC = degToRad(225); state.tabsData.cyclic_quad.angleD = degToRad(315); draw(); } },
+          { label: 'สี่เหลี่ยมคางหมูหน้าจั่ว', action: () => { state.tabsData.cyclic_quad.angleA = degToRad(30); state.tabsData.cyclic_quad.angleB = degToRad(150); state.tabsData.cyclic_quad.angleC = degToRad(210); state.tabsData.cyclic_quad.angleD = degToRad(330); draw(); } }
+        ],
+        quiz: {
+          q: 'ในสี่เหลี่ยมแนบในวงกลม $ABCD$ ถ้า $\\angle A = 75^\\circ$ มุม $\\angle C$ ที่อยู่ตรงข้ามจะมีขนาดกี่องศา?',
+          options: ['75°', '95°', '105°', '115°'],
+          correct: 2,
+          feedback: 'ถูกต้อง! มุมตรงข้ามรวมกันได้ 180°: 180° - 75° = 105°'
+        }
+      },
+
+      chords: {
+        title: 'ทฤษฎีบท 6 & 7: คอร์ดของวงกลมและการตั้งฉากแบ่งครึ่ง',
+        curriculum: 'สสวท. ทฤษฎีบท 2.1 & 2.2',
+        theoryBody: `
+          <strong>ทฤษฎีบท 6 (การแบ่งครึ่งคอร์ด):</strong> ส่วนของเส้นตรงที่ลากจากจุดศูนย์กลางมาตั้งฉากกับคอร์ด จะแบ่งครึ่งคอร์ดนั้นเสมอ ($OM \\perp AB \\implies AM = MB$) 
+
+          <strong>ทฤษฎีบท 7 (คอร์ดที่เท่ากัน):</strong> ในวงกลมเดียวกัน คอร์ดที่ยาวเท่ากันจะอยู่ห่างจากจุดศูนย์กลางเท่ากัน และในทางกลับกัน คอร์ดที่อยู่ห่างจากจุดศูนย์กลางเท่ากันย่อมยาวเท่ากัน ($c_1 = c_2 \\iff d_1 = d_2$)
+        `,
+        calloutTitle: 'เทคนิคสามเหลี่ยมมุมฉาก คอร์ด-รัศมี',
+        calloutDesc: `เมื่อลากเส้นตั้งฉาก $OM$ และลากรัศมี $OA = r$ จะเกิดสามเหลี่ยมมุมฉาก $OMA$ ที่มีความสัมพันธ์ตามทฤษฎีบทพีทาโกรัส: 
+$$ r^2 = d^2 + \\left(\\frac{c}{2}\\right)^2 $$ 
+โดย $d = OM$ คือระยะห่างจากจุดศูนย์กลาง และ $c = AB$ คือความยาวคอร์ด`,
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">ลากรัศมี</span>
+              <span>ลาก $OA$ และ $OB$ จะได้ $OA = OB = r$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">สามเหลี่ยมเท่ากัน</span>
+              <span>ใน $\\triangle OMA$ และ $\\triangle OMB$ มี $OA = OB$, $OM = OM$ (ด้านร่วม) และมุมฉาก $\\angle OMA = \\angle OMB = 90^\\circ$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ฉ-ด-ด</span>
+              <span>$\\triangle OMA \\cong \\triangle OMB$ (แบบ ฉาก-ด้าน-ด้าน) ส่งผลให้ด้านสมนัยกันยาวเท่ากัน: $AM = MB$</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'ระยะห่าง d = 0.5r', action: () => { state.tabsData.chords.distFactor = 0.5; draw(); } },
+          { label: 'ระยะห่าง d = 0.8r (คอร์ดสั้น)', action: () => { state.tabsData.chords.distFactor = 0.8; draw(); } },
+          { label: 'ลากผ่าน ศก. d = 0 (เส้นผ่าน ศก.)', action: () => { state.tabsData.chords.distFactor = 0.05; draw(); } }
+        ],
+        quiz: {
+          q: 'วงกลมรัศมี $10$ ซม. มีคอร์ดห่างจากจุดศูนย์กลาง $6$ ซม. คอร์ดนี้ยาวกี่เซนติเมตร?',
+          options: ['8 ซม.', '12 ซม.', '16 ซม.', '20 ซม.'],
+          correct: 2,
+          feedback: 'ถูกต้อง! ครึ่งคอร์ด = √(10² - 6²) = √(100 - 36) = √64 = 8 ซม. ดังนั้นความยาวคอร์ดเต็ม = 2 × 8 = 16 ซม.'
+        }
+      },
+
+      tangents: {
+        title: 'ทฤษฎีบท 8 & 9: เส้นสัมผัสวงกลมและจุดภายนอก',
+        curriculum: 'สสวท. ทฤษฎีบท 3.1 & 3.2',
+        theoryBody: `
+          <strong>ทฤษฎีบท 8 (รัศมีตั้งฉากเส้นสัมผัส):</strong> เส้นสัมผัสวงกลมจะตั้งฉากกับรัศมีของวงกลมที่จุดสัมผัสเสมอ ($OP \\perp L$) 
+
+          <strong>ทฤษฎีบท 9 (เส้นสัมผัสจากจุดภายนอก):</strong> ถ้าลากเส้นสัมผัสสองเส้นจากจุดภายนอก $P$ มาสัมผัสวงกลม:
+          <ol style="margin: 6px 0 6px 20px;">
+            <li>ความยาวส่วนของเส้นสัมผัสย่อมเท่ากัน ($PA = PB$)</li>
+            <li>เส้น $OP$ จะแบ่งครึ่งมุมระหว่างเส้นสัมผัส ($\\angle APO = \\angle BPO$)</li>
+            <li>เส้น $OP$ จะแบ่งครึ่งมุมที่จุดศูนย์กลาง ($\\angle AOP = \\angle BOP$)</li>
+          </ol>
+        `,
+        calloutTitle: 'ความคงตัว (Invariant)',
+        calloutDesc: `เนื่องจาก $\\angle OAP = \\angle OBP = 90^\\circ$ สี่เหลี่ยม $OAPB$ จึงเป็นสี่เหลี่ยมแนบในวงกลมที่มีมุมตรงข้ามรวมกันได้ $180^\\circ$ เสมอ: 
+$$ \\angle APB + \\angle AOB = 180^\\circ $$`,
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">มุมฉาก</span>
+              <span>จากทฤษฎีบท 8 รัศมีตั้งฉากเส้นสัมผัส $\\angle OAP = \\angle OBP = 90^\\circ$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ฉ-ด-ด</span>
+              <span>ใน $\\triangle OAP$ และ $\\triangle OBP$: $OA = OB = r$, $OP$ เป็นด้านร่วม $\\implies \\triangle OAP \\cong \\triangle OBP$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">สรุป</span>
+              <span>ดังนั้น $PA = PB$ (เส้นสัมผัสยาวเท่ากัน) และมุมสมนัยกันย่อมเท่ากันทั้งสองคู่</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'ระยะห่าง P = 2r (มุม 60°)', action: () => { state.tabsData.tangents.distRatio = 2.0; state.tabsData.tangents.angleP = 0; draw(); } },
+          { label: 'ระยะห่าง P ชิดวงกลม (1.3r)', action: () => { state.tabsData.tangents.distRatio = 1.3; draw(); } },
+          { label: 'ระยะห่าง P ไกล (2.5r)', action: () => { state.tabsData.tangents.distRatio = 2.5; draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้ามุมระหว่างเส้นสัมผัสทั้งสอง $\\angle APB = 50^\\circ$ ขนาดของมุมที่จุดศูนย์กลาง $\\angle AOB$ จะมีขนาดกี่องศา?',
+          options: ['50°', '100°', '130°', '140°'],
+          correct: 2,
+          feedback: 'ถูกต้อง! สี่เหลี่ยม OAPB มีมุมฉาก 2 มุม ดังนั้น ∠APB + ∠AOB = 180° จะได้ ∠AOB = 180° - 50° = 130°'
+        }
+      },
+
+      alternate_segment: {
+        title: 'ทฤษฎีบท 10: ทฤษฎีบทส่วนโค้งสลับ (Alternate Segment Theorem)',
+        curriculum: 'สสวท. ทฤษฎีบท 3.3',
+        theoryBody: `
+          <strong>ทฤษฎีบท:</strong> มุมที่เกิดจากเส้นสัมผัสจรดกับคอร์ด ย่อมมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ดนั้น
+          $$ \\text{มุมระหว่างเส้นสัมผัสกับคอร์ด } AB = \\angle ACB $$
+          <em>เทคนิคช่วยจำ:</em> มุมแหลมระหว่างเส้นสัมผัสกับคอร์ด จะเท่ากับมุมยอดของสามเหลี่ยมที่กางอยู่บนคอร์ดนั้นในฝั่งตรงข้าม
+        `,
+        calloutTitle: 'ความคงตัว (Invariant)',
+        calloutDesc: 'ลองเลื่อนจุด $C$ ไปมาบนส่วนโค้งฝั่งตรงข้าม จะเห็นว่า $\\angle ACB$ ไม่เปลี่ยนขนาดเลย และมีค่าเท่ากับมุมระหว่างเส้นสัมผัสกับคอร์ด $AB$ พอดีตลอดเวลา!',
+        proofBody: `
+          <ul class="proof-steps">
+            <li class="proof-step-item">
+              <span class="step-marker">เส้นผ่าน ศก.</span>
+              <span>ลากเส้นผ่านศูนย์กลาง $AD$ และลากคอร์ด $DB$ จะได้ $\\angle ABD = 90^\\circ$ (มุมในครึ่งวงกลม)</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">มุมฉาก</span>
+              <span>รัศมีตั้งฉากเส้นสัมผัส: $\\angle DAT = 90^\\circ$ ดังนั้น $\\angle BAT = 90^\\circ - \\angle DAB$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ไล่มุม</span>
+              <span>ในสามเหลี่ยมมุมฉาก $ABD$: $\\angle ADB = 90^\\circ - \\angle DAB$ ดังนั้น $\\angle BAT = \\angle ADB$</span>
+            </li>
+            <li class="proof-step-item">
+              <span class="step-marker">ทบ. 2</span>
+              <span>เนื่องจาก $\\angle ADB$ และ $\\angle ACB$ รองรับด้วยส่วนโค้ง $AB$ เดียวกัน $\\implies \\angle ADB = \\angle ACB$ จึงสรุปได้ว่า $\\angle BAT = \\angle ACB$</span>
+            </li>
+          </ul>
+        `,
+        presets: [
+          { label: 'มุมสัมผัส-คอร์ด 35° (ตามตัวอย่างในโน้ต)', action: () => { state.tabsData.alternate_segment.angleA = degToRad(0); state.tabsData.alternate_segment.angleB = degToRad(70); state.tabsData.alternate_segment.angleC = degToRad(200); draw(); } },
+          { label: 'มุมสัมผัส-คอร์ด 60°', action: () => { state.tabsData.alternate_segment.angleA = degToRad(0); state.tabsData.alternate_segment.angleB = degToRad(120); state.tabsData.alternate_segment.angleC = degToRad(230); draw(); } }
+        ],
+        quiz: {
+          q: 'ถ้าคอร์ด $AB$ ทำมุมกับเส้นสัมผัส $48^\\circ$ มุมในส่วนโค้งที่อยู่ตรงข้ามกับคอร์ดจะมีขนาดกี่องศา?',
+          options: ['24°', '48°', '96°', '132°'],
+          correct: 1,
+          feedback: 'ถูกต้อง! จาก Alternate Segment Theorem มุมในส่วนโค้งตรงข้ามจะเท่ากับมุมระหว่างเส้นสัมผัสกับคอร์ดพอดี คือ 48°'
+        }
+      },
+
+      worked_examples: {
+        title: 'ตัวอย่างโจทย์ & ยุทธวิธีการลากเส้นช่วย (Worked Examples & Auxiliary Lines)',
+        curriculum: 'สสวท. ตัวอย่างโจทย์ข้อสอบ',
+        theoryBody: `
+          <strong>ยุทธวิธีการลากเส้นช่วย 3 แบบหลัก:</strong>
+          <ol style="margin: 6px 0 10px 20px;">
+            <li><strong>ลากรัศมีไปยังจุดสำคัญ:</strong> เพื่อสร้าง <em>สามเหลี่ยมหน้าจั่ว</em> สองรูปประกบกัน</li>
+            <li><strong>ลากเส้นตั้งฉากกับคอร์ด:</strong> เพื่อสร้างสามเหลี่ยมมุมฉากและใช้พีทาโกรัส $r^2 = d^2 + (c/2)^2$</li>
+            <li><strong>ลากรัศมีไปยังจุดสัมผัส:</strong> เพื่อสร้างมุมฉาก $90^\\circ$ ณ จุดสัมผัส</li>
+          </ol>
+        `,
+        calloutTitle: 'โจทย์คลาสสิกที่พบบ่อยในข้อสอบ',
+        calloutDesc: 'เลือกสลับระหว่าง <strong>ตัวอย่างที่ 1</strong> (หามุมจากคอร์ดและเส้นสัมผัส) และ <strong>ตัวอย่างที่ 2</strong> (ระยะห่างคอร์ดคู่ขนาน 2 เส้น) ด้วยปุ่มด้านล่างเพื่อดูการจำลองและวิธีคิดละเอียด',
+        proofBody: `
+          <div id="exampleExplanation">
+            กำลังโหลดคำอธิบายโจทย์...
+          </div>
+        `,
+        presets: [
+          { label: 'ตัวอย่างที่ 1: มุมเส้นสัมผัส 35°', action: () => { state.tabsData.worked_examples.exType = 'ex1'; updateExtraSliders(); draw(); updateTabContent(); } },
+          { label: 'ตัวอย่างที่ 2: คอร์ดคู่ขนาน คนละข้าง (d = 14 ซม.)', action: () => { state.tabsData.worked_examples.exType = 'ex2'; state.tabsData.worked_examples.ex2Opposite = true; updateExtraSliders(); draw(); updateTabContent(); } },
+          { label: 'ตัวอย่างที่ 2: คอร์ดคู่ขนาน ข้างเดียวกัน (d = 2 ซม.)', action: () => { state.tabsData.worked_examples.exType = 'ex2'; state.tabsData.worked_examples.ex2Opposite = false; updateExtraSliders(); draw(); updateTabContent(); } }
+        ],
+        quiz: {
+          q: 'ในวงกลมรัศมี $10$ ซม. คอร์ดสองเส้นยาว $12$ และ $16$ ซม. ถ้าอยู่ "ข้างเดียวกัน" ของจุดศูนย์กลาง จะห่างกันกี่เซนติเมตร?',
+          options: ['2 ซม.', '4 ซม.', '14 ซม.', '28 ซม.'],
+          correct: 0,
+          feedback: 'ถูกต้อง! d₁ = √(10² - 8²) = 6, d₂ = √(10² - 6²) = 8 เมื่ออยู่ข้างเดียวกัน ระยะห่างคือ |8 - 6| = 2 ซม. (ถ้าคนละข้างจะบวกกันได้ 14 ซม.)'
+        }
+      }
+    };
+
+    // TAB SWITCHING
+    function switchTab(tabId) {
+      state.activeTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        const id = Object.keys(tabsConfig)[idx];
+        btn.classList.toggle('active', id === tabId);
+      });
+
+      updateTabContent();
+      updateExtraSliders();
+      draw();
+    }
+
+    function updateTabContent() {
+      const cfg = tabsConfig[state.activeTab];
+      if (!cfg) return;
+
+      document.getElementById('theoryTitle').textContent = cfg.title;
+      document.getElementById('theoryCurriculum').textContent = cfg.curriculum;
+      document.getElementById('theoryBody').innerHTML = cfg.theoryBody;
+      document.getElementById('calloutTitle').textContent = cfg.calloutTitle;
+      document.getElementById('calloutDesc').innerHTML = cfg.calloutDesc;
+      
+      const proofBodyEl = document.getElementById('proofBody');
+      if (state.activeTab === 'worked_examples') {
+        const exType = state.tabsData.worked_examples.exType;
+        if (exType === 'ex1') {
+          proofBodyEl.innerHTML = `
+            <strong>วิธีทำ 2 รูปแบบ (โจทย์มุมสัมผัส $35^\\circ$):</strong>
+            <ul class="proof-steps" style="margin-top: 8px;">
+              <li class="proof-step-item">
+                <span class="step-marker">วิธีที่ 1</span>
+                <span><strong>ใช้รัศมีตั้งฉาก:</strong> ลาก $OA \\implies \\angle OAP = 90^\\circ$ จะได้ $\\angle OAB = 90^\\circ - 35^\\circ = 55^\\circ$ 
+ เนื่องจาก $OA = OB = r$ (หน้าจั่ว) $\\implies \\angle OBA = 55^\\circ$ 
+ มุมที่ ศก. $\\angle AOB = 180^\\circ - 2(55^\\circ) = 70^\\circ$</span>
+              </li>
+              <li class="proof-step-item">
+                <span class="step-marker">วิธีที่ 2</span>
+                <span><strong>ใช้ทฤษฎีบทส่วนโค้งสลับ:</strong> มุมในส่วนโค้งตรงข้าม = $35^\\circ$ ทันที 
+ จากนั้นใช้ทฤษฎีบท 1: $\\angle AOB = 2 \\times 35^\\circ = 70^\\circ$ (เร็วกว่ามาก!)</span>
+              </li>
+            </ul>
+          `;
+        } else {
+          const isOpp = state.tabsData.worked_examples.ex2Opposite;
+          proofBodyEl.innerHTML = `
+            <strong>วิธีทำโจทย์คอร์ดคู่ขนาน ($r=10$, $c_1=16$, $c_2=12$ ซม.):</strong>
+            <ul class="proof-steps" style="margin-top: 8px;">
+              <li class="proof-step-item">
+                <span class="step-marker">คอร์ด 1</span>
+                <span>ครึ่งคอร์ด $= 16/2 = 8$ ซม. $\\implies d_1 = \\sqrt{10^2 - 8^2} = \\sqrt{36} = 6$ ซม.</span>
+              </li>
+              <li class="proof-step-item">
+                <span class="step-marker">คอร์ด 2</span>
+                <span>ครึ่งคอร์ด $= 12/2 = 6$ ซม. $\\implies d_2 = \\sqrt{10^2 - 6^2} = \\sqrt{64} = 8$ ซม.</span>
+              </li>
+              <li class="proof-step-item">
+                <span class="step-marker">สรุป</span>
+                <span>${isOpp ? 'คอร์ดอยู่ <strong>คนละข้าง</strong> ของจุดศูนย์กลาง $\\implies d = d_1 + d_2 = 6 + 8 = 14$ ซม.' : 'คอร์ดอยู่ <strong>ข้างเดียวกัน</strong> ของจุดศูนย์กลาง $\\implies d = |d_2 - d_1| = 8 - 6 = 2$ ซม.'}</span>
+              </li>
+            </ul>
+          `;
+        }
+      } else {
+        proofBodyEl.innerHTML = cfg.proofBody;
+      }
+
+      // Presets
+      const presetGroup = document.getElementById('presetGroup');
+      presetGroup.innerHTML = '<span class="preset-label">ตำแหน่งแนะนำ:</span>';
+      (cfg.presets || []).forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'preset-btn';
+        btn.textContent = p.label;
+        btn.onclick = p.action;
+        presetGroup.appendChild(btn);
+      });
+
+      // Quiz
+      const q = cfg.quiz;
+      if (q) {
+        document.getElementById('quizQ').innerHTML = q.q;
+        const optContainer = document.getElementById('quizOptions');
+        optContainer.innerHTML = '';
+        const fb = document.getElementById('quizFeedback');
+        fb.className = 'quiz-feedback';
+        fb.style.display = 'none';
+
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-opt-btn';
+          btn.innerHTML = opt;
+          btn.onclick = () => {
+            optContainer.querySelectorAll('.quiz-opt-btn').forEach(b => b.disabled = true);
+            if (idx === q.correct) {
+              btn.classList.add('correct');
+              fb.className = 'quiz-feedback show-correct';
+              fb.innerHTML = q.feedback;
+            } else {
+              btn.classList.add('wrong');
+              optContainer.children[q.correct].classList.add('correct');
+              fb.className = 'quiz-feedback show-wrong';
+              fb.innerHTML = 'ยังไม่ถูกต้อง ลองดูคำอธิบาย: ' + q.feedback;
+            }
+            typesetMath(fb);
+          };
+          optContainer.appendChild(btn);
+        });
+      }
+
+      // KaTeX typeset for updated cards
+      typesetMath(document.getElementById('theoryCard'));
+      typesetMath(document.getElementById('proofCard'));
+      typesetMath(document.getElementById('quizBox'));
+    }
+
+    function updateExtraSliders() {
+      const container = document.getElementById('extraSlidersContainer');
+      container.innerHTML = '';
+
+      if (state.activeTab === 'chords') {
+        container.innerHTML = `
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>ระยะห่างคอร์ด d = OM</span>
+              <span id="sliderChordDistVal">${(state.tabsData.chords.distFactor * 100).toFixed(0)}% ของรัศมี</span>
+            </div>
+            <input type="range" min="5" max="92" value="${state.tabsData.chords.distFactor * 100}" oninput="
+              state.tabsData.chords.distFactor = this.value / 100;
+              document.getElementById('sliderChordDistVal').textContent = this.value + '% ของรัศมี';
+              draw();
+            ">
+          </div>
+          <label class="toggle-control">
+            <input type="checkbox" ${state.tabsData.chords.showSecondChord ? 'checked' : ''} onchange="
+              state.tabsData.chords.showSecondChord = this.checked;
+              draw();
+            ">
+            <span>เปรียบเทียบคอร์ดเส้นที่ 2 (CD)</span>
+          </label>
+        `;
+      } else if (state.activeTab === 'tangents') {
+        container.innerHTML = `
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>ระยะห่างจุดภายนอก P</span>
+              <span id="sliderTangentPVal">${state.tabsData.tangents.distRatio.toFixed(2)}r</span>
+            </div>
+            <input type="range" min="115" max="280" value="${state.tabsData.tangents.distRatio * 100}" oninput="
+              state.tabsData.tangents.distRatio = this.value / 100;
+              document.getElementById('sliderTangentPVal').textContent = (this.value / 100).toFixed(2) + 'r';
+              draw();
+            ">
+          </div>
+        `;
+      } else if (state.activeTab === 'worked_examples' && state.tabsData.worked_examples.exType === 'ex1') {
+        container.innerHTML = `
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>มุมคอร์ดกับเส้นสัมผัส (องศา)</span>
+              <span id="sliderEx1Val">${state.tabsData.worked_examples.ex1Angle}°</span>
+            </div>
+            <input type="range" min="15" max="75" value="${state.tabsData.worked_examples.ex1Angle}" oninput="
+              state.tabsData.worked_examples.ex1Angle = parseInt(this.value);
+              document.getElementById('sliderEx1Val').textContent = this.value + '°';
+              draw();
+            ">
+          </div>
+        `;
+      }
+    }
+
+    // KaTeX Typesetting Helper
+    function typesetMath(el = document.body) {
+      if (typeof renderMathInElement === 'function') {
+        try {
+          renderMathInElement(el, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false }
+            ],
+            throwOnError: false
+          });
+        } catch (err) {
+          console.warn('KaTeX typeset warning:', err);
+        }
+      }
+    }
+
+    function initKaTeX() {
+      typesetMath(document.body);
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      resizeCanvas();
+      switchTab('anatomy');
+      setTimeout(initKaTeX, 200);
+      setTimeout(initKaTeX, 800);
+    });
+  </script>
+</body>
+</html>
