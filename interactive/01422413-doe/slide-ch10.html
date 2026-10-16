@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทที่ 10: แผนการทดลองแบบสปลิท-พลอท (Split-Plot) | 01422413</title>
+  
+  <!-- Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}], throwOnError: false});"></script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-page:        #f8fafc;
+      --bg-surface:     #ffffff;
+      --bg-alt:         #f1f5f9;
+      --ink:            #0f172a;
+      --ink-muted:      #475569;
+      --ink-subtle:     #64748b;
+      
+      --bw:             2px;
+      --border:         #0f172a;
+      --border-subtle:  #cbd5e1;
+      --shadow-hard:    4px 4px 0px 0px #0f172a;
+      --shadow-soft:    2px 2px 0px 0px #0f172a;
+      --radius:         8px;
+
+      /* Semantic Accent Color for Chapter 10 */
+      --accent-main:    #0f172a;
+      --accent-tint:    #f3e8ff;
+      --accent-warn:    #d97706;
+      --accent-danger:  #dc2626;
+
+      --font-heading:   'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-body:      'Bai Jamjuree', -apple-system, sans-serif;
+      --font-mono:      'JetBrains Mono', monospace;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg-page);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.5;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* NEO-MATH HUD BARS */
+    .hud-top {
+      position: fixed;
+      top: 0; left: 0; right: 0; height: 52px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem;
+      background: var(--bg-surface);
+      border-bottom: var(--bw) solid var(--border);
+      z-index: 100;
+    }
+
+    .brand-block {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .pill-badge {
+      background: var(--accent-main);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1.5px solid var(--border);
+      letter-spacing: 0.05em;
+    }
+
+    .course-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    .hud-chapter-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      background: var(--bg-alt);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-fs {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-fs:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 0 var(--border);
+    }
+
+    .hud-bottom {
+      position: fixed;
+      bottom: 0; left: 0; right: 0; height: 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem;
+      background: var(--bg-surface);
+      border-top: var(--bw) solid var(--border);
+      z-index: 100;
+    }
+
+    .progress-track {
+      position: absolute; top: -3px; left: 0; right: 0; height: 4px;
+      background: #e2e8f0;
+    }
+
+    .progress-fill {
+      height: 100%; width: 10%;
+      background: var(--accent-main);
+      transition: width 0.3s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-group {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .neo-btn {
+      background: var(--bg-surface);
+      border: var(--bw) solid var(--border);
+      box-shadow: var(--shadow-soft);
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .neo-btn:hover:not(:disabled) {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 0 var(--border);
+      background: var(--accent-tint);
+    }
+
+    .neo-btn:active:not(:disabled) {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 0 var(--border);
+    }
+
+    .neo-btn:disabled {
+      opacity: 0.35; cursor: not-allowed; box-shadow: none;
+    }
+
+    .slide-counter-badge {
+      font-family: var(--font-mono);
+      font-size: 13px; font-weight: 700; color: var(--ink);
+      padding: 4px 12px; background: var(--bg-alt);
+      border: 1.5px solid var(--border); border-radius: 6px;
+    }
+
+    .slide-counter-badge strong {
+      color: var(--accent-main);
+    }
+
+    .hud-kbd-hint {
+      font-family: var(--font-mono); font-size: 11px; color: var(--ink-subtle);
+    }
+
+    .hud-kbd-hint kbd {
+      background: var(--bg-alt); border: 1px solid var(--border-subtle);
+      border-bottom-width: 2px; padding: 2px 6px; border-radius: 3px;
+      color: var(--ink); font-weight: 600;
+    }
+
+    /* DECK STAGE */
+    .deck-stage {
+      position: absolute; top: 52px; bottom: 56px; left: 0; right: 0;
+      overflow: hidden; z-index: 10;
+    }
+
+    .slide {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      padding: 2.2rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      visibility: hidden; opacity: 0; transform: translateY(6px);
+      transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+      pointer-events: none;
+    }
+
+    .slide.is-active {
+      visibility: visible; opacity: 1; transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .slide-wrapper {
+      max-width: 1220px; width: 100%; margin: 0 auto; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    /* Typography */
+    .slide-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-kicker::before {
+      content: ''; display: inline-block; width: 8px; height: 8px;
+      background: var(--accent-main); border-radius: 2px; border: 1px solid var(--border);
+    }
+
+    .slide-heading {
+      font-family: var(--font-heading); font-size: clamp(2.0rem, 3.2vw, 2.75rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-heading em {
+      font-style: normal; color: var(--accent-main); background: var(--accent-tint);
+      padding: 0 6px; border-radius: 4px; border: 1px dashed var(--accent-main);
+    }
+
+    .lead-text {
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem); color: var(--ink-muted);
+      line-height: 1.55; margin-bottom: 1.25rem; max-width: 1080px;
+    }
+
+    /* Cards & Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+    .grid-story { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.6rem; align-items: center; }
+
+    .neo-card {
+      background: var(--bg-surface); border: var(--bw) solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-hard);
+      padding: 1.2rem 1.35rem; position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .neo-card:hover {
+      transform: translate(-1px, -1px); box-shadow: 5px 5px 0px 0px var(--border);
+    }
+
+    .neo-card.card-accent { border-top: 6px solid var(--accent-main); }
+    .neo-card.card-warn { border-top: 6px solid var(--accent-warn); }
+    .neo-card.card-danger { border-top: 6px solid var(--accent-danger); }
+
+    .card-title {
+      font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;
+    }
+
+    .card-body {
+      font-size: 0.92rem; color: var(--ink-muted); line-height: 1.5;
+    }
+
+    .card-body strong { color: var(--ink); font-weight: 600; }
+
+    .neo-list { list-style: none; margin-top: 0.4rem; }
+    .neo-list li {
+      position: relative; padding-left: 20px; margin-bottom: 6px; line-height: 1.45;
+    }
+    .neo-list li::before {
+      content: '✔'; position: absolute; left: 0; color: var(--accent-main); font-weight: 800; font-size: 11px;
+    }
+
+    .neo-callout {
+      background: var(--accent-tint); border: var(--bw) solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-soft);
+      padding: 0.85rem 1.25rem; margin-top: 1.1rem; font-size: 0.92rem;
+      color: var(--ink); display: flex; align-items: center; gap: 12px;
+    }
+
+    .neo-callout .callout-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .neo-callout strong { color: var(--accent-main); font-weight: 700; }
+
+    .neo-meta-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+      background: var(--bg-surface); border: var(--bw) solid var(--border);
+      box-shadow: var(--shadow-soft); border-radius: var(--radius);
+      padding: 0.75rem 1.2rem; margin-bottom: 1.25rem;
+    }
+
+    .neo-meta-item .meta-label {
+      display: block; font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      color: var(--ink-subtle); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;
+    }
+
+    .neo-meta-item .meta-value {
+      font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--ink);
+    }
+
+    .neo-table-wrapper {
+      border: var(--bw) solid var(--border); box-shadow: var(--shadow-hard);
+      border-radius: var(--radius); overflow: hidden; background: var(--bg-surface); margin-top: 0.6rem;
+    }
+
+    table.neo-table {
+      width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;
+    }
+    table.neo-table th {
+      background: var(--bg-alt); color: var(--ink); font-family: var(--font-heading);
+      font-weight: 700; padding: 10px 14px; border-bottom: var(--bw) solid var(--border);
+    }
+    table.neo-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); color: var(--ink-muted);
+    }
+    table.neo-table tr:last-child td { border-bottom: none; }
+
+    .story-box {
+      background: var(--bg-surface); border: var(--bw) solid var(--border);
+      box-shadow: var(--shadow-hard); border-radius: var(--radius); padding: 1.4rem;
+    }
+
+    .story-quote {
+      font-style: italic; color: var(--ink); border-left: 4px solid var(--accent-main);
+      margin: 0.8rem 0; font-size: 1.02rem; font-weight: 500; background: var(--accent-tint);
+      padding: 8px 12px; border-radius: 0 4px 4px 0;
+    }
+
+    /* Audit Checklist */
+    .audit-checklist { display: flex; flex-direction: column; gap: 8px; }
+    .audit-item {
+      background: #fef2f2; border: 1.5px solid #b91c1c; border-radius: 6px;
+      padding: 8px 12px; display: flex; align-items: flex-start; gap: 10px;
+    }
+    .audit-badge {
+      background: #dc2626; color: #ffffff; font-family: var(--font-mono);
+      font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .audit-text { font-size: 0.88rem; color: #7f1d1d; line-height: 1.4; }
+    .audit-text strong { color: #991b1b; }
+
+    /* Simulation Generic Neo Box */
+    .sim-desk-neo {
+      display: grid; grid-template-columns: 310px 1fr; gap: 1.4rem;
+      background: var(--bg-surface); border: var(--bw) solid var(--border);
+      box-shadow: var(--shadow-hard); border-radius: var(--radius); padding: 1.1rem;
+    }
+    .sim-panel-neo {
+      background: var(--bg-alt); border: 1.5px solid var(--border); border-radius: 6px;
+      padding: 0.9rem; display: flex; flex-direction: column; gap: 10px;
+    }
+    .sim-btn-neo {
+      background: var(--bg-surface); border: 1.5px solid var(--border); box-shadow: var(--shadow-soft);
+      color: var(--ink); font-family: var(--font-heading); font-size: 11px; font-weight: 700;
+      padding: 7px 10px; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.15s ease;
+    }
+    .sim-btn-neo:hover { background: var(--accent-tint); transform: translate(-1px, -1px); }
+    .sim-btn-neo.active { background: var(--accent-main); color: #ffffff; border-color: var(--border); }
+
+    /* Responsive adjustments for 720p Projectors */
+    @media (max-height: 760px) {
+      .slide { padding: 1.2rem 2.5rem; }
+      .slide-heading { font-size: 1.85rem; margin-bottom: 0.3rem; }
+      .lead-text { font-size: 0.92rem; margin-bottom: 0.8rem; }
+      .sim-desk-neo { padding: 0.8rem; gap: 1rem; }
+      .neo-card { padding: 1rem 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HUD -->
+  <header class="hud-top">
+    <div class="brand-block">
+      <span class="pill-badge">01422413</span>
+      <span class="course-title">การวางแผนการทดลอง (DESIGN OF EXPERIMENTS)</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span class="hud-chapter-tag">บทที่ 10: แผนการทดลองแบบสปลิท-พลอท (Split-Plot)</span>
+      <button class="btn-fs" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
+    </div>
+  </header>
+
+  <!-- DECK STAGE -->
+  <main class="deck-stage">
+
+    <!-- SLIDE 1: Cover & Metadata -->
+    <section class="slide is-active" id="slide-1">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">MODULE 10 · SPLIT-PLOT DESIGN</div>
+        <h1 class="slide-heading">บทที่ 10: <em>แผนการทดลองแบบสปลิท-พลอท (Split-Plot)</em></h1>
+        <p class="lead-text">
+          เรียนรู้โครงสร้างทางสถิติ การวางผังแปลง การทดสอบสมมติฐานทางคณิตศาสตร์ และการแปลผลการวิจัยจริงอย่างถูกต้องตามมาตรฐานสากล
+        </p>
+
+        <div class="neo-meta-strip">
+          <div class="neo-meta-item"><span class="meta-label">โครงสร้าง Error</span><span class="meta-value">2 ระดับ: Error_a และ Error_b</span></div>
+          <div class="neo-meta-item"><span class="meta-label">Main Plot</span><span class="meta-value">ปัจจัยที่เปลี่ยนยาก (คลอง/รถไถ)</span></div>
+          <div class="neo-meta-item"><span class="meta-label">Subplot</span><span class="meta-value">ปัจจัยที่เปลี่ยนง่าย (ปุ๋ย/พันธุ์)</span></div>
+          <div class="neo-meta-item"><span class="meta-label">การสุ่ม</span><span class="meta-value">Two-Stage Randomization</span></div>
+        </div>
+
+        <div class="grid-3">
+          <div class="neo-card card-accent">
+            <div class="card-title">1. วัตถุประสงค์หลัก</div>
+            <div class="card-body">ทำความเข้าใจตัวแบบเชิงเส้นทางสถิติ ($y$) และการสุ่มจัดสรรทรีตเมนต์ลงสู่หน่วยทดลองอย่างถูกต้อง</div>
+          </div>
+          <div class="neo-card card-accent">
+            <div class="card-title">2. การวิเคราะห์ ANOVA</div>
+            <div class="card-body">แยกผลรวมกำลังสอง ($SS$) คำนวณองศาอิสระ ($df$) และทดสอบอัตราส่วนความแปรปรวน ($F$-test)</div>
+          </div>
+          <div class="neo-card card-accent">
+            <div class="card-title">3. การประยุกต์ใช้งาน</div>
+            <div class="card-body">เชื่อมโยงสู่การทำโครงงาน วิจัยเกษตรกรรม อุตสาหกรรมชีวภาพ และการเขียนวิทยานิพนธ์ระดับบัณฑิตศึกษา</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Linear Model & Theory -->
+    <section class="slide" id="slide-2">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">STATISTICAL FORMULATION · ตัวแบบทางสถิติ</div>
+        <h2 class="slide-heading">ตัวแบบเชิงเส้นและข้อกำหนดทางคณิตศาสตร์</h2>
+        <p class="lead-text">
+          ตัวแบบทางสถิติของแผนแบบนี้ สะท้อนแหล่งที่มาของความแปรปรวนที่ผู้วิจัยต้องการศึกษาและส่วนที่ควบคุม:
+        </p>
+        <div class="grid-2">
+          <div class="neo-card card-accent">
+            <div class="card-title">สมการตัวแบบเชิงเส้น (Linear Model)</div>
+            <div class="card-body">
+              $$y_{ij} = \mu + 	au_i + arepsilon_{ij}$$
+              <ul class="neo-list">
+                <li>$y_{ij}$ = ค่าสังเกตของหน่วยทดลองที่ได้รับทรีตเมนต์ $i$ ซ้ำที่ $j$</li>
+                <li>$\mu$ = ค่าเฉลี่ยรวมแท้จริง (Overall True Mean)</li>
+                <li>$	au_i$ = อิทธิพลของทรีตเมนต์ที่ $i$ โดย $\sum 	au_i = 0$ (Fixed Effect)</li>
+                <li>$arepsilon_{ij}$ = ความคลาดเคลื่อนสุ่ม โดย $arepsilon_{ij} \sim 	ext{NID}(0, \sigma^2)$</li>
+              </ul>
+            </div>
+          </div>
+          <div class="neo-card">
+            <div class="card-title">ข้อสมมติฐานและเงื่อนไขบังคับ</div>
+            <div class="card-body">
+              <ul class="neo-list">
+                <li><strong>Independence:</strong> ความคลาดเคลื่อนระหว่างหน่วยทดลองต้องเป็นอิสระต่อกัน (รับประกันด้วยการสุ่ม)</li>
+                <li><strong>Normality:</strong> เศษเหลือต้องมีการแจกแจงแบบปกติ</li>
+                <li><strong>Homoscedasticity:</strong> ความแปรปรวนของความคลาดเคลื่อนต้องคงที่ทุกกลุ่ม ($\sigma_1^2 = \sigma_2^2 = \dots = \sigma^2$)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="neo-callout">
+          <span class="callout-icon">📌</span>
+          <div><strong>ข้อสังเกต:</strong> หากข้อสมมติความเป็นเนื้อเดียวกันของความแปรปรวนถูกละเมิด ค่า $F$-test จะเกิดความคลาดเคลื่อนสูงมาก ต้องแปลงข้อมูลก่อนวิเคราะห์</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Sum of Squares Partitioning -->
+    <section class="slide" id="slide-3">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">VARIANCE DECOMPOSITION · การแยกส่วนความแปรปรวน</div>
+        <h2 class="slide-heading">การแยกผลรวมกำลังสอง <em>(Sum of Squares)</em></h2>
+        <p class="lead-text">
+          หัวใจของ ANOVA คือการผ่าความแปรปรวนรวม ($SS_{\text{Total}}$) ออกเป็นก้อนที่อธิบายได้และก้อนความคลาดเคลื่อน:
+        </p>
+        <div class="grid-2">
+          <div class="neo-card card-accent">
+            <div class="card-title">สูตรการแยกผลรวมกำลังสอง</div>
+            <div class="card-body">
+              $$SS_{\text{Total}} = SS_{\text{Tr}} + SS_E$$
+              $$\sum_{i=1}^t \sum_{j=1}^r (y_{ij} - \bar{y}_{\cdot\cdot})^2 = r\sum_{i=1}^t (\bar{y}_{i\cdot} - \bar{y}_{\cdot\cdot})^2 + \sum_{i=1}^t \sum_{j=1}^r (y_{ij} - \bar{y}_{i\cdot})^2$$
+            </div>
+          </div>
+          <div class="neo-card">
+            <div class="card-title">การแบ่งสรรองศาความเป็นอิสระ (df)</div>
+            <div class="card-body">
+              <ul class="neo-list">
+                <li>$df_{\text{Total}} = N - 1 = tr - 1$</li>
+                <li>$df_{\text{Tr}} = t - 1$ (จำนวนทรีตเมนต์ลบ 1)</li>
+                <li>$df_E = t(r - 1) = N - t$ (องศาอิสระเพื่อประมาณค่า $\sigma^2$)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="neo-callout">
+          <span class="callout-icon">💡</span>
+          <div><strong>กฎอนุรักษ์:</strong> ทั้งผลรวมกำลังสอง ($SS$) และองศาอิสระ ($df$) สามารถบวกกันได้เสมอ: $SS_{\text{Total}} = \sum SS_{\text{Components}}$</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Standard ANOVA Construction -->
+    <section class="slide" id="slide-4">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">ANOVA TABLE · โครงสร้างตารางวิเคราะห์</div>
+        <h2 class="slide-heading">ตารางวิเคราะห์ความแปรปรวนและสถิติทดสอบ $F$</h2>
+        <p class="lead-text">
+          รวบรวมค่าจากการแยกส่วนความแปรปรวนเพื่อคำนวณอัตราส่วนทดสอบ $F = MS_{\text{Tr}} / MS_E$:
+        </p>
+        <div class="neo-table-wrapper">
+          <table class="neo-table">
+            <thead>
+              <tr><th>Source</th><th>df</th><th>SS</th><th>MS</th><th>F-Ratio</th><th>p-value</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Treatments</strong></td>
+                <td>$t - 1$</td>
+                <td>$SS_{\text{Tr}}$</td>
+                <td>$MS_{\text{Tr}} = \frac{SS_{\text{Tr}}}{t - 1}$</td>
+                <td>$\frac{MS_{\text{Tr}}}{MS_E}$</td>
+                <td>$P(F > F_{\text{calc}})$</td>
+              </tr>
+              <tr>
+                <td><strong>Error</strong></td>
+                <td>$N - t$</td>
+                <td>$SS_E$</td>
+                <td>$MS_E = \frac{SS_E}{N - t}$</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td>$N - 1$</td>
+                <td>$SS_{\text{Total}}$</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="neo-callout">
+          <span class="callout-icon">🎯</span>
+          <div><strong>เกณฑ์ตัดสินใจ:</strong> ปฏิเสธ $H_0$ เมื่อ $F_{\text{calc}} > F_{\alpha, t-1, N-t}$ แปลว่ามีทรีตเมนต์อย่างน้อย 1 คู่ที่มีค่าเฉลี่ยแตกต่างกันอย่างมีนัยสำคัญทางสถิติ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Historical Story -->
+    <section class="slide" id="slide-5">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">HISTORICAL VIGNETTE · ประวัติศาสตร์สถิติโลก</div>
+        <h2 class="slide-heading">เรื่องเล่าประวัติศาสตร์: <em>คลองส่งน้ำชลประทาน & แปลงปุ๋ยย่อยสองจังหวะ</em></h2>
+        <div class="grid-story">
+          <div class="story-box">
+            <div class="story-quote">"เราไม่สามารถขับรถแทรกเตอร์หรือเปลี่ยนระดับน้ำในคลองชลประทานทุกๆ 2 เมตรได้... ปัจจัยใหญ่ต้องคุมทั้งแปลง!"</div>
+            <p style="font-size:0.92rem; line-height:1.6; color:var(--ink-muted);">ในงานเกษตรกรรม ปัจจัยบางอย่างต้องใช้พื้นที่กว้างและเปลี่ยนระดับได้ยากมาก เช่น ระบบน้ำหรือการไถพรวน (Main Plot) ขณะที่พันธุ์พืชหรือปุ๋ยสามารถหยอดแบ่งในแปลงย่อยได้ง่าย (Subplot) ฟิชเชอร์และเยตส์จึงคิดค้น Split-Plot ซึ่งนำไปสู่การสุ่มสองจังหวะและทำให้เกิดความคลาดเคลื่อน 2 ตัวในตารางเดียว</p>
+          </div>
+          <div class="neo-card card-accent">
+            <div class="card-title">บทเรียนสำคัญสู่ทฤษฎี</div>
+            <div class="card-body">
+              ประวัติศาสตร์สอนเราว่า สถิติไม่ได้เกิดขึ้นในห้องแอร์ แต่เกิดจากการแก้ปัญหาจริงในแปลงเกษตร โรงเบียร์ และโรงงานอุตสาหกรรม ความถูกต้องของการทดลองเริ่มต้นจากการจัดผังแปลง ไม่ใช่การคำนวณหลังเก็บข้อมูลเสร็จแล้ว
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Field Agronomy / Real Case Study -->
+    <section class="slide" id="slide-6">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">REAL CASE STUDY · การทดลองจริงภาคสนาม</div>
+        <h2 class="slide-heading">กรณีศึกษาจริง: <em>ระบบการจัดการดิน (Main) ร่วมกับสายพันธุ์ข้าว (Subplot)</em></h2>
+        <div class="grid-story">
+          <div class="neo-card card-accent">
+            <div class="card-title">บริบทและการประยุกต์ใช้ในไทย</div>
+            <div class="card-body" style="font-size:0.92rem; line-height:1.6;">
+              แปลงใหญ่คือวิธีเตรียมดิน 3 แบบ (ไถดะ, ไถแปร, ไม่ไถ) ซึ่งต้องใช้แทรกเตอร์ขนาดใหญ่ทำทั้งแปลง จากนั้นในแต่ละแปลงใหญ่แบ่งเป็น 4 แปลงย่อยเพื่อปลูกข้าว 4 พันธุ์ การทดสอบพันธุ์ข้าว (Subplot) จะมีความแม่นยำสูงกว่าการทดสอบการเตรียมดิน เพราะมี Error_b ที่เล็กกว่า
+            </div>
+          </div>
+          <div class="story-box" style="border-top:6px solid var(--accent-main);">
+            <div style="font-family:var(--font-heading); font-size:1.05rem; font-weight:700; color:var(--accent-main); margin-bottom:0.4rem;">
+              คำแนะนำสำหรับวิทยานิพนธ์
+            </div>
+            <p style="font-size:0.92rem; line-height:1.55; color:var(--ink-muted);">
+              นิสิตวิทยาเขตกำแพงแสนต้องจำไว้เสมอ: <strong>"ผังแปลงกระดาษต้องแปลงเป็นผังจริงบนดินได้"</strong> ระวังขอบแปลง (Border Effect), ความลาดชันของน้ำ, และทิศทางร่มเงาไม้ใหญ่เสมอ
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Interactive Lab Sandbox -->
+    <section class="slide" id="slide-7">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">INTERACTIVE LAB · แบบจำลองสถานการณ์จริง</div>
+        <h2 class="slide-heading">ห้องทดลองจำลองเชิงโต้ตอบประจำบทเรียน</h2>
+                <div class="sim-desk-neo">
+          <div class="sim-panel-neo">
+            <span style="font-family:var(--font-heading); font-size:11px; font-weight:700;">ระดับความคลาดเคลื่อน 2 ชั้น</span>
+            <div style="font-size:0.8rem; line-height:1.4; color:var(--ink-muted); background:var(--bg-surface); border:1px solid var(--border-subtle); padding:8px; border-radius:4px;">
+              <strong>Main Plot Error (E_a):</strong> ความคลาดเคลื่อนแปลงใหญ่ (หยาบกว่า)<br><br>
+              <strong>Subplot Error (E_b):</strong> ความคลาดเคลื่อนแปลงย่อย (ละเอียดกว่า)
+            </div>
+          </div>
+          <div>
+            <div class="neo-table-wrapper" style="margin-top:0;">
+              <table class="neo-table">
+                <thead><tr><th>แหล่งความแปรปรวน</th><th>ตัวเศษ</th><th>ตัวหารที่ถูกต้อง</th><th>ความแม่นยำ</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Main Plot Factor A (ระบบน้ำ)</strong></td><td>MS_A</td><td style="color:#dc2626; font-weight:700;">MS_Ea</td><td>ต่ำกว่า (แปลงกว้าง)</td></tr>
+                  <tr><td><strong>Subplot Factor B (พันธุ์พืช)</strong></td><td>MS_B</td><td style="color:#16a34a; font-weight:700;">MS_Eb</td><td>สูงกว่า (แปลงย่อยละเอียด)</td></tr>
+                  <tr><td><strong>Interaction A x B</strong></td><td>MS_AB</td><td style="color:#16a34a; font-weight:700;">MS_Eb</td><td>สูงกว่า</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="margin-top:8px; font-size:0.85rem; color:var(--ink); padding:8px; background:var(--bg-alt); border-radius:6px; border:1px solid var(--border-subtle);">
+              ห้ามยุบ MS_Ea กับ MS_Eb รวมกันเด็ดขาด เพราะโครงสร้างการสุ่มเกิดขึ้นคนละระดับ!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Step-by-Step Computational Example -->
+    <section class="slide" id="slide-8">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">WORKED NUMERICAL EXAMPLE · ตัวอย่างการคำนวณจริง</div>
+        <h2 class="slide-heading">ตัวอย่างการคำนวณตาราง ANOVA แบบทีละขั้นตอน</h2>
+        <p class="lead-text">สมมติข้อมูล $t = 4$ ทรีตเมนต์ และ $r = 4$ ซ้ำ ($N = 16$ แปลง) คำนวณได้ผลรวมดังนี้:</p>
+        <div class="grid-2">
+          <div class="neo-card card-accent">
+            <div class="card-title">1. คำนวณค่า Correction Factor และ SS</div>
+            <div class="card-body">
+              <ul class="neo-list">
+                <li>$CF = \frac{Y_{\cdot\cdot}^2}{N} = \frac{800^2}{16} = 40,000.0$</li>
+                <li>$SS_{\text{Total}} = \sum y_{ij}^2 - CF = 40,320.0 - 40,000.0 = 320.0$</li>
+                <li>$SS_{\text{Tr}} = \frac{\sum Y_{i\cdot}^2}{r} - CF = 40,240.0 - 40,000.0 = 240.0$</li>
+                <li>$SS_E = SS_{\text{Total}} - SS_{\text{Tr}} = 320.0 - 240.0 = 80.0$</li>
+              </ul>
+            </div>
+          </div>
+          <div class="neo-card">
+            <div class="card-title">2. สรุปผลตาราง ANOVA</div>
+            <div class="card-body">
+              <ul class="neo-list">
+                <li>$MS_{\text{Tr}} = \frac{240.0}{3} = 80.0$</li>
+                <li>$MS_E = \frac{80.0}{12} = 6.67$</li>
+                <li>$F_{\text{calc}} = \frac{80.0}{6.67} = 12.00$</li>
+                <li>$F_{0.05, 3, 12} = 3.49 \implies F_{\text{calc}} > 3.49$ <strong>(แตกต่างอย่างมีนัยสำคัญ!)</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Crime Scene Forensic Audit -->
+    <section class="slide" id="slide-9">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">FORENSIC AUDIT · คดีสืบสวนข้อผิดพลาด</div>
+        <h2 class="slide-heading">แฟ้มคดีอาชญากรรมทางสถิติ: <em>3 กับดักยอดฮิต</em></h2>
+        <p class="lead-text">ตรวจสอบงานวิจัยของท่านด้วย Checklist วินิจฉัยนี้ก่อนลงมือปฏิบัติจริง:</p>
+        <div class="audit-checklist">
+          <div class="audit-item">
+            <span class="audit-badge">CASE 01</span>
+            <div class="audit-text"><strong>ยุบ Error_a รวมกับ Error_b เป็นก้อนเดียว (The Single Error Disaster):</strong> วิเคราะห์ Split-Plot เสมือน Factorial ธรรมดา โดยหารทุกอย่างด้วย Error ก้อนเดียว ทำให้ทดสอบ Main Plot ไวเกินจริงอย่างร้ายแรง</div>
+          </div>
+          <div class="audit-item">
+            <span class="audit-badge">CASE 02</span>
+            <div class="audit-text"><strong>เอาปัจจัยที่สนใจมากที่สุดไปไว้ที่ Main Plot:</strong> นำปัจจัยหลักของวิทยานิพนธ์ไปวางไว้ในแปลงใหญ่ ทั้งที่ Main Plot มีความแม่นยำต่ำกว่า Subplot ควรเอาปัจจัยสำคัญไว้ที่ Subplot</div>
+          </div>
+          <div class="audit-item">
+            <span class="audit-badge">CASE 03</span>
+            <div class="audit-text"><strong>ใช้ Standard Error ผิดสูตรในการเปรียบเทียบค่าเฉลี่ย:</strong> Split-Plot มีสูตร SE ถึง 4 รูปแบบขึ้นกับคู่เปรียบเทียบ (ใน Main เดียวกัน vs ต่าง Main Plot) ผู้วิจัยมักจำสูตรเดียวไปใช้ทั้งหมด</div>
+          </div>
+        </div>
+        <div class="neo-callout">
+          <span class="callout-icon">🔍</span>
+          <div><strong>หลักการเตือนใจ:</strong> ตรวจสอบข้อตกลงเบื้องต้นและตัวหาร F เสมอ หากวางแผนผิดตั้งแต่ผังแปลง สถิติขั้นสูงใดๆ ก็ไม่สามารถกู้ข้อมูลกลับมาได้</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Synthesis & Roadmap -->
+    <section class="slide" id="slide-10">
+      <div class="slide-wrapper">
+        <div class="slide-kicker">ROADMAP · สรุปและก้าวถัดไป</div>
+        <h2 class="slide-heading">สรุปหัวใจสำคัญของบทที่ 10</h2>
+        <div class="grid-2">
+          <div class="neo-card card-accent">
+            <div class="card-title">สิ่งสำคัญที่ได้เรียนรู้</div>
+            <div class="card-body">
+              <ul class="neo-list">
+                <li>เข้าใจตัวแบบและข้อตกลงของ แผนการทดลองแบบสปลิท-พลอท (Split-Plot) อย่างลึกซึ้ง</li>
+                <li>สามารถคำนวณแยกส่วน $SS$, $MS$ และทดสอบค่า $F$ ได้อย่างแม่นยำ</li>
+                <li>ตระหนักถึงกับดักข้อผิดพลาดทางสถิติที่พบบ่อยในงานวิจัยจริง</li>
+              </ul>
+            </div>
+          </div>
+          <div class="neo-card">
+            <div class="card-title">ความเชื่อมโยงสู่บทต่อไป</div>
+            <div class="card-body">
+              แผนแบบนี้เป็นฐานสำคัญในการต่อยอดสู่แผนแบบที่มีความซับซ้อนขึ้น เพื่อควบคุมความผันแปรหลายทิศทางและศึกษาปฏิสัมพันธ์ระหว่างปัจจัย
+            </div>
+          </div>
+        </div>
+        <div class="neo-callout" style="justify-content:space-between;">
+          <div><strong>จบเนื้อหาบทที่ 10:</strong> แผนการทดลองแบบสปลิท-พลอท (Split-Plot) (Split-Plot Design)</div>
+          <button class="neo-btn" onclick="window.location.href='index.html'">กลับสู่สารบัญบทเรียน ⌂</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM HUD -->
+  <footer class="hud-bottom">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="nav-group">
+      <button class="neo-btn" id="btnPrev" onclick="prevSlide()" disabled>← ก่อนหน้า</button>
+      <button class="neo-btn" id="btnNext" onclick="nextSlide()">ถัดไป →</button>
+      <span class="slide-counter-badge">สไลด์ <strong id="curSlideNum">01</strong> / 10</span>
+    </div>
+    <div class="hud-kbd-hint">เปลี่ยนสไลด์ด้วย <kbd>←</kbd> <kbd>→</kbd> หรือ <kbd>SPACE</kbd></div>
+  </footer>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    let curIndex = 0;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    const curSlideNum = document.getElementById('curSlideNum');
+    const progressFill = document.getElementById('progressFill');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        if (idx === curIndex) s.classList.add('is-active');
+        else s.classList.remove('is-active');
+      });
+
+      curSlideNum.textContent = String(curIndex + 1).padStart(2, '0');
+      progressFill.style.width = `${((curIndex + 1) / totalSlides) * 100}%`;
+      btnPrev.disabled = (curIndex === 0);
+      btnNext.disabled = (curIndex === totalSlides - 1);
+    }
+
+    function nextSlide() {
+      if (curIndex < totalSlides - 1) { curIndex++; updateSlide(); }
+    }
+
+    function prevSlide() {
+      if (curIndex > 0) { curIndex--; updateSlide(); }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+      else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+      else if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    }
+
+    // ==========================================
+    // SIMULATION ENGINE (Slide 7)
+    // ==========================================
+    function initSim() {}
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof initSim === 'function') initSim();
+      updateSlide();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เครื่องมือจำลองการแยกผลรวมกำลังสอง (ANOVA Sum of Squares Visualizer) | 01422413</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* vendor/katex.min.css inlined fallback comment */
+    :root {
+      --ku-green: #006644;
+      --ku-green-dark: #004d33;
+      --ku-green-light: #e6f4ea;
+      --ku-gold: #d97706;
+      --ku-gold-light: #fef3c7;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --font-heading: 'Prompt', 'Bai Jamjuree', sans-serif;
+      --font-body: 'Bai Jamjuree', 'Sarabun', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0b131f;
+      color: var(--slate-800);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-card {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--ku-green-dark) 0%, var(--ku-green) 100%);
+      color: #ffffff;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-title-group h1 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header-title-group p {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .app-content {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 28px;
+      background: var(--slate-50);
+    }
+
+    @media (max-width: 860px) {
+      .app-content { grid-template-columns: 1fr; }
+    }
+
+    .control-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .slider {
+      width: 100%;
+      accent-color: var(--ku-green);
+    }
+
+    .stage-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .canvas-container {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .stat-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    .metric-card.tr { border-top: 3px solid var(--ku-green); }
+    .metric-card.err { border-top: 3px solid var(--slate-600); }
+    .metric-card.tot { border-top: 3px solid var(--ku-gold); }
+
+    .metric-title {
+      font-size: 0.78rem;
+      color: var(--slate-600);
+      font-weight: 600;
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 2px;
+    }
+
+    .decision-alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .alert-sig { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .alert-nonsig { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+    <header class="app-header">
+      <div class="header-title-group">
+        <h1>📊 เครื่องมือจำลองการแยกผลรวมกำลังสอง (ANOVA Sum of Squares Visualizer)</h1>
+        <p>สร้างสัญชาตญาณเชิงภาพ: การแยกความผันแปรทั้งหมดเป็นผลจากทรีตเมนต์และความคลาดเคลื่อนสุ่ม</p>
+      </div>
+      <a href="index.html" class="back-btn">◀ กลับสู่หน้าหลัก</a>
+    </header>
+
+    <div class="app-content">
+      <!-- Controls -->
+      <aside class="control-panel">
+        <div class="form-group">
+          <label class="form-label">1. ผลต่างระหว่างทรีตเมนต์ (Treatment Effect: $\tau$)</label>
+          <input type="range" id="paramEffect" class="slider" min="0" max="40" value="15" oninput="updateVisualization()">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b;">
+            <span>0 (เท่ากัน)</span>
+            <span id="lblEffect">15</span>
+            <span>40 (ต่างกันมาก)</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">2. ความแปรปรวนสุ่มภายในกลุ่ม (Random Error: $\sigma$)</label>
+          <input type="range" id="paramNoise" class="slider" min="2" max="25" value="6" oninput="updateVisualization()" style="accent-color:var(--ku-gold);">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b;">
+            <span>2 (นิ่งมาก)</span>
+            <span id="lblNoise">6</span>
+            <span>25 (สับสน)</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">3. จำนวนซ้ำต่อกลุ่ม (Replications: $r$)</label>
+          <input type="range" id="paramReps" class="slider" min="3" max="10" value="5" oninput="updateVisualization()" style="accent-color:var(--slate-800);">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b;">
+            <span>3 ซ้ำ</span>
+            <span id="lblReps">5 ซ้ำ</span>
+            <span>10 ซ้ำ</span>
+          </div>
+        </div>
+
+        <div style="background:var(--ku-green-light); padding:12px; border-radius:8px; border:1px solid #bbf7d0; font-size:0.82rem; color:var(--ku-green-dark); line-height:1.5;">
+          <strong>สูตรหลักของ ANOVA:</strong>
+          $$SS_{\text{Total}} = SS_{\text{Tr}} + SS_E$$
+          เมื่อ $\tau$ เพิ่มขึ้น จุดเฉลี่ยแต่ละกลุ่มจะแยกห่างจากค่าเฉลี่ยรวม ทำให้ $SS_{\text{Tr}}$ ขยายตัวและค่า $F$ พุ่งสูงขึ้น
+        </div>
+      </aside>
+
+      <!-- Stage -->
+      <main class="stage-panel">
+        <div class="canvas-container">
+          <canvas id="plotCanvas" width="600" height="260" style="width:100%; max-width:600px; height:260px;"></canvas>
+        </div>
+
+        <!-- Metrics -->
+        <div class="stat-metrics-grid">
+          <div class="metric-card tr">
+            <div class="metric-title">$SS_{\text{Tr}}$ (Treatment)</div>
+            <div class="metric-value" id="valSSTr" style="color:var(--ku-green);">0.0</div>
+          </div>
+          <div class="metric-card err">
+            <div class="metric-title">$SS_E$ (Error)</div>
+            <div class="metric-value" id="valSSE" style="color:var(--slate-600);">0.0</div>
+          </div>
+          <div class="metric-card tot">
+            <div class="metric-title">$SS_{\text{Total}}$ (Total)</div>
+            <div class="metric-value" id="valSSTot" style="color:var(--ku-gold);">0.0</div>
+          </div>
+        </div>
+
+        <div class="stat-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">$MS_{\text{Tr}}$</div>
+            <div class="metric-value" id="valMSTr">0.0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">$MS_E$</div>
+            <div class="metric-value" id="valMSE">0.0</div>
+          </div>
+          <div class="metric-card" style="border:2px solid var(--ku-green);">
+            <div class="metric-title">$F_{\text{calc}}$ ($MS_{\text{Tr}} / MS_E$)</div>
+            <div class="metric-value" id="valFCalc" style="color:var(--ku-green);">0.00</div>
+          </div>
+        </div>
+
+        <div id="decisionAlert" class="decision-alert alert-sig">
+          ผลการทดสอบ: ปฏิเสธ H0 ทรีตเมนต์ให้ผลต่างกันอย่างมีนัยสำคัญ
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function updateVisualization() {
+      const effect = parseFloat(document.getElementById('paramEffect').value);
+      const noise = parseFloat(document.getElementById('paramNoise').value);
+      const r = parseInt(document.getElementById('paramReps').value);
+
+      document.getElementById('lblEffect').innerText = effect;
+      document.getElementById('lblNoise').innerText = noise;
+      document.getElementById('lblReps').innerText = `${r} ซ้ำ`;
+
+      const t = 3; // 3 groups
+      const N = t * r;
+      const dfTr = t - 1; // 2
+      const dfE = N - t;
+
+      // Group true means: 50 - effect, 50, 50 + effect
+      const ssTr = (r * 2 * (effect * effect)).toFixed(1);
+      const ssE = (dfE * (noise * noise)).toFixed(1);
+      const ssTot = (parseFloat(ssTr) + parseFloat(ssE)).toFixed(1);
+
+      const msTr = parseFloat(ssTr) / dfTr;
+      const msE = parseFloat(ssE) / dfE;
+      const fCalc = (msTr / msE).toFixed(2);
+      const fCrit = 3.88; // approx df=2, 12
+
+      document.getElementById('valSSTr').innerText = ssTr;
+      document.getElementById('valSSE').innerText = ssE;
+      document.getElementById('valSSTot').innerText = ssTot;
+      document.getElementById('valMSTr').innerText = msTr.toFixed(1);
+      document.getElementById('valMSE').innerText = msE.toFixed(1);
+      document.getElementById('valFCalc').innerText = fCalc;
+
+      const alertBox = document.getElementById('decisionAlert');
+      if (parseFloat(fCalc) > fCrit) {
+        alertBox.className = 'decision-alert alert-sig';
+        alertBox.innerText = `✅ F_calc (${fCalc}) > F_crit (${fCrit}) : ปฏิเสธ H0 - ทรีตเมนต์ให้ผลต่างกันอย่างมีนัยสำคัญทางสถิติ (p < 0.05)`;
+      } else {
+        alertBox.className = 'decision-alert alert-nonsig';
+        alertBox.innerText = `❌ F_calc (${fCalc}) ≤ F_crit (${fCrit}) : ยอมรับ H0 - ไม่พบความแตกต่างอย่างมีนัยสำคัญ (Noise กลบ Effect)`;
+      }
+
+      drawCanvas(effect, noise, r);
+    }
+
+    function drawCanvas(effect, noise, r) {
+      const canvas = document.getElementById('plotCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+      const midY = h / 2;
+
+      // Grand Mean Line (dashed)
+      ctx.strokeStyle = '#94a3b8';
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(40, midY);
+      ctx.lineTo(w - 40, midY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('Grand Mean (ค่าเฉลี่ยรวม Ȳ..)', 45, midY - 6);
+
+      const groupX = [w * 0.25, w * 0.5, w * 0.75];
+      const groupMeans = [midY + effect * 1.5, midY, midY - effect * 1.5];
+      const colors = ['#2563eb', '#16a34a', '#d97706'];
+      const names = ['กลุ่มที่ 1 (ปุ๋ย A)', 'กลุ่มที่ 2 (ปุ๋ย B)', 'กลุ่มที่ 3 (ปุ๋ย C)'];
+
+      for (let g = 0; g < 3; g++) {
+        const gx = groupX[g];
+        const gm = groupMeans[g];
+
+        // Draw Group Mean Line (solid)
+        ctx.strokeStyle = colors[g];
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(gx - 40, gm);
+        ctx.lineTo(gx + 40, gm);
+        ctx.stroke();
+
+        ctx.fillStyle = colors[g];
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText(names[g], gx - 35, h - 12);
+
+        // Draw Treatment Deviation arrow to Grand Mean
+        ctx.strokeStyle = 'rgba(0, 102, 68, 0.4)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(gx + 30, midY);
+        ctx.lineTo(gx + 30, gm);
+        ctx.stroke();
+
+        // Draw Sample Points (simulated scatter)
+        for (let i = 0; i < r; i++) {
+          const pseudoNoise = ((i * 17 + g * 31) % 11 - 5) * (noise * 0.35);
+          const py = gm + pseudoNoise;
+          const px = gx - 25 + (i * (50 / Math.max(r - 1, 1)));
+
+          ctx.fillStyle = colors[g];
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Thin error line from point to group mean
+          ctx.strokeStyle = 'rgba(100, 116, 139, 0.25)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(px, gm);
+          ctx.lineTo(px, py);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function typesetMath(el = document.body) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateVisualization();
+      typesetMath();
+    });
+  </script>
+</body>
+</html>

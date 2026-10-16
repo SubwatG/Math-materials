@@ -25,6 +25,20 @@
 - [One-to-one และ Onto](interactive/m5-one-to-one-onto.html) — สร้าง mapping เพื่อตรวจสอบ injective, surjective และ bijective ด้วยภาพลูกศร
 - [Inverse Function](interactive/m5-inverse-function.html) — ตรวจสอบว่า mapping มี inverse function หรือไม่ ผ่านเงื่อนไข bijective และตัวอย่างหลายกรณี
 
+
+### 01422413: การวางแผนการทดลอง (Design of Experiments)
+- **[คลังสไลด์บรรยาย 01422413 ครบ 10 บท (Master Portal)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/index.html)** — สไลด์บรรยาย 16:9 Zero-Scroll สไตล์ Neo-Math Light พร้อมเรื่องเล่าประวัติศาสตร์จริง คดีสืบสวนข้อผิดพลาดทางสถิติ และห้องทดลองจำลองเชิงโต้ตอบ
+  - [บทที่ 1: หลักการพื้นฐานของการวางแผนการทดลอง](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch01.html)
+  - [บทที่ 2: แผนการทดลองแบบสุ่มสมบูรณ์ (CRD)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch02.html)
+  - [บทที่ 3: การเปรียบเทียบค่าเฉลี่ยแบบพหุคูณ (Multiple Comparisons)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch03.html)
+  - [บทที่ 4: แผนการทดลองแบบสุ่มในบล็อกสมบูรณ์ (RCBD)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch04.html)
+  - [บทที่ 5: แผนการทดลองแบบลาตินสแควร์ (Latin Square)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch05.html)
+  - [บทที่ 6: ข้อกำหนด ANOVA และการแปลงข้อมูล](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch06.html)
+  - [บทที่ 7: แผนการทดลองแบบสุ่มซ้อน (Nested Design)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch07.html)
+  - [บทที่ 8: แผนการทดลองแบบแฟกทอเรียล (Factorial Experiments)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch08.html)
+  - [บทที่ 9: การวิเคราะห์ความแปรปรวนร่วม (ANCOVA)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch09.html)
+  - [บทที่ 10: แผนการทดลองแบบสปลิท-พลอท (Split-Plot Design)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/slide-ch10.html)
+
 ### 01422111 หลักสถิติ
 
 - [Statistics Interactive Teaching Assistant (Streamlit)](https://stat-distribution-solver-naaptzyidcew7rrys9xj2q.streamlit.app/) — แอป Streamlit สำหรับการแจกแจงทวินาม ปัวซง Z t ไคสแควร์ F และการแจกแจงค่าสถิติ พร้อมวิธีทำทีละขั้นด้วย KaTeX (แอปจะหลับเมื่อไม่ได้ใช้ ให้กดปุ่ม Wake up เพื่อปลุกก่อนใช้งาน)

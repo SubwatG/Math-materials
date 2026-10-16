@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เครื่องมือสำรวจอิทธิพลร่วม (Interaction Explorer) | 01422413</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* vendor/katex.min.css inlined fallback comment */
+    :root {
+      --ku-green: #006644;
+      --ku-green-dark: #004d33;
+      --ku-green-light: #e6f4ea;
+      --ku-gold: #d97706;
+      --ku-gold-light: #fef3c7;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --font-heading: 'Prompt', 'Bai Jamjuree', sans-serif;
+      --font-body: 'Bai Jamjuree', 'Sarabun', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0b131f;
+      color: var(--slate-800);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-card {
+      width: 100%;
+      max-width: 1120px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--ku-green-dark) 0%, var(--ku-green) 100%);
+      color: #ffffff;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-title-group h1 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header-title-group p {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .app-content {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+      background: var(--slate-50);
+    }
+
+    @media (max-width: 880px) {
+      .app-content { grid-template-columns: 1fr; }
+    }
+
+    .control-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .slider {
+      width: 100%;
+      accent-color: var(--ku-green);
+    }
+
+    .stage-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .canvas-container {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    .metric-title {
+      font-size: 0.78rem;
+      color: var(--slate-600);
+      font-weight: 600;
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 2px;
+    }
+
+    .feedback-banner {
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .fb-parallel { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .fb-crossed { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+    <header class="app-header">
+      <div class="header-title-group">
+        <h1>📈 เครื่องมือสำรวจอิทธิพลร่วม (Interaction Explorer)</h1>
+        <p>ทำความเข้าใจการปฏิสัมพันธ์ระหว่าง 2 ปัจจัย: เส้นขนาน (Additive) vs เส้นตัดกัน (Synergy / Antagonism)</p>
+      </div>
+      <a href="index.html" class="back-btn">◀ กลับสู่หน้าหลัก</a>
+    </header>
+
+    <div class="app-content">
+      <!-- Controls -->
+      <aside class="control-panel">
+        <div style="font-family:var(--font-heading); font-size:0.95rem; font-weight:700; color:var(--slate-800); border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+          ปรับค่าเฉลี่ยของเซลล์ ($2 \times 2$ Factorial)
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ปุ๋ยไนโตรเจน $N_0$ + น้ำ $W_0$ (Control):</label>
+          <input type="range" id="cell00" class="slider" min="10" max="80" value="30" oninput="updateInteractionApp()">
+          <span style="font-size:0.8rem; color:#64748b;" id="lblCell00">30 หน่วย</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ปุ๋ยไนโตรเจน $N_1$ + น้ำ $W_0$ (เพิ่มปุ๋ย น้ำน้อย):</label>
+          <input type="range" id="cell10" class="slider" min="10" max="80" value="45" oninput="updateInteractionApp()">
+          <span style="font-size:0.8rem; color:#64748b;" id="lblCell10">45 หน่วย</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ปุ๋ยไนโตรเจน $N_0$ + น้ำ $W_1$ (ไม่ใส่ปุ๋ย น้ำมาก):</label>
+          <input type="range" id="cell01" class="slider" min="10" max="80" value="40" oninput="updateInteractionApp()">
+          <span style="font-size:0.8rem; color:#64748b;" id="lblCell01">40 หน่วย</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ปุ๋ยไนโตรเจน $N_1$ + น้ำ $W_1$ (ใส่ปุ๋ย + น้ำมาก):</label>
+          <input type="range" id="cell11" class="slider" min="10" max="100" value="75" oninput="updateInteractionApp()" style="accent-color:var(--ku-gold);">
+          <span style="font-size:0.8rem; color:#64748b;" id="lblCell11">75 หน่วย</span>
+        </div>
+
+        <div style="background:var(--ku-green-light); padding:12px; border-radius:8px; border:1px solid #bbf7d0; font-size:0.82rem; color:var(--ku-green-dark); line-height:1.5;">
+          <strong>กฎเหล็กของการสรุปผล:</strong>
+          ถ้า $AB \ne 0$ (เส้นไม่ขนานกัน) การรายงานค่าเฉลี่ยของปุ๋ยโดยไม่ระบุระดับน้ำจะผิดหลักวิชาการทันที เพราะผลของปุ๋ยขึ้นอยู่กับว่าให้น้ำระดับใด!
+        </div>
+      </aside>
+
+      <!-- Stage -->
+      <main class="stage-panel">
+        <div class="canvas-container">
+          <canvas id="interactCanvas" width="560" height="260" style="width:100%; max-width:560px; height:260px;"></canvas>
+        </div>
+
+        <!-- Metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card" style="border-top:3px solid #2563eb;">
+            <div class="metric-title">Main Effect: ปุ๋ยไนโตรเจน ($A$)</div>
+            <div class="metric-value" id="valMainA">+20.0</div>
+          </div>
+          <div class="metric-card" style="border-top:3px solid #16a34a;">
+            <div class="metric-title">Main Effect: น้ำ ($B$)</div>
+            <div class="metric-value" id="valMainB">+20.0</div>
+          </div>
+          <div class="metric-card" style="border-top:3px solid #d97706;">
+            <div class="metric-title">Interaction Effect ($AB$)</div>
+            <div class="metric-value" id="valAB">+10.0</div>
+          </div>
+        </div>
+
+        <div id="feedbackBanner" class="feedback-banner fb-crossed">
+          ⚠️ เกิด Interaction อย่างมีนัยสำคัญ: ปุ๋ย $N_1$ จะให้ผลผลิตพุ่งสูงขึ้นอย่างก้าวกระโดดก็ต่อเมื่อได้รับน้ำ $W_1$ ร่วมด้วยเท่านั้น (เสริมฤทธิ์กัน / Synergistic Effect)
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function updateInteractionApp() {
+      const y00 = parseFloat(document.getElementById('cell00').value);
+      const y10 = parseFloat(document.getElementById('cell10').value);
+      const y01 = parseFloat(document.getElementById('cell01').value);
+      const y11 = parseFloat(document.getElementById('cell11').value);
+
+      document.getElementById('lblCell00').innerText = `${y00} กก.`;
+      document.getElementById('lblCell10').innerText = `${y10} กก.`;
+      document.getElementById('lblCell01').innerText = `${y01} กก.`;
+      document.getElementById('lblCell11').innerText = `${y11} กก.`;
+
+      // Main Effect A = 0.5 * [(y11 + y10) - (y01 + y00)]
+      const mainA = 0.5 * ((y11 + y10) - (y01 + y00));
+      // Main Effect B = 0.5 * [(y11 + y01) - (y10 + y00)]
+      const mainB = 0.5 * ((y11 + y01) - (y10 + y00));
+      // Interaction AB = 0.5 * [(y11 - y10) - (y01 - y00)]
+      const ab = 0.5 * ((y11 - y10) - (y01 - y00));
+
+      document.getElementById('valMainA').innerText = (mainA >= 0 ? '+' : '') + mainA.toFixed(1);
+      document.getElementById('valMainB').innerText = (mainB >= 0 ? '+' : '') + mainB.toFixed(1);
+      document.getElementById('valAB').innerText = (ab >= 0 ? '+' : '') + ab.toFixed(1);
+
+      const banner = document.getElementById('feedbackBanner');
+      if (Math.abs(ab) < 2.5) {
+        banner.className = 'feedback-banner fb-parallel';
+        banner.innerHTML = '✅ <strong>เส้นกราฟขนานกัน (ไม่มี Interaction):</strong> ผลของการใส่ปุ๋ยไนโตรเจนมีขนาดเท่ากันในทุกระดับน้ำ สามารถรายงาน Main Effect ของปุ๋ยและน้ำแยกจากกันได้อย่างอิสระ';
+      } else if (ab > 0) {
+        banner.className = 'feedback-banner fb-crossed';
+        banner.innerHTML = `⚠️ <strong>เกิด Interaction เชิงเสริมฤทธิ์ (Synergy: AB = +${ab.toFixed(1)}):</strong> ปุ๋ย $N_1$ จะแสดงประสิทธิภาพได้สูงสุดเมื่อได้รับน้ำ $W_1$ เต็มที่เท่านั้น ต้องทดสอบ Simple Effects ต่อไป`;
+      } else {
+        banner.className = 'feedback-banner fb-crossed';
+        banner.innerHTML = `⚠️ <strong>เกิด Interaction เชิงขัดขวาง (Antagonism: AB = ${ab.toFixed(1)}):</strong> เมื่อให้ทั้งปุ๋ยและน้ำร่วมกัน ผลผลิตกลับไม่เพิ่มขึ้นตามที่คาด ต้องอธิบายผลในเชิงปฏิสัมพันธ์`;
+      }
+
+      drawInteractionCanvas(y00, y10, y01, y11);
+      typesetMath(banner);
+    }
+
+    function drawInteractionCanvas(y00, y10, y01, y11) {
+      const canvas = document.getElementById('interactCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Coordinate scaling: Y range 0 to 120 -> canvas h-40 to 30
+      function scaleY(val) {
+        return (h - 40) - (val / 120.0) * (h - 70);
+      }
+
+      const x0 = w * 0.28; // N0
+      const x1 = w * 0.72; // N1
+
+      // Axes
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.15, h - 35);
+      ctx.lineTo(w * 0.88, h - 35);
+      ctx.stroke();
+
+      // Axis labels
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ปุ๋ย N0 (ไม่ใส่ปุ๋ย)', x0, h - 14);
+      ctx.fillText('ปุ๋ย N1 (ใส่ปุ๋ยเต็มอัตรา)', x1, h - 14);
+
+      // Line 1: W0 (Low Water) -> Cyan/Blue
+      const py00 = scaleY(y00);
+      const py10 = scaleY(y10);
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(x0, py00);
+      ctx.lineTo(x1, py10);
+      ctx.stroke();
+
+      // Dots W0
+      ctx.fillStyle = '#2563eb';
+      ctx.beginPath(); ctx.arc(x0, py00, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x1, py10, 6, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#1e40af';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText(`${y00}`, x0 - 18, py00 + 4);
+      ctx.fillText(`${y10} (W0)`, x1 + 28, py10 + 4);
+
+      // Line 2: W1 (High Water) -> Green
+      const py01 = scaleY(y01);
+      const py11 = scaleY(y11);
+      ctx.strokeStyle = '#16a34a';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(x0, py01);
+      ctx.lineTo(x1, py11);
+      ctx.stroke();
+
+      // Dots W1
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath(); ctx.arc(x0, py01, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x1, py11, 6, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = '#166534';
+      ctx.fillText(`${y01}`, x0 - 18, py01 + 4);
+      ctx.fillText(`${y11} (W1)`, x1 + 28, py11 + 4);
+    }
+
+    function typesetMath(el = document.body) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateInteractionApp();
+      typesetMath();
+    });
+  </script>
+</body>
+</html>

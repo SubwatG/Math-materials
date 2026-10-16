@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "2.0.0",
-  "lastUpdated": "2026-10-15",
+  "lastUpdated": "2026-10-16",
   "site": {
     "title": "สื่อการสอนคณิตศาสตร์",
     "description": "คลังสื่อคณิตศาสตร์แบบอ่าน อธิบาย และทดลองได้ด้วยตนเอง"
@@ -440,13 +440,230 @@
       ]
     },
     {
+      "id": "university-statistics-01422413",
+      "level": "university",
+      "levelLabel": "ระดับมหาวิทยาลัย",
+      "title": "01422413: การวางแผนการทดลอง (DOE)",
+      "description": "คลังสไลด์บรรยายสไตล์ Neo-Math 16:9 Zero-Scroll ครบ 10 บท พร้อมเรื่องเล่าประวัติศาสตร์ คดีสืบสวนข้อผิดพลาด และห้องทดลองจำลอง",
+      "theme": "emerald",
+      "order": 8,
+      "topics": [
+        {
+          "id": "doe-portal",
+          "title": "ศูนย์รวมสไลด์และห้องทดลองจำลอง DOE",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "doe-master-portal",
+              "filename": "interactive/01422413-doe/index.html",
+              "title": "คลังสไลด์ 01422413 ครบ 10 บท (Master Portal)",
+              "description": "หน้าศูนย์รวมสไลด์บรรยาย 10 บท สถาปัตยกรรม 16:9 Zero-Scroll พร้อมห้องทดลองจำลอง",
+              "type": "portal",
+              "typeLabel": "ศูนย์รวมสื่อ",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch01",
+          "title": "บทที่ 1: หลักการพื้นฐานของการวางแผนการทดลอง",
+          "order": 2,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "doe-ch01-slide",
+              "filename": "interactive/01422413-doe/slide-ch01.html",
+              "title": "หลักการพื้นฐานของการวางแผนการทดลอง",
+              "description": "3 เสาหลักของ Fisher, EU vs SU, The Lady Tasting Tea, และแบบจำลองการสุ่มแปลงปลูก",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch02",
+          "title": "บทที่ 2: แผนการทดลองแบบสุ่มสมบูรณ์ (CRD)",
+          "order": 3,
+          "prerequisites": [
+            "doe-ch01"
+          ],
+          "items": [
+            {
+              "id": "doe-ch02-slide",
+              "filename": "interactive/01422413-doe/slide-ch02.html",
+              "title": "การทดลองแบบสุ่มสมบูรณ์ (CRD)",
+              "description": "ตัวแบบเชิงเส้น, การแยก Sum of Squares, ตาราง ANOVA และประวัติโรงเบียร์ Guinness",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch03",
+          "title": "บทที่ 3: การเปรียบเทียบค่าเฉลี่ยแบบพหุคูณ",
+          "order": 4,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch03-slide",
+              "filename": "interactive/01422413-doe/slide-ch03.html",
+              "title": "การเปรียบเทียบพหุคูณ (Multiple Comparisons)",
+              "description": "LSD, Tukey HSD, Dunnett, Scheffé และไม้บรรทัดวัดระยะวิกฤต",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch04",
+          "title": "บทที่ 4: แผนการทดลองแบบสุ่มในบล็อกสมบูรณ์ (RCBD)",
+          "order": 5,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch04-slide",
+              "filename": "interactive/01422413-doe/slide-ch04.html",
+              "title": "สุ่มในบล็อกสมบูรณ์ (RCBD)",
+              "description": "Local Control, การบล็อกขวางแนวระดับดิน, และตัวดูดซับความแปรปรวน SS_Block",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch05",
+          "title": "บทที่ 5: แผนการทดลองแบบลาตินสแควร์ (Latin Square)",
+          "order": 6,
+          "prerequisites": [
+            "doe-ch04"
+          ],
+          "items": [
+            {
+              "id": "doe-ch05-slide",
+              "filename": "interactive/01422413-doe/slide-ch05.html",
+              "title": "แผนแบบลาตินสแควร์ (Latin Square)",
+              "description": "การควบคุม 2 ทิศทางตั้งฉาก, ปัญหา 36 นายทหารออยเลอร์, และการทดลองโคนม",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch06",
+          "title": "บทที่ 6: ข้อกำหนด ANOVA และการแปลงข้อมูล",
+          "order": 7,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch06-slide",
+              "filename": "interactive/01422413-doe/slide-ch06.html",
+              "title": "ข้อกำหนด ANOVA และการแปลงข้อมูล",
+              "description": "Normality, Homogeneity, Box-Cox Transformation และห้องตรวจวินิจฉัยเศษเหลือ",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch07",
+          "title": "บทที่ 7: แผนการทดลองแบบสุ่มซ้อน (Nested Design)",
+          "order": 8,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch07-slide",
+              "filename": "interactive/01422413-doe/slide-ch07.html",
+              "title": "แผนแบบสุ่มซ้อน (Nested Design)",
+              "description": "B ซ้อนอยู่ใน A, EMS และกับดักตัวหาร F-ratio ในงานวิจัยโรงงานยา",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch08",
+          "title": "บทที่ 8: แผนการทดลองแบบแฟกทอเรียล (Factorial)",
+          "order": 9,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch08-slide",
+              "filename": "interactive/01422413-doe/slide-ch08.html",
+              "title": "แผนแบบแฟกทอเรียล (Factorial Experiments)",
+              "description": "Interaction Effects, การตรวจจับ Synergism, และตัวจำลองเส้นปฏิสัมพันธ์",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch09",
+          "title": "บทที่ 9: การวิเคราะห์ความแปรปรวนร่วม (ANCOVA)",
+          "order": 10,
+          "prerequisites": [
+            "doe-ch02"
+          ],
+          "items": [
+            {
+              "id": "doe-ch09-slide",
+              "filename": "interactive/01422413-doe/slide-ch09.html",
+              "title": "การวิเคราะห์ความแปรปรวนร่วม (ANCOVA)",
+              "description": "การปรับลด Error ด้วย Covariate, Adjusted Means, และการทดลองขุนสุกร",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        },
+        {
+          "id": "doe-ch10",
+          "title": "บทที่ 10: แผนการทดลองแบบสปลิท-พลอท (Split-Plot)",
+          "order": 11,
+          "prerequisites": [
+            "doe-ch04",
+            "doe-ch08"
+          ],
+          "items": [
+            {
+              "id": "doe-ch10-slide",
+              "filename": "interactive/01422413-doe/slide-ch10.html",
+              "title": "แผนแบบสปลิท-พลอท (Split-Plot Design)",
+              "description": "Two-Stage Error (E_a และ E_b), แปลงชลประทานร่วมแปลงปุ๋ยย่อย",
+              "type": "slides",
+              "typeLabel": "สไลด์บรรยาย",
+              "tech": "neo-math"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "university-calculus",
       "level": "university",
       "levelLabel": "ระดับมหาวิทยาลัย",
       "title": "แคลคูลัส: Logistic Growth",
       "description": "ทดลองดูพฤติกรรมของฟังก์ชัน logistic และผลของพารามิเตอร์ต่อกราฟ",
       "theme": "blue",
-      "order": 8,
+      "order": 9,
       "topics": [
         {
           "id": "logistic-growth",
@@ -474,7 +691,7 @@
       "title": "ม.5: จำนวนเชิงซ้อน (Complex Numbers)",
       "description": "แบบจำลองเรขาคณิตโต้ตอบและคู่มือเชิงลึก: การแปลงพิกัดเชิงขั้ว z = r(cos θ + i sin θ), การวิเคราะห์จัตุภาค Arg(z), แล็บ Phasors, de Moivre และเซตของจุดในระนาบเชิงซ้อน",
       "theme": "teal",
-      "order": 9,
+      "order": 10,
       "topics": [
         {
           "id": "m5-polar-form-topic",

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เครื่องมือจำลองผังแปลงทดลองเชิงปฏิสัมพันธ์ (Interactive Field Randomizer) | 01422413</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* vendor/katex.min.css inlined fallback comment */
+    :root {
+      --ku-green: #006644;
+      --ku-green-dark: #004d33;
+      --ku-green-light: #e6f4ea;
+      --ku-gold: #d97706;
+      --ku-gold-light: #fef3c7;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --font-heading: 'Prompt', 'Bai Jamjuree', sans-serif;
+      --font-body: 'Bai Jamjuree', 'Sarabun', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0b131f;
+      color: var(--slate-800);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-card {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, var(--ku-green-dark) 0%, var(--ku-green) 100%);
+      color: #ffffff;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .header-title-group h1 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header-title-group p {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .app-content {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 28px;
+      background: var(--slate-50);
+    }
+
+    @media (max-width: 860px) {
+      .app-content { grid-template-columns: 1fr; }
+    }
+
+    .control-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .select-input, .number-input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--slate-800);
+      background: #ffffff;
+    }
+
+    .btn-action {
+      background: var(--ku-green);
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-action:hover {
+      background: var(--ku-green-dark);
+      transform: translateY(-1px);
+    }
+
+    .stage-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .stage-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--slate-900);
+    }
+
+    .field-display-grid {
+      display: grid;
+      gap: 10px;
+      background: #f1f5f9;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      min-height: 280px;
+    }
+
+    .plot-cell {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .plot-cell .plot-num {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--slate-600);
+      margin-bottom: 2px;
+    }
+
+    .trt-A { border-color: #2563eb; background: #eff6ff; color: #1e40af; }
+    .trt-B { border-color: #16a34a; background: #f0fdf4; color: #166534; }
+    .trt-C { border-color: #d97706; background: #fffbeb; color: #92400e; }
+    .trt-D { border-color: #dc2626; background: #fef2f2; color: #991b1b; }
+    .trt-E { border-color: #9333ea; background: #faf5ff; color: #6b21a8; }
+    .trt-F { border-color: #0891b2; background: #ecfeff; color: #155e75; }
+
+    .block-box {
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 10px;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .block-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--slate-700);
+      font-family: var(--font-heading);
+    }
+
+    .field-summary-box {
+      background: var(--slate-50);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      color: var(--slate-700);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+    <header class="app-header">
+      <div class="header-title-group">
+        <h1>🌱 เครื่องมือจำลองผังแปลงทดลอง (Interactive Field Randomizer)</h1>
+        <p>วิชา 01422413 / 01422311 สถิติวิเคราะห์และการวางแผนการทดลอง มหาวิทยาลัยเกษตรศาสตร์</p>
+      </div>
+      <a href="index.html" class="back-btn">◀ กลับสู่หน้าหลัก</a>
+    </header>
+
+    <div class="app-content">
+      <!-- Controls -->
+      <aside class="control-panel">
+        <div class="form-group">
+          <label class="form-label">1. แผนแบบการทดลอง (Design)</label>
+          <select id="designSelect" class="select-input" onchange="updateDesignOptions()">
+            <option value="CRD">CRD (สุ่มสมบูรณ์)</option>
+            <option value="RCBD" selected>RCBD (สุ่มในบล็อกสมบูรณ์)</option>
+            <option value="LSD">Latin Square Design (ลาตินสแควร์)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="trtGroup">
+          <label class="form-label">2. จำนวนทรีตเมนต์ (Treatments: t)</label>
+          <select id="trtSelect" class="select-input" onchange="renderField()">
+            <option value="3">3 ทรีตเมนต์ (A, B, C)</option>
+            <option value="4" selected>4 ทรีตเมนต์ (A, B, C, D)</option>
+            <option value="5">5 ทรีตเมนต์ (A, B, C, D, E)</option>
+            <option value="6">6 ทรีตเมนต์ (A, B, C, D, E, F)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="repGroup">
+          <label class="form-label">3. จำนวนซ้ำหรือบล็อก (Replications: r)</label>
+          <select id="repSelect" class="select-input" onchange="renderField()">
+            <option value="3">3 ซ้ำ / บล็อก</option>
+            <option value="4" selected>4 ซ้ำ / บล็อก</option>
+            <option value="5">5 ซ้ำ / บล็อก</option>
+          </select>
+        </div>
+
+        <button class="btn-action" onclick="renderField()">
+          🎲 สุ่มผังแปลงใหม่ (Randomize)
+        </button>
+
+        <div style="font-size:0.8rem; color:#64748b; line-height:1.4; border-top:1px solid var(--border-color); padding-top:12px;">
+          <strong>คำแนะนำ:</strong> ใช้ในการจำลองผังการลงแปลงจริงในวิทยานิพนธ์ หรือเตรียมเอกสารผังแปลงก่อนลงมือปลูก/ทดลอง
+        </div>
+      </aside>
+
+      <!-- Stage -->
+      <main class="stage-panel">
+        <div class="stage-header">
+          <div class="stage-title" id="stageTitle">ผังแปลงทดลองแบบ RCBD (4 ทรีตเมนต์, 4 บล็อก)</div>
+          <span style="font-size:0.85rem; font-weight:600; color:var(--ku-green);" id="totalPlots">รวมทั้งหมด 16 แปลงทดลอง</span>
+        </div>
+
+        <div class="field-display-grid" id="fieldStage"></div>
+
+        <div class="field-summary-box" id="fieldSummary">
+          <strong>หลักการสุ่ม:</strong> ทำการสุ่มทรีตเมนต์อย่างเป็นอิสระต่อกันภายในแต่ละบล็อก โดยทุกบล็อกจะได้รับทรีตเมนต์ครบทุกตัว (A, B, C, D) บล็อกละ 1 ครั้งพอดี
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const trtLetters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    function updateDesignOptions() {
+      const design = document.getElementById('designSelect').value;
+      const repGroup = document.getElementById('repGroup');
+      if (design === 'LSD') {
+        repGroup.style.display = 'none'; // LSD has r = t
+      } else {
+        repGroup.style.display = 'flex';
+      }
+      renderField();
+    }
+
+    function renderField() {
+      const design = document.getElementById('designSelect').value;
+      const t = parseInt(document.getElementById('trtSelect').value);
+      const r = parseInt(document.getElementById('repSelect').value);
+      const stage = document.getElementById('fieldStage');
+      const title = document.getElementById('stageTitle');
+      const summary = document.getElementById('fieldSummary');
+      const totalPlots = document.getElementById('totalPlots');
+
+      stage.innerHTML = '';
+
+      if (design === 'CRD') {
+        title.innerText = `ผังแปลงทดลองแบบ CRD (${t} ทรีตเมนต์, ${r} ซ้ำ)`;
+        totalPlots.innerText = `รวมทั้งหมด ${t * r} แปลงทดลอง`;
+        summary.innerHTML = `<strong>หลักการสุ่มของ CRD:</strong> ทรีตเมนต์ทั้งหมด (${t * r} แปลง) ถูกสุ่มลงทุกแปลงอย่างอิสระโดยสมบูรณ์ ไม่มีข้อจำกัดเรื่องบล็อก เหมาะสำหรับห้องทดลองที่สม่ำเสมอ`;
+
+        let allPlots = [];
+        for (let i = 0; i < t; i++) {
+          for (let j = 0; j < r; j++) {
+            allPlots.push(trtLetters[i]);
+          }
+        }
+        // Shuffle
+        allPlots.sort(() => Math.random() - 0.5);
+
+        stage.style.display = 'grid';
+        stage.style.gridTemplateColumns = `repeat(${Math.min(r, 5)}, 1fr)`;
+
+        allPlots.forEach((trt, idx) => {
+          const div = document.createElement('div');
+          div.className = `plot-cell trt-${trt}`;
+          div.innerHTML = `<span class="plot-num">แปลงที่ ${idx + 1}</span>${trt}`;
+          stage.appendChild(div);
+        });
+
+      } else if (design === 'RCBD') {
+        title.innerText = `ผังแปลงทดลองแบบ RCBD (${t} ทรีตเมนต์, ${r} บล็อก)`;
+        totalPlots.innerText = `รวมทั้งหมด ${t * r} แปลงทดลอง (${r} บล็อก)`;
+        summary.innerHTML = `<strong>หลักการสุ่มของ RCBD:</strong> สุ่มทรีตเมนต์อย่างเป็นอิสระภายในแต่ละบล็อก เพื่อให้แน่ใจว่าแต่ละบล็อกได้รับครบทั้ง ${t} ทรีตเมนต์ ช่วยควบคุมความผันแปรของแปลงดินหรือสิ่งแวดล้อม`;
+
+        stage.style.display = 'flex';
+        stage.style.flexDirection = 'column';
+        stage.style.gap = '14px';
+
+        let plotCounter = 1;
+        for (let b = 1; b <= r; b++) {
+          const blockBox = document.createElement('div');
+          blockBox.className = 'block-box';
+          blockBox.innerHTML = `<div class="block-label">บล็อกที่ ${b} (Block ${b})</div>`;
+          
+          const grid = document.createElement('div');
+          grid.style.display = 'grid';
+          grid.style.gridTemplateColumns = `repeat(${t}, 1fr)`;
+          grid.style.gap = '8px';
+
+          let blockTrts = trtLetters.slice(0, t).sort(() => Math.random() - 0.5);
+          blockTrts.forEach(trt => {
+            const div = document.createElement('div');
+            div.className = `plot-cell trt-${trt}`;
+            div.innerHTML = `<span class="plot-num">แปลง ${plotCounter++}</span>${trt}`;
+            grid.appendChild(div);
+          });
+
+          blockBox.appendChild(grid);
+          stage.appendChild(blockBox);
+        }
+
+      } else if (design === 'LSD') {
+        title.innerText = `ผังแปลงทดลองแบบ Latin Square (${t} × ${t})`;
+        totalPlots.innerText = `รวมทั้งหมด ${t * t} แปลงทดลอง`;
+        summary.innerHTML = `<strong>หลักการสุ่มของ Latin Square:</strong> แถวแทนตัวแปรควบคุมที่ 1 คอลัมน์แทนตัวแปรควบคุมที่ 2 ทุกทรีตเมนต์ปรากฏแถวละ 1 ครั้ง และคอลัมน์ละ 1 ครั้งพอดี`;
+
+        stage.style.display = 'grid';
+        stage.style.gridTemplateColumns = `repeat(${t}, 1fr)`;
+
+        // Cyclic latin square with random permutation of rows & cols
+        let rowPerm = Array.from({length: t}, (_, i) => i).sort(() => Math.random() - 0.5);
+        let colPerm = Array.from({length: t}, (_, i) => i).sort(() => Math.random() - 0.5);
+
+        for (let rIdx = 0; rIdx < t; rIdx++) {
+          for (let cIdx = 0; cIdx < t; cIdx++) {
+            const trtVal = (rowPerm[rIdx] + colPerm[cIdx]) % t;
+            const trt = trtLetters[trtVal];
+            const div = document.createElement('div');
+            div.className = `plot-cell trt-${trt}`;
+            div.innerHTML = `<span class="plot-num">แถว ${rIdx + 1}, เสา ${cIdx + 1}</span>${trt}`;
+            stage.appendChild(div);
+          }
+        }
+      }
+    }
+
+    function typesetMath(el = document.body) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderField();
+      typesetMath();
+    });
+  </script>
+</body>
+</html>
