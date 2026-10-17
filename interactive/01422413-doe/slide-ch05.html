@@ -34,7 +34,6 @@
       --shadow-soft:    2px 2px 0px 0px #0f172a;
       --radius:         8px;
 
-      /* Semantic Accent Color for Chapter 5 */
       --accent-main:    #e11d48;
       --accent-tint:    #ffe4e6;
       --accent-warn:    #d97706;
@@ -46,428 +45,218 @@
     }
 
     html, body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background-color: var(--bg-page);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-weight: 400;
-      line-height: 1.5;
-      font-size: 15px;
-      -webkit-font-smoothing: antialiased;
-      user-select: none;
+      width: 100vw; height: 100vh; overflow: hidden;
+      background-color: var(--bg-page); color: var(--ink);
+      font-family: var(--font-body); font-weight: 400; line-height: 1.5; font-size: 15px;
+      -webkit-font-smoothing: antialiased; user-select: none;
     }
 
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 1;
+      background-size: 24px 24px; opacity: 0.6; pointer-events: none; z-index: 1;
     }
 
-    /* NEO-MATH HUD BARS */
     .hud-top {
-      position: fixed;
-      top: 0; left: 0; right: 0; height: 52px;
+      position: fixed; top: 0; left: 0; right: 0; height: 52px;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem;
-      background: var(--bg-surface);
-      border-bottom: var(--bw) solid var(--border);
-      z-index: 100;
+      padding: 0 2rem; background: var(--bg-surface);
+      border-bottom: var(--bw) solid var(--border); z-index: 100;
     }
-
-    .brand-block {
-      display: flex; align-items: center; gap: 12px;
-    }
-
+    .brand-block { display: flex; align-items: center; gap: 12px; }
     .pill-badge {
-      background: var(--accent-main);
-      color: #ffffff;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1.5px solid var(--border);
-      letter-spacing: 0.05em;
+      background: var(--accent-main); color: #ffffff;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 4px; border: 1.5px solid var(--border);
     }
-
     .course-title {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--ink);
+      font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--ink);
     }
-
     .hud-chapter-tag {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--ink-muted);
-      background: var(--bg-alt);
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-muted);
+      background: var(--bg-alt); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-subtle);
     }
-
     .btn-fs {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border);
-      box-shadow: var(--shadow-soft);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
+      background: var(--bg-surface); border: 1.5px solid var(--border); box-shadow: var(--shadow-soft);
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700; padding: 4px 10px;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s ease;
     }
-
-    .btn-fs:hover {
-      transform: translate(-1px, -1px);
-      box-shadow: 3px 3px 0 0 var(--border);
-    }
+    .btn-fs:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 0 var(--border); }
 
     .hud-bottom {
-      position: fixed;
-      bottom: 0; left: 0; right: 0; height: 56px;
+      position: fixed; bottom: 0; left: 0; right: 0; height: 56px;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem;
-      background: var(--bg-surface);
-      border-top: var(--bw) solid var(--border);
-      z-index: 100;
+      padding: 0 2rem; background: var(--bg-surface);
+      border-top: var(--bw) solid var(--border); z-index: 100;
     }
-
-    .progress-track {
-      position: absolute; top: -3px; left: 0; right: 0; height: 4px;
-      background: #e2e8f0;
-    }
-
-    .progress-fill {
-      height: 100%; width: 10%;
-      background: var(--accent-main);
-      transition: width 0.3s cubic-bezier(.22, 1, .36, 1);
-    }
-
-    .nav-group {
-      display: flex; align-items: center; gap: 12px;
-    }
-
+    .progress-track { position: absolute; top: -3px; left: 0; right: 0; height: 4px; background: #e2e8f0; }
+    .progress-fill { height: 100%; width: 10%; background: var(--accent-main); transition: width 0.3s ease; }
+    .nav-group { display: flex; align-items: center; gap: 12px; }
     .neo-btn {
-      background: var(--bg-surface);
-      border: var(--bw) solid var(--border);
-      box-shadow: var(--shadow-soft);
-      color: var(--ink);
-      font-family: var(--font-heading);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-surface); border: var(--bw) solid var(--border); box-shadow: var(--shadow-soft);
+      color: var(--ink); font-family: var(--font-heading); font-size: 12px; font-weight: 700;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;
       transition: all 0.15s ease;
     }
-
     .neo-btn:hover:not(:disabled) {
-      transform: translate(-1px, -1px);
-      box-shadow: 3px 3px 0 0 var(--border);
-      background: var(--accent-tint);
+      transform: translate(-1px, -1px); box-shadow: 3px 3px 0 0 var(--border); background: var(--accent-tint);
     }
-
-    .neo-btn:active:not(:disabled) {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0 0 var(--border);
-    }
-
-    .neo-btn:disabled {
-      opacity: 0.35; cursor: not-allowed; box-shadow: none;
-    }
-
+    .neo-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
     .slide-counter-badge {
-      font-family: var(--font-mono);
-      font-size: 13px; font-weight: 700; color: var(--ink);
-      padding: 4px 12px; background: var(--bg-alt);
-      border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--ink);
+      padding: 4px 12px; background: var(--bg-alt); border: 1.5px solid var(--border); border-radius: 6px;
     }
-
-    .slide-counter-badge strong {
-      color: var(--accent-main);
-    }
-
-    .hud-kbd-hint {
-      font-family: var(--font-mono); font-size: 11px; color: var(--ink-subtle);
-    }
-
+    .slide-counter-badge strong { color: var(--accent-main); }
+    .hud-kbd-hint { font-family: var(--font-mono); font-size: 11px; color: var(--ink-subtle); }
     .hud-kbd-hint kbd {
-      background: var(--bg-alt); border: 1px solid var(--border-subtle);
-      border-bottom-width: 2px; padding: 2px 6px; border-radius: 3px;
-      color: var(--ink); font-weight: 600;
+      background: var(--bg-alt); border: 1px solid var(--border-subtle); border-bottom-width: 2px;
+      padding: 2px 6px; border-radius: 3px; color: var(--ink); font-weight: 600;
     }
 
-    /* DECK STAGE */
     .deck-stage {
-      position: absolute; top: 52px; bottom: 56px; left: 0; right: 0;
-      overflow: hidden; z-index: 10;
+      position: absolute; top: 52px; bottom: 56px; left: 0; right: 0; overflow: hidden; z-index: 10;
     }
-
     .slide {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      padding: 2.2rem 3.5rem;
+      position: absolute; inset: 0; width: 100%; height: 100%; padding: 2.0rem 3.5rem;
       display: flex; flex-direction: column; justify-content: center;
       visibility: hidden; opacity: 0; transform: translateY(6px);
-      transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
-      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; pointer-events: none;
     }
-
     .slide.is-active {
-      visibility: visible; opacity: 1; transform: translateY(0);
-      pointer-events: auto;
+      visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto;
     }
-
     .slide-wrapper {
       max-width: 1220px; width: 100%; margin: 0 auto; height: 100%;
       display: flex; flex-direction: column; justify-content: center;
     }
 
-    /* Typography */
     .slide-kicker {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-main);
-      margin-bottom: 0.4rem;
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent-main); margin-bottom: 0.35rem;
     }
-
     .slide-kicker::before {
       content: ''; display: inline-block; width: 8px; height: 8px;
       background: var(--accent-main); border-radius: 2px; border: 1px solid var(--border);
     }
-
     .slide-heading {
-      font-family: var(--font-heading); font-size: clamp(2.0rem, 3.2vw, 2.75rem);
-      font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink);
-      margin-bottom: 0.5rem;
+      font-family: var(--font-heading); font-size: clamp(1.85rem, 3.0vw, 2.5rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.45rem;
     }
-
     .slide-heading em {
       font-style: normal; color: var(--accent-main); background: var(--accent-tint);
       padding: 0 6px; border-radius: 4px; border: 1px dashed var(--accent-main);
     }
-
     .lead-text {
-      font-size: clamp(0.95rem, 1.2vw, 1.05rem); color: var(--ink-muted);
-      line-height: 1.55; margin-bottom: 1.25rem; max-width: 1080px;
+      font-size: clamp(0.92rem, 1.15vw, 1.02rem); color: var(--ink-muted); line-height: 1.5;
+      margin-bottom: 1.1rem; max-width: 1080px;
     }
 
-    /* Cards & Grids */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
-    .grid-story { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.6rem; align-items: center; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
+    .grid-story { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.5rem; align-items: center; }
 
     .neo-card {
-      background: var(--bg-surface); border: var(--bw) solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-hard);
-      padding: 1.2rem 1.35rem; position: relative;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: var(--bg-surface); border: var(--bw) solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow-hard); padding: 1.1rem 1.3rem; position: relative;
     }
-
-    .neo-card:hover {
-      transform: translate(-1px, -1px); box-shadow: 5px 5px 0px 0px var(--border);
-    }
-
     .neo-card.card-accent { border-top: 6px solid var(--accent-main); }
     .neo-card.card-warn { border-top: 6px solid var(--accent-warn); }
-    .neo-card.card-danger { border-top: 6px solid var(--accent-danger); }
 
     .card-title {
-      font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;
-      color: var(--ink); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--ink);
+      margin-bottom: 0.45rem; display: flex; align-items: center; gap: 8px;
     }
-
-    .card-body {
-      font-size: 0.92rem; color: var(--ink-muted); line-height: 1.5;
-    }
-
+    .card-body { font-size: 0.90rem; color: var(--ink-muted); line-height: 1.5; }
     .card-body strong { color: var(--ink); font-weight: 600; }
 
-    .neo-list { list-style: none; margin-top: 0.4rem; }
-    .neo-list li {
-      position: relative; padding-left: 20px; margin-bottom: 6px; line-height: 1.45;
-    }
+    .neo-list { list-style: none; margin-top: 0.35rem; }
+    .neo-list li { position: relative; padding-left: 18px; margin-bottom: 5px; line-height: 1.4; }
     .neo-list li::before {
-      content: '✔'; position: absolute; left: 0; color: var(--accent-main); font-weight: 800; font-size: 11px;
+      content: '✔'; position: absolute; left: 0; color: var(--accent-main); font-weight: 800; font-size: 10px;
     }
 
     .neo-callout {
-      background: var(--accent-tint); border: var(--bw) solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-soft);
-      padding: 0.85rem 1.25rem; margin-top: 1.1rem; font-size: 0.92rem;
-      color: var(--ink); display: flex; align-items: center; gap: 12px;
+      background: var(--accent-tint); border: var(--bw) solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow-soft); padding: 0.75rem 1.2rem; margin-top: 0.95rem; font-size: 0.90rem;
+      color: var(--ink); display: flex; align-items: center; gap: 10px;
     }
-
-    .neo-callout .callout-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .neo-callout .callout-icon { font-size: 1.3rem; flex-shrink: 0; }
     .neo-callout strong { color: var(--accent-main); font-weight: 700; }
 
     .neo-meta-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-      background: var(--bg-surface); border: var(--bw) solid var(--border);
-      box-shadow: var(--shadow-soft); border-radius: var(--radius);
-      padding: 0.75rem 1.2rem; margin-bottom: 1.25rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; background: var(--bg-surface);
+      border: var(--bw) solid var(--border); box-shadow: var(--shadow-soft); border-radius: var(--radius);
+      padding: 0.7rem 1.1rem; margin-bottom: 1.1rem;
     }
-
     .neo-meta-item .meta-label {
       display: block; font-family: var(--font-mono); font-size: 9px; font-weight: 700;
       color: var(--ink-subtle); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px;
     }
-
     .neo-meta-item .meta-value {
-      font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--ink);
+      font-family: var(--font-heading); font-size: 1.0rem; font-weight: 700; color: var(--ink);
     }
 
     .neo-table-wrapper {
-      border: var(--bw) solid var(--border); box-shadow: var(--shadow-hard);
-      border-radius: var(--radius); overflow: hidden; background: var(--bg-surface); margin-top: 0.6rem;
+      border: var(--bw) solid var(--border); box-shadow: var(--shadow-hard); border-radius: var(--radius);
+      overflow: hidden; background: var(--bg-surface); margin-top: 0.5rem;
     }
-
-    table.neo-table {
-      width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;
-    }
+    table.neo-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
     table.neo-table th {
-      background: var(--bg-alt); color: var(--ink); font-family: var(--font-heading);
-      font-weight: 700; padding: 10px 14px; border-bottom: var(--bw) solid var(--border);
+      background: var(--bg-alt); color: var(--ink); font-family: var(--font-heading); font-weight: 700;
+      padding: 8px 12px; border-bottom: var(--bw) solid var(--border);
     }
     table.neo-table td {
-      padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); color: var(--ink-muted);
+      padding: 8px 12px; border-bottom: 1px solid var(--border-subtle); color: var(--ink-muted);
     }
     table.neo-table tr:last-child td { border-bottom: none; }
 
     .story-box {
-      background: var(--bg-surface); border: var(--bw) solid var(--border);
-      box-shadow: var(--shadow-hard); border-radius: var(--radius); padding: 1.4rem;
+      background: var(--bg-surface); border: var(--bw) solid var(--border); box-shadow: var(--shadow-hard);
+      border-radius: var(--radius); padding: 1.3rem;
     }
-
     .story-quote {
       font-style: italic; color: var(--ink); border-left: 4px solid var(--accent-main);
-      margin: 0.8rem 0; font-size: 1.02rem; font-weight: 500; background: var(--accent-tint);
-      padding: 8px 12px; border-radius: 0 4px 4px 0;
+      margin: 0.7rem 0; font-size: 0.98rem; font-weight: 500; background: var(--accent-tint);
+      padding: 7px 11px; border-radius: 0 4px 4px 0;
     }
 
-    /* Audit Checklist */
-    .audit-checklist { display: flex; flex-direction: column; gap: 8px; }
+    .audit-checklist { display: flex; flex-direction: column; gap: 7px; }
     .audit-item {
       background: #fef2f2; border: 1.5px solid #b91c1c; border-radius: 6px;
-      padding: 8px 12px; display: flex; align-items: flex-start; gap: 10px;
+      padding: 7px 11px; display: flex; align-items: flex-start; gap: 9px;
     }
     .audit-badge {
       background: #dc2626; color: #ffffff; font-family: var(--font-mono);
       font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
       flex-shrink: 0; margin-top: 2px;
     }
-    .audit-text { font-size: 0.88rem; color: #7f1d1d; line-height: 1.4; }
+    .audit-text { font-size: 0.86rem; color: #7f1d1d; line-height: 1.35; }
     .audit-text strong { color: #991b1b; }
 
-    /* Simulation Generic Neo Box */
     .sim-desk-neo {
-      display: grid; grid-template-columns: 310px 1fr; gap: 1.4rem;
-      background: var(--bg-surface); border: var(--bw) solid var(--border);
-      box-shadow: var(--shadow-hard); border-radius: var(--radius); padding: 1.1rem;
+      display: grid; grid-template-columns: 310px 1fr; gap: 1.3rem; background: var(--bg-surface);
+      border: var(--bw) solid var(--border); box-shadow: var(--shadow-hard); border-radius: var(--radius); padding: 1.0rem;
     }
     .sim-panel-neo {
-      background: var(--bg-alt); border: 1.5px solid var(--border); border-radius: 6px;
-      padding: 0.9rem; display: flex; flex-direction: column; gap: 10px;
+      background: var(--bg-alt); border: 1.5px solid var(--border); border-radius: 6px; padding: 0.85rem;
+      display: flex; flex-direction: column; gap: 9px;
     }
     .sim-btn-neo {
       background: var(--bg-surface); border: 1.5px solid var(--border); box-shadow: var(--shadow-soft);
       color: var(--ink); font-family: var(--font-heading); font-size: 11px; font-weight: 700;
-      padding: 7px 10px; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.15s ease;
+      padding: 6px 9px; border-radius: 5px; cursor: pointer; text-align: left; transition: all 0.15s ease;
     }
     .sim-btn-neo:hover { background: var(--accent-tint); transform: translate(-1px, -1px); }
     .sim-btn-neo.active { background: var(--accent-main); color: #ffffff; border-color: var(--border); }
 
-    /* Responsive adjustments for 720p Projectors */
     @media (max-height: 760px) {
-      .slide { padding: 1.2rem 2.5rem; }
-      .slide-heading { font-size: 1.85rem; margin-bottom: 0.3rem; }
-      .lead-text { font-size: 0.92rem; margin-bottom: 0.8rem; }
-      .sim-desk-neo { padding: 0.8rem; gap: 1rem; }
-      .neo-card { padding: 1rem 1.1rem; }
-    }
-
-    /* HUD Zen Mode (Hide Toolbars) */
-    .hud-top, .hud-bottom {
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-    }
-    body.hud-hidden .hud-top {
-      transform: translateY(-100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    body.hud-hidden .hud-bottom {
-      transform: translateY(100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .deck-stage {
-      transition: top 0.28s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.hud-hidden .deck-stage {
-      top: 0;
-      bottom: 0;
-    }
-
-    /* Floating restore trigger when HUD is hidden */
-    .btn-floating-hud {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      z-index: 200;
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-soft);
-      cursor: pointer;
-      font-size: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.8);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.hud-hidden .btn-floating-hud {
-      opacity: 0.65;
-      pointer-events: auto;
-      transform: scale(1);
-    }
-    body.hud-hidden .btn-floating-hud:hover,
-    body.hud-hidden .btn-floating-hud:active {
-      opacity: 1;
-      transform: scale(1.1);
-      background: var(--accent-tint);
-    }
-
-    /* Mobile & Touch Responsive Adaptation */
-    @media (max-width: 820px) {
-      .hud-top { padding: 0 1rem; height: 46px; }
-      .hud-bottom { padding: 0 1rem; height: 50px; }
-      .deck-stage { top: 46px; bottom: 50px; }
-      .course-title, .hud-chapter-tag, .hud-kbd-hint { display: none; }
-      .slide { padding: 1rem 1.2rem; }
-      .slide-wrapper { overflow-y: auto; max-height: 100%; justify-content: flex-start; padding: 0.5rem 0; }
-      .slide-heading { font-size: 1.45rem; line-height: 1.25; }
-      .lead-text { font-size: 0.88rem; }
-      .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 10px; }
-      .neo-meta-strip { flex-wrap: wrap; gap: 6px; }
-      .neo-meta-item { min-width: calc(50% - 6px); }
-      .sim-desk-neo { flex-direction: column; overflow-y: auto; max-height: 75vh; }
-      .sim-controls { width: 100%; min-width: 0; }
+      .slide { padding: 1.1rem 2.2rem; }
+      .slide-heading { font-size: 1.75rem; margin-bottom: 0.25rem; }
+      .lead-text { font-size: 0.88rem; margin-bottom: 0.7rem; }
+      .sim-desk-neo { padding: 0.7rem; gap: 0.9rem; }
+      .neo-card { padding: 0.9rem 1.0rem; }
+      .neo-callout { margin-top: 0.6rem; padding: 0.6rem 0.9rem; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -479,9 +268,8 @@
       <span class="pill-badge">01422413</span>
       <span class="course-title">การวางแผนการทดลอง (DESIGN OF EXPERIMENTS)</span>
     </div>
-    <div style="display:flex; align-items:center; gap:10px;">
+    <div style="display:flex; align-items:center; gap:14px;">
       <span class="hud-chapter-tag">บทที่ 5: แผนการทดลองแบบลาตินสแควร์ (Latin Square)</span>
-      <button class="btn-fs" id="btnToggleHud" onclick="toggleHud()" title="ซ่อน/แสดงแถบเครื่องมือ (H)">👁️ ซ่อนแถบ (H)</button>
       <button class="btn-fs" onclick="toggleFullScreen()">⛶ เต็มจอ</button>
     </div>
   </header>
@@ -489,17 +277,17 @@
   <!-- DECK STAGE -->
   <main class="deck-stage">
 
-    <!-- SLIDE 1: Cover & Metadata -->
+    <!-- SLIDE 1 -->
     <section class="slide is-active" id="slide-1">
       <div class="slide-wrapper">
         <div class="slide-kicker">MODULE 05 · LATIN SQUARE DESIGN</div>
         <h1 class="slide-heading">บทที่ 5: <em>แผนการทดลองแบบลาตินสแควร์ (Latin Square)</em></h1>
         <p class="lead-text">
-          เรียนรู้โครงสร้างทางสถิติ การวางผังแปลง การทดสอบสมมติฐานทางคณิตศาสตร์ และการแปลผลการวิจัยจริงอย่างถูกต้องตามมาตรฐานสากล
+          ควบคุมความผันแปรของสภาพแวดล้อมได้ถึงสองทิศทางพร้อมกัน (แถวและคอลัมน์) โดยใช้จำนวนหน่วยทดลองเพียง t² หน่วยได้อย่างมีประสิทธิภาพสูงสุด
         </p>
 
         <div class="neo-meta-strip">
-          <div class="neo-meta-item"><span class="meta-label">ตัวแบบ</span><span class="meta-value">y_ijk = μ + τ_i + ρ_j + γ_k + ε_ijk</span></div>
+          <div class="neo-meta-item"><span class="meta-label">ตัวแบบ</span><span class="meta-value">y_{ijk} = \mu + \tau_i + \rho_j + \gamma_k + \varepsilon_{ijk}</span></div>
           <div class="neo-meta-item"><span class="meta-label">การควบคุม</span><span class="meta-value">2-Way Blocking (Row & Col)</span></div>
           <div class="neo-meta-item"><span class="meta-label">เงื่อนไข</span><span class="meta-value">r = c = t (Square Matrix)</span></div>
           <div class="neo-meta-item"><span class="meta-label">df Error</span><span class="meta-value">(t - 1)(t - 2)</span></div>
@@ -507,143 +295,93 @@
 
         <div class="grid-3">
           <div class="neo-card card-accent">
-            <div class="card-title">1. วัตถุประสงค์หลัก</div>
-            <div class="card-body">ทำความเข้าใจตัวแบบเชิงเส้นทางสถิติ ($y$) และการสุ่มจัดสรรทรีตเมนต์ลงสู่หน่วยทดลองอย่างถูกต้อง</div>
+            <div class="card-title">1. การบล็อกสองทาง</div>
+            <div class="card-body">บล็อกทิศทางที่หนึ่งตามแถว (Row) และบล็อกทิศทางที่สองตามคอลัมน์ (Column) ขจัดอิทธิพลกวนแฝงได้พร้อมกัน 2 แหล่ง</div>
           </div>
           <div class="neo-card card-accent">
-            <div class="card-title">2. การวิเคราะห์ ANOVA</div>
-            <div class="card-body">แยกผลรวมกำลังสอง ($SS$) คำนวณองศาอิสระ ($df$) และทดสอบอัตราส่วนความแปรปรวน ($F$-test)</div>
+            <div class="card-title">2. กฎการวางทรีตเมนต์</div>
+            <div class="card-body">ทรีตเมนต์แต่ละตัวจะต้องปรากฏในแต่ละแถวและแต่ละคอลัมน์เพียงครั้งเดียวพอดี (คล้ายตารางซูโดกุ)</div>
           </div>
           <div class="neo-card card-accent">
-            <div class="card-title">3. การประยุกต์ใช้งาน</div>
-            <div class="card-body">เชื่อมโยงสู่การทำโครงงาน วิจัยเกษตรกรรม อุตสาหกรรมชีวภาพ และการเขียนวิทยานิพนธ์ระดับบัณฑิตศึกษา</div>
+            <div class="card-title">3. ข้อจำกัดสำคัญ</div>
+            <div class="card-body">จำนวนแถว คอลัมน์ และทรีตเมนต์ต้องเท่ากันเสมอ หากทรีตเมนต์น้อย ($t \le 4$) องศาอิสระของ Error จะต่ำมาก</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 2: Linear Model & Theory -->
+    <!-- SLIDE 2: Model & Theory -->
     <section class="slide" id="slide-2">
       <div class="slide-wrapper">
-        <div class="slide-kicker">STATISTICAL FORMULATION · ตัวแบบทางสถิติ</div>
-        <h2 class="slide-heading">ตัวแบบเชิงเส้นและข้อกำหนดทางคณิตศาสตร์</h2>
-        <p class="lead-text">
-          ตัวแบบทางสถิติของแผนแบบนี้ สะท้อนแหล่งที่มาของความแปรปรวนที่ผู้วิจัยต้องการศึกษาและส่วนที่ควบคุม:
-        </p>
+        <div class="slide-kicker">LINEAR MODEL · ตัวแบบทางสถิติ</div>
+        <h2 class="slide-heading">ตัวแบบเชิงเส้นและข้อกำหนดของ Latin Square</h2>
+        <p class="lead-text">ตัวแบบเชิงเส้นของการจัดบล็อกสองทิศทางตั้งฉาก:</p>
         <div class="grid-2">
           <div class="neo-card card-accent">
             <div class="card-title">สมการตัวแบบเชิงเส้น (Linear Model)</div>
-            <div class="card-body">
-              $$y_{ij} = \mu + 	au_i + arepsilon_{ij}$$
-              <ul class="neo-list">
-                <li>$y_{ij}$ = ค่าสังเกตของหน่วยทดลองที่ได้รับทรีตเมนต์ $i$ ซ้ำที่ $j$</li>
-                <li>$\mu$ = ค่าเฉลี่ยรวมแท้จริง (Overall True Mean)</li>
-                <li>$	au_i$ = อิทธิพลของทรีตเมนต์ที่ $i$ โดย $\sum 	au_i = 0$ (Fixed Effect)</li>
-                <li>$arepsilon_{ij}$ = ความคลาดเคลื่อนสุ่ม โดย $arepsilon_{ij} \sim 	ext{NID}(0, \sigma^2)$</li>
-              </ul>
-            </div>
+            <div class="card-body">$$y_{ijk} = \mu + \tau_i + \rho_j + \gamma_k + \varepsilon_{ijk}$$ โดย $i, j, k = 1, \dots, t$<br><ul class='neo-list'><li>$y_{ijk}$ = ค่าสังเกตของทรีตเมนต์ $i$ ในแถว $j$ และคอลัมน์ $k$</li><li>$\mu$ = ค่าเฉลี่ยรวมแท้จริง</li><li>$\tau_i$ = อิทธิพลทรีตเมนต์ที่ $i$ โดย $\sum \tau_i = 0$</li><li>$\rho_j$ = อิทธิพลแถวที่ $j$ โดย $\sum \rho_j = 0$</li><li>$\gamma_k$ = อิทธิพลคอลัมน์ที่ $k$ โดย $\sum \gamma_k = 0$</li><li>$\varepsilon_{ijk} \sim \text{NID}(0, \sigma^2)$ = ความคลาดเคลื่อนสุ่ม</li></ul></div>
           </div>
           <div class="neo-card">
-            <div class="card-title">ข้อสมมติฐานและเงื่อนไขบังคับ</div>
-            <div class="card-body">
-              <ul class="neo-list">
-                <li><strong>Independence:</strong> ความคลาดเคลื่อนระหว่างหน่วยทดลองต้องเป็นอิสระต่อกัน (รับประกันด้วยการสุ่ม)</li>
-                <li><strong>Normality:</strong> เศษเหลือต้องมีการแจกแจงแบบปกติ</li>
-                <li><strong>Homoscedasticity:</strong> ความแปรปรวนของความคลาดเคลื่อนต้องคงที่ทุกกลุ่ม ($\sigma_1^2 = \sigma_2^2 = \dots = \sigma^2$)</li>
-              </ul>
-            </div>
+            <div class="card-title">สมมติฐาน Additivity และข้อจำกัดขนาด</div>
+            <div class="card-body"><strong>1. ไม่มี Interaction:</strong> สมมติว่าไม่มีปฏิสัมพันธ์ใดๆ ระหว่าง Treatments, Rows และ Columns<br><br><strong>2. จัตุรัสสมบูรณ์:</strong> จำนวนระดับของทั้ง 3 ปัจจัยต้องเท่ากันคือ $t$<br><br><strong>3. ข้อจำกัด:</strong> หาก $t=3$ จะได้ $df_E = (3-1)(3-2) = 2$ ซึ่งต่ำเกินไปสำหรับการทดสอบที่แม่นยำ</div>
           </div>
         </div>
         <div class="neo-callout">
           <span class="callout-icon">📌</span>
-          <div><strong>ข้อสังเกต:</strong> หากข้อสมมติความเป็นเนื้อเดียวกันของความแปรปรวนถูกละเมิด ค่า $F$-test จะเกิดความคลาดเคลื่อนสูงมาก ต้องแปลงข้อมูลก่อนวิเคราะห์</div>
+          <div><strong>ข้อสังเกต:</strong> หากสงสัยว่าทรีตเมนต์จะมีปฏิกิริยาร่วมกับแถวหรือคอลัมน์ ห้ามใช้ Latin Square เด็ดขาด</div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 3: Sum of Squares Partitioning -->
+    <!-- SLIDE 3: Variance Decomposition -->
     <section class="slide" id="slide-3">
       <div class="slide-wrapper">
-        <div class="slide-kicker">VARIANCE DECOMPOSITION · การแยกส่วนความแปรปรวน</div>
-        <h2 class="slide-heading">การแยกผลรวมกำลังสอง <em>(Sum of Squares)</em></h2>
-        <p class="lead-text">
-          หัวใจของ ANOVA คือการผ่าความแปรปรวนรวม ($SS_{\text{Total}}$) ออกเป็นก้อนที่อธิบายได้และก้อนความคลาดเคลื่อน:
-        </p>
+        <div class="slide-kicker">SS DECOMPOSITION · การแยกผลรวมกำลังสอง</div>
+        <h2 class="slide-heading">การแยกผลรวมกำลังสอง 4 ส่วนใน Latin Square</h2>
+        <p class="lead-text">ใน Latin Square ความแปรปรวนรวม ($SS_{\text{Total}}$) ถูกผ่าออกเป็น 4 ก้อนอิสระ:</p>
         <div class="grid-2">
           <div class="neo-card card-accent">
-            <div class="card-title">สูตรการแยกผลรวมกำลังสอง</div>
-            <div class="card-body">
-              $$SS_{\text{Total}} = SS_{\text{Tr}} + SS_E$$
-              $$\sum_{i=1}^t \sum_{j=1}^r (y_{ij} - \bar{y}_{\cdot\cdot})^2 = r\sum_{i=1}^t (\bar{y}_{i\cdot} - \bar{y}_{\cdot\cdot})^2 + \sum_{i=1}^t \sum_{j=1}^r (y_{ij} - \bar{y}_{i\cdot})^2$$
-            </div>
+            <div class="card-title">สูตรการคำนวณ Sums of Squares</div>
+            <div class="card-body">$$SS_{\text{Total}} = SS_{\text{Tr}} + SS_{\text{Row}} + SS_{\text{Col}} + SS_E$$<br>$$CF = \frac{Y_{\cdot\cdot\cdot}^2}{t^2}, \quad SS_{\text{Total}} = \sum \sum \sum y_{ijk}^2 - CF$$<br>$$SS_{\text{Tr}} = \frac{\sum Y_{i\cdot\cdot}^2}{t} - CF, \quad SS_{\text{Row}} = \frac{\sum Y_{\cdot j\cdot}^2}{t} - CF$$<br>$$SS_{\text{Col}} = \frac{\sum Y_{\cdot\cdot k}^2}{t} - CF$$</div>
           </div>
           <div class="neo-card">
-            <div class="card-title">การแบ่งสรรองศาความเป็นอิสระ (df)</div>
-            <div class="card-body">
-              <ul class="neo-list">
-                <li>$df_{\text{Total}} = N - 1 = tr - 1$</li>
-                <li>$df_{\text{Tr}} = t - 1$ (จำนวนทรีตเมนต์ลบ 1)</li>
-                <li>$df_E = t(r - 1) = N - t$ (องศาอิสระเพื่อประมาณค่า $\sigma^2$)</li>
-              </ul>
-            </div>
+            <div class="card-title">การกระจายองศาความเป็นอิสระ (df)</div>
+            <div class="card-body"><ul class='neo-list'><li>$df_{\text{Total}} = t^2 - 1$</li><li>$df_{\text{Tr}} = t - 1$</li><li>$df_{\text{Row}} = t - 1$</li><li>$df_{\text{Col}} = t - 1$</li><li>$df_E = (t - 1)(t - 2)$</li><li>สมบัติบวก: $df_{\text{Total}} = 3(t - 1) + (t - 1)(t - 2)$</li></ul></div>
           </div>
         </div>
         <div class="neo-callout">
           <span class="callout-icon">💡</span>
-          <div><strong>กฎอนุรักษ์:</strong> ทั้งผลรวมกำลังสอง ($SS$) และองศาอิสระ ($df$) สามารถบวกกันได้เสมอ: $SS_{\text{Total}} = \sum SS_{\text{Components}}$</div>
+          <div><strong>ความประหยัด:</strong> ใช้เพียง $t^2$ หน่วยทดลอง แทนที่จะต้องใช้ $t^3$ หน่วยเหมือนใน Factorial สามปัจจัยเต็มรูป</div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 4: Standard ANOVA Construction -->
+    <!-- SLIDE 4: ANOVA & Criteria -->
     <section class="slide" id="slide-4">
       <div class="slide-wrapper">
-        <div class="slide-kicker">ANOVA TABLE · โครงสร้างตารางวิเคราะห์</div>
-        <h2 class="slide-heading">ตารางวิเคราะห์ความแปรปรวนและสถิติทดสอบ $F$</h2>
-        <p class="lead-text">
-          รวบรวมค่าจากการแยกส่วนความแปรปรวนเพื่อคำนวณอัตราส่วนทดสอบ $F = MS_{\text{Tr}} / MS_E$:
-        </p>
+        <div class="slide-kicker">ANOVA TABLE · ตารางวิเคราะห์ความแปรปรวน</div>
+        <h2 class="slide-heading">ตาราง ANOVA ของ Latin Square และประสิทธิภาพสัมพัทธ์</h2>
+        <p class="lead-text">โครงสร้างตารางวิเคราะห์ความแปรปรวนสำหรับ Latin Square Design:</p>
         <div class="neo-table-wrapper">
           <table class="neo-table">
-            <thead>
-              <tr><th>Source</th><th>df</th><th>SS</th><th>MS</th><th>F-Ratio</th><th>p-value</th></tr>
-            </thead>
+            <thead><tr><th>Source</th><th>df</th><th>SS</th><th>MS</th><th>F-Ratio</th><th>E(MS) [Fixed Trt]</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>Treatments</strong></td>
-                <td>$t - 1$</td>
-                <td>$SS_{\text{Tr}}$</td>
-                <td>$MS_{\text{Tr}} = \frac{SS_{\text{Tr}}}{t - 1}$</td>
-                <td>$\frac{MS_{\text{Tr}}}{MS_E}$</td>
-                <td>$P(F > F_{\text{calc}})$</td>
-              </tr>
-              <tr>
-                <td><strong>Error</strong></td>
-                <td>$N - t$</td>
-                <td>$SS_E$</td>
-                <td>$MS_E = \frac{SS_E}{N - t}$</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td><strong>Total</strong></td>
-                <td>$N - 1$</td>
-                <td>$SS_{\text{Total}}$</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
+              <tr><td><strong>Treatments</strong></td><td>$t - 1$</td><td>$SS_{\text{Tr}}$</td><td>$MS_{\text{Tr}} = \frac{SS_{\text{Tr}}}{t - 1}$</td><td>$\frac{MS_{\text{Tr}}}{MS_E}$</td><td>$\sigma^2 + \frac{t \sum \tau_i^2}{t - 1}$</td></tr>
+              <tr><td><strong>Rows</strong></td><td>$t - 1$</td><td>$SS_{\text{Row}}$</td><td>$MS_{\text{Row}} = \frac{SS_{\text{Row}}}{t - 1}$</td><td>$\frac{MS_{\text{Row}}}{MS_E}$</td><td>$\sigma^2 + \frac{t \sum \rho_j^2}{t - 1}$</td></tr>
+              <tr><td><strong>Columns</strong></td><td>$t - 1$</td><td>$SS_{\text{Col}}$</td><td>$MS_{\text{Col}} = \frac{SS_{\text{Col}}}{t - 1}$</td><td>$\frac{MS_{\text{Col}}}{MS_E}$</td><td>$\sigma^2 + \frac{t \sum \gamma_k^2}{t - 1}$</td></tr>
+              <tr><td><strong>Error</strong></td><td>$(t - 1)(t - 2)$</td><td>$SS_E$</td><td>$MS_E = \frac{SS_E}{(t - 1)(t - 2)}$</td><td>—</td><td>$\sigma^2$</td></tr>
+              <tr><td><strong>Total</strong></td><td>$t^2 - 1$</td><td>$SS_{\text{Total}}$</td><td>—</td><td>—</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
         <div class="neo-callout">
           <span class="callout-icon">🎯</span>
-          <div><strong>เกณฑ์ตัดสินใจ:</strong> ปฏิเสธ $H_0$ เมื่อ $F_{\text{calc}} > F_{\alpha, t-1, N-t}$ แปลว่ามีทรีตเมนต์อย่างน้อย 1 คู่ที่มีค่าเฉลี่ยแตกต่างกันอย่างมีนัยสำคัญทางสถิติ</div>
+          <div><strong>ประสิทธิภาพเทียบกับ CRD:</strong> $RE = \frac{MS_{\text{Row}} + MS_{\text{Col}} + (t-1)MS_E}{(t+1)MS_E} \times 100\%$ แสดงเปอร์เซ็นต์ความแม่นยำที่เพิ่มขึ้นจากการบล็อก 2 ทิศทาง</div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 5: Historical Story -->
+    <!-- SLIDE 5: History -->
     <section class="slide" id="slide-5">
       <div class="slide-wrapper">
         <div class="slide-kicker">HISTORICAL VIGNETTE · ประวัติศาสตร์สถิติโลก</div>
@@ -655,15 +393,15 @@
           </div>
           <div class="neo-card card-accent">
             <div class="card-title">บทเรียนสำคัญสู่ทฤษฎี</div>
-            <div class="card-body">
-              ประวัติศาสตร์สอนเราว่า สถิติไม่ได้เกิดขึ้นในห้องแอร์ แต่เกิดจากการแก้ปัญหาจริงในแปลงเกษตร โรงเบียร์ และโรงงานอุตสาหกรรม ความถูกต้องของการทดลองเริ่มต้นจากการจัดผังแปลง ไม่ใช่การคำนวณหลังเก็บข้อมูลเสร็จแล้ว
+            <div class="card-body" style="font-size:0.90rem; line-height:1.55;">
+              คณิตศาสตร์เชิงการจัด (Combinatorics) กลายมาเป็นเครื่องมืออันทรงพลังในการประหยัดทรัพยากรการทดลองภาคสนาม
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 6: Field Agronomy / Real Case Study -->
+    <!-- SLIDE 6: Field Case -->
     <section class="slide" id="slide-6">
       <div class="slide-wrapper">
         <div class="slide-kicker">REAL CASE STUDY · การทดลองจริงภาคสนาม</div>
@@ -671,7 +409,7 @@
         <div class="grid-story">
           <div class="neo-card card-accent">
             <div class="card-title">บริบทและการประยุกต์ใช้ในไทย</div>
-            <div class="card-body" style="font-size:0.92rem; line-height:1.6;">
+            <div class="card-body" style="font-size:0.90rem; line-height:1.55;">
               โคนม 4 ตัว (Row Blocking: ควบคุมพันธุกรรมและขนาดตัว) ทดสอบตลอด 4 ช่วงเวลาการให้นม (Column Blocking: ควบคุมระยะการให้นมตามอายุ) สลับรับอาหารสูตร A, B, C, D แผนแบบลาตินสแควร์ทำให้ตัดอิทธิพลความต่างระหว่างตัววัวและช่วงเวลาออกจากการทดสอบสูตรอาหารได้อย่างหมดจด
             </div>
           </div>
@@ -679,15 +417,15 @@
             <div style="font-family:var(--font-heading); font-size:1.05rem; font-weight:700; color:var(--accent-main); margin-bottom:0.4rem;">
               คำแนะนำสำหรับวิทยานิพนธ์
             </div>
-            <p style="font-size:0.92rem; line-height:1.55; color:var(--ink-muted);">
-              นิสิตวิทยาเขตกำแพงแสนต้องจำไว้เสมอ: <strong>"ผังแปลงกระดาษต้องแปลงเป็นผังจริงบนดินได้"</strong> ระวังขอบแปลง (Border Effect), ความลาดชันของน้ำ, และทิศทางร่มเงาไม้ใหญ่เสมอ
+            <p style="font-size:0.90rem; line-height:1.5; color:var(--ink-muted);">
+              ระวังเรื่อง Residual Carryover Effect หากอาหารในรอบก่อนหน้ายังมีผลตกค้างถึงรอบถัดไป ต้องเว้นระยะล้างท้อง (Washout Period) ระหว่างช่วงเวลาเสมอ
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 7: Interactive Lab Sandbox -->
+    <!-- SLIDE 7: Simulation -->
     <section class="slide" id="slide-7">
       <div class="slide-wrapper">
         <div class="slide-kicker">INTERACTIVE LAB · แบบจำลองสถานการณ์จริง</div>
@@ -710,40 +448,30 @@
       </div>
     </section>
 
-    <!-- SLIDE 8: Step-by-Step Computational Example -->
+    <!-- SLIDE 8: Custom Worked Example -->
     <section class="slide" id="slide-8">
       <div class="slide-wrapper">
-        <div class="slide-kicker">WORKED NUMERICAL EXAMPLE · ตัวอย่างการคำนวณจริง</div>
-        <h2 class="slide-heading">ตัวอย่างการคำนวณตาราง ANOVA แบบทีละขั้นตอน</h2>
-        <p class="lead-text">สมมติข้อมูล $t = 4$ ทรีตเมนต์ และ $r = 4$ ซ้ำ ($N = 16$ แปลง) คำนวณได้ผลรวมดังนี้:</p>
+        <div class="slide-kicker">WORKED EXAMPLE · ตัวอย่างการคำนวณจริง</div>
+        <h2 class="slide-heading">ตัวอย่างการคำนวณ Latin Square ขนาด 4x4</h2>
+        <p class="lead-text">สมมติการทดสอบอาหารโคนม 4 สูตร ($t=4, N=16$) ได้ผลรวมดังนี้:</p>
         <div class="grid-2">
           <div class="neo-card card-accent">
-            <div class="card-title">1. คำนวณค่า Correction Factor และ SS</div>
-            <div class="card-body">
-              <ul class="neo-list">
-                <li>$CF = \frac{Y_{\cdot\cdot}^2}{N} = \frac{800^2}{16} = 40,000.0$</li>
-                <li>$SS_{\text{Total}} = \sum y_{ij}^2 - CF = 40,320.0 - 40,000.0 = 320.0$</li>
-                <li>$SS_{\text{Tr}} = \frac{\sum Y_{i\cdot}^2}{r} - CF = 40,240.0 - 40,000.0 = 240.0$</li>
-                <li>$SS_E = SS_{\text{Total}} - SS_{\text{Tr}} = 320.0 - 240.0 = 80.0$</li>
-              </ul>
-            </div>
+            <div class="card-title">1. การคำนวณตาราง ANOVA ของ Latin Square</div>
+            <div class="card-body"><ul class='neo-list'><li>$CF = 40,000.0, \quad SS_{\text{Total}} = 410.0$</li><li>$SS_{\text{Tr}} = 240.0, \quad SS_{\text{Row}} = 80.0, \quad SS_{\text{Col}} = 60.0$</li><li>$SS_E = 410.0 - 240.0 - 80.0 - 60.0 = 30.0$</li><li>$df_E = (4 - 1)(4 - 2) = 6, \quad MS_E = 30.0 / 6 = 5.00$</li><li>$MS_{\text{Tr}} = 240.0 / 3 = 80.0$</li><li>$F_{\text{calc}} = 80.0 / 5.00 = 16.00 > F_{0.05, 3, 6} = 4.76$ <strong>(Sig!)</strong></li></ul></div>
           </div>
           <div class="neo-card">
-            <div class="card-title">2. สรุปผลตาราง ANOVA</div>
-            <div class="card-body">
-              <ul class="neo-list">
-                <li>$MS_{\text{Tr}} = \frac{240.0}{3} = 80.0$</li>
-                <li>$MS_E = \frac{80.0}{12} = 6.67$</li>
-                <li>$F_{\text{calc}} = \frac{80.0}{6.67} = 12.00$</li>
-                <li>$F_{0.05, 3, 12} = 3.49 \implies F_{\text{calc}} > 3.49$ <strong>(แตกต่างอย่างมีนัยสำคัญ!)</strong></li>
-              </ul>
-            </div>
+            <div class="card-title">2. การคำนวณ RE และการทำซ้ำจัตุรัส</div>
+            <div class="card-body"><ul class='neo-list'><li>$MS_{\text{Row}} = 80.0 / 3 = 26.67, \quad MS_{\text{Col}} = 60.0 / 3 = 20.00$</li><li>$RE = \frac{26.67 + 20.00 + 3(5.00)}{5(5.00)} = \frac{61.67}{25.0} = 246.7\%$</li><li>การจัด Latin Square ให้ประสิทธิภาพสูงกว่า CRD ถึง 146.7%!</li><li><strong>เทคนิค Repetition:</strong> หาก $t=3$ หรือ $4$ ให้ทำซ้ำจัตุรัสละติน $m$ จัตุรัส (Replication of Latin Squares) เพื่อเพิ่ม $df_E$</li></ul></div>
           </div>
+        </div>
+        <div class="neo-callout">
+          <span class="callout-icon">📊</span>
+          <div><strong>สรุป:</strong> แผนแบบลาตินสแควร์ช่วยขจัดความแปรปรวนจากทั้งตัวสัตว์และช่วงเวลาได้อย่างคุ้มค่ามหาศาล</div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 9: Crime Scene Forensic Audit -->
+    <!-- SLIDE 9: Crime Scene Audit -->
     <section class="slide" id="slide-9">
       <div class="slide-wrapper">
         <div class="slide-kicker">FORENSIC AUDIT · คดีสืบสวนข้อผิดพลาด</div>
@@ -765,12 +493,12 @@
         </div>
         <div class="neo-callout">
           <span class="callout-icon">🔍</span>
-          <div><strong>หลักการเตือนใจ:</strong> ตรวจสอบข้อตกลงเบื้องต้นและตัวหาร F เสมอ หากวางแผนผิดตั้งแต่ผังแปลง สถิติขั้นสูงใดๆ ก็ไม่สามารถกู้ข้อมูลกลับมาได้</div>
+          <div><strong>หลักการเตือนใจ:</strong> ขนาดจัตุรัสที่เหมาะสมที่สุดคือ $5 \times 5$ ถึง $8 \times 8$ หากเล็กกว่านี้ $df_E$ จะน้อย หากใหญ่กว่านี้จะหาหน่วยทดลองที่เท่ากันทั้ง 2 ทิศทางได้ยาก</div>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 10: Synthesis & Roadmap -->
+    <!-- SLIDE 10: Synthesis -->
     <section class="slide" id="slide-10">
       <div class="slide-wrapper">
         <div class="slide-kicker">ROADMAP · สรุปและก้าวถัดไป</div>
@@ -780,16 +508,16 @@
             <div class="card-title">สิ่งสำคัญที่ได้เรียนรู้</div>
             <div class="card-body">
               <ul class="neo-list">
-                <li>เข้าใจตัวแบบและข้อตกลงของ แผนการทดลองแบบลาตินสแควร์ (Latin Square) อย่างลึกซึ้ง</li>
-                <li>สามารถคำนวณแยกส่วน $SS$, $MS$ และทดสอบค่า $F$ ได้อย่างแม่นยำ</li>
-                <li>ตระหนักถึงกับดักข้อผิดพลาดทางสถิติที่พบบ่อยในงานวิจัยจริง</li>
+                <li>Latin Square ควบคุมความผันแปร 2 ทิศทางตั้งฉาก (Row และ Column)</li>
+            <li>การแยกผลรวมกำลังสอง 4 ส่วน: $SS_{\text{Total}} = SS_{\text{Tr}} + SS_{\text{Row}} + SS_{\text{Col}} + SS_E$</li>
+            <li>ต้องระวังเรื่องสมมติฐาน Additivity และข้อจำกัด $df_E$ เมื่อ $t$ มีขนาดเล็ก</li>
               </ul>
             </div>
           </div>
           <div class="neo-card">
             <div class="card-title">ความเชื่อมโยงสู่บทต่อไป</div>
             <div class="card-body">
-              แผนแบบนี้เป็นฐานสำคัญในการต่อยอดสู่แผนแบบที่มีความซับซ้อนขึ้น เพื่อควบคุมความผันแปรหลายทิศทางและศึกษาปฏิสัมพันธ์ระหว่างปัจจัย
+              ในบทที่ 6 เราจะมาตรวจสอบ: <strong>ข้อกำหนดในการวิเคราะห์ ANOVA และการแปลงข้อมูล (Transformations)</strong>
             </div>
           </div>
         </div>
@@ -810,11 +538,8 @@
       <button class="neo-btn" id="btnNext" onclick="nextSlide()">ถัดไป →</button>
       <span class="slide-counter-badge">สไลด์ <strong id="curSlideNum">01</strong> / 10</span>
     </div>
-    <div class="hud-kbd-hint">เปลี่ยนสไลด์ด้วย <kbd>←</kbd> <kbd>→</kbd> หรือ <kbd>SPACE</kbd> · ซ่อนแถบด้วย <kbd>H</kbd></div>
+    <div class="hud-kbd-hint">เปลี่ยนสไลด์ด้วย <kbd>←</kbd> <kbd>→</kbd> หรือ <kbd>SPACE</kbd></div>
   </footer>
-
-  <!-- Floating HUD Restore Trigger -->
-  <button id="btnFloatingShowHud" class="btn-floating-hud" onclick="toggleHud()" aria-label="แสดงแถบเครื่องมือ (H)" title="แสดงแถบเครื่องมือ (H)">👁️</button>
 
   <!-- SCRIPT ENGINE -->
   <script>
@@ -846,15 +571,10 @@
       if (curIndex > 0) { curIndex--; updateSlide(); }
     }
 
-    function toggleHud() {
-      document.body.classList.toggle('hud-hidden');
-    }
-
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
       else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
-      else if (e.key === 'h' || e.key === 'H') toggleHud();
     });
 
     function toggleFullScreen() {
@@ -862,55 +582,7 @@
       else if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
     }
 
-    // Touch gestures (Swipe & Double Tap)
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchStartTime = 0;
-    let lastTapTime = 0;
-
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchStartTime = Date.now();
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchend', (e) => {
-      if (e.changedTouches.length === 1) {
-        const deltaX = e.changedTouches[0].clientX - touchStartX;
-        const deltaY = e.changedTouches[0].clientY - touchStartY;
-        const elapsedTime = Date.now() - touchStartTime;
-        const target = e.target;
-
-        // Double tap detection on background/slide (toggle HUD)
-        const now = Date.now();
-        if (now - lastTapTime < 320 && now - lastTapTime > 60 && Math.abs(deltaX) < 15 && Math.abs(deltaY) < 15) {
-          if (!target.closest('button, input, select, textarea, a, .sim-desk-neo, .interactive-box')) {
-            toggleHud();
-          }
-        }
-        lastTapTime = now;
-
-        // Don't trigger slide change if swiping on interactive controls or simulation widgets
-        if (target.closest('input, button, select, textarea, .field-grid, .sim-desk-neo')) {
-          return;
-        }
-
-        // Horizontal swipe: threshold 45px, predominantly horizontal, < 500ms
-        if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4 && elapsedTime < 500) {
-          if (deltaX < 0) {
-            nextSlide();
-          } else {
-            prevSlide();
-          }
-        }
-      }
-    }, { passive: true });
-
-    // ==========================================
-    // SIMULATION ENGINE (Slide 7)
-    // ==========================================
+    // Simulation code
     
     function shuffleLatinSquare() {
       const base = ['A', 'B', 'C', 'D'];
