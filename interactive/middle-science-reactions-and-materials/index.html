@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="ระบบแบบทดสอบเชิงโต้ตอบ วิทยาศาสตร์ ม.3 เล่ม 2: ปฏิกิริยากรด-คาร์บอเนต สนิมเหล็ก การเผาไหม้ แล็บทดสอบพอลิเมอร์ เซรามิกส์ โลหะผสม และวัสดุผสม 3R" />
+  <title>แบบทดสอบปฏิกิริยาเคมี & วัสดุในชีวิตประจำวัน — วิทยาศาสตร์ ม.3</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="if(window.renderMathInElement) try{renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});}catch(e){}"></script>
+
+  <style>
+    :root {
+      --bg: #f4f5f0;
+      --bg-elev: #ffffff;
+      --bg-elev-2: #f8faf7;
+      --fg: #1e2621;
+      --fg-dim: #4d5750;
+      --muted: #6f7a72;
+      --border: rgba(30, 38, 33, 0.14);
+      --border-strong: rgba(30, 38, 33, 0.28);
+      
+      --accent: #2e6047;
+      --accent-hover: #234d37;
+      --accent-subtle: #e6ede8;
+      --accent-2: #8b572a;
+      
+      --good: #216a3a;
+      --good-bg: #eaf4ed;
+      --bad: #9b2c2c;
+      --bad-bg: #fbeeed;
+      --warn: #92540d;
+      --warn-bg: #fef7e7;
+      
+      --font-body: 'IBM Plex Sans Thai Looped', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #18201a;
+      --bg-elev: #212c24;
+      --bg-elev-2: #28362c;
+      --fg: #edf2ed;
+      --fg-dim: #b8c4ba;
+      --muted: #839185;
+      --border: rgba(237, 242, 237, 0.12);
+      --border-strong: rgba(237, 242, 237, 0.24);
+      
+      --accent: #86b896;
+      --accent-hover: #9ec9ac;
+      --accent-subtle: #243529;
+      --accent-2: #dfa878;
+      
+      --good: #72cf93;
+      --good-bg: #1e3525;
+      --bad: #e88b8b;
+      --bad-bg: #3d2222;
+      --warn: #f0bd64;
+      --warn-bg: #382c16;
+      
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+      --shadow-md: 0 6px 20px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16.5px;
+      line-height: 1.68;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: transparent;
+      z-index: 1000;
+    }
+    .top-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+    .brand-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .btn-icon {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .btn-icon:hover {
+      background: var(--accent-subtle);
+      border-color: var(--accent);
+    }
+
+    main.container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .hero-banner {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--accent);
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 10px;
+      color: var(--fg);
+    }
+    .hero-desc {
+      font-size: 15.5px;
+      color: var(--fg-dim);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .student-badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      background: var(--bg-elev-2);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .input-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .input-field {
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-elev);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+
+    .exam-sec {
+      margin-bottom: 36px;
+    }
+    .sec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .sec-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .sec-tag {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .q-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .q-num-stem {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .q-num {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .q-stem {
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: var(--fg);
+      flex: 1;
+    }
+
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-left: 40px;
+    }
+    .opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+    .opt-btn.is-selected {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+      font-weight: 600;
+    }
+    .opt-key {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .opt-btn.is-selected .opt-key {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .q-feedback {
+      margin-top: 14px;
+      margin-left: 40px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14.5px;
+      line-height: 1.55;
+      display: none;
+    }
+    .q-feedback.show-feedback {
+      display: block;
+    }
+    .q-feedback.graded-correct {
+      background: var(--good-bg);
+      border-left: 4px solid var(--good);
+      color: var(--fg);
+    }
+    .q-feedback.graded-wrong {
+      background: var(--bad-bg);
+      border-left: 4px solid var(--bad);
+      color: var(--fg);
+    }
+
+    /* Lab visual simulation box */
+    .lab-box {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .lab-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .lab-desc {
+      font-size: 15px;
+      color: var(--fg-dim);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .lab-visual-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .lab-tube-card {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tube-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+    .tube-name {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 14.5px;
+    }
+    .tube-condition {
+      font-size: 13px;
+      color: var(--fg-dim);
+    }
+    .tube-outcome {
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .tube-outcome.rust {
+      color: var(--bad);
+    }
+    .tube-outcome.no-rust {
+      color: var(--good);
+    }
+
+    /* Polymer Lab items */
+    .polymer-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .polymer-card-row {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .polymer-info {
+      flex: 1;
+      min-width: 250px;
+    }
+    .polymer-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--fg);
+      margin-bottom: 4px;
+    }
+    .polymer-test {
+      font-size: 14px;
+      color: var(--fg-dim);
+      line-height: 1.5;
+    }
+    .polymer-explain {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .btn-toggle-pair {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .toggle-opt {
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-elev);
+      color: var(--fg-dim);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .toggle-opt:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .toggle-opt.is-selected {
+      background: var(--accent-subtle);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .toggle-opt.graded-correct {
+      background: var(--good-bg) !important;
+      border-color: var(--good) !important;
+      color: var(--good) !important;
+      font-weight: 700;
+    }
+    .toggle-opt.is-wrong {
+      background: var(--bad-bg) !important;
+      border-color: var(--bad) !important;
+      color: var(--bad) !important;
+      text-decoration: line-through;
+    }
+
+    /* Results Hero */
+    .results-hero {
+      background: var(--bg-elev);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 32px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .results-hero.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--accent-subtle);
+      border: 4px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto 12px;
+      font-family: var(--font-mono);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .score-pct {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .breakdown-card {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+    }
+    .breakdown-num {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .breakdown-lbl {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Submit Card */
+    .submit-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .btn-action-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-submit {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border-strong);
+      color: var(--fg);
+    }
+    .btn-outline:hover {
+      background: var(--accent-subtle);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media print {
+      header.site-header, .top-progress, .submit-card, .btn-action-row {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        color: #000;
+      }
+      .q-card, .lab-box, .results-hero {
+        border-color: #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      .q-feedback {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .opts-grid { margin-left: 0; }
+      .q-feedback { margin-left: 0; }
+      .polymer-card-row { flex-direction: column; align-items: flex-start; }
+      .btn-toggle-pair { width: 100%; justify-content: stretch; }
+      .btn-toggle-pair button { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-progress"><div class="top-progress-bar" id="progressBar"></div></div>
+
+  <header class="site-header">
+    <div class="brand-wrap">
+      <span class="brand-title">วิทยาศาสตร์ ม.3 · เล่ม 2</span>
+      <span class="brand-subtitle">สสวท. ปรับปรุง 2560 · หน่วยที่ 5 ปฏิกิริยาเคมีและวัสดุ (ตอนที่ 2)</span>
+    </div>
+    <div class="header-actions">
+      <span class="status-badge" id="headerProgress">ตอบแล้ว 0 / 26 ข้อ</span>
+      <button class="btn-icon" id="themeToggleBtn" title="สลับโหมดมืด/สว่าง">
+        <span id="themeIcon">🌓</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="results-hero" id="resultsHero">
+      <h2>🎉 ผลการประเมินแบบทดสอบ</h2>
+      <p style="color: var(--fg-dim);">รายงานผลคะแนนและการวิเคราะห์มโนทัศน์วิทยาศาสตร์</p>
+      <div class="score-circle" id="scoreCircle">0 / 26</div>
+      <div class="score-pct" id="scorePct">คิดเป็น 0%</div>
+
+      <div class="breakdown-grid">
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec1">0/4</div>
+          <div class="breakdown-lbl">1. กรด+คาร์บอเนต</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec2">0/4</div>
+          <div class="breakdown-lbl">2. สนิมเหล็ก & ป้องกัน</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec3">0/5</div>
+          <div class="breakdown-lbl">3. เผาไหม้ & สิ่งแวดล้อม</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec4">0/4</div>
+          <div class="breakdown-lbl">4. แล็บทดสอบพอลิเมอร์</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec5">0/4</div>
+          <div class="breakdown-lbl">5. เซรามิกส์ & โลหะผสม</div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-num" id="bkSec6">0/5</div>
+          <div class="breakdown-lbl">6. วัสดุผสม & ขยะ 3R</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero-banner">
+      <span class="hero-tag">Active Assessment · ม.3 เทอม 2</span>
+      <h1 class="hero-title">แบบทดสอบและแล็บจำลอง: ปฏิกิริยาเคมี & วัสดุในชีวิตประจำวัน</h1>
+      <p class="hero-desc">
+        แบบทดสอบวัดมโนทัศน์วิทยาศาสตร์เชิงลึก 6 ตอน (รวม 26 ข้อ) ครอบคลุมตั้งแต่ปฏิกิริยากรดกับสารประกอบคาร์บอเนต การทดสอบแก๊ส ปฏิกิริยาการเกิดสนิมเหล็กและการป้องกัน ปฏิกิริยาการเผาไหม้และสิ่งแวดล้อม แล็บจำลองการทดสอบพอลิเมอร์ต่อความร้อน เซรามิกส์ โลหะผสม และวัสดุผสม (Composites) ตามหลักสูตร สสวท. เล่ม 2 (ว 2.1 ม.3/1 – ม.3/8)
+      </p>
+
+      <div class="student-badge-grid">
+        <div class="input-group">
+          <label class="input-label" for="stdName">ชื่อ-นามสกุล นักเรียน</label>
+          <input class="input-field" type="text" id="stdName" placeholder="ระบุชื่อ-นามสกุล..." />
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="stdNick">ชื่อเล่น / รหัสนักเรียน</label>
+          <input class="input-field" type="text" id="stdNick" placeholder="เช่น น้องนนท์ / M3-01..." />
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="stdDate">วันที่ทำแบบทดสอบ</label>
+          <input class="input-field" type="date" id="stdDate" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ตอนที่ 1: กรดกับคาร์บอเนต -->
+    <section class="exam-sec" id="sec1">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 1: ปฏิกิริยากรดกับสารประกอบคาร์บอเนต และการทดสอบแก๊ส (4 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/5 · คลิป 005</span>
+      </div>
+      <div class="q-list" id="qListSec1"></div>
+    </section>
+
+    <!-- ตอนที่ 2: สนิมเหล็กและการป้องกัน -->
+    <section class="exam-sec" id="sec2">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 2: ปฏิกิริยาการเกิดสนิมของเหล็ก และแล็บวิเคราะห์หลอดทดลอง (4 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/5 · คลิป 006</span>
+      </div>
+
+      <!-- กล่องแสดงภาพรวมแล็บหลอดทดลอง 4 หลอด -->
+      <div class="lab-box">
+        <div class="lab-title">🔬 ภาพรวมชุดการทดลอง: การศึกษาปัจจัยการเกิดสนิมของตะปูเหล็ก (4 สภาวะ)</div>
+        <div class="lab-desc">
+          นักเรียนจัดชุดการทดลองใส่ตะปูเหล็กในหลอดทดลอง 4 หลอดที่มีสภาวะต่างกัน ทิ้งไว้เป็นเวลา 5 วัน แล้วสังเกตการเปลี่ยนแปลง:
+        </div>
+        <div class="lab-visual-grid">
+          <div class="lab-tube-card">
+            <div class="tube-header">
+              <span class="tube-name">หลอดที่ 1</span>
+              <span class="tube-condition">อากาศแห้งสนิท</span>
+            </div>
+            <div style="font-size: 13.5px; color: var(--fg-dim); margin-top: 4px;">
+              ใส่เม็ดดูดความชื้น ($CaCl_2$) และปิดจุกยางแน่นหนา (มี $O_2$ แต่ไม่มี $H_2O$)
+            </div>
+            <div class="tube-outcome no-rust">✓ ผล: ไม่เกิดสนิมเหล็ก</div>
+          </div>
+          <div class="lab-tube-card">
+            <div class="tube-header">
+              <span class="tube-name">หลอดที่ 2</span>
+              <span class="tube-condition">น้ำต้มสุก + เคลือบน้ำมัน</span>
+            </div>
+            <div style="font-size: 13.5px; color: var(--fg-dim); margin-top: 4px;">
+              น้ำต้มสุกไล่อากาศ เทน้ำมันพืชปิดผิวด้านบน (มี $H_2O$ แต่ไม่มี $O_2$)
+            </div>
+            <div class="tube-outcome no-rust">✓ ผล: ไม่เกิดสนิมเหล็ก</div>
+          </div>
+          <div class="lab-tube-card">
+            <div class="tube-header">
+              <span class="tube-name">หลอดที่ 3</span>
+              <span class="tube-condition">น้ำประปาเปิดสัมผัสอากาศ</span>
+            </div>
+            <div style="font-size: 13.5px; color: var(--fg-dim); margin-top: 4px;">
+              แช่ตะปูในน้ำธรรมดาเปิดหลอดสัมผัสอากาศ (มีทั้ง $H_2O$ และ $O_2$)
+            </div>
+            <div class="tube-outcome rust">⚠️ ผล: เกิดสนิมสีน้ำตาลส้ม</div>
+          </div>
+          <div class="lab-tube-card">
+            <div class="tube-header">
+              <span class="tube-name">หลอดที่ 4</span>
+              <span class="tube-condition">สารละลายน้ำเกลือ ($NaCl$)</span>
+            </div>
+            <div style="font-size: 13.5px; color: var(--fg-dim); margin-top: 4px;">
+              แช่ตะปูในน้ำเกลือเปิดสัมผัสอากาศ (มี $H_2O, O_2$ และไอออนนำไฟฟ้า)
+            </div>
+            <div class="tube-outcome rust">💥 ผล: เกิดสนิมรวดเร็วและรุนแรงที่สุด</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-list" id="qListSec2"></div>
+    </section>
+
+    <!-- ตอนที่ 3: เผาไหม้และสิ่งแวดล้อม -->
+    <section class="exam-sec" id="sec3">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 3: ปฏิกิริยาการเผาไหม้และผลกระทบต่อสิ่งแวดล้อม (5 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/7 · คลิป 007</span>
+      </div>
+      <div class="q-list" id="qListSec3"></div>
+    </section>
+
+    <!-- ตอนที่ 4: แล็บทดสอบพอลิเมอร์ -->
+    <section class="exam-sec" id="sec4">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 4: ห้องทดลองจำลอง: การทดสอบสมบัติพลาสติกและพอลิเมอร์ต่อความร้อน (4 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/1 · คลิป 008</span>
+      </div>
+
+      <div class="lab-box">
+        <div class="lab-title">🧪 Heat Response Test: พฤติกรรมของพอลิเมอร์เมื่อได้รับความร้อน</div>
+        <div class="lab-desc">
+          ให้นักเรียนวิเคราะห์ผลการให้ความร้อนต่อชิ้นตัวอย่างพลาสติก 4 ชนิด (A – D) แล้วเลือกจัดกลุ่มให้ถูกต้องว่าเป็น <strong>"เทอร์โมพลาสติก (Thermoplastic)"</strong> หรือ <strong>"เทอร์โมเซตติง (Thermosetting)"</strong>
+        </div>
+        <div class="polymer-card-list" id="polymerLabList"></div>
+      </div>
+    </section>
+
+    <!-- ตอนที่ 5: เซรามิกส์และโลหะผสม -->
+    <section class="exam-sec" id="sec5">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 5: เซรามิกส์ โลหะ และโลหะผสม (4 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/2 · คลิป 008</span>
+      </div>
+      <div class="q-list" id="qListSec5"></div>
+    </section>
+
+    <!-- ตอนที่ 6: วัสดุผสมและขยะ 3R -->
+    <section class="exam-sec" id="sec6">
+      <div class="sec-header">
+        <h2 class="sec-title">ตอนที่ 6: วัสดุผสม (Composites) และการจัดการขยะ 3R (5 ข้อ)</h2>
+        <span class="sec-tag">ว 2.1 ม.3/3 - ม.3/4 · คลิป 009</span>
+      </div>
+      <div class="q-list" id="qListSec6"></div>
+    </section>
+
+    <div class="submit-card" id="submitSection">
+      <h2 style="font-size: 22px; color: var(--accent); margin-bottom: 8px;">ส่งแบบทดสอบเพื่อตรวจและดูเฉลย</h2>
+      <p style="color: var(--fg-dim); font-size: 15px; margin-bottom: 18px;">
+        ตรวจสอบคำตอบให้ครบทุกข้อก่อนกดส่ง เมื่อกดส่งแล้วระบบจะคำนวณคะแนนรวม แสดงบทวิเคราะห์ และเปิดเฉลยละเอียดทุกข้อพร้อมกันทันที
+      </p>
+
+      <div class="btn-action-row">
+        <button class="btn-submit btn-primary" id="submitExamBtn">
+          <span>📝 ส่งข้อสอบและตรวจคำตอบ (Submit & Grade)</span>
+        </button>
+        <button class="btn-submit btn-outline" id="copyReportBtn" style="display: none;">
+          <span>📋 คัดลอกผลคะแนนและรายงาน (Copy Report)</span>
+        </button>
+        <button class="btn-submit btn-outline" id="printReportBtn" style="display: none;">
+          <span>🖨️ พิมพ์ / บันทึก PDF</span>
+        </button>
+        <button class="btn-submit btn-outline" id="retakeBtn" style="display: none;">
+          <span>🔄 ทำแบบทดสอบใหม่อีกครั้ง</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- Data Definitions ---
+
+    // ตอนที่ 1: กรดกับคาร์บอเนต (4 ข้อ)
+    const sec1Data = [
+      {
+        id: 's1_1',
+        num: 1,
+        stem: 'เมื่อหยดสารละลายกรดไฮโดรคลอริก ($HCl$) ลงบนเปลือกหอยหรือแคลเซียมคาร์บอเนต ($CaCO_3$) ผลิตภัณฑ์ที่เกิดขึ้นในปฏิกิริยานี้คือข้อใด',
+        options: [
+          { key: 'A', text: '$CaCl_2 + H_2O + CO_2$' },
+          { key: 'B', text: '$CaO + H_2 + Cl_2$' },
+          { key: 'C', text: '$CaCl_2 + H_2 + CO$' },
+          { key: 'D', text: '$Ca(OH)_2 + CO_2 + Cl_2$' }
+        ],
+        answer: 'A',
+        explain: 'ปฏิกิริยาระหว่างกรดกับสารประกอบคาร์บอเนต ได้ผลิตภัณฑ์เป็น เกลือ + น้ำ + แก๊สคาร์บอนไดออกไซด์ ($2HCl + CaCO_3 \to CaCl_2 + H_2O + CO_2$)'
+      },
+      {
+        id: 's1_2',
+        num: 2,
+        stem: 'ในการทดสอบแก๊สที่ได้จากปฏิกิริยาระหว่างกรดกับคาร์บอเนต เหตุใดเมื่อผ่านแก๊สดังกล่าวลงใน "น้ำปูนใส ($Ca(OH)_2$)" จึงทำให้น้ำปูนใสเปลี่ยนเป็น "ขุ่นขาว"',
+        options: [
+          { key: 'A', text: 'แก๊สไปลดอุณหภูมิของน้ำปูนใสจนเกิดการแข็งตัวเป็นเกล็ดน้ำแข็ง' },
+          { key: 'B', text: 'แก๊สคาร์บอนไดออกไซด์ทำปฏิกิริยากับน้ำปูนใส เกิดตะกอนแคลเซียมคาร์บอเนต ($CaCO_3$) ที่ไม่ละลายน้ำ' },
+          { key: 'C', text: 'กรดระเหยตามท่อไปทำปฏิกิริยาสะเทินกับน้ำปูนใสจนเปลี่ยนเป็นสีขาว' },
+          { key: 'D', text: 'แก๊สออกซิเจนเข้าไปแย่งจับประจุแคลเซียมจนตกผลึกเป็นปูนขาว' }
+        ],
+        answer: 'B',
+        explain: 'แก๊ส $CO_2$ ทำปฏิกิริยากับสารละลายแคลเซียมไฮดรอกไซด์ (น้ำปูนใส) เกิดตะกอนแคลเซียมคาร์บอเนตสีขาวที่ไม่ละลายน้ำ: $CO_2 + Ca(OH)_2 \to CaCO_3\downarrow + H_2O$'
+      },
+      {
+        id: 's1_3',
+        num: 3,
+        stem: 'ในการทำขนมเค้กหรือเบเกอรี่ การผสม "ผงฟูหรือเบกกิ้งโซดา ($NaHCO_3$)" เข้ากับส่วนผสมที่มีฤทธิ์เป็นกรด (เช่น น้ำมะนาว น้ำส้ม นมเปรี้ยว) ปรากฏการณ์ใดที่ทำให้เนื้อขนมฟูพองและนุ่ม',
+        options: [
+          { key: 'A', text: 'กรดช่วยละลายแป้งให้กลายเป็นของเหลวหนืด' },
+          { key: 'B', text: 'เกิดฟองแก๊สคาร์บอนไดออกไซด์ ($CO_2$) แทรกตัวในเนื้อแป้ง เมื่อโดนความร้อนจะขยายตัวดันให้ขนมฟูพอง' },
+          { key: 'C', text: 'เกิดปฏิกิริยาคายความร้อนสูงจนทำให้น้ำตาลในแป้งกลายเป็นคาราเมล' },
+          { key: 'D', text: 'สารละลายเบสของผงฟูทำปฏิกิริยากับไขมันในเนยเกิดเป็นสบู่ช่วยพยุงโครงสร้าง' }
+        ],
+        answer: 'B',
+        explain: 'กรดทำปฏิกิริยากับโซเดียมไฮโดรเจนคาร์บอเนต ($NaHCO_3$) เกิดฟองแก๊ส $CO_2$ เมื่อนำไปอบความร้อน แก๊สจะขยายตัวดันเนื้อแป้งให้พองตัวเกิดเป็นรูพรุนนุ่ม'
+      },
+      {
+        id: 's1_4',
+        num: 4,
+        stem: 'การเกิดปรากฏการณ์ "หินงอกหินย้อย (Stalactites & Stalagmites)" ในถ้ำหินปูน มีกลไกทางเคมีที่เกี่ยวข้องตามข้อใด',
+        options: [
+          { key: 'A', text: 'หินปูนถูกความร้อนใต้พิภพหลอมละลายแล้วไหลย้อยลงมาแข็งตัว' },
+          { key: 'B', text: 'น้ำฝนที่มีกรดคาร์บอนิก ($H_2CO_3$) กัดกร่อนหินปูน ($CaCO_3$) เป็นสารละลาย $Ca(HCO_3)_2$ เมื่อสัมผัสอากาศจะคาย $CO_2$ และตกตะกอนกลับเป็นหินปูนแข็งตัวสะสม' },
+          { key: 'C', text: 'กรดซัลฟิวริกจากฝนกรดทำปฏิกิริยากับหินปูนกลายเป็นยิปซัมย้อยลงมา' },
+          { key: 'D', text: 'แร่เหล็กในถ้ำเกิดสนิมและขยายปริมาตรจนดันหินปูนย้อยลงมา' }
+        ],
+        answer: 'B',
+        explain: 'น้ำฝนละลาย $CO_2$ ในอากาศเกิดเป็นกรดคาร์บอนิกอ่อนๆ กัดกร่อนหินปูนเป็น $Ca(HCO_3)_2$ เมื่อหยดน้ำกระทบอากาศจะสูญเสีย $CO_2$ ตกตะกอนกลับเป็น $CaCO_3$ สะสมเป็นหินงอกหินย้อย'
+      }
+    ];
+
+    // ตอนที่ 2: สนิมเหล็กและการป้องกัน (4 ข้อ)
+    const sec2Data = [
+      {
+        id: 's2_1',
+        num: 5,
+        stem: 'จากชุดการทดลองข้างต้น ในหลอดที่ 1 (อากาศแห้ง) และหลอดที่ 2 (น้ำต้มสุกเคลือบน้ำมัน) ซึ่ง "ไม่เกิดสนิมเหล็กเลย" สามารถสรุปปัจจัยสำคัญที่ทำให้เกิดสนิมเหล็กได้ตามข้อใด',
+        options: [
+          { key: 'A', text: 'ต้องมีเฉพาะแก๊สออกซิเจนในอากาศเท่านั้น' },
+          { key: 'B', text: 'ต้องมีเฉพาะน้ำหรือความชื้นเท่านั้น' },
+          { key: 'C', text: 'ต้องมีทั้ง "น้ำ (ความชื้น)" และ "แก๊สออกซิเจน" พร้อมกัน จึงจะเกิดสนิมเหล็กได้' },
+          { key: 'D', text: 'ต้องมีสารละลายอิเล็กโทรไลต์ เช่น เกลือ หรือ กรด เสมอ' }
+        ],
+        answer: 'C',
+        explain: 'หลอดที่ 1 มีออกซิเจนแต่ขาดน้ำ หลอดที่ 2 มีน้ำแต่ขาดออกซิเจน ทั้งสองหลอดไม่เกิดสนิม แสดงว่าการเกิดสนิมเหล็กต้องมีทั้งน้ำและแก๊สออกซิเจนร่วมกันเสมอ'
+      },
+      {
+        id: 's2_2',
+        num: 6,
+        stem: 'เหตุใดในการเตรียมหลอดทดลองที่ 2 จึงต้องใช้ "น้ำต้มสุก" และต้อง "เทน้ำมันพืชเคลือบผิวด้านบน" เสมอ',
+        options: [
+          { key: 'A', text: 'น้ำต้มสุกช่วยเร่งอุณหภูมิ และน้ำมันช่วยเพิ่มแรงดันอากาศ' },
+          { key: 'B', text: 'การต้มน้ำช่วยไล่แก๊สออกซิเจนที่ละลายอยู่ในน้ำออกไป และน้ำมันพืชช่วยป้องกันไม่ให้ออกซิเจนจากอากาศภายนอกละลายกลับลงไปในน้ำ' },
+          { key: 'C', text: 'น้ำมันพืชทำปฏิกิริยากับน้ำต้มสุกเกิดเป็นชั้นฉนวนดูดซับความชื้น' },
+          { key: 'D', text: 'น้ำต้มสุกมีสภาพเป็นกรด ส่วนน้ำมันพืชช่วยปรับสมดุล pH ให้เป็นกลาง' }
+        ],
+        answer: 'B',
+        explain: 'การต้มน้ำเดือดเป็นการไล่แก๊สออกซิเจนที่ละลายอยู่ออกไป และน้ำมันพืชซึ่งมีความหนาแน่นน้อยกว่าน้ำจะลอยเคลือบผิวด้านบน ป้องกันไม่ให้ออกซิเจนในอากาศละลายลงไปใหม่'
+      },
+      {
+        id: 's2_3',
+        num: 7,
+        stem: 'ผลการทดลองในหลอดที่ 4 พบว่าเกิดสนิมปริมาณมากและรวดเร็วกว่าหลอดที่ 3 อย่างชัดเจน ข้อใดอธิบายบทบาทของเกลือแกง ($NaCl$) ได้ถูกต้องตามหลักเคมี',
+        options: [
+          { key: 'A', text: 'เกลือแกงทำหน้าที่เป็นตัวเร่งปฏิกิริยาทางชีวภาพ' },
+          { key: 'B', text: 'ไอออนของเกลือแกงในน้ำทำหน้าที่เป็นสารละลายอิเล็กโทรไลต์ ช่วยให้การถ่ายโอนประจุและอิเล็กตรอนระหว่างขั้วไฟฟ้าบนผิวเหล็กเกิดขึ้นได้รวดเร็วยิ่งขึ้น' },
+          { key: 'C', text: 'เกลือแกงเปลี่ยนน้ำให้กลายเป็นกรดแก่ที่มีฤทธิ์กัดกร่อนรุนแรง' },
+          { key: 'D', text: 'โซเดียมในเกลือแกงทำปฏิกิริยาแย่งออกซิเจนจากเหล็ก' }
+        ],
+        answer: 'B',
+        explain: 'การเกิดสนิมเป็นปฏิกิริยาเคมีไฟฟ้า (Electrochemical reaction) ไอออนของเกลือ ($Na^+, Cl^-$) ช่วยเพิ่มการนำไฟฟ้า (อิเล็กโทรไลต์) ทำให้การถ่ายโอนอิเล็กตรอนดำเนินไปได้อย่างรวดเร็วมาก'
+      },
+      {
+        id: 's2_4',
+        num: 8,
+        stem: 'วิธีการป้องกันสนิมแบบ "แคโทดิก (Cathodic Protection)" เช่น การนำแท่งแมกนีเซียม ($Mg$) หรือสังกะสี ($Zn$) มาต่อเชื่อมกับโครงสร้างเหล็กของเรือเดินสมุทรหรือท่อส่งก๊าซใต้ดิน อาศัยหลักการทางเคมีในข้อใด',
+        options: [
+          { key: 'A', text: 'โลหะที่นำมาต่อจะปล่อยสารเคมีเคลือบผิวเหล็กให้กลายเป็นฉนวน' },
+          { key: 'B', text: 'โลหะ $Mg$ หรือ $Zn$ มีความว่องไวทางเคมีสูงกว่าเหล็ก (เสียอิเล็กตรอนง่ายกว่า) จึงทำหน้าที่เป็นขั้วเสียสละ (Sacrificial Anode) ถูกออกซิไดซ์แทนเหล็ก' },
+          { key: 'C', text: 'โลหะทั้งสองชนิดจะดูดน้ำและความชื้นออกจากเหล็กจนแห้งสนิท' },
+          { key: 'D', text: 'แมกนีเซียมทำปฏิกิริยากับน้ำเค็มเกิดฟิล์มเบสป้องกันสนิม' }
+        ],
+        answer: 'B',
+        explain: 'วิธีแคโทดิกใช้โลหะที่ให้อิเล็กตรอนได้ง่ายกว่า (ว่องไวกว่าเหล็ก เช่น $Mg, Zn$) มาเชื่อมต่อ โลหะเหล่านี้จะยอมสละอิเล็กตรอนและถูกกัดกร่อนแทนโครงสร้างเหล็ก'
+      }
+    ];
+
+    // ตอนที่ 3: เผาไหม้และสิ่งแวดล้อม (5 ข้อ)
+    const sec3Data = [
+      {
+        id: 's3_1',
+        num: 9,
+        stem: 'หากเผาไหม้แก๊สโพรเพน ($C_3H_8$) ในห้องปิดที่มีปริมาณแก๊สออกซิเจน "ไม่เพียงพอ (จำกัด)" ผลิตภัณฑ์ที่เป็นอันตรายที่อาจเกิดขึ้นแทนแก๊สคาร์บอนไดออกไซด์คือข้อใด',
+        options: [
+          { key: 'A', text: 'แก๊สคาร์บอนมอนอกไซด์ ($CO$) และ/หรือ เขม่าคาร์บอน ($C$)' },
+          { key: 'B', text: 'แก๊สซัลเฟอร์ไดออกไซด์ ($SO_2$)' },
+          { key: 'C', text: 'กรดไฮโดรคลอริก ($HCl$)' },
+          { key: 'D', text: 'แก๊สไนโตรเจนมอนอกไซด์ ($NO$)' }
+        ],
+        answer: 'A',
+        explain: 'เมื่อมีออกซิเจนไม่เพียงพอ ปฏิกิริยาการเผาไหม้จะไม่สมบูรณ์ ทำให้อะตอมคาร์บอนจับกับออกซิเจนได้เพียง 1 อะตอมเกิดเป็นแก๊สคาร์บอนมอนอกไซด์ ($CO$) และ/หรือ อนุภาคเขม่าควันสีดำ ($C$)'
+      },
+      {
+        id: 's3_2',
+        num: 10,
+        stem: 'เหตุใดการสตาร์ตรถยนต์ทิ้งไว้ในโรงรถที่ปิดมิดชิด หรือการจุดเตาถ่านในเต็นท์/ห้องนอนที่ปิดหน้าต่าง จึงเป็นอันตรายถึงชีวิตจากแก๊สคาร์บอนมอนอกไซด์ ($CO$)',
+        options: [
+          { key: 'A', text: 'แก๊ส $CO$ มีกลิ่นฉุนรุนแรงทำให้ทางเดินหายใจอุดตันเฉียบพลัน' },
+          { key: 'B', text: 'แก๊ส $CO$ ไม่มีสี ไม่มีกลิ่น และสามารถจับกับ "ฮีโมโกลบิน" ในเซลล์เม็ดเลือดแดงได้แน่นกว่าออกซิเจนถึง 200–250 เท่า ทำให้ร่างกายขาดออกซิเจนจนหมดสติและเสียชีวิต' },
+          { key: 'C', text: 'แก๊ส $CO$ ทำปฏิกิริยากับความชื้นในปอดกลายเป็นกรดแก่กัดเนื้อเยื่อปอด' },
+          { key: 'D', text: 'แก๊ส $CO$ เข้าไปแย่งทำลายเซลล์ประสาทสมองโดยตรงทันทีที่สูดดม' }
+        ],
+        answer: 'B',
+        explain: '$CO$ ไร้สีไร้กลิ่น และแย่งจับกับฮีโมโกลบินได้ดีกว่าออกซิเจน 200-250 เท่า (กลายเป็น Carboxyhemoglobin) ทำให้เม็ดเลือดแดงไม่สามารถนำพาออกซิเจนไปเลี้ยงร่างกายได้'
+      },
+      {
+        id: 's3_3',
+        num: 11,
+        stem: '"ฝนกรด (Acid Rain)" มีค่า $pH$ ต่ำกว่า $5.6$ เกิดจากแก๊สไอเสียที่ปล่อยจากโรงไฟฟ้าถ่านหินและการเผาไหม้ในเครื่องยนต์ยานพาหนะตามข้อใดเป็นหลัก',
+        options: [
+          { key: 'A', text: 'แก๊สคาร์บอนไดออกไซด์ ($CO_2$) และแก๊สมีเทน ($CH_4$)' },
+          { key: 'B', text: 'แก๊สซัลเฟอร์ไดออกไซด์ ($SO_2$) และออกไซด์ของไนโตรเจน ($NO_x$)' },
+          { key: 'C', text: 'แก๊สคลอโรฟลูออโรคาร์บอน (CFCs) และแก๊สโอโซน ($O_3$)' },
+          { key: 'D', text: 'แก๊สไฮโดรเจน ($H_2$) และไอน้ำ ($H_2O$)' }
+        ],
+        answer: 'B',
+        explain: 'ฝนกรดเกิดจาก $SO_2$ (จากการเผาไหม้เชื้อเพลิงที่มีกำมะถัน เช่น ถ่านหิน) และ $NO_x$ (จากการเผาไหม้ที่อุณหภูมิสูงในเครื่องยนต์) ทำปฏิกิริยากับน้ำและออกซิเจนในอากาศ เกิดกรดซัลฟิวริกและกรดไนทริก'
+      },
+      {
+        id: 's3_4',
+        num: 12,
+        stem: 'เมื่อฝนกรดตกลงสู่อาคารสิ่งก่อสร้างที่เป็นหินอ่อน เสาปูน หรืออนุสาวรีย์ที่มีส่วนประกอบของหินปูน ($CaCO_3$) จะเกิดผลกระทบอย่างไร',
+        options: [
+          { key: 'A', text: 'กรดช่วยชะล้างคราบสกปรกทำให้ผิวหินอ่อนเงางามขึ้น' },
+          { key: 'B', text: 'กรดในน้ำฝนทำปฏิกิริยากับแคลเซียมคาร์บอเนต เกิดการกัดกร่อน ผุกร่อนเป็นรูพรุน และปล่อยแก๊ส $CO_2$' },
+          { key: 'C', text: 'เกิดปฏิกิริยารวมตัวเป็นผลึกควอตซ์ทำให้หินแข็งแรงขึ้น' },
+          { key: 'D', text: 'กรดทำปฏิกิริยากับแร่ธาตุในหินเปลี่ยนเป็นสารประกอบโลหะนำไฟฟ้า' }
+        ],
+        answer: 'B',
+        explain: 'ฝนกรดมีฤทธิ์กัดกร่อนหินปูนและหินอ่อน ($CaCO_3$) ทำให้โครงสร้างผุกร่อน เสียรูปทรง เกิดเป็นเกลือที่ละลายน้ำและปล่อยแก๊ส $CO_2$'
+      },
+      {
+        id: 's3_5',
+        num: 13,
+        stem: 'ปฏิกิริยาการสังเคราะห์ด้วยแสง (Photosynthesis) ของพืช: ข้อใดระบุสมการเคมีและการเปลี่ยนแปลงพลังงานได้ถูกต้องที่สุด',
+        options: [
+          { key: 'A', text: '$6CO_2 + 6H_2O \to C_6H_{12}O_6 + 6O_2$ เป็นปฏิกิริยา "ดูดพลังงานแสง" เปลี่ยนเป็นพลังงานเคมีในน้ำตาล' },
+          { key: 'B', text: '$C_6H_{12}O_6 + 6O_2 \to 6CO_2 + 6H_2O$ เป็นปฏิกิริยา "คายพลังงานความร้อน"' },
+          { key: 'C', text: '$CO_2 + 2H_2O \to CH_4 + 2O_2$ เป็นปฏิกิริยาดูดความร้อน' },
+          { key: 'D', text: '$6CO_2 + 12H_2 \to C_6H_{12}O_6 + 6H_2O$ เป็นปฏิกิริยาคายพลังงานแสง' }
+        ],
+        answer: 'A',
+        explain: 'พืชใช้ $CO_2$ และ $H_2O$ ร่วมกับแสงและคลอโรฟิลล์เพื่อสร้างน้ำตาลกลูโคสและแก๊ส $O_2$ เป็นกระบวนการดูดพลังงานแสงเก็บไว้ในรูปพลังงานเคมี'
+      }
+    ];
+
+    // ตอนที่ 4: แล็บทดสอบพอลิเมอร์ต่อความร้อน (4 ข้อ)
+    const sec4Data = [
+      {
+        id: 's4_1',
+        num: 14,
+        name: 'ตัวอย่าง A: ขวดน้ำดื่มใส (PET - โพลีเอทิลีนเทเรฟทาเลต)',
+        test: 'การทดสอบ: ให้ความร้อนที่ 80–90°C ตัวอย่างเริ่มอ่อนตัว อ่อนนิ่ม บิดงอ หลอมเหลว เมื่อปล่อยให้เย็นลงสามารถแข็งตัวขึ้นรูปซ้ำได้',
+        answer: 'thermoplastic',
+        explain: 'โครงสร้างแบบเส้นหรือกิ่ง สายโซ่พอลิเมอร์ไม่ได้เชื่อมขวาง จึงเลื่อนไถลได้เมื่อได้รับความร้อน หลอมขึ้นรูปใหม่ได้ ⟶ เทอร์โมพลาสติก (รีไซเคิลได้)'
+      },
+      {
+        id: 's4_2',
+        num: 15,
+        name: 'ตัวอย่าง B: ด้ามจับกระทะ / สวิตช์ไฟ (Bakelite - ฟีนอลฟอร์มาลดีไฮด์)',
+        test: 'การทดสอบ: ให้ความร้อนสูงถึง 200°C โครงสร้างยังแข็งแกร่ง คงรูปเดิม ไม่อ่อนตัว ไม่หลอมเหลว แต่เมื่อให้ความร้อนสูงต่อไปจะไหม้เกรียม แตกหัก ไม่สามารถหลอมซ้ำได้',
+        answer: 'thermosetting',
+        explain: 'โครงสร้างแบบร่างแห (Cross-linked) พันธะเชื่อมขวางแน่นหนา ทนความร้อนสูง เมื่อขึ้นรูปถาวรแล้วจะไม่หลอมเหลวอีก ⟶ เทอร์โมเซตติงพลาสติก'
+      },
+      {
+        id: 's4_3',
+        num: 16,
+        name: 'ตัวอย่าง C: ท่อประปาสีฟ้า (PVC - โพลีไวนิลคลอไรด์)',
+        test: 'การทดสอบ: ได้รับความร้อน 70–100°C อ่อนนิ่ม ดัดโค้งงอได้ หลอมเหลว และนำกลับมาหลอมขึ้นรูปใหม่เพื่อรีไซเคิลได้',
+        answer: 'thermoplastic',
+        explain: 'โครงสร้างแบบเส้น มีแรงยึดเหนี่ยวระหว่างสายพอลิเมอร์ เมื่อโดนความร้อนโซ่จะแยกตัวและหลอมเหลวได้ ⟶ เทอร์โมพลาสติก'
+      },
+      {
+        id: 's4_4',
+        num: 17,
+        name: 'ตัวอย่าง D: จานชามเมลามีน (Melamine Resin)',
+        test: 'การทดสอบ: นำไปสัมผัสความร้อนสูง ไม่หลอมเหลว ทนทาน ไม่เสียรูปทรง หากอุณหภูมิสูงเกินพิกัดจะเกิดรอยไหม้เกรียมและแตกร้าว หลอมละลายไม่ได้',
+        answer: 'thermosetting',
+        explain: 'โครงสร้างแบบร่างแห 3 มิติ ยึดเกาะกันถาวร ทนความร้อนและกรดด่างได้ดี แต่ไม่หลอมเหลวซ้ำ ⟶ เทอร์โมเซตติงพลาสติก'
+      }
+    ];
+
+    // ตอนที่ 5: เซรามิกส์และโลหะผสม (4 ข้อ)
+    const sec5Data = [
+      {
+        id: 's5_1',
+        num: 18,
+        stem: 'เซรามิกส์ผลิตจากการนำวัตถุดิบอนินทรีย์ (ดิน หิน แร่ทราย แร่ดินขาว) มาขึ้นรูปและผ่านการเผาที่อุณหภูมิสูง สมบัติเด่นและจุดอ่อนของเซรามิกส์คือข้อใด',
+        options: [
+          { key: 'A', text: 'ยืดหยุ่นได้ดี เหนียว แต่ติดไฟง่าย' },
+          { key: 'B', text: 'ทนความร้อนสูง จุดหลอมเหลวสูง เป็นฉนวนความร้อนและไฟฟ้าที่ดี แต่มีจุดอ่อนคือ "เปราะ แตกหักง่ายเมื่อถูกแรงกระแทก"' },
+          { key: 'C', text: 'นำไฟฟ้าได้ดีมาก ทนแรงดึงสูง แต่หลอมเหลวง่าย' },
+          { key: 'D', text: 'มีความหนาแน่นต่ำมาก ลอยน้ำได้ แต่ไม่ทนต่อสารเคมี' }
+        ],
+        answer: 'B',
+        explain: 'เซรามิกส์มีพันธะไอออนิกหรือโควาเลนต์ที่แข็งแรงมาก จึงทนความร้อนสูง จุดหลอมเหลวสูง และเป็นฉนวนที่ดีมาก แต่โครงสร้างผลึกไม่ยอมให้อนุภาคเลื่อนไถล จึงเปราะแตกหักง่ายเมื่อถูกแรงกระแทก'
+      },
+      {
+        id: 's5_2',
+        num: 19,
+        stem: 'การนำเซรามิกส์มาทำเป็น "ลูกถ้วยฉนวนบนเสาไฟฟ้าแรงสูง" และ "ฉนวนหัวเทียนในเครื่องยนต์" อาศัยสมบัติข้อใดร่วมกัน',
+        options: [
+          { key: 'A', text: 'ความเหนียวและน้ำหนักเบา' },
+          { key: 'B', text: 'การเป็นฉนวนไฟฟ้าที่ดีเยี่ยม และความสามารถในการทนต่ออุณหภูมิสูงโดยไม่นำกระแสไฟฟ้า' },
+          { key: 'C', text: 'ความสามารถในการนำความร้อนระบายออกจากขั้วไฟฟ้า' },
+          { key: 'D', text: 'ความยืดหยุ่นที่ช่วยดูดซับแรงสั่นสะเทือนจากสายไฟ' }
+        ],
+        answer: 'B',
+        explain: 'ลูกถ้วยไฟฟ้าแรงสูงและหัวเทียนต้องเผชิญกับศักย์ไฟฟ้าสูงมากและอุณหภูมิสูง เซรามิกส์จึงเป็นวัสดุที่เหมาะสมที่สุดเพราะเป็นฉนวนไฟฟ้า ไม่นำกระแส และไม่หลอมเหลวหรือเสื่อมสภาพเมื่ออุณหภูมิสูง'
+      },
+      {
+        id: 's5_3',
+        num: 20,
+        stem: 'เหตุใด "เหล็กกล้าไร้สนิม (Stainless Steel)" จึงมีความสามารถในการต้านทานการเกิดสนิมได้ดีกว่าเหล็กกล้าธรรมดา',
+        options: [
+          { key: 'A', text: 'เพราะไม่มีธาตุเหล็ก ($Fe$) ผสมอยู่เลย' },
+          { key: 'B', text: 'เพราะผสมธาตุโครเมียม ($Cr$) ไม่น้อยกว่า 10.5% ซึ่งโครเมียมจะทำปฏิกิริยากับออกซิเจนสร้างชั้นฟิล์มบางๆ (Passive film) เคลือบผิว ป้องกันน้ำและออกซิเจนไม่ให้ซึมถึงเนื้อเหล็ก' },
+          { key: 'C', text: 'เพราะเคลือบด้วยยางสังเคราะห์ตั้งแต่ขั้นตอนหล่อหลอม' },
+          { key: 'D', text: 'เพราะผสมทองคำและแพลทินัมช่วยเพิ่มความเฉื่อย' }
+        ],
+        answer: 'B',
+        explain: 'สเตนเลสสตีลผสมโครเมียม ($Cr$) และนิกเกิล ($Ni$) โดยโครเมียมจะทำปฏิกิริยากับออกซิเจนในอากาศเกิดเป็นฟิล์มโครเมียมออกไซด์บางระดับนาโนเมตรที่โปร่งแสงและเกาะติดแน่น ช่วยปกป้องผิวเหล็ก'
+      },
+      {
+        id: 's5_4',
+        num: 21,
+        stem: 'ข้อใดจับคู่วัสดุ "โลหะผสม (Alloys)" กับองค์ประกอบธาตุหลักได้อย่างถูกต้อง',
+        options: [
+          { key: 'A', text: 'ทองเหลือง (Brass) = ทองแดง ($Cu$) + สังกะสี ($Zn$)' },
+          { key: 'B', text: 'ทองสัมฤทธิ์ (Bronze) = ทองคำ ($Au$) + เงิน ($Ag$)' },
+          { key: 'C', text: 'เหล็กกล้า (Steel) = อะลูมิเนียม ($Al$) + ดีบุก ($Sn$)' },
+          { key: 'D', text: 'อัลปาก้า (Alpaca) = ตะกั่ว ($Pb$) + ปรอท ($Hg$)' }
+        ],
+        answer: 'A',
+        explain: 'ทองเหลืองเกิดจากทองแดงผสมสังกะสี ($Cu + Zn$), ส่วนทองสัมฤทธิ์หรือบรอนซ์เกิดจากทองแดงผสมดีบุก ($Cu + Sn$), เหล็กกล้าเกิดจากเหล็กผสมคาร์บอน ($Fe + C$)'
+      }
+    ];
+
+    // ตอนที่ 6: วัสดุผสมและขยะ 3R (5 ข้อ)
+    const sec6Data = [
+      {
+        id: 's6_1',
+        num: 22,
+        stem: '"วัสดุผสม (Composite Materials)" มีลักษณะโครงสร้างตามข้อใด',
+        options: [
+          { key: 'A', text: 'สารบริสุทธิ์ที่เกิดจากธาตุเพียงชนิดเดียวจัดเรียงตัวเป็นผลึกเดี่ยว' },
+          { key: 'B', text: 'การนำวัสดุต่างชนิดกันตั้งแต่ 2 ชนิดขึ้นไปมารวมกัน โดยไม่ละลายกลืนเป็นเนื้อเดียวกัน ประกอบด้วย "เมทริกซ์ (Matrix)" เป็นเนื้อหลัก และ "วัสดุเสริมแรง (Reinforcement)" เพื่อให้ได้สมบัติดีกว่าวัสดุเดิม' },
+          { key: 'C', text: 'พลาสติกที่นำไปผ่านการรีไซเคิลซ้ำเกิน 5 ครั้ง' },
+          { key: 'D', text: 'โลหะที่ถูกหลอมรวมกันจนกลายเป็นสารละลายเนื้อเดียว' }
+        ],
+        answer: 'B',
+        explain: 'วัสดุผสมเกิดจากการนำวัสดุที่มีสมบัติต่างกันอย่างน้อย 2 ชนิดมารวมกันโดยยังมีเฟสแยกกันชัดเจน (ไม่ละลายเป็นเนื้อเดียว) ประกอบด้วยเมทริกซ์ (เนื้อหลัก) และวัสดุเสริมแรงเพื่อเพิ่มความแข็งแรง'
+      },
+      {
+        id: 's6_2',
+        num: 23,
+        stem: '"เนื้อไม้ (Wood)" จัดเป็นตัวอย่างคลาสสิกของวัสดุผสมที่มีอยู่ในธรรมชาติ ข้อใดจับคู่หน้าที่ขององค์ประกอบในเนื้อไม้ได้ถูกต้อง',
+        options: [
+          { key: 'A', text: 'เซลลูโลสทำหน้าที่เป็นเมทริกซ์ และแป้งทำหน้าที่เป็นตัวเสริมแรง' },
+          { key: 'B', text: 'ลิกนิน (Lignin) ทำหน้าที่เป็นเมทริกซ์ (เนื้อยึดเหนี่ยว) และเส้นใยเซลลูโลส (Cellulose) ทำหน้าที่เป็นวัสดุเสริมแรงรับแรงดึง' },
+          { key: 'C', text: 'น้ำยางธรรมชาติเป็นวัสดุเสริมแรง และเปลือกไม้เป็นเมทริกซ์' },
+          { key: 'D', text: 'คลอโรฟิลล์เป็นเมทริกซ์ และท่อลำเลียงเป็นตัวเสริมแรง' }
+        ],
+        answer: 'B',
+        explain: 'ในเนื้อไม้ เส้นใยเซลลูโลสมีความเหนียวและรับแรงดึงได้ดีมาก (Reinforcement) โดยมีสารลิกนินทำหน้าที่เป็นกาวประสานและรับแรงอัด (Matrix) ทำให้ลำต้นแข็งแรงมั่นคง'
+      },
+      {
+        id: 's6_3',
+        num: 24,
+        stem: 'เหตุใดการก่อสร้างสะพานและอาคารสูงจึงต้องใช้ "คอนกรีตเสริมเหล็ก (Reinforced Concrete)" แทนการใช้คอนกรีตล้วน',
+        options: [
+          { key: 'A', text: 'คอนกรีตรับแรงอัดได้ดีแต่รับแรงดึงได้ต่ำมาก เมื่อนำเหล็กเส้นซึ่งรับแรงดึงได้สูงมากมาเป็นตัวเสริมแรง ทำให้โครงสร้างรับได้ทั้งแรงกดอัดและแรงดัดงอ' },
+          { key: 'B', text: 'เหล็กช่วยให้คอนกรีตแห้งตัวเร็วขึ้นและไม่ดูดความชื้น' },
+          { key: 'C', text: 'คอนกรีตทำหน้าที่ป้องกันไม่ให้เหล็กนำความร้อน' },
+          { key: 'D', text: 'เหล็กเส้นช่วยลดน้ำหนักรวมของโครงสร้างอาคาร' }
+        ],
+        answer: 'A',
+        explain: 'คอนกรีตรับน้ำหนักกดทับ (แรงอัด) ได้ดีเยี่ยม แต่รับแรงดึงหรือแรงดัดได้แย่มาก การใส่เหล็กเส้นเข้าไปเป็นวัสดุเสริมแรงจะช่วยแบกรับแรงดึง ทำให้โครงสร้างรับแรงได้ทั้งสองทิศทาง'
+      },
+      {
+        id: 's6_4',
+        num: 25,
+        stem: 'ปรากฏการณ์ "การสะสมชีวภาพ (Biomagnification)" ของไมโครพลาสติกและสารพิษในห่วงโซ่อาหาร ส่งผลกระทบต่อสิ่งมีชีวิตอย่างไร',
+        options: [
+          { key: 'A', text: 'สิ่งมีชีวิตทุกชนิดสามารถย่อยสลายไมโครพลาสติกให้กลายเป็นสารอาหารได้' },
+          { key: 'B', text: 'สารพิษที่เกาะบนไมโครพลาสติกจะเจือจางลงเรื่อยๆ เมื่อสัตว์ตัวใหญ่กินสัตว์ตัวเล็ก' },
+          { key: 'C', text: 'ไมโครพลาสติกและสารเคมีอันตรายไม่ถูกขับออก แต่จะสะสมและมีความเข้มข้นสูงขึ้นเรื่อยๆ ตามลำดับขั้นการกินในห่วงโซ่อาหาร จนผู้บริโภคลำดับสูงสุด (เช่น มนุษย์) ได้รับสารพิษเข้มข้นที่สุด' },
+          { key: 'D', text: 'ไมโครพลาสติกจะส่งผลกระทบเฉพาะต่อพืชน้ำเท่านั้น ไม่กระทบต่อสัตว์เลี้ยงลูกด้วยนม' }
+        ],
+        answer: 'C',
+        explain: 'ไมโครพลาสติกไม่ย่อยสลายและดูดซับสารพิษ เมื่อถูกกินต่อกันเป็นทอดๆ ในห่วงโซ่อาหาร สารพิษจะสะสมในเนื้อเยื่อและมีความเข้มข้นทวีคูณ (Biomagnification) จนผู้บริโภคระดับบนได้รับสารพิษสะสมอันตราย'
+      },
+      {
+        id: 's6_5',
+        num: 26,
+        stem: 'การกระทำในข้อใดถือว่าเป็นการปฏิบัติตามหลักการ "Reduce (ลดการใช้)" ได้ถูกต้องและตรงตามนิยามที่สุด',
+        options: [
+          { key: 'A', text: 'การนำขวดน้ำพลาสติกที่ใช้แล้วมาตัดทำเป็นกระถางปลูกต้นไม้' },
+          { key: 'B', text: 'การนำกล่องพลาสติกใส่อาหารที่ล้างสะอาดแล้วมาใช้ใส่ของซ้ำ' },
+          { key: 'C', text: 'การปฏิเสธการรับถุงพลาสติกแบบใช้ครั้งเดียวทิ้ง และพกถุงผ้าส่วนตัวหรือกล่องข้าวไปซื้อของ' },
+          { key: 'D', text: 'การรวบรวมขวดพลาสติก PET ส่งโรงงานเพื่อนำไปหลอมแปรรูปเป็นเส้นใยเสื้อผ้า' }
+        ],
+        answer: 'C',
+        explain: 'Reduce คือการลดการบริโภคหรือลดการสร้างขยะตั้งแต่ต้นทาง เช่น พกถุงผ้า ใช้กล่องข้าว ปฏิเสธ Single-use plastics (ส่วน A และ B เป็น Reuse ใช้ซ้ำ และ D เป็น Recycle แปรรูปใหม่)'
+      }
+    ];
+
+    // --- State ---
+    let userAnswers = {};
+    let isGraded = false;
+
+    // --- Render Functions ---
+
+    function renderMCQSection(containerId, dataList) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      dataList.forEach(q => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = 'qCard_' + q.id;
+
+        const selected = userAnswers[q.id];
+
+        let optsHtml = '';
+        q.options.forEach(opt => {
+          let btnClass = 'opt-btn';
+          if (selected === opt.key) {
+            btnClass += ' is-selected';
+          }
+          if (isGraded) {
+            if (opt.key === q.answer) {
+              btnClass += ' graded-correct';
+            } else if (selected === opt.key && selected !== q.answer) {
+              btnClass += ' is-wrong';
+            }
+          }
+
+          optsHtml += `
+            <button class="${btnClass}" onclick="handleSelect('${q.id}', '${opt.key}')" ${isGraded ? 'disabled' : ''}>
+              <span class="opt-key">${opt.key}</span>
+              <span class="opt-text">${opt.text}</span>
+            </button>
+          `;
+        });
+
+        const isCorrect = isGraded && selected === q.answer;
+        const feedbackClass = isGraded 
+          ? (isCorrect ? 'q-feedback show-feedback graded-correct' : 'q-feedback show-feedback graded-wrong')
+          : 'q-feedback';
+
+        const feedbackText = isGraded
+          ? (isCorrect 
+              ? `<strong>✓ ถูกต้อง! (+1 คะแนน)</strong><br>${q.explain}` 
+              : `<strong>✗ ยังไม่ถูกต้อง</strong> (คำตอบที่ถูกคือข้อ ${q.answer})<br>${q.explain}`)
+          : '';
+
+        card.innerHTML = `
+          <div class="q-num-stem">
+            <span class="q-num">${q.num}</span>
+            <div class="q-stem">${q.stem}</div>
+          </div>
+          <div class="opts-grid">
+            ${optsHtml}
+          </div>
+          <div class="${feedbackClass}" id="fb_${q.id}">
+            ${feedbackText}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderPolymerLabSection() {
+      const container = document.getElementById('polymerLabList');
+      container.innerHTML = '';
+
+      sec4Data.forEach(item => {
+        const selected = userAnswers[item.id];
+        const row = document.createElement('div');
+        row.className = 'polymer-card-row';
+
+        let thermoClass = 'toggle-opt';
+        let settingClass = 'toggle-opt';
+
+        if (selected === 'thermoplastic') thermoClass += ' is-selected';
+        if (selected === 'thermosetting') settingClass += ' is-selected';
+
+        if (isGraded) {
+          if (item.answer === 'thermoplastic') {
+            thermoClass += ' graded-correct';
+            if (selected === 'thermosetting') settingClass += ' is-wrong';
+          } else {
+            settingClass += ' graded-correct';
+            if (selected === 'thermoplastic') thermoClass += ' is-wrong';
+          }
+        }
+
+        row.innerHTML = `
+          <div class="polymer-info">
+            <div class="polymer-name">${item.name}</div>
+            <div class="polymer-test">${item.test}</div>
+            ${isGraded ? `<div class="polymer-explain">💡 <strong>เฉลย:</strong> ${item.explain}</div>` : ''}
+          </div>
+          <div class="btn-toggle-pair">
+            <button class="${thermoClass}" onclick="handleSelect('${item.id}', 'thermoplastic')" ${isGraded ? 'disabled' : ''}>
+              เทอร์โมพลาสติก
+            </button>
+            <button class="${settingClass}" onclick="handleSelect('${item.id}', 'thermosetting')" ${isGraded ? 'disabled' : ''}>
+              เทอร์โมเซตติง
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function handleSelect(qId, val) {
+      if (isGraded) return;
+      userAnswers[qId] = val;
+      renderAll();
+      updateProgress();
+    }
+
+    function renderAll() {
+      renderMCQSection('qListSec1', sec1Data);
+      renderMCQSection('qListSec2', sec2Data);
+      renderMCQSection('qListSec3', sec3Data);
+      renderPolymerLabSection();
+      renderMCQSection('qListSec5', sec5Data);
+      renderMCQSection('qListSec6', sec6Data);
+
+      if (window.renderMathInElement) {
+        try {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false }
+            ]
+          });
+        } catch (e) {}
+      }
+    }
+
+    function updateProgress() {
+      const answered = Object.keys(userAnswers).length;
+      const total = 26;
+      const pct = Math.round((answered / total) * 100);
+
+      document.getElementById('headerProgress').textContent = `ตอบแล้ว ${answered} / ${total} ข้อ (${pct}%)`;
+      document.getElementById('progressBar').style.width = pct + '%';
+    }
+
+    function gradeExam() {
+      const answered = Object.keys(userAnswers).length;
+      const total = 26;
+      if (answered < total) {
+        const proceed = confirm(`อาจารย์/นักเรียนยังตอบไม่ครบ (ตอบแล้ว ${answered}/${total} ข้อ)\nต้องการส่งเพื่อตรวจและดูเฉลยเลยหรือไม่?`);
+        if (!proceed) return;
+      }
+
+      isGraded = true;
+
+      let scoreSec1 = 0;
+      sec1Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec1++; });
+
+      let scoreSec2 = 0;
+      sec2Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec2++; });
+
+      let scoreSec3 = 0;
+      sec3Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec3++; });
+
+      let scoreSec4 = 0;
+      sec4Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec4++; });
+
+      let scoreSec5 = 0;
+      sec5Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec5++; });
+
+      let scoreSec6 = 0;
+      sec6Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec6++; });
+
+      const totalScore = scoreSec1 + scoreSec2 + scoreSec3 + scoreSec4 + scoreSec5 + scoreSec6;
+      const pct = Math.round((totalScore / total) * 100);
+
+      document.getElementById('scoreCircle').textContent = `${totalScore} / ${total}`;
+      document.getElementById('scorePct').textContent = `คิดเป็น ${pct}%`;
+
+      document.getElementById('bkSec1').textContent = `${scoreSec1} / 4`;
+      document.getElementById('bkSec2').textContent = `${scoreSec2} / 4`;
+      document.getElementById('bkSec3').textContent = `${scoreSec3} / 5`;
+      document.getElementById('bkSec4').textContent = `${scoreSec4} / 4`;
+      document.getElementById('bkSec5').textContent = `${scoreSec5} / 4`;
+      document.getElementById('bkSec6').textContent = `${scoreSec6} / 5`;
+
+      const hero = document.getElementById('resultsHero');
+      hero.classList.add('active');
+
+      document.getElementById('submitExamBtn').style.display = 'none';
+      document.getElementById('copyReportBtn').style.display = 'inline-flex';
+      document.getElementById('printReportBtn').style.display = 'inline-flex';
+      document.getElementById('retakeBtn').style.display = 'inline-flex';
+
+      renderAll();
+      hero.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- Action Buttons ---
+
+    document.getElementById('submitExamBtn').addEventListener('click', gradeExam);
+
+    document.getElementById('copyReportBtn').addEventListener('click', () => {
+      const name = document.getElementById('stdName').value.trim() || 'ไม่ระบุชื่อ';
+      const nick = document.getElementById('stdNick').value.trim() || '-';
+      const date = document.getElementById('stdDate').value || new Date().toISOString().split('T')[0];
+
+      let scoreSec1 = 0; sec1Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec1++; });
+      let scoreSec2 = 0; sec2Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec2++; });
+      let scoreSec3 = 0; sec3Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec3++; });
+      let scoreSec4 = 0; sec4Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec4++; });
+      let scoreSec5 = 0; sec5Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec5++; });
+      let scoreSec6 = 0; sec6Data.forEach(q => { if (userAnswers[q.id] === q.answer) scoreSec6++; });
+
+      const total = scoreSec1 + scoreSec2 + scoreSec3 + scoreSec4 + scoreSec5 + scoreSec6;
+      const pct = Math.round((total / 26) * 100);
+
+      const lines = [
+        '📋 [รายงานผลแบบทดสอบ วิทยาศาสตร์ ม.3 เล่ม 2]',
+        'หัวข้อ: ปฏิกิริยาเคมี & วัสดุในชีวิตประจำวัน (ตอนที่ 2)',
+        '---------------------------------------',
+        `👤 นักเรียน: ${name} (${nick})`,
+        `📅 วันที่: ${date}`,
+        `🎯 คะแนนรวม: ${total} / 26 (${pct}%)`,
+        '---------------------------------------',
+        '📊 รายละเอียดแต่ละตอน:',
+        `• ตอนที่ 1 กรด+คาร์บอเนต: ${scoreSec1}/4`,
+        `• ตอนที่ 2 สนิมเหล็กและการป้องกัน: ${scoreSec2}/4`,
+        `• ตอนที่ 3 การเผาไหม้และสิ่งแวดล้อม: ${scoreSec3}/5`,
+        `• ตอนที่ 4 แล็บทดสอบพอลิเมอร์: ${scoreSec4}/4`,
+        `• ตอนที่ 5 เซรามิกส์และโลหะผสม: ${scoreSec5}/4`,
+        `• ตอนที่ 6 วัสดุผสมและขยะ 3R: ${scoreSec6}/5`,
+        '---------------------------------------',
+        'ระบบ SubwatG Math-materials Interactive Learning'
+      ];
+
+      const text = lines.join('\n');
+      navigator.clipboard.writeText(text).then(() => {
+        alert('คัดลอกสรุปผลคะแนนเรียบร้อยแล้ว! สามารถนำไป Paste ส่งในแชตได้ทันที');
+      }).catch(err => {
+        alert('เกิดข้อผิดพลาดในการคัดลอก: ' + err);
+      });
+    });
+
+    document.getElementById('printReportBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('retakeBtn').addEventListener('click', () => {
+      if (confirm('ต้องการล้างคำตอบเพื่อเริ่มทำใหม่อีกครั้งใช่หรือไม่?')) {
+        userAnswers = {};
+        isGraded = false;
+        updateProgress();
+        document.getElementById('resultsHero').classList.remove('active');
+        document.getElementById('submitExamBtn').style.display = 'inline-flex';
+        document.getElementById('copyReportBtn').style.display = 'none';
+        document.getElementById('printReportBtn').style.display = 'none';
+        document.getElementById('retakeBtn').style.display = 'none';
+        renderAll();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌓';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+    });
+  </script>
+</body>
+</html>
