@@ -26,6 +26,10 @@
 - [One-to-one และ Onto](interactive/m5-one-to-one-onto.html) — สร้าง mapping เพื่อตรวจสอบ injective, surjective และ bijective ด้วยภาพลูกศร
 - [Inverse Function](interactive/m5-inverse-function.html) — ตรวจสอบว่า mapping มี inverse function หรือไม่ ผ่านเงื่อนไข bijective และตัวอย่างหลายกรณี
 
+### ม.6 — ทฤษฎีจำนวนและคณิตศาสตร์เชิงการจัด
+
+- [ห้องปฏิบัติการคณิตศาสตร์มอดุลาร์ (Neo-Brutalist Math Lab)](https://subwatg.github.io/Math-materials/interactive/congruence-and-calendar/) — สื่อการสอนแบบโต้ตอบ 4 โมดูล: วงล้อเศษเหลือ mod m, นักสืบวันเกิด (mod 7), ถอดรหัสตรวจสอบบัตรประชาชนไทย (mod 11), และสังเวียนดวลเกมนิม 21 เหรียญ (mod 4) พร้อมระบบโฟกัสเต็มจอ (Zen Mode)
+
 
 ### 01422413: การวางแผนการทดลอง (Design of Experiments)
 - **[คลังสไลด์บรรยาย 01422413 ครบ 10 บท (Master Portal)](https://subwatg.github.io/Math-materials/interactive/01422413-doe/index.html)** — สไลด์บรรยาย 16:9 Zero-Scroll สไตล์ Neo-Math Light พร้อมเรื่องเล่าประวัติศาสตร์จริง คดีสืบสวนข้อผิดพลาดทางสถิติ และห้องทดลองจำลองเชิงโต้ตอบ

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ห้องปฏิบัติการคณิตศาสตร์มอดุลาร์ // การลงรอยกันและปฏิทิน</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Prompt:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* Neo-Brutalist CSS System */
+    :root {
+      --bg-cream: #FFFDF5;
+      --ink: #000000;
+      --card-bg: #FFFFFF;
+      --yellow: #FEF08A;
+      --blue: #BAE6FD;
+      --green: #BBF7D0;
+      --coral: #FED7AA;
+      --pink: #FECDD3;
+      --purple: #E9D5FF;
+      --border-w: 3px;
+      --shadow-offset: 4px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(#1b1c17 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      color: var(--ink);
+      font-family: 'Bai Jamjuree', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Prompt', sans-serif;
+      font-weight: 700;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Brutalist Tokens */
+    .neo-box {
+      background: var(--card-bg);
+      border: var(--border-w) solid var(--ink);
+      border-radius: 8px;
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--ink);
+    }
+
+    .neo-pill {
+      border: 2px solid var(--ink);
+      border-radius: 9999px;
+      box-shadow: 2px 2px 0px var(--ink);
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .tactile-btn {
+      border: var(--border-w) solid var(--ink);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0px var(--ink);
+      font-family: 'Prompt', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .tactile-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink);
+    }
+
+    .tactile-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+
+    /* Top Navigation HUD */
+    #topHUD {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #FFFFFF;
+      border-bottom: var(--border-w) solid var(--ink);
+      box-shadow: 0px 4px 0px var(--ink);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+
+    body.zen-active #topHUD {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      background: #F4F4F5;
+      color: var(--ink);
+    }
+
+    .tab-btn.active {
+      background: var(--yellow);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+
+    /* Floating Zen Button */
+    #floatingZenRestore {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: var(--yellow);
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    body.zen-active #floatingZenRestore {
+      display: inline-flex;
+    }
+
+    /* Main Stage Layout */
+    main.stage-container {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Module 1: Modular Wheel */
+    .wheel-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #FFFFFF;
+    }
+
+    .control-card {
+      padding: 24px;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* SVG Clock styling */
+    #clockSvg {
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(4px 4px 0px #000);
+    }
+
+    /* Module 2: Birthday Detective */
+    .step-card {
+      padding: 16px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: #FFFFFF;
+      box-shadow: 3px 3px 0px var(--ink);
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .step-card.active-step {
+      background: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--ink);
+    }
+
+    /* Module 3: Thai ID */
+    .id-digit-group {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+
+    .id-box {
+      width: 44px;
+      height: 52px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      border: 3px solid var(--ink);
+      border-radius: 6px;
+      box-shadow: 3px 3px 0px var(--ink);
+      background: #FFFFFF;
+    }
+
+    .id-box.check-digit {
+      background: var(--green);
+    }
+
+    /* Module 4: Nim Game */
+    .coin-tray {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 24px;
+      background: #FFFDF5;
+      border: 3px solid var(--ink);
+      border-radius: 8px;
+      box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1), 4px 4px 0px var(--ink);
+      min-height: 180px;
+      align-content: flex-start;
+      margin: 16px 0;
+    }
+
+    .coin {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #FBBF24;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0px var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .coin.p-safe {
+      background: #A7F3D0;
+      border-color: #065F46;
+      box-shadow: 0 0 12px #34D399, 3px 3px 0px var(--ink);
+    }
+
+    .coin.taken {
+      opacity: 0;
+      transform: scale(0.2) translateY(-40px);
+      pointer-events: none;
+    }
+
+    /* Custom Form Controls */
+    input[type=number], input[type=text], select {
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 1rem;
+      font-family: 'Bai Jamjuree', sans-serif;
+      box-shadow: 2px 2px 0px var(--ink);
+      outline: none;
+    }
+
+    input[type=number]:focus, input[type=text]:focus, select:focus {
+      background: #FEF08A;
+    }
+
+    /* Alert and Notification Banners */
+    .banner-box {
+      padding: 12px 16px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0px var(--ink);
+      margin: 10px 0;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation HUD -->
+  <header id="topHUD">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="neo-pill" style="background: var(--yellow);">มก. กพส.</div>
+        <div>
+          <h1 style="font-size: 1.15rem; line-height: 1.2;">การลงรอยกันและคณิตศาสตร์ปฏิทิน</h1>
+          <div style="font-size: 0.8rem; color: #4B5563;">ค่ายวิทยาศาสตร์ โรงเรียนวัดไร่ขิงวิทยา (ระดับชั้น ม.6)</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" role="tablist">
+        <button class="tactile-btn tab-btn active" onclick="switchTab('tabWheel')" id="btnTabWheel">
+          <span>🔄</span> 1. วงล้อเศษเหลือ
+        </button>
+        <button class="tactile-btn tab-btn" onclick="switchTab('tabBirthday')" id="btnTabBirthday">
+          <span>🗓️</span> 2. นักสืบวันเกิด
+        </button>
+        <button class="tactile-btn tab-btn" onclick="switchTab('tabId')" id="btnTabId">
+          <span>🪪</span> 3. ตรวจบัตรประชาชน
+        </button>
+        <button class="tactile-btn tab-btn" onclick="switchTab('tabNim')" id="btnTabNim">
+          <span>🪙</span> 4. ดวลเกมนิม 21
+        </button>
+      </nav>
+
+      <div>
+        <button class="tactile-btn" style="background: var(--pink); padding: 8px 14px; font-size: 0.9rem;" onclick="toggleZenMode()" title="ซ่อนแถบเมนูเพื่อขยายพื้นที่เต็มจอ (กดปุ่ม H บนคีย์บอร์ด)">
+          <span>🎯</span> โฟกัสเต็มจอ (H)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Floating Restore Button when Zen Mode is Active -->
+  <button id="floatingZenRestore" class="tactile-btn" onclick="toggleZenMode()">
+    <span>🎯</span> คืนแถบเมนู (H)
+  </button>
+
+  <!-- Main Workspace -->
+  <main class="stage-container">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: MODULAR WHEEL & CLOCK SANDBOX -->
+    <!-- ========================================================================= -->
+    <section id="tabWheel" class="tab-panel active">
+      <div class="grid-2">
+        <!-- SVG Canvas Card -->
+        <div class="neo-box wheel-card">
+          <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="neo-pill" style="background: var(--yellow);">หน้าปัดมอดุโล m</div>
+            <div id="wheelEquationDisplay" class="font-mono" style="font-size: 1.2rem; font-weight: 700;">
+              0 &equiv; 0 (mod 12)
+            </div>
+          </div>
+
+          <svg id="clockSvg" viewBox="-220 -220 440 440">
+            <!-- Background circle -->
+            <circle cx="0" cy="0" r="180" fill="#FFFDF5" stroke="#000" stroke-width="4"></circle>
+            <!-- Center pivot -->
+            <circle cx="0" cy="0" r="14" fill="#000"></circle>
+            <!-- Node elements inserted by JS -->
+            <g id="clockNodes"></g>
+            <!-- Chords for power cycle -->
+            <g id="clockChords"></g>
+            <!-- Pointer Hand -->
+            <line id="clockHand" x1="0" y1="0" x2="0" y2="-130" stroke="#EF4444" stroke-width="6" stroke-linecap="round"></line>
+            <circle id="pointerTip" cx="0" cy="-130" r="8" fill="#EF4444" stroke="#000" stroke-width="2"></circle>
+          </svg>
+
+          <div style="margin-top: 16px; font-size: 0.9rem; color: #4B5563; text-align: center;">
+            เข็มนาฬิกาชี้ที่เศษตกค้างมาตรฐาน <span class="font-mono font-bold">0 &le; r &lt; m</span> เสมอ
+          </div>
+        </div>
+
+        <!-- Controls Card -->
+        <div class="neo-box control-card">
+          <div>
+            <h2 style="font-size: 1.25rem; margin-bottom: 8px;">ตั้งค่าระบบมอดุโล (Modulus Setup)</h2>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+              <button class="tactile-btn" style="padding: 6px 12px; background: #FFFFFF;" onclick="setModulus(12)">12 นาฬิกา</button>
+              <button class="tactile-btn" style="padding: 6px 12px; background: #FFFFFF;" onclick="setModulus(7)">7 วัน</button>
+              <button class="tactile-btn" style="padding: 6px 12px; background: #FFFFFF;" onclick="setModulus(10)">10 หลักหน่วย</button>
+              <button class="tactile-btn" style="padding: 6px 12px; background: #FFFFFF;" onclick="setModulus(4)">4 นิมเกม</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <label for="inputModulus" style="font-weight: 700;">ค่ามอดุลัส m:</label>
+              <input type="number" id="inputModulus" value="12" min="2" max="24" style="width: 80px;" onchange="updateModulusFromInput()">
+            </div>
+          </div>
+
+          <hr style="border: 1px dashed #000;">
+
+          <div>
+            <h2 style="font-size: 1.25rem; margin-bottom: 8px;">คำนวณการลงรอยกัน a &equiv; r (mod m)</h2>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+              <label for="inputNumberA" style="font-weight: 700;">ป้อนจำนวน a:</label>
+              <input type="number" id="inputNumberA" value="38" style="width: 110px;">
+              <button class="tactile-btn" style="background: var(--yellow); padding: 8px 16px;" onclick="calculateAndAnimate()">
+                <span>⚡</span> คำนวณทันที
+              </button>
+            </div>
+            <div id="mathStepBreakdown" class="banner-box" style="background: var(--blue);">
+              การหาร: 38 = 3 &times; 12 + 2 &rArr; เศษเหลือคือ 2
+            </div>
+          </div>
+
+          <hr style="border: 1px dashed #000;">
+
+          <div>
+            <h2 style="font-size: 1.25rem; margin-bottom: 8px;">สำรวจวัฏจักรเลขยกกำลัง b^k (mod m)</h2>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+              <label for="inputBaseB" style="font-weight: 700;">ฐาน b:</label>
+              <input type="number" id="inputBaseB" value="3" style="width: 70px;">
+              <button class="tactile-btn" style="background: var(--green); padding: 6px 14px;" onclick="renderPowerCycle()">
+                วาดลวดลายวัฏจักร
+              </button>
+              <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 10px;" onclick="clearChords()">
+                ล้างเส้น
+              </button>
+            </div>
+            <div id="powerCycleText" style="font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+              3^1 &equiv; 3, 3^2 &equiv; 9, 3^3 &equiv; 1 (mod 13)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: BIRTHDAY DETECTIVE LIVE DEMO -->
+    <!-- ========================================================================= -->
+    <section id="tabBirthday" class="tab-panel">
+      <div class="grid-2">
+        <!-- Input & Presets -->
+        <div class="neo-box" style="padding: 24px; background: #FFFFFF;">
+          <div class="neo-pill" style="background: var(--blue); margin-bottom: 12px;">ขั้นตอนวิธีคำนวณวันในสัปดาห์ (mod 7)</div>
+          <h2 style="font-size: 1.35rem; margin-bottom: 12px;">กรอกวัน เดือน และปี ค.ศ.</h2>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+            <div>
+              <label style="font-weight: 700; display: block; margin-bottom: 4px;">วันที่ (d):</label>
+              <input type="number" id="bDay" value="19" min="1" max="31" style="width: 100%;" onchange="runBirthdayCalculation()">
+            </div>
+            <div>
+              <label style="font-weight: 700; display: block; margin-bottom: 4px;">เดือน (m):</label>
+              <select id="bMonth" style="width: 100%;" onchange="runBirthdayCalculation()">
+                <option value="1">1. มกราคม</option>
+                <option value="2">2. กุมภาพันธ์</option>
+                <option value="3">3. มีนาคม</option>
+                <option value="4">4. เมษายน</option>
+                <option value="5">5. พฤษภาคม</option>
+                <option value="6">6. มิถุนายน</option>
+                <option value="7">7. กรกฎาคม</option>
+                <option value="8">8. สิงหาคม</option>
+                <option value="9">9. กันยายน</option>
+                <option value="10">10. ตุลาคม</option>
+                <option value="11" selected>11. พฤศจิกายน</option>
+                <option value="12">12. ธันวาคม</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight: 700; display: block; margin-bottom: 4px;">ปี ค.ศ. (พ.ศ. - 543):</label>
+              <input type="number" id="bYear" value="2026" min="1600" max="2399" style="width: 100%;" onchange="runBirthdayCalculation()">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px; font-size: 0.85rem;" onclick="setBirthdayPreset(19, 11, 2026)">
+              วันจัดค่าย (19 พ.ย. 2026)
+            </button>
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px; font-size: 0.85rem;" onclick="setBirthdayPreset(8, 8, 2008)">
+              โอลิมปิก 2008 (รุ่น ม.6)
+            </button>
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px; font-size: 0.85rem;" onclick="setBirthdayPreset(1, 1, 2027)">
+              ปีใหม่ 2027
+            </button>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 6px 12px; font-size: 0.85rem;" onclick="setBirthdayRandom()">
+              🎲 สุ่มวันเกิด
+            </button>
+          </div>
+
+          <!-- Memory Key Matrix Table -->
+          <div style="border: 2px solid #000; border-radius: 8px; padding: 12px; background: #FFFDF5;">
+            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px;">รหัสช่วยจำ 12 เดือน (Month Key M):</div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+              <div id="mGroup1" style="border: 1px solid #000; padding: 4px; border-radius: 4px; background: #FFF;">033 (ม.ค.-มี.ค.)</div>
+              <div id="mGroup2" style="border: 1px solid #000; padding: 4px; border-radius: 4px; background: #FFF;">614 (เม.ย.-มิ.ย.)</div>
+              <div id="mGroup3" style="border: 1px solid #000; padding: 4px; border-radius: 4px; background: #FFF;">625 (ก.ค.-ก.ย.)</div>
+              <div id="mGroup4" style="border: 1px solid #000; padding: 4px; border-radius: 4px; background: #FFF;">035 (ต.ค.-ธ.ค.)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scaffolding Step Breakdown -->
+        <div class="neo-box" style="padding: 24px; background: #FFFFFF;">
+          <h2 style="font-size: 1.35rem; margin-bottom: 12px;">ก้าวการคำนวณ 5 องค์ประกอบ</h2>
+
+          <div class="step-card" id="bStep1">
+            <strong>1. วันที่:</strong> <span class="font-mono" id="bVal1">19 &equiv; 5 (mod 7)</span>
+          </div>
+
+          <div class="step-card" id="bStep2">
+            <strong>2. รหัสเดือน พฤศจิกายน (M):</strong> <span class="font-mono" id="bVal2">3</span>
+          </div>
+
+          <div class="step-card" id="bStep3">
+            <strong>3. ปีสองหลักท้าย:</strong> <span class="font-mono" id="bVal3">26 + &lfloor;26/4&rfloor; = 32 &equiv; 4 (mod 7)</span>
+          </div>
+
+          <div class="step-card" id="bStep4">
+            <strong>4. รหัสศตวรรษ 2000s (C):</strong> <span class="font-mono" id="bVal4">6 &equiv; -1 (mod 7)</span>
+          </div>
+
+          <div class="step-card" id="bStep5">
+            <strong>5. ปีอธิกสุรทิน (Leap Year):</strong> <span class="font-mono" id="bVal5">ไม่เข้าเงื่อนไขหัก 1</span>
+          </div>
+
+          <!-- Final Target Banner -->
+          <div id="bResultCard" class="banner-box" style="background: var(--yellow); text-align: center; padding: 18px;">
+            <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;">สรุปผลรวมมอดุโล 7</div>
+            <div id="bSumEquation" class="font-mono" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">
+              5 + 3 + 4 + (-1) = 11 &equiv; 4 (mod 7)
+            </div>
+            <div id="bDayName" style="font-size: 1.8rem; font-weight: 800; font-family: 'Prompt', sans-serif;">
+              วันพฤหัสบดี (Thursday)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: THAI ID CARD MOD 11 SIMULATOR -->
+    <!-- ========================================================================= -->
+    <section id="tabId" class="tab-panel">
+      <div class="neo-box" style="padding: 24px; background: #FFFFFF; max-width: 1000px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div class="neo-pill" style="background: var(--green);">ถอดรหัสตรวจสอบความถูกต้อง (mod 11)</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px; font-size: 0.85rem;" onclick="setIdPreset('123456789012')">ตัวอย่าง 5.1 (12 หลัก)</button>
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px; font-size: 0.85rem;" onclick="setIdPreset('310023456789')">แบบฝึก 5.1 (3-1002...)</button>
+            <button class="tactile-btn" style="background: var(--coral); padding: 6px 12px; font-size: 0.85rem;" onclick="injectIdError()">💥 ลองพิมพ์ผิด 1 หลัก</button>
+          </div>
+        </div>
+
+        <h2 style="font-size: 1.25rem; text-align: center; margin-bottom: 8px;">เลขประจำตัวประชาชนไทย 12 หลักแรก + หลักตรวจสอบ</h2>
+
+        <!-- Digits Inputs Grid -->
+        <div class="id-digit-group" id="idInputsContainer">
+          <!-- 12 boxes + 1 check digit generated by script -->
+        </div>
+
+        <!-- 2-Stage Calculation Table -->
+        <div style="margin: 20px 0;">
+          <div style="font-weight: 700; margin-bottom: 8px;">ตารางผลคูณถ่วงน้ำหนัก (แบ่ง 2 ช่วง เพื่อความสะดวกและเป็นระเบียบ):</div>
+          
+          <div style="overflow-x: auto;">
+            <!-- Stage 1 -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; border: 2px solid #000; text-align: center; font-family: 'JetBrains Mono', monospace;">
+              <thead>
+                <tr style="background: #F3F4F6; border-bottom: 2px solid #000;">
+                  <th style="padding: 6px; border-right: 2px solid #000; width: 15%;">หลัก (i)</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">1</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">2</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">3</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">4</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">5</th>
+                  <th style="padding: 6px;">6</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #000;">
+                  <td style="padding: 6px; font-weight: 700; border-right: 2px solid #000; background: #FFFDF5;">ตัวเลข (d_i)</td>
+                  <td id="tD1" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD2" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD3" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD4" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD5" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD6">-</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #000; background: #F9FAFB;">
+                  <td style="padding: 6px; font-weight: 700; border-right: 2px solid #000;">น้ำหนัก (14-i)</td>
+                  <td style="border-right: 1px solid #000;">13</td>
+                  <td style="border-right: 1px solid #000;">12</td>
+                  <td style="border-right: 1px solid #000; background: var(--pink);" title="น้ำหนัก 11 = 0 mod 11!">11*</td>
+                  <td style="border-right: 1px solid #000;">10</td>
+                  <td style="border-right: 1px solid #000;">9</td>
+                  <td>8</td>
+                </tr>
+                <tr style="background: #FFFDF5; font-weight: 700;">
+                  <td style="padding: 6px; border-right: 2px solid #000;">ผลคูณ</td>
+                  <td id="tP1" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP2" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP3" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP4" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP5" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP6">-</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Stage 2 -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; border: 2px solid #000; text-align: center; font-family: 'JetBrains Mono', monospace;">
+              <thead>
+                <tr style="background: #F3F4F6; border-bottom: 2px solid #000;">
+                  <th style="padding: 6px; border-right: 2px solid #000; width: 15%;">หลัก (i)</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">7</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">8</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">9</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">10</th>
+                  <th style="padding: 6px; border-right: 1px solid #000;">11</th>
+                  <th style="padding: 6px;">12</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #000;">
+                  <td style="padding: 6px; font-weight: 700; border-right: 2px solid #000; background: #FFFDF5;">ตัวเลข (d_i)</td>
+                  <td id="tD7" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD8" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD9" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD10" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD11" style="border-right: 1px solid #000;">-</td>
+                  <td id="tD12">-</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #000; background: #F9FAFB;">
+                  <td style="padding: 6px; font-weight: 700; border-right: 2px solid #000;">น้ำหนัก (14-i)</td>
+                  <td style="border-right: 1px solid #000;">7</td>
+                  <td style="border-right: 1px solid #000;">6</td>
+                  <td style="border-right: 1px solid #000;">5</td>
+                  <td style="border-right: 1px solid #000;">4</td>
+                  <td style="border-right: 1px solid #000;">3</td>
+                  <td>2</td>
+                </tr>
+                <tr style="background: #FFFDF5; font-weight: 700;">
+                  <td style="padding: 6px; border-right: 2px solid #000;">ผลคูณ</td>
+                  <td id="tP7" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP8" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP9" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP10" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP11" style="border-right: 1px solid #000;">-</td>
+                  <td id="tP12">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Formula Results -->
+        <div class="grid-2">
+          <div class="banner-box" style="background: #F3F4F6;">
+            <div>1. ผลรวมถ่วงน้ำหนัก: <strong id="idSumVal" class="font-mono">S = 0</strong></div>
+            <div>2. เศษเหลือจากการหารด้วย 11: <strong id="idRemVal" class="font-mono">N = S mod 11 = 0</strong></div>
+            <div>3. สูตรหลักตรวจสอบ: <strong id="idFormulaVal" class="font-mono">(11 - N) mod 10 = ?</strong></div>
+          </div>
+          <div id="idStatusBanner" class="banner-box" style="background: var(--green); text-align: center; display: flex; flex-direction: column; justify-content: center;">
+            <div style="font-size: 0.9rem;">หลักตรวจสอบที่ถูกต้อง (d13)</div>
+            <div id="idCheckDigitDisplay" class="font-mono" style="font-size: 2.2rem; font-weight: 800;">1</div>
+          </div>
+        </div>
+
+        <!-- Insight Box -->
+        <div style="margin-top: 16px; border-left: 6px solid #EF4444; padding: 12px; background: #FEF2F2; font-size: 0.9rem;">
+          <strong>ข้อสังเกตจุดบอดทางคณิตศาสตร์:</strong> หลักที่ 3 มีน้ำหนักเท่ากับ 11 ซึ่ง $11 \equiv 0 \pmod{11}$ ส่งผลให้ตัวเลขในหลักที่ 3 จะถูกคูณด้วยศูนย์ในระบบเศษเหลือเสมอ ดังนั้นหากพิมพ์ผิดเฉพาะหลักที่ 3 สูตรนี้จะไม่สามารถตรวจจับข้อผิดพลาดได้!
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: MODULAR NIM 21 ARENA -->
+    <!-- ========================================================================= -->
+    <section id="tabNim" class="tab-panel">
+      <div class="neo-box" style="padding: 24px; background: #FFFFFF; max-width: 1000px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div class="neo-pill" style="background: var(--coral);">สังเวียนทฤษฎีเกม (mod 4)</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="tactile-btn" style="background: var(--purple); padding: 6px 14px;" onclick="toggleNimSecret()" id="btnNimSecret">
+              <span>🔑</span> ปลดล็อกสูตรชนะ
+            </button>
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px;" onclick="resetNimGame()">
+              เริ่มเกมใหม่ (21 เหรียญ)
+            </button>
+          </div>
+        </div>
+
+        <!-- Tray of coins -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <h2 style="font-size: 1.25rem;">กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ</h2>
+          <div id="nimTurnBadge" class="neo-pill" style="background: var(--green);">ตาของนักเรียน (Player 1)</div>
+        </div>
+
+        <div class="coin-tray" id="nimCoinTray">
+          <!-- 21 coins dynamically rendered -->
+        </div>
+
+        <!-- Game Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span style="font-weight: 700;">เลือกหยิบเหรียญ:</span>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(1)" id="btnPick1">หยิบ 1</button>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(2)" id="btnPick2">หยิบ 2</button>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(3)" id="btnPick3">หยิบ 3</button>
+          </div>
+
+          <div id="nimGameLog" style="font-size: 0.95rem; font-weight: 600; color: #1F2937;">
+            กติกา: หยิบได้ครั้งละ 1, 2 หรือ 3 เม็ด ผู้ที่หยิบเม็ดสุดท้ายเป็นผู้ชนะ!
+          </div>
+        </div>
+
+        <!-- Secret Strategy Explanation Panel -->
+        <div id="nimSecretPanel" class="banner-box" style="display: none; background: #ECFDF5; border-color: #059669; margin-top: 16px;">
+          <h3 style="color: #065F46; margin-bottom: 4px;">คณิตศาสตร์เบื้องหลังเกม: การคุมเศษเหลือมอดุโล 4</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 6px;">
+            เนื่องจากเราสามารถหยิบเหรียญคู่ตรงข้ามให้รวมกันได้ <strong>4 เม็ดเสมอ</strong> (1 คู่กับ 3, 2 คู่กับ 2, 3 คู่กับ 1) ดังนั้น จำนวนเหรียญที่เป็นจุดปลอดภัย (P-position) คือพหุคูณของ 4: <strong>0, 4, 8, 12, 16, 20</strong>
+          </p>
+          <div class="font-mono" style="font-size: 0.95rem; font-weight: 700; color: #047857;">
+            21 = 4 &times; 5 + 1 &equiv; 1 (mod 4) &rArr; ผู้เล่นคนแรกหยิบ 1 เม็ดในตาแรกเพื่อล็อก 20 จะชนะ 100%!
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // STATE & NAVIGATION
+    // =========================================================================
+    let currentTab = 'tabWheel';
+    let isZenMode = false;
+
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const activePanel = document.getElementById(tabId);
+      if (activePanel) activePanel.classList.add('active');
+
+      const activeBtn = document.getElementById('btn' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabId === 'tabWheel') {
+        renderClockNodes();
+      } else if (tabId === 'tabBirthday') {
+        runBirthdayCalculation();
+      } else if (tabId === 'tabId') {
+        calculateIdChecksum();
+      }
+    }
+
+    function toggleZenMode() {
+      isZenMode = !isZenMode;
+      if (isZenMode) {
+        document.body.classList.add('zen-active');
+      } else {
+        document.body.classList.remove('zen-active');
+      }
+    }
+
+    // Keyboard Shortcuts (H for Zen Mode, F for Fullscreen)
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'h' || e.key === 'H') {
+        toggleZenMode();
+      } else if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    });
+
+    // =========================================================================
+    // MODULE 1: MODULAR WHEEL (SVG CLOCK)
+    // =========================================================================
+    let currentModulus = 12;
+
+    function setModulus(m) {
+      currentModulus = m;
+      document.getElementById('inputModulus').value = m;
+      renderClockNodes();
+      calculateAndAnimate();
+    }
+
+    function updateModulusFromInput() {
+      const val = parseInt(document.getElementById('inputModulus').value, 10);
+      if (val >= 2 && val <= 30) {
+        currentModulus = val;
+        renderClockNodes();
+        calculateAndAnimate();
+      }
+    }
+
+    function renderClockNodes() {
+      const g = document.getElementById('clockNodes');
+      g.innerHTML = '';
+      const r = 140;
+
+      for (let i = 0; i < currentModulus; i++) {
+        // Angle in radians: 0 at top, clockwise
+        const angle = (i / currentModulus) * 2 * Math.PI - Math.PI / 2;
+        const x = r * Math.cos(angle);
+        const y = r * Math.sin(angle);
+
+        // Node group
+        const nodeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        nodeG.setAttribute('id', `node_${i}`);
+        nodeG.style.cursor = 'pointer';
+        nodeG.onclick = () => {
+          document.getElementById('inputNumberA').value = i;
+          calculateAndAnimate();
+        };
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('r', currentModulus > 16 ? 12 : 16);
+        circle.setAttribute('fill', '#FFFFFF');
+        circle.setAttribute('stroke', '#000000');
+        circle.setAttribute('stroke-width', '3');
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x);
+        text.setAttribute('y', y + (currentModulus > 16 ? 4 : 5));
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('font-family', 'JetBrains Mono');
+        text.setAttribute('font-weight', '700');
+        text.setAttribute('font-size', currentModulus > 16 ? '11px' : '14px');
+        text.setAttribute('fill', '#000000');
+        text.textContent = i;
+
+        nodeG.appendChild(circle);
+        nodeG.appendChild(text);
+        g.appendChild(nodeG);
+      }
+    }
+
+    function calculateAndAnimate() {
+      const a = parseInt(document.getElementById('inputNumberA').value, 10) || 0;
+      const m = currentModulus;
+      // Truncated remainder vs standard positive residue:
+      let r = a % m;
+      if (r < 0) r += m;
+
+      const q = Math.floor(a / m);
+
+      // Rotate Clock Hand
+      const angleDeg = (r / m) * 360;
+      const hand = document.getElementById('clockHand');
+      const tip = document.getElementById('pointerTip');
+
+      // Radian for coordinate
+      const angleRad = (r / m) * 2 * Math.PI - Math.PI / 2;
+      const tipX = 130 * Math.cos(angleRad);
+      const tipY = 130 * Math.sin(angleRad);
+
+      hand.setAttribute('x2', tipX);
+      hand.setAttribute('y2', tipY);
+      tip.setAttribute('cx', tipX);
+      tip.setAttribute('cy', tipY);
+
+      // Highlight active node
+      for (let i = 0; i < m; i++) {
+        const node = document.getElementById(`node_${i}`);
+        if (node) {
+          const c = node.querySelector('circle');
+          if (i === r) {
+            c.setAttribute('fill', '#FEF08A');
+            c.setAttribute('stroke-width', '4');
+          } else {
+            c.setAttribute('fill', '#FFFFFF');
+            c.setAttribute('stroke-width', '3');
+          }
+        }
+      }
+
+      // Update text displays
+      document.getElementById('wheelEquationDisplay').textContent = `${a} ≡ ${r} (mod ${m})`;
+      document.getElementById('mathStepBreakdown').innerHTML = 
+        `ขั้นตอนวิธีการหาร: ${a} = (${q} &times; ${m}) + ${r} &rArr; เศษเหลือมาตรฐานคือ <strong>${r}</strong>`;
+    }
+
+    function renderPowerCycle() {
+      const b = parseInt(document.getElementById('inputBaseB').value, 10) || 1;
+      const m = currentModulus;
+      const g = document.getElementById('clockChords');
+      g.innerHTML = '';
+
+      const r = 140;
+      const visited = [];
+      let cur = 1;
+      let textSteps = [];
+
+      for (let k = 1; k <= m; k++) {
+        const nextVal = (cur * b) % m;
+        visited.push({from: cur, to: nextVal});
+        textSteps.push(`${b}^${k} &equiv; ${nextVal}`);
+        cur = nextVal;
+        if (cur === 1) break; // completed cycle
+      }
+
+      // Draw lines
+      visited.forEach((item, idx) => {
+        const a1 = (item.from / m) * 2 * Math.PI - Math.PI / 2;
+        const a2 = (item.to / m) * 2 * Math.PI - Math.PI / 2;
+        const x1 = r * Math.cos(a1);
+        const y1 = r * Math.sin(a1);
+        const x2 = r * Math.cos(a2);
+        const y2 = r * Math.sin(a2);
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', '#3B82F6');
+        line.setAttribute('stroke-width', '3');
+        line.setAttribute('stroke-dasharray', '4,2');
+        g.appendChild(line);
+      });
+
+      document.getElementById('powerCycleText').innerHTML = 
+        `วัฏจักรฐาน ${b}: ` + textSteps.join(', ') + ` (mod ${m})`;
+    }
+
+    function clearChords() {
+      document.getElementById('clockChords').innerHTML = '';
+      document.getElementById('powerCycleText').textContent = 'ล้างเส้นเรียบร้อย';
+    }
+
+    // =========================================================================
+    // MODULE 2: BIRTHDAY DETECTIVE
+    // =========================================================================
+    const MONTH_KEYS = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5];
+    const DAY_NAMES = [
+      {th: "วันอาทิตย์ (Sunday)", color: "#EF4444"},
+      {th: "วันจันทร์ (Monday)", color: "#EAB308"},
+      {th: "วันอังคาร (Tuesday)", color: "#EC4899"},
+      {th: "วันพุธ (Wednesday)", color: "#22C55E"},
+      {th: "วันพฤหัสบดี (Thursday)", color: "#F97316"},
+      {th: "วันศุกร์ (Friday)", color: "#38BDF8"},
+      {th: "วันเสาร์ (Saturday)", color: "#A855F7"}
+    ];
+
+    function setBirthdayPreset(d, m, y) {
+      document.getElementById('bDay').value = d;
+      document.getElementById('bMonth').value = m;
+      document.getElementById('bYear').value = y;
+      runBirthdayCalculation();
+    }
+
+    function setBirthdayRandom() {
+      const d = Math.floor(Math.random() * 28) + 1;
+      const m = Math.floor(Math.random() * 12) + 1;
+      const y = Math.floor(Math.random() * 20) + 2005; // 2005-2024
+      setBirthdayPreset(d, m, y);
+    }
+
+    function isLeapYear(year) {
+      return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    }
+
+    function getCenturyCode(year) {
+      const c = Math.floor(year / 100);
+      const rem = c % 4;
+      if (rem === 0) return 6; // 1600s, 2000s
+      if (rem === 1) return 4; // 1700s, 2100s
+      if (rem === 2) return 2; // 1800s, 2200s
+      return 0;                // 1900s, 2300s
+    }
+
+    function runBirthdayCalculation() {
+      const d = parseInt(document.getElementById('bDay').value, 10) || 1;
+      const m = parseInt(document.getElementById('bMonth').value, 10) || 1;
+      let y = parseInt(document.getElementById('bYear').value, 10) || 2026;
+
+      // Handle BE to CE automatic safety if user enters > 2400
+      if (y >= 2400) y -= 543;
+
+      const dMod = d % 7;
+      const mKey = MONTH_KEYS[m - 1];
+      const yTwo = y % 100;
+      const yShift = (yTwo + Math.floor(yTwo / 4)) % 7;
+      const cCode = getCenturyCode(y);
+      const leap = isLeapYear(y);
+
+      let leapDeduct = 0;
+      if (leap && (m === 1 || m === 2)) {
+        leapDeduct = 1;
+      }
+
+      const total = dMod + mKey + yShift + cCode - leapDeduct;
+      let dayIndex = total % 7;
+      if (dayIndex < 0) dayIndex += 7;
+
+      // Update Breakdown Displays
+      document.getElementById('bVal1').textContent = `${d} ≡ ${dMod} (mod 7)`;
+      document.getElementById('bVal2').textContent = `${mKey} (เดือน ${m})`;
+      document.getElementById('bVal3').textContent = `${yTwo} + ⌊${yTwo}/4⌋ = ${yTwo + Math.floor(yTwo/4)} ≡ ${yShift} (mod 7)`;
+      document.getElementById('bVal4').textContent = `${cCode} (${Math.floor(y/100)}00s)`;
+      document.getElementById('bVal5').textContent = leap ? (leapDeduct ? 'ปีอธิกสุรทิน (หัก 1 สำหรับ ม.ค./ก.พ.)' : 'ปีอธิกสุรทิน (ไม่ต้องหัก)') : 'ปีปกติ (ไม่หัก)';
+
+      // Highlight active Month Matrix
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`mGroup${i}`);
+        el.style.background = '#FFF';
+        el.style.fontWeight = 'normal';
+      }
+      const groupIdx = Math.floor((m - 1) / 3) + 1;
+      const activeGroupEl = document.getElementById(`mGroup${groupIdx}`);
+      if (activeGroupEl) {
+        activeGroupEl.style.background = '#FEF08A';
+        activeGroupEl.style.fontWeight = 'bold';
+      }
+
+      // Equation and Day text
+      let sumText = `${dMod} + ${mKey} + ${yShift} + ${cCode}`;
+      if (leapDeduct) sumText += ` - 1`;
+      sumText += ` = ${total} ≡ ${dayIndex} (mod 7)`;
+
+      document.getElementById('bSumEquation').innerHTML = sumText;
+      const dayObj = DAY_NAMES[dayIndex];
+      const dayEl = document.getElementById('bDayName');
+      dayEl.textContent = dayObj.th;
+      dayEl.style.color = dayObj.color;
+    }
+
+    // =========================================================================
+    // MODULE 3: THAI ID CARD MOD 11
+    // =========================================================================
+    let idDigits = ['1','2','3','4','5','6','7','8','9','0','1','2'];
+
+    function initIdBoxes() {
+      const container = document.getElementById('idInputsContainer');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 12; i++) {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.maxLength = 1;
+        inp.className = 'id-box';
+        inp.id = `idBox_${i}`;
+        inp.value = idDigits[i];
+        inp.oninput = (e) => {
+          const val = e.target.value.replace(/[^0-9]/g, '');
+          e.target.value = val;
+          idDigits[i] = val || '0';
+          if (val && i < 11) {
+            document.getElementById(`idBox_${i+1}`).focus();
+          }
+          calculateIdChecksum();
+        };
+        container.appendChild(inp);
+      }
+
+      // 13th Check Digit box (Read-only)
+      const checkInp = document.createElement('input');
+      checkInp.type = 'text';
+      checkInp.readOnly = true;
+      checkInp.className = 'id-box check-digit';
+      checkInp.id = 'idBox_12';
+      checkInp.value = '?';
+      container.appendChild(checkInp);
+    }
+
+    function setIdPreset(digitStr) {
+      for (let i = 0; i < 12; i++) {
+        idDigits[i] = digitStr[i] || '0';
+        const box = document.getElementById(`idBox_${i}`);
+        if (box) box.value = idDigits[i];
+      }
+      calculateIdChecksum();
+    }
+
+    function injectIdError() {
+      // Intentionally alter one digit (e.g. digit 0 or 4) to test error detection
+      const targetIdx = 0;
+      const current = parseInt(idDigits[targetIdx], 10);
+      const next = (current + 1) % 10;
+      idDigits[targetIdx] = next.toString();
+      document.getElementById(`idBox_${targetIdx}`).value = next.toString();
+      calculateIdChecksum();
+    }
+
+    function calculateIdChecksum() {
+      const weights = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+      let sum = 0;
+
+      for (let i = 0; i < 12; i++) {
+        const d = parseInt(idDigits[i], 10) || 0;
+        const prod = d * weights[i];
+        sum += prod;
+
+        const dCell = document.getElementById(`tD${i+1}`);
+        const pCell = document.getElementById(`tP${i+1}`);
+        if (dCell) dCell.textContent = d;
+        if (pCell) pCell.textContent = prod;
+      }
+
+      const n = sum % 11;
+      const d13 = (11 - n) % 10;
+
+      document.getElementById('idSumVal').textContent = `S = ${sum}`;
+      document.getElementById('idRemVal').textContent = `N = ${sum} mod 11 = ${n}`;
+      document.getElementById('idFormulaVal').textContent = `(11 - ${n}) mod 10 = ${11 - n} mod 10 = ${d13}`;
+
+      const checkDigitBox = document.getElementById('idBox_12');
+      if (checkDigitBox) checkDigitBox.value = d13;
+
+      document.getElementById('idCheckDigitDisplay').textContent = d13;
+    }
+
+    // =========================================================================
+    // MODULE 4: NIM 21 ARENA
+    // =========================================================================
+    let nimRemaining = 21;
+    let isPlayerTurn = true;
+    let showSecret = false;
+
+    function resetNimGame() {
+      nimRemaining = 21;
+      isPlayerTurn = true;
+      document.getElementById('nimRemainingCount').textContent = nimRemaining;
+      document.getElementById('nimTurnBadge').textContent = 'ตาของนักเรียน (Player 1)';
+      document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
+      document.getElementById('nimGameLog').textContent = 'เริ่มเกมใหม่! กองเหรียญมี 21 เม็ด เลือกหยิบ 1, 2 หรือ 3 เม็ด';
+      enablePickButtons(true);
+      renderNimCoins();
+    }
+
+    function renderNimCoins() {
+      const tray = document.getElementById('nimCoinTray');
+      tray.innerHTML = '';
+
+      for (let i = 1; i <= 21; i++) {
+        const coin = document.createElement('div');
+        coin.className = 'coin';
+        coin.textContent = i;
+
+        if (i > nimRemaining) {
+          coin.classList.add('taken');
+        }
+
+        // Secret highlight: safe positions are multiples of 4
+        if (showSecret && (i % 4 === 0)) {
+          coin.classList.add('p-safe');
+        }
+
+        tray.appendChild(coin);
+      }
+    }
+
+    function toggleNimSecret() {
+      showSecret = !showSecret;
+      const panel = document.getElementById('nimSecretPanel');
+      const btn = document.getElementById('btnNimSecret');
+      if (showSecret) {
+        panel.style.display = 'block';
+        btn.style.background = '#FEF08A';
+      } else {
+        panel.style.display = 'none';
+        btn.style.background = 'var(--purple)';
+      }
+      renderNimCoins();
+    }
+
+    function enablePickButtons(enable) {
+      document.getElementById('btnPick1').disabled = !enable;
+      document.getElementById('btnPick2').disabled = !enable;
+      document.getElementById('btnPick3').disabled = !enable;
+    }
+
+    function playerPickNim(k) {
+      if (!isPlayerTurn || nimRemaining <= 0) return;
+      if (k > nimRemaining) return;
+
+      nimRemaining -= k;
+      document.getElementById('nimRemainingCount').textContent = nimRemaining;
+      renderNimCoins();
+
+      if (nimRemaining === 0) {
+        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>ยินดีด้วย! นักเรียนเป็นผู้ชนะอย่างยอดเยี่ยม!</strong>';
+        enablePickButtons(false);
+        return;
+      }
+
+      // Computer's turn
+      isPlayerTurn = false;
+      document.getElementById('nimTurnBadge').textContent = 'ตาของคอมพิวเตอร์ (AI คิดเลข)...';
+      document.getElementById('nimTurnBadge').style.background = '#FED7AA';
+      document.getElementById('nimGameLog').textContent = `นักเรียนหยิบไป ${k} เม็ด เหลือ ${nimRemaining} เม็ด`;
+      enablePickButtons(false);
+
+      setTimeout(() => {
+        aiPickNim(k);
+      }, 700);
+    }
+
+    function aiPickNim(playerK) {
+      // Optimal strategy: lock to multiple of 4
+      let aiPick = 4 - playerK;
+      if (aiPick > nimRemaining || aiPick <= 0) {
+        aiPick = nimRemaining % 4;
+        if (aiPick === 0) aiPick = 1;
+      }
+
+      nimRemaining -= aiPick;
+      document.getElementById('nimRemainingCount').textContent = nimRemaining;
+      renderNimCoins();
+
+      if (nimRemaining === 0) {
+        document.getElementById('nimGameLog').innerHTML = `🤖 <strong>คอมพิวเตอร์หยิบ ${aiPick} เม็ดสุดท้ายและเป็นผู้ชนะ!</strong>`;
+        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
+        document.getElementById('nimTurnBadge').style.background = '#FECDD3';
+        enablePickButtons(false);
+        return;
+      }
+
+      isPlayerTurn = true;
+      document.getElementById('nimTurnBadge').textContent = 'ตาของนักเรียน (Player 1)';
+      document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
+      document.getElementById('nimGameLog').textContent = `คอมพิวเตอร์ตอบโต้ด้วยการหยิบ ${aiPick} เม็ด! เหลือ ${nimRemaining} เม็ด`;
+      enablePickButtons(true);
+    }
+
+    // =========================================================================
+    // INITIALIZATION
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderClockNodes();
+      calculateAndAnimate();
+      runBirthdayCalculation();
+      initIdBoxes();
+      calculateIdChecksum();
+      resetNimGame();
+
+      // Typeset KaTeX if available
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

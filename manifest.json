@@ -276,6 +276,26 @@
               "tech": "purehtml-vanilla"
             }
           ]
+        },
+        {
+          "id": "m6-congruence-and-calendar",
+          "title": "ม.6: การลงรอยกันและคณิตศาสตร์ปฏิทิน",
+          "order": 6,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m6-congruence-calendar-lab",
+              "filename": "interactive/congruence-and-calendar/index.html",
+              "alternateFiles": [
+                "interactive/congruence-and-calendar.html"
+              ],
+              "title": "ห้องปฏิบัติการคณิตศาสตร์มอดุลาร์ (Neo-Brutalist Math Lab)",
+              "description": "สำรวจเลขคณิตมอดุลาร์: วงล้อเศษเหลือ mod m, นักสืบวันเกิด (mod 7), ตรวจรหัสบัตรประชาชนไทย (mod 11), และดวลเกมนิม 21 เหรียญ",
+              "type": "interactive",
+              "typeLabel": "ห้องปฏิบัติการโต้ตอบ",
+              "tech": "html-katex"
+            }
+          ]
         }
       ]
     },
