@@ -318,6 +318,24 @@
       pointer-events: none;
     }
 
+    .coin.said {
+      background: #E5E7EB;
+      border-color: #9CA3AF;
+      color: #6B7280;
+      box-shadow: 1px 1px 0px #9CA3AF;
+    }
+
+    .coin.p-danger {
+      background: #FECDD3;
+      border-color: #BE123C;
+      box-shadow: 0 0 12px #FB7185, 3px 3px 0px var(--ink);
+    }
+
+    .coin.current {
+      outline: 3px solid #EA580C;
+      outline-offset: 2px;
+    }
+
     /* Custom Form Controls */
     input[type=number], input[type=text], select {
       border: 2px solid var(--ink);
@@ -721,41 +739,47 @@
       <div class="neo-box" style="padding: 24px; background: #FFFFFF; max-width: 1000px; margin: 0 auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
           <div class="neo-pill" style="background: var(--coral);">สังเวียนทฤษฎีเกม (mod 4)</div>
-          <div style="display: flex; gap: 8px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="tactile-btn" style="background: var(--purple); padding: 6px 14px;" onclick="toggleNimSecret()" id="btnNimSecret">
               <span>🔑</span> ปลดล็อกสูตรชนะ
             </button>
-            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px;" onclick="resetNimGame()">
-              เริ่มเกมใหม่ (21 เหรียญ)
+            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px;" onclick="resetActiveGame()" id="btnResetGame">
+              เริ่มเกมใหม่
             </button>
           </div>
         </div>
 
-        <!-- Tray of coins -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h2 style="font-size: 1.25rem;">กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ</h2>
+        <div style="display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;">
+          <button class="tactile-btn" id="btnModeCoins" style="background: var(--yellow); padding: 8px 16px;" onclick="setGameMode('coins')">🪙 หยิบเหรียญ (Normal Play)</button>
+          <button class="tactile-btn" id="btnModeCount" style="background: #FFFFFF; padding: 8px 16px;" onclick="setGameMode('count')">🔢 นับเลขถึง 21 (Misère Play)</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+          <h2 id="nimStatusTitle" style="font-size: 1.25rem;">กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ</h2>
           <div id="nimTurnBadge" class="neo-pill" style="background: var(--green);">ตาของนักเรียน (Player 1)</div>
         </div>
 
-        <div class="coin-tray" id="nimCoinTray">
-          <!-- 21 coins dynamically rendered -->
+        <div class="coin-tray" id="nimCoinTray"></div>
+
+        <div id="countStartRow" style="display: none; margin-top: 12px; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <span style="font-weight: 700;">ตาแรก:</span>
+          <button class="tactile-btn" id="btnStartPlayer" style="background: var(--yellow); padding: 6px 14px;" onclick="setCountStart('player')">นักเรียนเริ่มก่อน</button>
+          <button class="tactile-btn" id="btnStartAI" style="background: #FFFFFF; padding: 6px 14px;" onclick="setCountStart('ai')">คอมพิวเตอร์เริ่มก่อน</button>
+          <span style="font-size: 0.85rem; color: #6B7280;">(คนที่สองได้เปรียบ — ลองเริ่มหลังเพื่อใช้กลยุทธ์ชนะ)</span>
         </div>
 
-        <!-- Game Controls -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <span style="font-weight: 700;">เลือกหยิบเหรียญ:</span>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(1)" id="btnPick1">หยิบ 1</button>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(2)" id="btnPick2">หยิบ 2</button>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerPickNim(3)" id="btnPick3">หยิบ 3</button>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span id="nimActionLabel" style="font-weight: 700;">เลือกหยิบเหรียญ:</span>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(1)" id="btnPick1">หยิบ 1</button>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(2)" id="btnPick2">หยิบ 2</button>
+            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(3)" id="btnPick3">หยิบ 3</button>
           </div>
-
           <div id="nimGameLog" style="font-size: 0.95rem; font-weight: 600; color: #1F2937;">
             กติกา: หยิบได้ครั้งละ 1, 2 หรือ 3 เม็ด ผู้ที่หยิบเม็ดสุดท้ายเป็นผู้ชนะ!
           </div>
         </div>
 
-        <!-- Secret Strategy Explanation Panel -->
         <div id="nimSecretPanel" class="banner-box" style="display: none; background: #ECFDF5; border-color: #059669; margin-top: 16px;">
           <h3 style="color: #065F46; margin-bottom: 4px;">คณิตศาสตร์เบื้องหลังเกม: การคุมเศษเหลือมอดุโล 4</h3>
           <p style="font-size: 0.9rem; margin-bottom: 6px;">
@@ -765,9 +789,21 @@
             21 = 4 &times; 5 + 1 &equiv; 1 (mod 4) &rArr; ผู้เล่นคนแรกหยิบ 1 เม็ดในตาแรกเพื่อล็อก 20 จะชนะ 100%!
           </div>
         </div>
+
+        <div id="countSecretPanel" class="banner-box" style="display: none; background: #FFF7ED; border-color: #EA580C; margin-top: 16px;">
+          <h3 style="color: #9A3412; margin-bottom: 4px;">คณิตศาสตร์เบื้องหลังเกม: นับเลขถึง 21 (Misère Play)</h3>
+          <p style="font-size: 0.9rem; margin-bottom: 6px;">
+            ให้ $c$ คือเลขล่าสุดที่พูดไปแล้ว ฝ่ายที่ต้องเดินต่อจะแพ้เมื่อ $(21 - c) \equiv 1 \pmod 4$ นั่นคือ <strong>$c \in \{0, 4, 8, 12, 16, 20\}$</strong> — เริ่มที่ $c=0$ ซึ่งเป็นสถานะแพ้ของฝ่ายเดินก่อน
+          </p>
+          <div class="font-mono" style="font-size: 0.95rem; font-weight: 700; color: #C2410C;">
+            21 &equiv; 1 (mod 4) &rArr; ผู้เล่นคนที่สองชนะแน่นอน โดยนับให้จบตาที่ 4, 8, 12, 16, 20 เสมอ แล้วอีกฝ่ายต้องพูด 21 และแพ้
+          </div>
+          <p style="font-size: 0.85rem; margin-top: 6px; color: #6B7280;">
+            เทียบเกมเหรียญ: โครงสร้าง mod 4 เหมือนกัน แต่นิยามสิ้นสุดกลับด้าน (หยิบเม็ดสุดท้าย "ชนะ" vs พูด 21 "แพ้") ทำให้ผู้ได้เปรียบสลับข้างกัน
+          </p>
+        </div>
       </div>
     </section>
-
   </main>
 
   <script>
@@ -1161,18 +1197,73 @@
     }
 
     // =========================================================================
-    // MODULE 4: NIM 21 ARENA
+    // MODULE 4: MODULAR GAME ARENA (Normal-play Nim + Misère Counting to 21)
     // =========================================================================
-    let nimRemaining = 21;
+    let gameMode = 'coins';        // 'coins' | 'count'
+    let nimRemaining = 21;         // coins mode: coins left
+    let countVal = 0;              // count mode: last number said
+    let countStart = 'player';     // who moves first in count mode
     let isPlayerTurn = true;
     let showSecret = false;
 
+    function setGameMode(mode) {
+      gameMode = mode;
+      document.getElementById('btnModeCoins').style.background = (mode === 'coins') ? 'var(--yellow)' : '#FFFFFF';
+      document.getElementById('btnModeCount').style.background = (mode === 'count') ? 'var(--yellow)' : '#FFFFFF';
+      document.getElementById('countStartRow').style.display = (mode === 'count') ? 'flex' : 'none';
+      document.getElementById('nimActionLabel').textContent = (mode === 'coins') ? 'เลือกหยิบเหรียญ:' : 'เลือกนับต่อ:';
+      const labels = (mode === 'coins') ? ['หยิบ 1', 'หยิบ 2', 'หยิบ 3'] : ['นับ +1', 'นับ +2', 'นับ +3'];
+      for (let i = 1; i <= 3; i++) document.getElementById('btnPick' + i).textContent = labels[i - 1];
+      document.getElementById('nimSecretPanel').style.display = (showSecret && mode === 'coins') ? 'block' : 'none';
+      document.getElementById('countSecretPanel').style.display = (showSecret && mode === 'count') ? 'block' : 'none';
+      resetActiveGame();
+    }
+
+    function setCountStart(who) {
+      countStart = who;
+      document.getElementById('btnStartPlayer').style.background = (who === 'player') ? 'var(--yellow)' : '#FFFFFF';
+      document.getElementById('btnStartAI').style.background = (who === 'ai') ? 'var(--yellow)' : '#FFFFFF';
+      resetCountGame();
+    }
+
+    function resetActiveGame() {
+      if (gameMode === 'coins') resetNimGame(); else resetCountGame();
+    }
+
+    function toggleNimSecret() {
+      showSecret = !showSecret;
+      document.getElementById('btnNimSecret').style.background = showSecret ? '#FEF08A' : 'var(--purple)';
+      document.getElementById('nimSecretPanel').style.display = (showSecret && gameMode === 'coins') ? 'block' : 'none';
+      document.getElementById('countSecretPanel').style.display = (showSecret && gameMode === 'count') ? 'block' : 'none';
+      if (gameMode === 'coins') renderNimCoins(); else renderCountTrack();
+    }
+
+    function enablePickButtons(enable) {
+      for (let i = 1; i <= 3; i++) document.getElementById('btnPick' + i).disabled = !enable;
+    }
+
+    function setTurnBadgePlayer() {
+      const b = document.getElementById('nimTurnBadge');
+      b.textContent = 'ตาของนักเรียน';
+      b.style.background = '#BBF7D0';
+    }
+
+    function setTurnBadgeAI() {
+      const b = document.getElementById('nimTurnBadge');
+      b.textContent = 'ตาของคอมพิวเตอร์ (AI คิดเลข)...';
+      b.style.background = '#FED7AA';
+    }
+
+    function playerMove(k) {
+      if (gameMode === 'coins') playerPickNim(k); else playerCount(k);
+    }
+
+    // ---------- Normal-play coin Nim (take the LAST coin WINS) ----------
     function resetNimGame() {
       nimRemaining = 21;
       isPlayerTurn = true;
-      document.getElementById('nimRemainingCount').textContent = nimRemaining;
-      document.getElementById('nimTurnBadge').textContent = 'ตาของนักเรียน (Player 1)';
-      document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
+      document.getElementById('nimStatusTitle').innerHTML = 'กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ';
+      setTurnBadgePlayer();
       document.getElementById('nimGameLog').textContent = 'เริ่มเกมใหม่! กองเหรียญมี 21 เม็ด เลือกหยิบ 1, 2 หรือ 3 เม็ด';
       enablePickButtons(true);
       renderNimCoins();
@@ -1181,83 +1272,47 @@
     function renderNimCoins() {
       const tray = document.getElementById('nimCoinTray');
       tray.innerHTML = '';
-
       for (let i = 1; i <= 21; i++) {
         const coin = document.createElement('div');
         coin.className = 'coin';
         coin.textContent = i;
-
-        if (i > nimRemaining) {
-          coin.classList.add('taken');
-        }
-
-        // Secret highlight: safe positions are multiples of 4
-        if (showSecret && (i % 4 === 0)) {
-          coin.classList.add('p-safe');
-        }
-
+        if (i > nimRemaining) coin.classList.add('taken');
+        if (showSecret && (i % 4 === 0)) coin.classList.add('p-safe');
         tray.appendChild(coin);
       }
     }
 
-    function toggleNimSecret() {
-      showSecret = !showSecret;
-      const panel = document.getElementById('nimSecretPanel');
-      const btn = document.getElementById('btnNimSecret');
-      if (showSecret) {
-        panel.style.display = 'block';
-        btn.style.background = '#FEF08A';
-      } else {
-        panel.style.display = 'none';
-        btn.style.background = 'var(--purple)';
-      }
-      renderNimCoins();
-    }
-
-    function enablePickButtons(enable) {
-      document.getElementById('btnPick1').disabled = !enable;
-      document.getElementById('btnPick2').disabled = !enable;
-      document.getElementById('btnPick3').disabled = !enable;
+    function updateCoinCount() {
+      const el = document.getElementById('nimRemainingCount');
+      if (el) el.textContent = nimRemaining;
     }
 
     function playerPickNim(k) {
       if (!isPlayerTurn || nimRemaining <= 0) return;
       if (k > nimRemaining) return;
-
       nimRemaining -= k;
-      document.getElementById('nimRemainingCount').textContent = nimRemaining;
+      updateCoinCount();
       renderNimCoins();
-
       if (nimRemaining === 0) {
-        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>ยินดีด้วย! นักเรียนเป็นผู้ชนะอย่างยอดเยี่ยม!</strong>';
+        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>ยินดีด้วย! นักเรียนหยิบเม็ดสุดท้ายและเป็นผู้ชนะ!</strong>';
         enablePickButtons(false);
         return;
       }
-
-      // Computer's turn
       isPlayerTurn = false;
-      document.getElementById('nimTurnBadge').textContent = 'ตาของคอมพิวเตอร์ (AI คิดเลข)...';
-      document.getElementById('nimTurnBadge').style.background = '#FED7AA';
+      setTurnBadgeAI();
       document.getElementById('nimGameLog').textContent = `นักเรียนหยิบไป ${k} เม็ด เหลือ ${nimRemaining} เม็ด`;
       enablePickButtons(false);
-
-      setTimeout(() => {
-        aiPickNim(k);
-      }, 700);
+      setTimeout(() => aiPickNim(), 700);
     }
 
-    function aiPickNim(playerK) {
-      // Optimal strategy: lock to multiple of 4
-      let aiPick = 4 - playerK;
-      if (aiPick > nimRemaining || aiPick <= 0) {
-        aiPick = nimRemaining % 4;
-        if (aiPick === 0) aiPick = 1;
-      }
-
+    function aiPickNim() {
+      // Optimal strategy: leave a MULTIPLE OF 4 for the opponent (20,16,12,8,4,0)
+      let aiPick = nimRemaining % 4;
+      if (aiPick === 0) aiPick = 1;            // losing position: take 1, hope opponent errs
+      if (aiPick > nimRemaining) aiPick = nimRemaining;
       nimRemaining -= aiPick;
-      document.getElementById('nimRemainingCount').textContent = nimRemaining;
+      updateCoinCount();
       renderNimCoins();
-
       if (nimRemaining === 0) {
         document.getElementById('nimGameLog').innerHTML = `🤖 <strong>คอมพิวเตอร์หยิบ ${aiPick} เม็ดสุดท้ายและเป็นผู้ชนะ!</strong>`;
         document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
@@ -1265,12 +1320,92 @@
         enablePickButtons(false);
         return;
       }
-
       isPlayerTurn = true;
-      document.getElementById('nimTurnBadge').textContent = 'ตาของนักเรียน (Player 1)';
-      document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
+      setTurnBadgePlayer();
       document.getElementById('nimGameLog').textContent = `คอมพิวเตอร์ตอบโต้ด้วยการหยิบ ${aiPick} เม็ด! เหลือ ${nimRemaining} เม็ด`;
       enablePickButtons(true);
+    }
+
+    // ---------- Misère counting to 21 (say 21 LOSES) ----------
+    function resetCountGame() {
+      countVal = 0;
+      document.getElementById('nimStatusTitle').innerHTML = 'นับถึง: <span id="countValDisplay" class="font-mono" style="color: #EA580C; font-size: 1.6rem; font-weight: 800;">0</span> / 21';
+      document.getElementById('nimGameLog').textContent = 'กติกา: ผลัดกันนับต่อครั้งละ 1–3 จำนวน ใครพูดเลข 21 แพ้!';
+      renderCountTrack();
+      if (countStart === 'ai') {
+        isPlayerTurn = false;
+        setTurnBadgeAI();
+        enablePickButtons(false);
+        setTimeout(() => aiCount(), 700);
+      } else {
+        isPlayerTurn = true;
+        setTurnBadgePlayer();
+        enablePickButtons(true);
+        updateCountButtonStates();
+      }
+    }
+
+    function renderCountTrack() {
+      const tray = document.getElementById('nimCoinTray');
+      tray.innerHTML = '';
+      for (let i = 1; i <= 21; i++) {
+        const coin = document.createElement('div');
+        coin.className = 'coin';
+        coin.textContent = i;
+        if (i === 21) coin.classList.add('p-danger');
+        else if (showSecret && (i % 4 === 0)) coin.classList.add('p-safe');
+        else if (i <= countVal) coin.classList.add('said');
+        if (i === countVal && countVal > 0) coin.classList.add('current');
+        tray.appendChild(coin);
+      }
+      const el = document.getElementById('countValDisplay');
+      if (el) el.textContent = countVal;
+    }
+
+    function updateCountButtonStates() {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('btnPick' + i).disabled = (countVal + i > 21);
+      }
+    }
+
+    function playerCount(k) {
+      if (!isPlayerTurn || countVal >= 21) return;
+      if (countVal + k > 21) return;           // cannot overshoot 21
+      countVal += k;
+      renderCountTrack();
+      if (countVal === 21) {
+        document.getElementById('nimGameLog').innerHTML = '💥 <strong>นักเรียนพูดเลข 21 — แพ้! (Misère: คนพูด 21 แพ้)</strong>';
+        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
+        document.getElementById('nimTurnBadge').style.background = '#FECDD3';
+        enablePickButtons(false);
+        return;
+      }
+      isPlayerTurn = false;
+      setTurnBadgeAI();
+      document.getElementById('nimGameLog').textContent = `นักเรียนนับถึง ${countVal}`;
+      enablePickButtons(false);
+      setTimeout(() => aiCount(), 700);
+    }
+
+    function aiCount() {
+      // Optimal misère strategy: leave a MULTIPLE OF 4 for the opponent (say 4,8,12,16,20)
+      let aiPick = (4 - (countVal % 4)) % 4;
+      if (aiPick === 0) aiPick = 1;            // losing position: say 1 number, hope opponent errs
+      if (countVal + aiPick > 21) aiPick = 21 - countVal;  // forced to say 21 (loses)
+      countVal += aiPick;
+      renderCountTrack();
+      if (countVal === 21) {
+        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>คอมพิวเตอร์ถูกบังคับให้พูด 21 — นักเรียนชนะ!</strong>';
+        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
+        document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
+        enablePickButtons(false);
+        return;
+      }
+      isPlayerTurn = true;
+      setTurnBadgePlayer();
+      document.getElementById('nimGameLog').textContent = `คอมพิวเตอร์นับต่อ ${aiPick} จำนวน ถึง ${countVal}`;
+      enablePickButtons(true);
+      updateCountButtonStates();
     }
 
     // =========================================================================
@@ -1282,7 +1417,7 @@
       runBirthdayCalculation();
       initIdBoxes();
       calculateIdChecksum();
-      resetNimGame();
+      setGameMode('coins');
 
       // Typeset KaTeX if available
       if (typeof renderMathInElement === 'function') {
