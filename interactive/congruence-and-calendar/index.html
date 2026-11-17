@@ -798,6 +798,8 @@
             <button class="tactile-btn" style="background:var(--green); padding:6px 14px;" onclick="duelRandom()">สุ่มโจทย์</button>
             <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelRematch()">เริ่มเกมใหม่</button>
             <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelResetScore()">รีเซ็ตคะแนน</button>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px; display:none;" onclick="duelToggleHint()" id="btnDuelHint">คำใบ้: ปิด</button>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelToggleSound()" id="btnDuelSound">เสียง: เปิด</button>
           </div>
         </div>
 
@@ -842,10 +844,8 @@
               <option value="B">ทีม B</option>
               <option value="random">สุ่ม</option>
             </select>
-            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelToggleHint()" id="btnDuelHint">คำใบ้: ปิด</button>
-            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelToggleSound()" id="btnDuelSound">เสียง: เปิด</button>
           </div>
-          <div class="duel-row">
+          <div class="duel-row" id="duelAdvRow" style="display:none;">
             <span class="duel-adv" id="duelAdvantage"></span>
           </div>
         </div>
@@ -1371,9 +1371,10 @@
       const firstTeam = duel.startSel === 'random' ? 'ทีมที่สุ่มได้เริ่ม' : duelName(duel.startSel);
       const secondTeam = duel.startSel === 'random' ? 'ทีมที่สอง' : duelName(duelOther(duel.startSel));
       const favTeam = favFirst ? firstTeam : secondTeam;
-      document.getElementById('duelAdvantage').textContent =
-        'ผู้ได้เปรียบ: ' + favTeam + ' (' + (favFirst ? 'เริ่มก่อน' : 'เริ่มหลัง') + ') — N=' + duel.N +
+      const advEl = document.getElementById('duelAdvantage');
+      advEl.textContent = 'ผู้ได้เปรียบ: ' + favTeam + ' (' + (favFirst ? 'เริ่มก่อน' : 'เริ่มหลัง') + ') — N=' + duel.N +
         ' ≡ ' + (duel.N % M) + ' (mod ' + M + '), เศษเป้าหมาย r=' + r;
+      document.getElementById('duelAdvRow').style.display = duel.showTech ? '' : 'none';   // ซ่อนทังแถวระหว่างเล่น
     }
 
     // ---- round lifecycle ----
@@ -1541,6 +1542,14 @@
       duel.showTech = !duel.showTech;
       document.getElementById('btnDuelTech').style.background = duel.showTech ? '#FEF08A' : 'var(--purple)';
       document.getElementById('duelTech').style.display = duel.showTech ? 'block' : 'none';
+      // คำใบ้ + คำว่า "ผู้ได้เปรียบ" ถูกซ่อนระหว่างเล่น: เปิดเฉพาะตอนครูกดเฉลย
+      const hintBtn = document.getElementById('btnDuelHint');
+      hintBtn.style.display = duel.showTech ? '' : 'none';
+      if (!duel.showTech && duel.hint){
+        duel.hint = false; hintBtn.textContent = 'คำใบ้: ปิด'; hintBtn.style.background = '#FFFFFF';
+      }
+      document.getElementById('duelAdvRow').style.display = duel.showTech ? '' : 'none';
+      duelRenderAdvantage();
       duelRenderTray(); duelRenderActions();
     }
     function duelToggleHint(){
