@@ -276,7 +276,7 @@
       background: var(--green);
     }
 
-    /* Module 4: Nim Game */
+    /* Module 4: Team Strategy Duel (2 human teams) */
     .coin-tray {
       display: flex;
       flex-wrap: wrap;
@@ -286,11 +286,11 @@
       border: 3px solid var(--ink);
       border-radius: 8px;
       box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1), 4px 4px 0px var(--ink);
-      min-height: 180px;
+      min-height: 120px;
       align-content: flex-start;
       margin: 16px 0;
+      transition: box-shadow 0.2s;
     }
-
     .coin {
       width: 48px;
       height: 48px;
@@ -305,37 +305,91 @@
       font-family: 'JetBrains Mono', monospace;
       transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
     .coin.p-safe {
       background: #A7F3D0;
       border-color: #065F46;
       box-shadow: 0 0 12px #34D399, 3px 3px 0px var(--ink);
     }
-
     .coin.taken {
-      opacity: 0;
-      transform: scale(0.2) translateY(-40px);
+      opacity: 0.18;
+      transform: scale(0.7);
       pointer-events: none;
     }
-
     .coin.said {
       background: #E5E7EB;
       border-color: #9CA3AF;
       color: #6B7280;
       box-shadow: 1px 1px 0px #9CA3AF;
     }
-
     .coin.p-danger {
       background: #FECDD3;
       border-color: #BE123C;
       box-shadow: 0 0 12px #FB7185, 3px 3px 0px var(--ink);
     }
-
+    .coin.p-goal {
+      background: #A7F3D0;
+      border-color: #065F46;
+      box-shadow: 0 0 12px #34D399, 3px 3px 0px var(--ink);
+    }
     .coin.current {
       outline: 3px solid #EA580C;
       outline-offset: 2px;
     }
+    .coin-tray.dense { gap: 8px; padding: 16px; }
+    .coin-tray.dense .coin { width: 34px; height: 34px; font-size: 0.78rem; border-width: 2px; }
+    .coin-tray.safe-glow {
+      box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1), 4px 4px 0px var(--ink), 0 0 0 4px #34D399;
+    }
 
+    .duel-config {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 14px 16px; background: #F8FAFC;
+      border: 3px solid var(--ink); border-radius: 8px; margin-bottom: 14px;
+    }
+    .duel-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .duel-row > .lbl { font-weight: 700; min-width: 92px; }
+    .duel-seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; }
+    .duel-seg button {
+      border: none; background: #fff; padding: 7px 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit; font-size: 0.92rem;
+    }
+    .duel-seg button.on { background: var(--yellow); }
+    .duel-seg button + button { border-left: 2px solid var(--ink); }
+    .duel-team-input {
+      border: 2px solid var(--ink); border-radius: 6px; padding: 6px 10px;
+      font-weight: 700; font-family: inherit; width: 130px;
+    }
+    .duel-score {
+      display: flex; align-items: center; justify-content: center; gap: 18px;
+      padding: 10px; margin-bottom: 12px; border: 3px solid var(--ink);
+      border-radius: 8px; background: #fff; flex-wrap: wrap;
+    }
+    .duel-score .team { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; }
+    .duel-score .num { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 800; min-width: 34px; text-align: center; }
+    .duel-score .vs { font-weight: 800; color: #6B7280; }
+    .duel-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); display: inline-block; }
+    .duel-turn {
+      padding: 10px 18px; border: 3px solid var(--ink); border-radius: 10px;
+      font-weight: 800; font-size: 1.25rem; text-align: center;
+      box-shadow: 4px 4px 0px var(--ink); transition: all 0.2s;
+    }
+    .duel-turn.pulse { animation: duelPulse 1.1s ease-in-out infinite; }
+    @keyframes duelPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    .duel-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .duel-actions button { padding: 14px 22px; font-size: 1.15rem; font-weight: 800; }
+    .duel-actions button.hint-glow { box-shadow: 0 0 0 4px #34D399, 4px 4px 0px var(--ink); }
+    .duel-win {
+      margin-top: 14px; padding: 16px; border: 3px solid var(--ink); border-radius: 10px;
+      text-align: center; font-size: 1.3rem; font-weight: 800;
+      box-shadow: 5px 5px 0px var(--ink); display: none;
+    }
+    .duel-tech { display: none; margin-top: 16px; }
+    .duel-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 10px 0; }
+    .duel-fact { border: 2px solid var(--ink); border-radius: 8px; padding: 10px 12px; background: #fff; }
+    .duel-fact .k { font-size: 0.8rem; color: #6B7280; font-weight: 700; }
+    .duel-fact .v { font-size: 1.05rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .duel-adv { font-size: 0.9rem; font-weight: 700; padding: 6px 12px; border-radius: 6px; border: 2px dashed var(--ink); background: #FFFBEB; }
+    #duelConfetti { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
     /* Custom Form Controls */
     input[type=number], input[type=text], select {
       border: 2px solid var(--ink);
@@ -386,8 +440,8 @@
           <span>🪪</span> 3. ตรวจบัตรประชาชน
         </button>
         <button class="tactile-btn tab-btn" onclick="switchTab('tabNim')" id="btnTabNim">
-          <span>🪙</span> 4. ดวลเกมนิม 21
-        </button>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 4. ดวลเกม 2 ทีม
+      </button>
       </nav>
 
       <div>
@@ -733,76 +787,108 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- TAB 4: MODULAR NIM 21 ARENA -->
+    <!-- TAB 4: TEAM STRATEGY DUEL (two human teams, configurable target) -->
     <!-- ========================================================================= -->
     <section id="tabNim" class="tab-panel">
-      <div class="neo-box" style="padding: 24px; background: #FFFFFF; max-width: 1000px; margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-          <div class="neo-pill" style="background: var(--coral);">สังเวียนทฤษฎีเกม (mod 4)</div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="tactile-btn" style="background: var(--purple); padding: 6px 14px;" onclick="toggleNimSecret()" id="btnNimSecret">
-              <span>🔑</span> ปลดล็อกสูตรชนะ
-            </button>
-            <button class="tactile-btn" style="background: #FFFFFF; padding: 6px 12px;" onclick="resetActiveGame()" id="btnResetGame">
-              เริ่มเกมใหม่
-            </button>
+      <div class="neo-box" style="padding:24px; background:#FFFFFF; max-width:1040px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+          <div class="neo-pill" style="background:var(--coral);">ดวลทฤษฎีเกม 2 ทีม (ปรับโจทย์ได้)</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="tactile-btn" style="background:var(--purple); padding:6px 14px;" onclick="duelToggleTech()" id="btnDuelTech">เฉลยเทคนิค</button>
+            <button class="tactile-btn" style="background:var(--green); padding:6px 14px;" onclick="duelRandom()">สุ่มโจทย์</button>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelRematch()">เริ่มเกมใหม่</button>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelResetScore()">รีเซ็ตคะแนน</button>
           </div>
         </div>
 
-        <div style="display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;">
-          <button class="tactile-btn" id="btnModeCoins" style="background: var(--yellow); padding: 8px 16px;" onclick="setGameMode('coins')">🪙 หยิบเหรียญ (Normal Play)</button>
-          <button class="tactile-btn" id="btnModeCount" style="background: #FFFFFF; padding: 8px 16px;" onclick="setGameMode('count')">🔢 นับเลขถึง 21 (Misère Play)</button>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
-          <h2 id="nimStatusTitle" style="font-size: 1.25rem;">กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ</h2>
-          <div id="nimTurnBadge" class="neo-pill" style="background: var(--green);">ตาของนักเรียน (Player 1)</div>
-        </div>
-
-        <div class="coin-tray" id="nimCoinTray"></div>
-
-        <div id="countStartRow" style="display: none; margin-top: 12px; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <span style="font-weight: 700;">ตาแรก:</span>
-          <button class="tactile-btn" id="btnStartPlayer" style="background: var(--yellow); padding: 6px 14px;" onclick="setCountStart('player')">นักเรียนเริ่มก่อน</button>
-          <button class="tactile-btn" id="btnStartAI" style="background: #FFFFFF; padding: 6px 14px;" onclick="setCountStart('ai')">คอมพิวเตอร์เริ่มก่อน</button>
-          <span style="font-size: 0.85rem; color: #6B7280;">(คนที่สองได้เปรียบ — ลองเริ่มหลังเพื่อใช้กลยุทธ์ชนะ)</span>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <span id="nimActionLabel" style="font-weight: 700;">เลือกหยิบเหรียญ:</span>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(1)" id="btnPick1">หยิบ 1</button>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(2)" id="btnPick2">หยิบ 2</button>
-            <button class="tactile-btn" style="background: var(--yellow); padding: 12px 20px; font-size: 1.1rem;" onclick="playerMove(3)" id="btnPick3">หยิบ 3</button>
+        <div class="duel-config">
+          <div class="duel-row">
+            <span class="lbl">รูปแบบ:</span>
+            <div class="duel-seg" id="segType">
+              <button id="segTypeCount" onclick="duelSetType('count')">นับเลข</button>
+              <button id="segTypeCoins" onclick="duelSetType('coins')">หยิบเหรียญ</button>
+            </div>
+            <span class="lbl" style="min-width:auto;">กติกา:</span>
+            <div class="duel-seg" id="segRule">
+              <button id="segRuleNormal" onclick="duelSetRule(false)">คนสุดท้ายชนะ</button>
+              <button id="segRuleMisere" onclick="duelSetRule(true)">คนสุดท้ายแพ้</button>
+            </div>
           </div>
-          <div id="nimGameLog" style="font-size: 0.95rem; font-weight: 600; color: #1F2937;">
-            กติกา: หยิบได้ครั้งละ 1, 2 หรือ 3 เม็ด ผู้ที่หยิบเม็ดสุดท้ายเป็นผู้ชนะ!
+          <div class="duel-row">
+            <span class="lbl">เป้าหมาย N:</span>
+            <div class="duel-seg" id="segN">
+              <button onclick="duelSetN(21)">21</button>
+              <button onclick="duelSetN(30)">30</button>
+              <button onclick="duelSetN(50)">50</button>
+            </div>
+            <input type="number" id="duelNInput" min="5" max="99" value="21" style="width:80px;" onchange="duelSetN(parseInt(this.value)||21)">
+            <span class="lbl" style="min-width:auto;">ครั้งละไม่เกิน m:</span>
+            <select id="duelMSelect" onchange="duelSetM(parseInt(this.value))">
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="duel-row">
+            <span class="lbl">ชื่อทีม:</span>
+            <span class="duel-dot" style="background:#0D9488;"></span>
+            <input type="text" id="duelNameA" class="duel-team-input" value="ทีม A" maxlength="18" oninput="duelSetName('A',this.value)">
+            <span class="duel-dot" style="background:#EA580C;"></span>
+            <input type="text" id="duelNameB" class="duel-team-input" value="ทีม B" maxlength="18" oninput="duelSetName('B',this.value)">
+            <span class="lbl" style="min-width:auto;">เริ่มก่อน:</span>
+            <select id="duelStartSelect" onchange="duelSetStart(this.value)">
+              <option value="A">ทีม A</option>
+              <option value="B">ทีม B</option>
+              <option value="random">สุ่ม</option>
+            </select>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelToggleHint()" id="btnDuelHint">คำใบ้: ปิด</button>
+            <button class="tactile-btn" style="background:#FFFFFF; padding:6px 12px;" onclick="duelToggleSound()" id="btnDuelSound">เสียง: เปิด</button>
+          </div>
+          <div class="duel-row">
+            <span class="duel-adv" id="duelAdvantage"></span>
           </div>
         </div>
 
-        <div id="nimSecretPanel" class="banner-box" style="display: none; background: #ECFDF5; border-color: #059669; margin-top: 16px;">
-          <h3 style="color: #065F46; margin-bottom: 4px;">คณิตศาสตร์เบื้องหลังเกม: การคุมเศษเหลือมอดุโล 4</h3>
-          <p style="font-size: 0.9rem; margin-bottom: 6px;">
-            เนื่องจากเราสามารถหยิบเหรียญคู่ตรงข้ามให้รวมกันได้ <strong>4 เม็ดเสมอ</strong> (1 คู่กับ 3, 2 คู่กับ 2, 3 คู่กับ 1) ดังนั้น จำนวนเหรียญที่เป็นจุดปลอดภัย (P-position) คือพหุคูณของ 4: <strong>0, 4, 8, 12, 16, 20</strong>
+        <div class="duel-score">
+          <div class="team"><span class="duel-dot" style="background:#0D9488;"></span><span id="scoreNameA">ทีม A</span><span class="num" id="scoreA" style="color:#0D9488;">0</span></div>
+          <div class="vs">ชนะ : ชนะ</div>
+          <div class="team"><span class="num" id="scoreB" style="color:#EA580C;">0</span><span id="scoreNameB">ทีม B</span><span class="duel-dot" style="background:#EA580C;"></span></div>
+          <div style="font-size:0.85rem; color:#6B7280; font-weight:700;">รอบที่ <span id="duelRounds">0</span></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;">
+          <h2 id="duelStatus" style="font-size:1.3rem;"></h2>
+          <div class="duel-turn pulse" id="duelTurn"></div>
+        </div>
+
+        <div class="coin-tray" id="duelTray"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-top:14px;">
+          <div class="duel-actions" id="duelActions"></div>
+          <div id="duelLog" style="font-size:0.95rem; font-weight:600; color:#1F2937; max-width:440px;"></div>
+        </div>
+
+        <div class="duel-win" id="duelWin"></div>
+
+        <div class="duel-tech banner-box" id="duelTech" style="background:#ECFDF5; border-color:#059669;">
+          <h3 style="color:#065F46; margin-bottom:6px;">เทคนิคชนะที่ใช้ได้กับทุกโจทย์ (ไม่ใช่แค่ 21)</h3>
+          <p style="font-size:0.92rem; margin-bottom:6px;">
+            หัวใจคือมอดุโล $M = m + 1$ เมื่ออีกฝ่ายเติม $k$ เราเติม $M - k$ ให้ครบ $M$ ทุกคู่ตา
+            แล้วคุมให้ตำแหน่งที่เหลืออยู่คงเศษเดิมตลอด อีกฝ่ายจะถูกบังคับให้เดินเข้าหาจุดจบเอง
           </p>
-          <div class="font-mono" style="font-size: 0.95rem; font-weight: 700; color: #047857;">
-            21 = 4 &times; 5 + 1 &equiv; 1 (mod 4) &rArr; ผู้เล่นคนแรกหยิบ 1 เม็ดในตาแรกเพื่อล็อก 20 จะชนะ 100%!
+          <div class="duel-facts">
+            <div class="duel-fact"><div class="k">มอดุโล M = m+1</div><div class="v" id="techM">4</div></div>
+            <div class="duel-fact"><div class="k">เศษเป้าหมาย r</div><div class="v" id="techR">0</div></div>
+            <div class="duel-fact"><div class="k">ทีมที่ได้เปรียบ</div><div class="v" id="techFav">—</div></div>
+            <div class="duel-fact"><div class="k">ตาแรกควรทำ</div><div class="v" id="techFirst">—</div></div>
           </div>
-        </div>
-
-        <div id="countSecretPanel" class="banner-box" style="display: none; background: #FFF7ED; border-color: #EA580C; margin-top: 16px;">
-          <h3 style="color: #9A3412; margin-bottom: 4px;">คณิตศาสตร์เบื้องหลังเกม: นับเลขถึง 21 (Misère Play)</h3>
-          <p style="font-size: 0.9rem; margin-bottom: 6px;">
-            ให้ $c$ คือเลขล่าสุดที่พูดไปแล้ว ฝ่ายที่ต้องเดินต่อจะแพ้เมื่อ $(21 - c) \equiv 1 \pmod 4$ นั่นคือ <strong>$c \in \{0, 4, 8, 12, 16, 20\}$</strong> — เริ่มที่ $c=0$ ซึ่งเป็นสถานะแพ้ของฝ่ายเดินก่อน
-          </p>
-          <div class="font-mono" style="font-size: 0.95rem; font-weight: 700; color: #C2410C;">
-            21 &equiv; 1 (mod 4) &rArr; ผู้เล่นคนที่สองชนะแน่นอน โดยนับให้จบตาที่ 4, 8, 12, 16, 20 เสมอ แล้วอีกฝ่ายต้องพูด 21 และแพ้
-          </div>
-          <p style="font-size: 0.85rem; margin-top: 6px; color: #6B7280;">
-            เทียบเกมเหรียญ: โครงสร้าง mod 4 เหมือนกัน แต่นิยามสิ้นสุดกลับด้าน (หยิบเม็ดสุดท้าย "ชนะ" vs พูด 21 "แพ้") ทำให้ผู้ได้เปรียบสลับข้างกัน
-          </p>
+          <p style="font-size:0.9rem; margin-bottom:4px;">ตำแหน่งปลอดภัย (P-position) ที่ควรทิ้งให้อีกฝ่าย:</p>
+          <div class="font-mono" id="techSafe" style="font-size:0.95rem; font-weight:700; color:#047857;"></div>
+          <p style="font-size:0.85rem; margin-top:8px; color:#6B7280;" id="techNote"></p>
         </div>
       </div>
+      <canvas id="duelConfetti"></canvas>
     </section>
   </main>
 
@@ -830,6 +916,8 @@
         runBirthdayCalculation();
       } else if (tabId === 'tabId') {
         calculateIdChecksum();
+      } else if (tabId === 'tabNim') {
+        renderDuel();
       }
     }
 
@@ -1197,216 +1285,318 @@
     }
 
     // =========================================================================
-    // MODULE 4: MODULAR GAME ARENA (Normal-play Nim + Misère Counting to 21)
-    // =========================================================================
-    let gameMode = 'coins';        // 'coins' | 'count'
-    let nimRemaining = 21;         // coins mode: coins left
-    let countVal = 0;              // count mode: last number said
-    let countStart = 'player';     // who moves first in count mode
-    let isPlayerTurn = true;
-    let showSecret = false;
+    // MODULE 4: TEAM STRATEGY DUEL — two human teams, configurable N / m / rule
+    // General theory (verified vs independent minimax oracle, 1896 combos, 0 mismatch):
+    //   M = m+1. Counting: keep count == r (mod M), r = N%M (normal) or (N-1)%M (misere).
+    //   Coins: keep remaining == r (mod M), r = 0 (normal) or 1 (misere).
+    //   Pair opponent's k with (M-k). First mover favored iff start is not a P-position.
+    const DUEL_COLOR = { A: '#0D9488', B: '#EA580C' };
+    const DUEL_BG    = { A: '#CCFBF1', B: '#FFEDD5' };
+    let duel = {
+      type: 'count', misere: true, N: 21, m: 3,
+      startSel: 'A', names: { A: 'ทีม A', B: 'ทีม B' },
+      pos: 0, turn: 'A', over: false, winner: null,
+      score: { A: 0, B: 0 }, rounds: 0,
+      showTech: false, hint: false, sound: true, log: []
+    };
+    let duelAudioCtx = null;
 
-    function setGameMode(mode) {
-      gameMode = mode;
-      document.getElementById('btnModeCoins').style.background = (mode === 'coins') ? 'var(--yellow)' : '#FFFFFF';
-      document.getElementById('btnModeCount').style.background = (mode === 'count') ? 'var(--yellow)' : '#FFFFFF';
-      document.getElementById('countStartRow').style.display = (mode === 'count') ? 'flex' : 'none';
-      document.getElementById('nimActionLabel').textContent = (mode === 'coins') ? 'เลือกหยิบเหรียญ:' : 'เลือกนับต่อ:';
-      const labels = (mode === 'coins') ? ['หยิบ 1', 'หยิบ 2', 'หยิบ 3'] : ['นับ +1', 'นับ +2', 'นับ +3'];
-      for (let i = 1; i <= 3; i++) document.getElementById('btnPick' + i).textContent = labels[i - 1];
-      document.getElementById('nimSecretPanel').style.display = (showSecret && mode === 'coins') ? 'block' : 'none';
-      document.getElementById('countSecretPanel').style.display = (showSecret && mode === 'count') ? 'block' : 'none';
-      resetActiveGame();
+    function duelOther(t){ return t === 'A' ? 'B' : 'A'; }
+    function duelName(t){ return duel.names[t] || ('ทีม ' + t); }
+    function duelMod(){ return duel.m + 1; }
+    function duelResidue(){
+      const M = duelMod();
+      if (duel.type === 'count') return duel.misere ? (duel.N - 1) % M : duel.N % M;
+      return duel.misere ? 1 : 0;
+    }
+    function duelFirstFavored(){
+      const M = duelMod();
+      if (duel.type === 'count') return duelResidue() !== 0;
+      return (duel.N % M) !== duelResidue();
+    }
+    function duelFirstMove(){
+      const M = duelMod();
+      if (duel.type === 'count') return duelResidue();
+      return (duel.N - duelResidue()) % M;
+    }
+    function duelSafeList(){
+      const M = duelMod(), r = duelResidue(), out = [];
+      if (duel.type === 'count'){ for (let c = r; c < duel.N; c += M) out.push(c); }
+      else { for (let v = r; v <= duel.N; v += M) out.push(v); }
+      return out;
+    }
+    function duelIsSafePos(){ return (duel.pos % duelMod()) === duelResidue(); }
+    function duelWinningMove(){
+      const M = duelMod(), r = duelResidue();
+      let k = (duel.type === 'count') ? ((r - duel.pos % M) % M + M) % M
+                                      : ((duel.pos - r) % M + M) % M;
+      if (k < 1 || k > duel.m) return 0;
+      if (duel.type === 'count' && duel.pos + k > duel.N) return 0;
+      if (duel.type === 'coins' && k > duel.pos) return 0;
+      return k;
     }
 
-    function setCountStart(who) {
-      countStart = who;
-      document.getElementById('btnStartPlayer').style.background = (who === 'player') ? 'var(--yellow)' : '#FFFFFF';
-      document.getElementById('btnStartAI').style.background = (who === 'ai') ? 'var(--yellow)' : '#FFFFFF';
-      resetCountGame();
+    // ---- configuration ----
+    function duelSetType(t){ duel.type = t; duelSyncConfigUI(); duelNewRound(); }
+    function duelSetRule(mis){ duel.misere = mis; duelSyncConfigUI(); duelNewRound(); }
+    function duelSetN(n){
+      n = Math.max(5, Math.min(99, (n | 0) || 21));
+      duel.N = n; document.getElementById('duelNInput').value = n;
+      duelSyncConfigUI(); duelNewRound();
+    }
+    function duelSetM(m){
+      m = Math.max(1, Math.min(5, (m | 0) || 3));
+      duel.m = m; document.getElementById('duelMSelect').value = m;
+      duelSyncConfigUI(); duelNewRound();
+    }
+    function duelSetName(t, v){
+      duel.names[t] = (v || '').trim() || ('ทีม ' + t);
+      duelRenderScore(); duelRenderTurn();
+    }
+    function duelSetStart(s){ duel.startSel = s; duelSyncConfigUI(); duelNewRound(); }
+
+    function duelSyncConfigUI(){
+      document.getElementById('segTypeCount').classList.toggle('on', duel.type === 'count');
+      document.getElementById('segTypeCoins').classList.toggle('on', duel.type === 'coins');
+      document.getElementById('segRuleNormal').classList.toggle('on', !duel.misere);
+      document.getElementById('segRuleMisere').classList.toggle('on', duel.misere);
+      document.querySelectorAll('#segN button').forEach(b => b.classList.toggle('on', parseInt(b.textContent) === duel.N));
+      duelBuildActions();
+      duelRenderAdvantage();
+      duelRenderTech();
+    }
+    function duelRenderAdvantage(){
+      const favFirst = duelFirstFavored();
+      const M = duelMod(), r = duelResidue();
+      const firstTeam = duel.startSel === 'random' ? 'ทีมที่สุ่มได้เริ่ม' : duelName(duel.startSel);
+      const secondTeam = duel.startSel === 'random' ? 'ทีมที่สอง' : duelName(duelOther(duel.startSel));
+      const favTeam = favFirst ? firstTeam : secondTeam;
+      document.getElementById('duelAdvantage').textContent =
+        'ผู้ได้เปรียบ: ' + favTeam + ' (' + (favFirst ? 'เริ่มก่อน' : 'เริ่มหลัง') + ') — N=' + duel.N +
+        ' ≡ ' + (duel.N % M) + ' (mod ' + M + '), เศษเป้าหมาย r=' + r;
     }
 
-    function resetActiveGame() {
-      if (gameMode === 'coins') resetNimGame(); else resetCountGame();
+    // ---- round lifecycle ----
+    function duelNewRound(){
+      duel.over = false; duel.winner = null; duel.log = [];
+      duel.pos = (duel.type === 'count') ? 0 : duel.N;
+      duel.turn = (duel.startSel === 'random') ? (Math.random() < 0.5 ? 'A' : 'B') : duel.startSel;
+      document.getElementById('duelWin').style.display = 'none';
+      duelPushLog('เริ่มเกม: ' + (duel.type === 'count' ? 'นับเลข' : 'หยิบเหรียญ') +
+        (duel.misere ? ' (คนสุดท้ายแพ้)' : ' (คนสุดท้ายชนะ)') + ' เป้าหมาย ' + duel.N +
+        ', ครั้งละ 1–' + duel.m + ' — ' + duelName(duel.turn) + ' เริ่มก่อน');
+      renderDuel();
     }
+    function duelRematch(){ duelNewRound(); }
+    function duelResetScore(){ duel.score = { A: 0, B: 0 }; duel.rounds = 0; duelNewRound(); }
+    function duelRandom(){ duelSetN(10 + Math.floor(Math.random() * 51)); }
 
-    function toggleNimSecret() {
-      showSecret = !showSecret;
-      document.getElementById('btnNimSecret').style.background = showSecret ? '#FEF08A' : 'var(--purple)';
-      document.getElementById('nimSecretPanel').style.display = (showSecret && gameMode === 'coins') ? 'block' : 'none';
-      document.getElementById('countSecretPanel').style.display = (showSecret && gameMode === 'count') ? 'block' : 'none';
-      if (gameMode === 'coins') renderNimCoins(); else renderCountTrack();
-    }
-
-    function enablePickButtons(enable) {
-      for (let i = 1; i <= 3; i++) document.getElementById('btnPick' + i).disabled = !enable;
-    }
-
-    function setTurnBadgePlayer() {
-      const b = document.getElementById('nimTurnBadge');
-      b.textContent = 'ตาของนักเรียน';
-      b.style.background = '#BBF7D0';
-    }
-
-    function setTurnBadgeAI() {
-      const b = document.getElementById('nimTurnBadge');
-      b.textContent = 'ตาของคอมพิวเตอร์ (AI คิดเลข)...';
-      b.style.background = '#FED7AA';
-    }
-
-    function playerMove(k) {
-      if (gameMode === 'coins') playerPickNim(k); else playerCount(k);
-    }
-
-    // ---------- Normal-play coin Nim (take the LAST coin WINS) ----------
-    function resetNimGame() {
-      nimRemaining = 21;
-      isPlayerTurn = true;
-      document.getElementById('nimStatusTitle').innerHTML = 'กองเหรียญที่เหลือ: <span id="nimRemainingCount" class="font-mono" style="color: #EF4444; font-size: 1.6rem; font-weight: 800;">21</span> เหรียญ';
-      setTurnBadgePlayer();
-      document.getElementById('nimGameLog').textContent = 'เริ่มเกมใหม่! กองเหรียญมี 21 เม็ด เลือกหยิบ 1, 2 หรือ 3 เม็ด';
-      enablePickButtons(true);
-      renderNimCoins();
-    }
-
-    function renderNimCoins() {
-      const tray = document.getElementById('nimCoinTray');
-      tray.innerHTML = '';
-      for (let i = 1; i <= 21; i++) {
-        const coin = document.createElement('div');
-        coin.className = 'coin';
-        coin.textContent = i;
-        if (i > nimRemaining) coin.classList.add('taken');
-        if (showSecret && (i % 4 === 0)) coin.classList.add('p-safe');
-        tray.appendChild(coin);
-      }
-    }
-
-    function updateCoinCount() {
-      const el = document.getElementById('nimRemainingCount');
-      if (el) el.textContent = nimRemaining;
-    }
-
-    function playerPickNim(k) {
-      if (!isPlayerTurn || nimRemaining <= 0) return;
-      if (k > nimRemaining) return;
-      nimRemaining -= k;
-      updateCoinCount();
-      renderNimCoins();
-      if (nimRemaining === 0) {
-        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>ยินดีด้วย! นักเรียนหยิบเม็ดสุดท้ายและเป็นผู้ชนะ!</strong>';
-        enablePickButtons(false);
-        return;
-      }
-      isPlayerTurn = false;
-      setTurnBadgeAI();
-      document.getElementById('nimGameLog').textContent = `นักเรียนหยิบไป ${k} เม็ด เหลือ ${nimRemaining} เม็ด`;
-      enablePickButtons(false);
-      setTimeout(() => aiPickNim(), 700);
-    }
-
-    function aiPickNim() {
-      // Optimal strategy: leave a MULTIPLE OF 4 for the opponent (20,16,12,8,4,0)
-      let aiPick = nimRemaining % 4;
-      if (aiPick === 0) aiPick = 1;            // losing position: take 1, hope opponent errs
-      if (aiPick > nimRemaining) aiPick = nimRemaining;
-      nimRemaining -= aiPick;
-      updateCoinCount();
-      renderNimCoins();
-      if (nimRemaining === 0) {
-        document.getElementById('nimGameLog').innerHTML = `🤖 <strong>คอมพิวเตอร์หยิบ ${aiPick} เม็ดสุดท้ายและเป็นผู้ชนะ!</strong>`;
-        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
-        document.getElementById('nimTurnBadge').style.background = '#FECDD3';
-        enablePickButtons(false);
-        return;
-      }
-      isPlayerTurn = true;
-      setTurnBadgePlayer();
-      document.getElementById('nimGameLog').textContent = `คอมพิวเตอร์ตอบโต้ด้วยการหยิบ ${aiPick} เม็ด! เหลือ ${nimRemaining} เม็ด`;
-      enablePickButtons(true);
-    }
-
-    // ---------- Misère counting to 21 (say 21 LOSES) ----------
-    function resetCountGame() {
-      countVal = 0;
-      document.getElementById('nimStatusTitle').innerHTML = 'นับถึง: <span id="countValDisplay" class="font-mono" style="color: #EA580C; font-size: 1.6rem; font-weight: 800;">0</span> / 21';
-      document.getElementById('nimGameLog').textContent = 'กติกา: ผลัดกันนับต่อครั้งละ 1–3 จำนวน ใครพูดเลข 21 แพ้!';
-      renderCountTrack();
-      if (countStart === 'ai') {
-        isPlayerTurn = false;
-        setTurnBadgeAI();
-        enablePickButtons(false);
-        setTimeout(() => aiCount(), 700);
+    function duelMove(k){
+      if (duel.over || k < 1 || k > duel.m) return;
+      const t = duel.turn;
+      if (duel.type === 'count'){
+        if (duel.pos + k > duel.N) return;
+        duel.pos += k;
+        duelPushLog(duelName(t) + ' นับถึง ' + duel.pos);
+        if (duel.pos === duel.N){ duelEnd(t, !duel.misere); return; }
       } else {
-        isPlayerTurn = true;
-        setTurnBadgePlayer();
-        enablePickButtons(true);
-        updateCountButtonStates();
+        if (k > duel.pos) return;
+        duel.pos -= k;
+        duelPushLog(duelName(t) + ' หยิบ ' + k + ' เม็ด เหลือ ' + duel.pos);
+        if (duel.pos === 0){ duelEnd(t, !duel.misere); return; }
       }
+      duel.turn = duelOther(t);
+      renderDuel();
+    }
+    function duelEnd(mover, moverWins){
+      const winner = moverWins ? mover : duelOther(mover);
+      duel.over = true; duel.winner = winner;
+      duel.score[winner]++; duel.rounds++;
+      const last = duel.type === 'count' ? ('พูดเลข ' + duel.N) : 'หยิบเม็ดสุดท้าย';
+      const how = duelName(mover) + ' ' + last + ' — ' + (moverWins ? 'ชนะ' : 'แพ้');
+      duelPushLog(how);
+      renderDuel();
+      const w = document.getElementById('duelWin');
+      w.style.display = 'block';
+      w.style.background = DUEL_BG[winner]; w.style.color = DUEL_COLOR[winner];
+      w.innerHTML = duelName(winner) + ' ชนะรอบนี้! <span style="font-size:0.9rem;font-weight:600;color:#374151;">(' + how + ')</span>';
+      duelCelebrate(winner);
+      duelChime();
     }
 
-    function renderCountTrack() {
-      const tray = document.getElementById('nimCoinTray');
+    // ---- rendering ----
+    function renderDuel(){
+      duelRenderStatus(); duelRenderTurn(); duelRenderTray();
+      duelRenderActions(); duelRenderScore(); duelRenderTech();
+    }
+    function duelRenderStatus(){
+      const el = document.getElementById('duelStatus');
+      if (duel.type === 'count'){
+        el.innerHTML = 'นับถึง: <span class="font-mono" style="color:#EA580C;font-size:1.7rem;font-weight:800;">' + duel.pos + '</span> / ' + duel.N;
+      } else {
+        el.innerHTML = 'เหรียญเหลือ: <span class="font-mono" style="color:#EF4444;font-size:1.7rem;font-weight:800;">' + duel.pos + '</span> / ' + duel.N;
+      }
+    }
+    function duelRenderTurn(){
+      const el = document.getElementById('duelTurn');
+      if (duel.over){
+        el.textContent = 'เกมจบแล้ว';
+        el.style.background = '#FECDD3'; el.style.color = '#9F1239'; el.classList.remove('pulse');
+        return;
+      }
+      const t = duel.turn;
+      el.textContent = 'ตาของ ' + duelName(t);
+      el.style.background = DUEL_BG[t]; el.style.color = DUEL_COLOR[t];
+      el.classList.add('pulse');
+    }
+    function duelRenderTray(){
+      const tray = document.getElementById('duelTray');
       tray.innerHTML = '';
-      for (let i = 1; i <= 21; i++) {
-        const coin = document.createElement('div');
-        coin.className = 'coin';
-        coin.textContent = i;
-        if (i === 21) coin.classList.add('p-danger');
-        else if (showSecret && (i % 4 === 0)) coin.classList.add('p-safe');
-        else if (i <= countVal) coin.classList.add('said');
-        if (i === countVal && countVal > 0) coin.classList.add('current');
-        tray.appendChild(coin);
+      tray.classList.toggle('dense', duel.N > 40);
+      const safe = duelSafeList();
+      if (duel.type === 'count'){
+        for (let i = 1; i <= duel.N; i++){
+          const c = document.createElement('div'); c.className = 'coin'; c.textContent = i;
+          if (i === duel.N) c.classList.add(duel.misere ? 'p-danger' : 'p-goal');
+          else if (duel.showTech && safe.includes(i)) c.classList.add('p-safe');
+          else if (i <= duel.pos) c.classList.add('said');
+          if (i === duel.pos && duel.pos > 0) c.classList.add('current');
+          tray.appendChild(c);
+        }
+      } else {
+        for (let i = 1; i <= duel.N; i++){
+          const c = document.createElement('div'); c.className = 'coin'; c.textContent = i;
+          if (i > duel.pos) c.classList.add('taken');
+          if (i === duel.pos && duel.pos > 0) c.classList.add('current');
+          tray.appendChild(c);
+        }
       }
-      const el = document.getElementById('countValDisplay');
-      if (el) el.textContent = countVal;
+      tray.classList.toggle('safe-glow', duel.showTech && !duel.over && duelIsSafePos());
+    }
+    function duelBuildActions(){
+      const box = document.getElementById('duelActions'); box.innerHTML = '';
+      const lbl = document.createElement('span'); lbl.style.fontWeight = '700';
+      lbl.textContent = duel.type === 'count' ? 'นับต่อ:' : 'หยิบ:';
+      box.appendChild(lbl);
+      for (let k = 1; k <= duel.m; k++){
+        const b = document.createElement('button'); b.className = 'tactile-btn'; b.id = 'duelBtn' + k;
+        b.style.background = 'var(--yellow)';
+        b.textContent = (duel.type === 'count' ? 'นับ +' : 'หยิบ ') + k;
+        b.onclick = () => duelMove(k);
+        box.appendChild(b);
+      }
+    }
+    function duelRenderActions(){
+      const winK = duelWinningMove();
+      for (let k = 1; k <= duel.m; k++){
+        const b = document.getElementById('duelBtn' + k); if (!b) continue;
+        let dis = duel.over;
+        if (!dis){ dis = (duel.type === 'count') ? (duel.pos + k > duel.N) : (k > duel.pos); }
+        b.disabled = dis;
+        b.classList.toggle('hint-glow', duel.hint && !duel.over && !dis && k === winK);
+      }
+    }
+    function duelRenderScore(){
+      document.getElementById('scoreA').textContent = duel.score.A;
+      document.getElementById('scoreB').textContent = duel.score.B;
+      document.getElementById('scoreNameA').textContent = duelName('A');
+      document.getElementById('scoreNameB').textContent = duelName('B');
+      document.getElementById('duelRounds').textContent = duel.rounds;
+    }
+    function duelRenderTech(){
+      const M = duelMod(), r = duelResidue();
+      document.getElementById('techM').textContent = M;
+      document.getElementById('techR').textContent = r;
+      const favFirst = duelFirstFavored();
+      const firstTeam = duel.startSel === 'random' ? 'ทีมเริ่มก่อน' : duelName(duel.startSel);
+      const secondTeam = duel.startSel === 'random' ? 'ทีมที่สอง' : duelName(duelOther(duel.startSel));
+      document.getElementById('techFav').textContent = favFirst ? firstTeam : secondTeam;
+      const fm = duelFirstMove();
+      document.getElementById('techFirst').textContent = fm > 0
+        ? (duel.type === 'count' ? 'นับ ' + fm + ' จำนวน' : 'หยิบ ' + fm + ' เม็ด')
+        : 'ไม่มี (รออีกฝ่ายพลาด)';
+      const safe = duelSafeList();
+      document.getElementById('techSafe').textContent = safe.join(', ') + (duel.type === 'count' ? ('  → จบที่ ' + duel.N) : '');
+      let note;
+      if (duel.type === 'count'){
+        note = duel.misere
+          ? 'นับ misère: คุมให้เลขที่พูด ≡ ' + r + ' (mod ' + M + ') แล้วอีกฝ่ายถูกบังคับให้พูด ' + duel.N + ' และแพ้'
+          : 'นับ normal: คุมให้เลขที่พูด ≡ ' + r + ' (mod ' + M + ') แล้วเราจะเป็นคนพูด ' + duel.N + ' เองและชนะ';
+      } else {
+        note = duel.misere
+          ? 'เหรียญ misère: คุมให้เหรียญเหลือ ≡ ' + r + ' (mod ' + M + ') แล้วอีกฝ่ายต้องหยิบเม็ดสุดท้ายและแพ้'
+          : 'เหรียญ normal: คุมให้เหรียญเหลือเป็นพหุคูณของ ' + M + ' แล้วเราหยิบเม็ดสุดท้ายเองและชนะ';
+      }
+      document.getElementById('techNote').textContent = note;
+    }
+    function duelPushLog(msg){
+      duel.log.unshift(msg);
+      if (duel.log.length > 3) duel.log.pop();
+      document.getElementById('duelLog').innerHTML =
+        duel.log.map((m, i) => '<div style="opacity:' + (i === 0 ? 1 : 0.55) + ';">' + m + '</div>').join('');
     }
 
-    function updateCountButtonStates() {
-      for (let i = 1; i <= 3; i++) {
-        document.getElementById('btnPick' + i).disabled = (countVal + i > 21);
-      }
+    // ---- teacher toggles ----
+    function duelToggleTech(){
+      duel.showTech = !duel.showTech;
+      document.getElementById('btnDuelTech').style.background = duel.showTech ? '#FEF08A' : 'var(--purple)';
+      document.getElementById('duelTech').style.display = duel.showTech ? 'block' : 'none';
+      duelRenderTray(); duelRenderActions();
+    }
+    function duelToggleHint(){
+      duel.hint = !duel.hint;
+      document.getElementById('btnDuelHint').textContent = 'คำใบ้: ' + (duel.hint ? 'เปิด' : 'ปิด');
+      document.getElementById('btnDuelHint').style.background = duel.hint ? '#FEF08A' : '#FFFFFF';
+      duelRenderActions();
+    }
+    function duelToggleSound(){
+      duel.sound = !duel.sound;
+      document.getElementById('btnDuelSound').textContent = 'เสียง: ' + (duel.sound ? 'เปิด' : 'ปิด');
     }
 
-    function playerCount(k) {
-      if (!isPlayerTurn || countVal >= 21) return;
-      if (countVal + k > 21) return;           // cannot overshoot 21
-      countVal += k;
-      renderCountTrack();
-      if (countVal === 21) {
-        document.getElementById('nimGameLog').innerHTML = '💥 <strong>นักเรียนพูดเลข 21 — แพ้! (Misère: คนพูด 21 แพ้)</strong>';
-        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
-        document.getElementById('nimTurnBadge').style.background = '#FECDD3';
-        enablePickButtons(false);
-        return;
+    // ---- celebration ----
+    function duelCelebrate(team){
+      const cv = document.getElementById('duelConfetti');
+      const ctx = cv.getContext('2d');
+      cv.width = window.innerWidth; cv.height = window.innerHeight;
+      const colors = [DUEL_COLOR[team], '#FBBF24', '#34D399', '#F472B6', DUEL_COLOR[duelOther(team)]];
+      const parts = [];
+      for (let i = 0; i < 140; i++){
+        parts.push({ x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * 0.3,
+          vx: (Math.random() - 0.5) * 3, vy: 2 + Math.random() * 3.5,
+          s: 5 + Math.random() * 7, rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.2,
+          c: colors[i % colors.length] });
       }
-      isPlayerTurn = false;
-      setTurnBadgeAI();
-      document.getElementById('nimGameLog').textContent = `นักเรียนนับถึง ${countVal}`;
-      enablePickButtons(false);
-      setTimeout(() => aiCount(), 700);
+      const t0 = performance.now();
+      function frame(now){
+        const el = now - t0;
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.rot += p.vr;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.c;
+          ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6); ctx.restore(); });
+        if (el < 2600) requestAnimationFrame(frame);
+        else ctx.clearRect(0, 0, cv.width, cv.height);
+      }
+      requestAnimationFrame(frame);
+    }
+    function duelChime(){
+      if (!duel.sound) return;
+      try {
+        duelAudioCtx = duelAudioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const ctx = duelAudioCtx; const notes = [523.25, 659.25, 783.99, 1046.5];
+        notes.forEach((f, i) => {
+          const o = ctx.createOscillator(), g = ctx.createGain();
+          o.type = 'triangle'; o.frequency.value = f;
+          g.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.12);
+          g.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + i * 0.12 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.12 + 0.3);
+          o.connect(g); g.connect(ctx.destination);
+          o.start(ctx.currentTime + i * 0.12); o.stop(ctx.currentTime + i * 0.12 + 0.32);
+        });
+      } catch (e) {}
     }
 
-    function aiCount() {
-      // Optimal misère strategy: leave a MULTIPLE OF 4 for the opponent (say 4,8,12,16,20)
-      let aiPick = (4 - (countVal % 4)) % 4;
-      if (aiPick === 0) aiPick = 1;            // losing position: say 1 number, hope opponent errs
-      if (countVal + aiPick > 21) aiPick = 21 - countVal;  // forced to say 21 (loses)
-      countVal += aiPick;
-      renderCountTrack();
-      if (countVal === 21) {
-        document.getElementById('nimGameLog').innerHTML = '🏆 <strong>คอมพิวเตอร์ถูกบังคับให้พูด 21 — นักเรียนชนะ!</strong>';
-        document.getElementById('nimTurnBadge').textContent = 'เกมจบลงแล้ว';
-        document.getElementById('nimTurnBadge').style.background = '#BBF7D0';
-        enablePickButtons(false);
-        return;
-      }
-      isPlayerTurn = true;
-      setTurnBadgePlayer();
-      document.getElementById('nimGameLog').textContent = `คอมพิวเตอร์นับต่อ ${aiPick} จำนวน ถึง ${countVal}`;
-      enablePickButtons(true);
-      updateCountButtonStates();
-    }
+    function initDuel(){ duelSyncConfigUI(); duelNewRound(); }
 
     // =========================================================================
     // INITIALIZATION
@@ -1417,7 +1607,7 @@
       runBirthdayCalculation();
       initIdBoxes();
       calculateIdChecksum();
-      setGameMode('coins');
+      initDuel();
 
       // Typeset KaTeX if available
       if (typeof renderMathInElement === 'function') {
