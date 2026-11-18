@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "2.0.0",
-  "lastUpdated": "2026-10-16",
+  "lastUpdated": "2026-11-18",
   "site": {
     "title": "สื่อการสอนคณิตศาสตร์",
     "description": "คลังสื่อคณิตศาสตร์แบบอ่าน อธิบาย และทดลองได้ด้วยตนเอง"
@@ -773,6 +773,34 @@
               "type": "interactive",
               "typeLabel": "คลังข้อสอบ",
               "tech": "html-js"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "m6-modulo-arena",
+      "level": "m6",
+      "levelLabel": "มัธยมศึกษาตอนปลาย (ม.6)",
+      "title": "ม.6: Modulo Arena — กิจกรรมคณิตศาสตร์ 6 ทีม",
+      "description": "กิจกรรมตอบโจทย์คณิตศาสตร์แบบ 6 ทีม 10 ข้อ ครอบคลุมมอดุลาร์ ปฏิทิน รหัสตรวจสอบ ทฤษฎีจำนวน และเกมกลยุทธ์ พร้อมเฉลยและระบบให้คะแนนบางส่วนรายทีม",
+      "theme": "teal",
+      "order": 11,
+      "topics": [
+        {
+          "id": "m6-modulo-arena-activity",
+          "title": "Modulo Arena",
+          "order": 1,
+          "prerequisites": [],
+          "items": [
+            {
+              "id": "m6-modulo-arena-app",
+              "filename": "interactive/modulo-arena.html",
+              "title": "Modulo Arena — กิจกรรมตอบโจทย์ 6 ทีม",
+              "description": "แอปพลิเคชัน HTML ไฟล์เดียวสำหรับฉายบนโปรเจกเตอร์: 10 ข้อ 33 คะแนน จับเวลาได้ เปิดเฉลยได้ และให้คะแนนบางส่วน 0 ถึงคะแนนเต็มของแต่ละทีม",
+              "type": "interactive",
+              "typeLabel": "กิจกรรมทีม",
+              "tech": "html-katex"
             }
           ]
         }

@@ -29,6 +29,7 @@
 ### ม.6 — ทฤษฎีจำนวนและคณิตศาสตร์เชิงการจัด
 
 - [ห้องปฏิบัติการคณิตศาสตร์มอดุลาร์ (Neo-Brutalist Math Lab)](https://subwatg.github.io/Math-materials/interactive/congruence-and-calendar/) — สื่อการสอนแบบโต้ตอบ 4 โมดูล: วงล้อเศษเหลือ mod m, นักสืบวันเกิด (mod 7), ถอดรหัสตรวจสอบบัตรประชาชนไทย (mod 11), และสังเวียนดวลเกมนิม 21 เหรียญ (mod 4) พร้อมระบบโฟกัสเต็มจอ (Zen Mode)
+- [Modulo Arena — กิจกรรมตอบโจทย์ 6 ทีม](https://subwatg.github.io/Math-materials/interactive/modulo-arena.html) — แอป HTML ไฟล์เดียวสำหรับฉายบนโปรเจกเตอร์ 10 ข้อ 33 คะแนน พร้อมเฉลย จับเวลา และให้คะแนนบางส่วนรายทีม 0 ถึงคะแนนเต็ม
 
 
 ### 01422413: การวางแผนการทดลอง (Design of Experiments)
